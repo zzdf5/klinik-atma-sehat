@@ -1,0 +1,195 @@
+@startuml ERD - Klinik Atma Sehat
+
+skinparam linetype ortho
+
+' ===================== TABEL =====================
+
+entity "pengguna" as pengguna {
+  * id : VARCHAR(20) <<PK>>
+  --
+  nama : VARCHAR(100)
+  no_telepon : VARCHAR(15)
+  username : VARCHAR(50) <<UNIQUE>>
+  password : VARCHAR(255)
+  peran : ENUM('Dokter','Admin')
+}
+
+entity "dokter" as dokter {
+  * id : VARCHAR(20) <<PK, FK>>
+  --
+  nomor_str : VARCHAR(30) <<UNIQUE>>
+  spesialisasi : VARCHAR(100)
+  tarif_konsultasi : DECIMAL(12,2)
+  status_aktif : TINYINT(1)
+}
+
+entity "admin" as admin {
+  * id : VARCHAR(20) <<PK, FK>>
+  --
+  jabatan : ENUM('KARYAWAN','MANAGER')
+  status_aktif : TINYINT(1)
+}
+
+entity "pasien" as pasien {
+  * id : VARCHAR(20) <<PK>>
+  --
+  nomor_rekam_medis : VARCHAR(20) <<UNIQUE>>
+  nama : VARCHAR(100)
+  tanggal_lahir : DATE
+  jenis_kelamin : ENUM('L','P')
+  no_telepon : VARCHAR(15)
+  alamat : TEXT
+}
+
+entity "rekam_medis" as rekam_medis {
+  * nomor_rekam_medis : VARCHAR(20) <<PK>>
+  --
+  id_pasien : VARCHAR(20) <<FK>>
+  tanggal_buat : DATE
+  alergi : TEXT
+  riwayat_penyakit : TEXT
+}
+
+entity "poliklinik" as poliklinik {
+  * id_poliklinik : VARCHAR(20) <<PK>>
+  --
+  nama_poliklinik : VARCHAR(100)
+  lokasi_ruangan : VARCHAR(100)
+  jam_operasional : VARCHAR(30)
+}
+
+entity "jadwal_dokter" as jadwal_dokter {
+  * id_jadwal : VARCHAR(20) <<PK>>
+  --
+  id_dokter : VARCHAR(20) <<FK>>
+  id_poliklinik : VARCHAR(20) <<FK>>
+  jam_mulai : TIME
+  jam_selesai : TIME
+  kuota_pasien : INT
+}
+
+entity "antrian" as antrian {
+  * id_antrian : VARCHAR(20) <<PK>>
+  --
+  nomor_urut : VARCHAR(10)
+  id_pasien : VARCHAR(20) <<FK>>
+  id_dokter : VARCHAR(20) <<FK>>
+  id_poliklinik : VARCHAR(20) <<FK>>
+  tanggal : DATE
+  status : ENUM('MENUNGGU','DALAM_PEMERIKSAAN','SELESAI','BATAL')
+  jenis_kunjungan : ENUM('BARU','KONTROL','RUJUKAN')
+}
+
+entity "kunjungan" as kunjungan {
+  * id_kunjungan : VARCHAR(20) <<PK>>
+  --
+  nomor_rekam_medis : VARCHAR(20) <<FK>>
+  id_dokter : VARCHAR(20) <<FK>>
+  tanggal : DATE
+  jam : TIME
+  keluhan_utama : TEXT
+  hasil_pemeriksaan : TEXT
+  id_diagnosa : VARCHAR(20) <<FK>>
+  id_resep : VARCHAR(20) <<FK>>
+  biaya_konsultasi : DECIMAL(12,2)
+  status : ENUM('BELUM_DILAKUKAN','SELESAI','BATAL')
+}
+
+entity "diagnosa" as diagnosa {
+  * id_diagnosa : VARCHAR(20) <<PK>>
+  --
+  kode_penyakit : VARCHAR(20)
+  nama_penyakit : VARCHAR(200)
+  keterangan : TEXT
+  tanggal_diagnosa : DATE
+  perlu_rujukan : TINYINT(1)
+}
+
+entity "obat" as obat {
+  * id_obat : VARCHAR(20) <<PK>>
+  --
+  nama_obat : VARCHAR(100)
+  bentuk_sediaan : VARCHAR(50)
+  dosis : VARCHAR(50)
+  kategori : VARCHAR(50)
+  harga_satuan : DECIMAL(12,2)
+  stok : INT
+}
+
+entity "resep" as resep {
+  * id_resep : VARCHAR(20) <<PK>>
+  --
+  id_dokter : VARCHAR(20) <<FK>>
+  nomor_rekam_medis : VARCHAR(20) <<FK>>
+  tanggal_resep : DATE
+  status : ENUM('DIPROSES','SELESAI','BATAL')
+}
+
+entity "item_resep" as item_resep {
+  * id : INT <<PK, AUTO_INCREMENT>>
+  --
+  id_resep : VARCHAR(20) <<FK>>
+  id_obat : VARCHAR(20) <<FK>>
+  jumlah : INT
+  aturan_pakai : VARCHAR(100)
+}
+
+entity "tagihan" as tagihan {
+  * id_tagihan : VARCHAR(20) <<PK>>
+  --
+  id_kunjungan : VARCHAR(20) <<FK>>
+  tanggal_tagihan : DATE
+  total_tagihan : DECIMAL(12,2)
+  jumlah_bayar : DECIMAL(12,2)
+  kembalian : DECIMAL(12,2)
+  metode_pembayaran : ENUM('TUNAI','BPJS','TRANSFER','DEBIT')
+  status : ENUM('BELUM_BAYAR','LUNAS')
+}
+
+entity "item_tagihan" as item_tagihan {
+  * id : INT <<PK, AUTO_INCREMENT>>
+  --
+  id_tagihan : VARCHAR(20) <<FK>>
+  nama_item : VARCHAR(100)
+  jumlah : INT
+  harga_satuan : DECIMAL(12,2)
+}
+
+entity "rujukan" as rujukan {
+  * id_rujukan : VARCHAR(20) <<PK>>
+  --
+  id_kunjungan : VARCHAR(20) <<FK>>
+  nomor_rekam_medis : VARCHAR(20) <<FK>>
+  id_dokter_pengirim : VARCHAR(20) <<FK>>
+  tujuan_rujukan : VARCHAR(200)
+  alasan_rujukan : TEXT
+  tanggal_rujukan : DATE
+  tanggal_berlaku : DATE
+  status : ENUM('AKTIF','DIGUNAKAN','BATAL')
+}
+
+' ===================== RELASI =====================
+
+pengguna    ||--||    dokter
+pengguna    ||--||    admin
+pasien      ||--||    rekam_medis
+pasien      ||--o{    antrian
+dokter      ||--o{    jadwal_dokter
+poliklinik  ||--o{    jadwal_dokter
+dokter      ||--o{    antrian
+poliklinik  ||--o{    antrian
+rekam_medis ||--o{    kunjungan
+dokter      ||--o{    kunjungan
+dokter      ||--o{    resep
+rekam_medis ||--o{    resep
+kunjungan   ||--o|    diagnosa
+kunjungan   ||--o|    resep
+kunjungan   ||--o|    tagihan
+kunjungan   ||--o|    rujukan
+dokter      ||--o{    rujukan
+rekam_medis ||--o{    rujukan
+resep       ||--o{    item_resep
+obat        ||--o{    item_resep
+tagihan     ||--o{    item_tagihan
+
+@enduml

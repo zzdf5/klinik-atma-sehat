@@ -24,10 +24,6 @@ public abstract class Pengguna {
     public String getUsername() { return username; }
     public String getPassword() { return password; }
 
-    public boolean cekPassword(String inputPassword) {
-        return this.password != null && this.password.equals(inputPassword);
-    }
-
     public String getInfo() {
         return id + " | " + nama + " | " + noTelepon;
     }

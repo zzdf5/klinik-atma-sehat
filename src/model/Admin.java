@@ -20,5 +20,5 @@ public class Admin extends Pengguna {
     public Jabatan getJabatan() { return jabatan; }
 
     @Override
-    public String getPeran() { return "Admin"; }
+    public String getPeran() { return "Admin - "+jabatan; }
 }

@@ -48,7 +48,6 @@ public class Tagihan {
 
     public void tambahItem(ItemTagihan item) {
         this.daftarItem.add(item);
-        this.totalTagihan += item.getSubtotal();
     }
 
     public String getInfo() {
@@ -74,11 +73,9 @@ public class Tagihan {
         public int getJumlah() { return jumlah; }
         public double getHargaSatuan() { return hargaSatuan; }
 
-        public double getSubtotal() { return hargaSatuan * jumlah; }
-
         @Override
         public String toString() {
-            return String.format("%-25s x%d  Rp%.0f", namaItem, jumlah, getSubtotal());
+            return String.format("%-25s x%d  Rp%.0f", namaItem, jumlah, hargaSatuan);
         }
     }
 }

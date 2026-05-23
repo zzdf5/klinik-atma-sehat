@@ -36,16 +36,6 @@ public class Obat {
     public double getHargaSatuan() { return hargaSatuan; }
     public int getStok() { return stok; }
 
-    public boolean kurangiStok(int jumlah) {
-        if (jumlah > stok) return false;
-        this.stok -= jumlah;
-        return true;
-    }
-
-    public void tambahStok(int jumlah) {
-        this.stok += jumlah;
-    }
-
     public String getInfo() {
         return idObat + " | " + namaObat + " " + dosis + " | Stok: " + stok
                 + " | Rp" + String.format("%.0f", hargaSatuan);

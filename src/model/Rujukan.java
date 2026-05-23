@@ -12,7 +12,7 @@ public class Rujukan {
     private Status status;
 
     public enum Status {
-        AKTIF, DIGUNAKAN, KADALUARSA, DIBATALKAN
+        AKTIF, DIGUNAKAN, BATAL
     }
 
     public Rujukan(String idRujukan, String idKunjungan, String nomorRekamMedis,

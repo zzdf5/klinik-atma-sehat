@@ -39,10 +39,6 @@ public class Resep {
 
     public void tambahObat(ItemResep item) { this.daftarObat.add(item); }
 
-    public double hitungTotalHarga() {
-        return daftarObat.stream().mapToDouble(i -> i.getHarga() * i.getJumlah()).sum();
-    }
-
     public String getInfo() {
         return idResep + " | " + nomorRekamMedis + " | " + tanggalResep + " | " + status;
     }
@@ -68,12 +64,9 @@ public class Resep {
         public String getNamaObat() { return obat.getNamaObat(); }
         public double getHarga() { return obat.getHargaSatuan(); }
 
-        public double getSubtotal() { return obat.getHargaSatuan() * jumlah; }
-
         @Override
         public String toString() {
-            return obat.getNamaObat() + " x" + jumlah + " | " + aturanPakai
-                    + " | Rp" + String.format("%.0f", getSubtotal());
+            return obat.getNamaObat() + " x" + jumlah + " | " + aturanPakai;
         }
     }
 }
