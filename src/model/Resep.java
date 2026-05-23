@@ -1,95 +1,79 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Model Resep - menyimpan data resep obat dari dokter untuk pasien
- * @author Sistem Klinik Kesehatan
- */
 public class Resep {
     private String idResep;
     private String idDokter;
     private String nomorRekamMedis;
-    private LocalDate tanggalResep;
+    private String tanggalResep;
+    private Status status;
     private List<ItemResep> daftarObat;
-    private String catatan;
-    private StatusResep status;
 
-    public enum StatusResep {
-        MENUNGGU, DIPROSES, SELESAI, DIBATALKAN
+    public enum Status {
+        DIPROSES, SELESAI, BATAL
     }
 
-    public Resep(String idDokter, String nomorRekamMedis) {
-        this.idDokter = idDokter;
-        this.nomorRekamMedis = nomorRekamMedis;
-        this.tanggalResep = LocalDate.now();
-        this.daftarObat = new ArrayList<>();
-        this.status = StatusResep.MENUNGGU;
-    }
-
-    public Resep(String idResep, String idDokter, String nomorRekamMedis,
-                 LocalDate tanggalResep, String catatan) {
+    public Resep(String idResep, String idDokter, String nomorRekamMedis, String tanggalResep) {
         this.idResep = idResep;
         this.idDokter = idDokter;
         this.nomorRekamMedis = nomorRekamMedis;
         this.tanggalResep = tanggalResep;
-        this.catatan = catatan;
+        this.status = Status.DIPROSES;
         this.daftarObat = new ArrayList<>();
-        this.status = StatusResep.MENUNGGU;
     }
 
-    // Setters
     public void setIdResep(String idResep) { this.idResep = idResep; }
     public void setIdDokter(String idDokter) { this.idDokter = idDokter; }
     public void setNomorRekamMedis(String nomorRekamMedis) { this.nomorRekamMedis = nomorRekamMedis; }
-    public void setTanggalResep(LocalDate tanggalResep) { this.tanggalResep = tanggalResep; }
-    public void setCatatan(String catatan) { this.catatan = catatan; }
-    public void setStatus(StatusResep status) { this.status = status; }
+    public void setTanggalResep(String tanggalResep) { this.tanggalResep = tanggalResep; }
+    public void setStatus(Status status) { this.status = status; }
 
-    // Getters
     public String getIdResep() { return idResep; }
     public String getIdDokter() { return idDokter; }
     public String getNomorRekamMedis() { return nomorRekamMedis; }
-    public LocalDate getTanggalResep() { return tanggalResep; }
-    public String getCatatan() { return catatan; }
-    public StatusResep getStatus() { return status; }
+    public String getTanggalResep() { return tanggalResep; }
+    public Status getStatus() { return status; }
     public List<ItemResep> getDaftarObat() { return daftarObat; }
 
-    public void tambahObat(ItemResep item) {
-        this.daftarObat.add(item);
-    }
-
-    public void hapusObat(String namaObat) {
-        daftarObat.removeIf(item -> item.getNamaObat().equalsIgnoreCase(namaObat));
-    }
+    public void tambahObat(ItemResep item) { this.daftarObat.add(item); }
 
     public double hitungTotalHarga() {
-        return daftarObat.stream()
-                .mapToDouble(item -> item.getHarga() * item.getJumlah())
-                .sum();
+        return daftarObat.stream().mapToDouble(i -> i.getHarga() * i.getJumlah()).sum();
     }
 
     public String getInfo() {
         return idResep + " | " + nomorRekamMedis + " | " + tanggalResep + " | " + status;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("=== RESEP OBAT ===\n");
-        sb.append("ID Resep     : ").append(idResep).append("\n");
-        sb.append("Dokter       : ").append(idDokter).append("\n");
-        sb.append("Pasien (RM)  : ").append(nomorRekamMedis).append("\n");
-        sb.append("Tanggal      : ").append(tanggalResep).append("\n");
-        sb.append("Status       : ").append(status).append("\n");
-        sb.append("Daftar Obat  :\n");
-        for (ItemResep item : daftarObat) {
-            sb.append("  - ").append(item.toString()).append("\n");
+    public static class ItemResep {
+        private Obat obat;
+        private int jumlah;
+        private String aturanPakai;
+
+        public ItemResep(Obat obat, int jumlah, String aturanPakai) {
+            this.obat = obat;
+            this.jumlah = jumlah;
+            this.aturanPakai = aturanPakai;
         }
-        sb.append("Catatan      : ").append(catatan).append("\n");
-        sb.append("Total Harga  : Rp").append(String.format("%.0f", hitungTotalHarga()));
-        return sb.toString();
+
+        public void setObat(Obat obat) { this.obat = obat; }
+        public void setJumlah(int jumlah) { this.jumlah = jumlah; }
+        public void setAturanPakai(String aturanPakai) { this.aturanPakai = aturanPakai; }
+
+        public Obat getObat() { return obat; }
+        public int getJumlah() { return jumlah; }
+        public String getAturanPakai() { return aturanPakai; }
+        public String getNamaObat() { return obat.getNamaObat(); }
+        public double getHarga() { return obat.getHargaSatuan(); }
+
+        public double getSubtotal() { return obat.getHargaSatuan() * jumlah; }
+
+        @Override
+        public String toString() {
+            return obat.getNamaObat() + " x" + jumlah + " | " + aturanPakai
+                    + " | Rp" + String.format("%.0f", getSubtotal());
+        }
     }
 }

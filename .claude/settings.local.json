@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Remove-Item \"c:\\\\Users\\\\Divo Pratama\\\\OneDrive\\\\Documents\\\\klinik-atma-sehat\\\\src\\\\model\\\\ItemResep.java\" -Force)",
+      "Bash(Remove-Item \"c:\\\\Users\\\\Divo Pratama\\\\OneDrive\\\\Documents\\\\klinik-atma-sehat\\\\src\\\\model\\\\ItemTagihan.java\" -Force)",
+      "Bash(Write-Output \"Deleted\")",
+      "PowerShell(\"Deleted\")"
+    ]
+  }
+}
