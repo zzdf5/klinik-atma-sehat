@@ -5,21 +5,26 @@
         <group>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/dao/AntrianDAO.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/JadwalDokterControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/view/MainFrame.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/view/MainViewForm.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/ObatHerbal.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/interfaceDAO/IShowForDropDown.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Antrian.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Rujukan.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/DiagnosaControl.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Kunjungan.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/AdminControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/PendaftaranPasienPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/view/LoginPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/Connection/DBConnection.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/KunjunganControl.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Tagihan.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/AntrianControl.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/dao/AdminDAO.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Obat.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Pasien.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenPasienPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/exception/InputSpecialAttributeException.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/RekamMedis.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Diagnosa.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/exception/InputKosongException.java</file>
         </group>
     </open-files>
