@@ -1,8 +1,8 @@
 package model;
 
 public class Antrian {
-    private String idAntrian;
-    private String nomorUrut;
+    private int idAntrian;
+    private int nomorUrut;
     private String idPasien;
     private String idDokter;
     private String idPoliklinik;
@@ -18,7 +18,7 @@ public class Antrian {
         BARU, KONTROL, RUJUKAN
     }
 
-    public Antrian(String idAntrian, String nomorUrut, String idPasien, String idDokter,
+    public Antrian(int idAntrian, int nomorUrut, String idPasien, String idDokter,
                    String idPoliklinik, String tanggal, JenisKunjungan jenisKunjungan) {
         this.idAntrian = idAntrian;
         this.nomorUrut = nomorUrut;
@@ -30,8 +30,8 @@ public class Antrian {
         this.status = Status.MENUNGGU;
     }
 
-    public void setIdAntrian(String idAntrian) { this.idAntrian = idAntrian; }
-    public void setNomorUrut(String nomorUrut) { this.nomorUrut = nomorUrut; }
+    public void setIdAntrian(int idAntrian) { this.idAntrian = idAntrian; }
+    public void setNomorUrut(int nomorUrut) { this.nomorUrut = nomorUrut; }
     public void setIdPasien(String idPasien) { this.idPasien = idPasien; }
     public void setIdDokter(String idDokter) { this.idDokter = idDokter; }
     public void setIdPoliklinik(String idPoliklinik) { this.idPoliklinik = idPoliklinik; }
@@ -39,8 +39,8 @@ public class Antrian {
     public void setStatus(Status status) { this.status = status; }
     public void setJenisKunjungan(JenisKunjungan jenisKunjungan) { this.jenisKunjungan = jenisKunjungan; }
 
-    public String getIdAntrian() { return idAntrian; }
-    public String getNomorUrut() { return nomorUrut; }
+    public int getIdAntrian() { return idAntrian; }
+    public int getNomorUrut() { return nomorUrut; }
     public String getIdPasien() { return idPasien; }
     public String getIdDokter() { return idDokter; }
     public String getIdPoliklinik() { return idPoliklinik; }
