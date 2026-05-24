@@ -100,7 +100,7 @@ public class AdminDAO implements IDAO<Admin, String> {
     public List<Admin> showData() {
         con = dbCon.makeConnection();
 
-        String sql = "SELECT p.id, p.nama, p.no_telepon, p.username, p.password, a.jabatan, a.status_aktif "
+        String sql = "SELECT p.id, p.nama, p.no_telepon, a.jabatan, a.status_aktif "
                 + "FROM pengguna p JOIN admin a ON p.id = a.id";
         List<Admin> list = new ArrayList<>();
 
@@ -114,8 +114,8 @@ public class AdminDAO implements IDAO<Admin, String> {
                             rs.getString("id"),
                             rs.getString("nama"),
                             rs.getString("no_telepon"),
-                            rs.getString("username"),
-                            rs.getString("password"),
+                            null,
+                            null,
                             Admin.Jabatan.valueOf(rs.getString("jabatan")));
                     admin.setStatusAktif(rs.getBoolean("status_aktif"));
                     list.add(admin);
@@ -130,6 +130,41 @@ public class AdminDAO implements IDAO<Admin, String> {
 
         dbCon.closeConnection();
         return list;
+    }
+
+    public Admin searchByCredential(String username, String password) {
+        con = dbCon.makeConnection();
+
+        String sql = "SELECT p.id, p.nama, p.no_telepon, p.username, p.password, a.jabatan, a.status_aktif "
+                + "FROM pengguna p JOIN admin a ON p.id = a.id "
+                + "WHERE p.username=? AND p.password=?";
+        Admin admin = null;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null && rs.next()) {
+                admin = new Admin(
+                        rs.getString("id"),
+                        rs.getString("nama"),
+                        rs.getString("no_telepon"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        Admin.Jabatan.valueOf(rs.getString("jabatan")));
+                admin.setStatusAktif(rs.getBoolean("status_aktif"));
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error searchByCredential Admin: " + e);
+        }
+
+        dbCon.closeConnection();
+        return admin;
     }
 
     @Override
