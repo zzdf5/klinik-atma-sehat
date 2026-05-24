@@ -35,6 +35,9 @@ public class Tagihan {
     public void setTanggalTagihan(String tanggalTagihan) { this.tanggalTagihan = tanggalTagihan; }
     public void setMetodePembayaran(MetodePembayaran metodePembayaran) { this.metodePembayaran = metodePembayaran; }
     public void setStatus(Status status) { this.status = status; }
+    public void setJumlahBayar(double jumlahBayar) { this.jumlahBayar = jumlahBayar; }
+    public void setKembalian(double kembalian) { this.kembalian = kembalian; }
+    public void setTotalTagihan(double totalTagihan) { this.totalTagihan = totalTagihan; }
 
     public String getIdTagihan() { return idTagihan; }
     public String getIdKunjungan() { return idKunjungan; }

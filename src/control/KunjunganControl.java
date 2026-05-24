@@ -1,0 +1,23 @@
+package control;
+
+import dao.KunjunganDAO;
+import java.util.List;
+import model.Kunjungan;
+
+public class KunjunganControl {
+    private final KunjunganDAO dao = new KunjunganDAO();
+
+    public void insert(Kunjungan data) { dao.insert(data); }
+    public void update(Kunjungan data, String id) { dao.update(data, id); }
+    public void delete(String id) { dao.delete(id); }
+    public List<Kunjungan> showData() { return dao.showData(); }
+    public Kunjungan search(String id) { return dao.search(id); }
+
+    public void selesaikan(Kunjungan kunjungan, String hasilPemeriksaan, String idDiagnosa, String idResep) {
+        kunjungan.setHasilPemeriksaan(hasilPemeriksaan);
+        kunjungan.setIdDiagnosa(idDiagnosa);
+        kunjungan.setIdResep(idResep);
+        kunjungan.setStatus(Kunjungan.Status.SELESAI);
+        dao.update(kunjungan, kunjungan.getIdKunjungan());
+    }
+}
