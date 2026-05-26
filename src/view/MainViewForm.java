@@ -264,7 +264,7 @@ public class MainViewForm extends javax.swing.JFrame {
 
         recolorDefaultSwitchPanel ();
         customerPanel.setBackground (new Color (241, 53, 21, 200));
-        setForm(new ManajemenObatPanel());
+        setForm(new ManajemenJadwalDokterPanel());
         selectedIndex = 1;
     }//GEN-LAST:event_customerPanelMouseClicked
 
