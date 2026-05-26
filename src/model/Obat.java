@@ -20,13 +20,29 @@ public class Obat {
         this.stok = stok;
     }
 
-    public void setIdObat(String idObat) { this.idObat = idObat; }
-    public void setNamaObat(String namaObat) { this.namaObat = namaObat; }
-    public void setBentukSediaan(String bentukSediaan) { this.bentukSediaan = bentukSediaan; }
-    public void setDosis(String dosis) { this.dosis = dosis; }
-    public void setKategori(String kategori) { this.kategori = kategori; }
-    public void setHargaSatuan(double hargaSatuan) { this.hargaSatuan = hargaSatuan; }
-    public void setStok(int stok) { this.stok = stok; }
+    public void setIdObat(String idObat) { 
+        this.idObat = idObat; 
+    }
+    public void setNamaObat(String namaObat) { 
+        this.namaObat = namaObat; 
+    }
+    public void setBentukSediaan(String bentukSediaan) { 
+        this.bentukSediaan = bentukSediaan; 
+    }
+    
+    public void setDosis(String dosis) { 
+        this.dosis = dosis; 
+    
+    }
+    public void setKategori(String kategori) { 
+        this.kategori = kategori; 
+    }
+    public void setHargaSatuan(double hargaSatuan) { 
+        this.hargaSatuan = hargaSatuan; 
+    }
+    public void setStok(int stok) { 
+        this.stok = stok;
+    }
 
     public String getIdObat() { return idObat; }
     public String getNamaObat() { return namaObat; }
