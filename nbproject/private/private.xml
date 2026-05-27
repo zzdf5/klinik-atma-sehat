@@ -3,22 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/DokterPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/model/Admin.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/model/Dokter.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenPasienPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenObatPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/view/MainViewFormAdmin.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenDokterPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/view/MainViewFormDokter.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/model/Pengguna.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenPoliKlinikPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenTagihanPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenJadwalDokterPanel.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/model/Kunjungan.java</file>
             <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/view/LoginPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenKunjunganPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenAntrianPanel.java</file>
-            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/model/Pasien.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/view/MainViewFormDokter.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/view/MainViewFormAdmin.java</file>
         </group>
     </open-files>
 </project-private>

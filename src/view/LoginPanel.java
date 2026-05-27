@@ -19,6 +19,7 @@ public class LoginPanel extends javax.swing.JPanel {
         mainPanel = new javax.swing.JPanel();
         NavbarPanel = new javax.swing.JPanel();
         NavbarLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         FormInputPanel = new javax.swing.JPanel();
         FormInputLabel1 = new javax.swing.JLabel();
         FormInputLabel2 = new javax.swing.JLabel();
@@ -39,21 +40,29 @@ public class LoginPanel extends javax.swing.JPanel {
         NavbarLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         NavbarLabel.setText("Klinik Atma Sehat");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Logo_Tubes (1)_1.png"))); // NOI18N
+
         javax.swing.GroupLayout NavbarPanelLayout = new javax.swing.GroupLayout(NavbarPanel);
         NavbarPanel.setLayout(NavbarPanelLayout);
         NavbarPanelLayout.setHorizontalGroup(
             NavbarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NavbarPanelLayout.createSequentialGroup()
-                .addGap(113, 113, 113)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NavbarLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         NavbarPanelLayout.setVerticalGroup(
             NavbarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NavbarPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(NavbarLabel)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NavbarPanelLayout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         FormInputPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -205,10 +214,10 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(NavbarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(372, 372, 372)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap(369, Short.MAX_VALUE)
                 .addComponent(FormInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(324, Short.MAX_VALUE))
+                .addGap(327, 327, 327))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +226,7 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addComponent(NavbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(FormInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -248,6 +257,7 @@ public class LoginPanel extends javax.swing.JPanel {
     private javax.swing.JTextField inputPasswordTextField;
     private javax.swing.JLabel inputUsernameLabel;
     private javax.swing.JTextField inputUsernameTextField;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }

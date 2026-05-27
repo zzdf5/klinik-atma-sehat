@@ -30,6 +30,14 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     public MainViewFormAdmin() {
         initComponents();
         recolorDefaultSwitchPanel();
+        
+        kunjunganPanel.setBackground(
+            new Color(245,245,245)
+        );
+
+        setForm(new ManajemenKunjunganPanel());
+
+        selectedIndex = 1;
         setLocationRelativeTo(null); 
     }
     
