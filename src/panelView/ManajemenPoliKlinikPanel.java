@@ -4,9 +4,9 @@
  */
 package panelView;
 
-public class ManajemenPoliklinikPanel extends javax.swing.JPanel {
+public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
-    public ManajemenPoliklinikPanel() {
+    public ManajemenPoliKlinikPanel() {
         initComponents();
     }
 

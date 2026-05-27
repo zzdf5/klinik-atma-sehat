@@ -3,27 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Pasien.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Obat.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Pengguna.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/panelView/ManajemenPasienPanel.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Kunjungan.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/panelView/ManajemenDokterPanel.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Dokter.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/enums/Role.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/enums/Gender.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/panelView/ManajemenObatPanel.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Tagihan.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/RekamMedis.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Admin.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Resep.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/JadwalDokter.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/panelView/ManajemenPoliKlinikPanel.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Antrian.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/panelView/ManajemenJadwalDokterPanel.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Diagnosa.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Poliklinik.java</file>
-            <file>file:/D:/Developments/klinik-atma-sehat/src/model/Rujukan.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenPasienPanel.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/view/MainViewForm.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenPoliKlinikPanel.java</file>
         </group>
     </open-files>
 </project-private>
