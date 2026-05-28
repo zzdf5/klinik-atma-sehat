@@ -8,12 +8,13 @@ import java.util.List;
 import model.Obat;
 import model.ObatHerbal;
 import model.ObatPaten;
+import table.TableObat;
 
 public class ObatControl {
     private final ObatDAO dao = new ObatDAO();
     private final ObatHerbalDAO herbalDAO = new ObatHerbalDAO();
     private final ObatPatenDAO patenDAO = new ObatPatenDAO();
-
+   
     public void insert(Obat data) { dao.insert(data); }
     public void insertHerbal(ObatHerbal data) { herbalDAO.insert(data); }
     public void insertPaten(ObatPaten data) { patenDAO.insert(data); }
@@ -31,6 +32,17 @@ public class ObatControl {
     public List<Obat> showData() { return dao.showData(); }
     public List<ObatHerbal> showDataHerbal() { return herbalDAO.showData(); }
     public List<ObatPaten> showDataPaten() { return patenDAO.showData(); }
+    
+    public TableObat showTable(String target){
+        List<Obat> dataObat = dao.showData();
+        TableObat tableObat = new TableObat(dataObat);
+
+        for(Obat o : dataObat){
+            System.out.println(o.getNamaObat());
+        }
+
+        return tableObat;
+    }
 
     public List<Obat> showSemua() {
         List<Obat> semua = new ArrayList<>();

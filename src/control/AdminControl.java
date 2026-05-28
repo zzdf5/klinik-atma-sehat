@@ -10,8 +10,8 @@ public class AdminControl {
     private final AdminDAO dao = new AdminDAO();
 
     public Admin masuk(String username, String password) throws InputKosongException, DataTidakDitemukanException {
-        if (username == null || username.isBlank()) throw new InputKosongException("Username");
-        if (password == null || password.isBlank()) throw new InputKosongException("Password");
+        if (username == null || username.isBlank()) throw new InputKosongException();
+        if (password == null || password.isBlank()) throw new InputKosongException();
 
         Admin admin = dao.searchByCredential(username, hash(password));
         if (admin == null) throw new DataTidakDitemukanException("Admin", username);
@@ -21,10 +21,10 @@ public class AdminControl {
 
     public void daftar(String id, String nama, String noTelepon, String username, String password, Admin.Jabatan jabatan)
             throws InputKosongException {
-        if (id == null || id.isBlank()) throw new InputKosongException("ID");
-        if (nama == null || nama.isBlank()) throw new InputKosongException("Nama");
-        if (username == null || username.isBlank()) throw new InputKosongException("Username");
-        if (password == null || password.isBlank()) throw new InputKosongException("Password");
+        if (id == null || id.isBlank()) throw new InputKosongException();
+        if (nama == null || nama.isBlank()) throw new InputKosongException();
+        if (username == null || username.isBlank()) throw new InputKosongException();
+        if (password == null || password.isBlank()) throw new InputKosongException();
 
         dao.insert(new Admin(id, nama, noTelepon, username, hash(password), jabatan));
     }

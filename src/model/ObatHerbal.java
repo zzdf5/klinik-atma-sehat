@@ -5,7 +5,7 @@ public class ObatHerbal extends Obat {
 
     public ObatHerbal(String bahanUtama, String idObat, String namaObat, String bentukSediaan, String dosis,
                 String kategori, double hargaSatuan, int stok) {
-        super(idObat, namaObat, bentukSediaan, dosis, kategori, hargaSatuan, stok);
+        super(idObat, namaObat, bentukSediaan, dosis, "Obat Herbal", hargaSatuan, stok);
         this.bahanUtama = bahanUtama;
     }
 
