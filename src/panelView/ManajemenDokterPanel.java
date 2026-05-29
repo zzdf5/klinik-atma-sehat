@@ -3,11 +3,77 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panelView;
+import control.DokterControl;
+import model.Dokter;
 
 public class ManajemenDokterPanel extends javax.swing.JPanel {
+    private DokterControl dokterControl = new DokterControl();
+    private String action = null;
+    private String selectedId = null;
+    private boolean statusAktif = true; 
 
     public ManajemenDokterPanel() {
         initComponents();
+        setOpaque(false);
+        showDokter();
+        setComponentsDokter(false);
+        setEditDeleteButtonDokter(false);
+        clearTextDokter();
+    }
+    
+    public void setComponentsDokter(boolean value) {
+        inputNamaDokterTextField.setEnabled(value);
+        inputNomorSTRTextField.setEnabled(value);
+        inputSpesialisasiDokterTextField.setEnabled(value);
+        inputTarifDokterTextField.setEnabled(value);
+        inputStatusDokterButton.setEnabled(value);
+        simpanDokterButton.setEnabled(value);
+        batalDokterButton.setEnabled(value);
+    }
+
+    public void setEditDeleteButtonDokter(boolean value) {
+        barukanDokterButton.setEnabled(value);
+        hapusDokterButton.setEnabled(value);
+    }
+
+    public void clearTextDokter() {
+        inputNamaDokterTextField.setText("");
+        inputNomorSTRTextField.setText("");
+        inputSpesialisasiDokterTextField.setText("");
+        inputTarifDokterTextField.setText("");
+        pencarianDokterTextField.setText("");
+        statusAktif = true;
+        inputStatusDokterButton.setText("Aktif");
+    }
+
+    public void showDokter() {
+        dokterTable.setModel(dokterControl.showTable(""));
+    }
+
+    public void doSearchDokter() {
+        if(pencarianDokterTextField.getText().isEmpty()){
+            showDokter();
+            return;
+        }
+        dokterTable.setModel(dokterControl.showTable(pencarianDokterTextField.getText()));
+        setComponentsDokter(false);
+        setEditDeleteButtonDokter(false);
+        clearTextDokter();
+        tambahDokterButton.setEnabled(true);
+    }
+
+    public void inputKosongException() throws Exception {
+        if(inputNamaDokterTextField.getText().isEmpty() ||
+           inputNomorSTRTextField.getText().isEmpty() ||
+           inputSpesialisasiDokterTextField.getText().isEmpty() ||
+           inputTarifDokterTextField.getText().isEmpty()) {
+            throw new Exception("Seluruh Data Input Tidak Boleh Kosong!");
+        }
+    }
+    
+    public boolean isDouble(String str) {
+        try { Double.parseDouble(str); return true; } 
+        catch (NumberFormatException e) { return false; }
     }
 
     /**
@@ -30,8 +96,8 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputNomorSTRLabel = new javax.swing.JLabel();
         inputNomorSTRTextField = new javax.swing.JTextField();
         inputStatusDokterPanel = new javax.swing.JPanel();
-        inputStatusDokterButton = new javax.swing.JToggleButton();
         inputStatusDokterLabel = new javax.swing.JLabel();
+        inputStatusDokterButton = new javax.swing.JButton();
         inputSpesialisasiDokterPanel = new javax.swing.JPanel();
         inputSpesialisasiDokterLabel = new javax.swing.JLabel();
         inputSpesialisasiDokterTextField = new javax.swing.JTextField();
@@ -61,10 +127,21 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         pencarianDokterLabel.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 18)); // NOI18N
         pencarianDokterLabel.setText("Pencarian Dokter");
 
+        pencarianDokterTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pencarianDokterTextFieldKeyPressed(evt);
+            }
+        });
+
         pencarianDokterButton.setBackground(new java.awt.Color(51, 0, 153));
         pencarianDokterButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         pencarianDokterButton.setForeground(new java.awt.Color(255, 255, 255));
         pencarianDokterButton.setText("Cari");
+        pencarianDokterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pencarianDokterButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pencarianDokterPanelLayout = new javax.swing.GroupLayout(pencarianDokterPanel);
         pencarianDokterPanel.setLayout(pencarianDokterPanelLayout);
@@ -127,15 +204,20 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputStatusDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
         inputStatusDokterPanel.setToolTipText("");
 
+        inputStatusDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputStatusDokterLabel.setText("Status Aktif");
+
         inputStatusDokterButton.setText("Aktif");
+        inputStatusDokterButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inputStatusDokterButtonMouseClicked(evt);
+            }
+        });
         inputStatusDokterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputStatusDokterButtonActionPerformed(evt);
             }
         });
-
-        inputStatusDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
-        inputStatusDokterLabel.setText("Status Aktif");
 
         javax.swing.GroupLayout inputStatusDokterPanelLayout = new javax.swing.GroupLayout(inputStatusDokterPanel);
         inputStatusDokterPanel.setLayout(inputStatusDokterPanelLayout);
@@ -143,7 +225,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             inputStatusDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputStatusDokterPanelLayout.createSequentialGroup()
                 .addComponent(inputStatusDokterLabel)
-                .addGap(122, 129, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
             .addComponent(inputStatusDokterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         inputStatusDokterPanelLayout.setVerticalGroup(
@@ -214,6 +296,11 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         simpanDokterButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         simpanDokterButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanDokterButton.setText("Simpan");
+        simpanDokterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanDokterButtonActionPerformed(evt);
+            }
+        });
 
         batalDokterButton.setBackground(new java.awt.Color(237, 8, 0));
         batalDokterButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
@@ -301,6 +388,12 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        dokterScrollPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dokterScrollPaneMouseClicked(evt);
+            }
+        });
+
         dokterTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -312,6 +405,11 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        dokterTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dokterTableMouseClicked(evt);
+            }
+        });
         dokterScrollPane.setViewportView(dokterTable);
 
         dokterButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -321,16 +419,31 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         tambahDokterButton.setForeground(new java.awt.Color(255, 255, 255));
         tambahDokterButton.setText("Tambah");
         tambahDokterButton.setPreferredSize(new java.awt.Dimension(124, 24));
+        tambahDokterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahDokterButtonActionPerformed(evt);
+            }
+        });
 
         barukanDokterButton.setBackground(new java.awt.Color(255, 189, 3));
         barukanDokterButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         barukanDokterButton.setForeground(new java.awt.Color(255, 255, 255));
         barukanDokterButton.setText("Barukan");
+        barukanDokterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barukanDokterButtonActionPerformed(evt);
+            }
+        });
 
         hapusDokterButton.setBackground(new java.awt.Color(237, 8, 0));
         hapusDokterButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         hapusDokterButton.setForeground(new java.awt.Color(255, 255, 255));
         hapusDokterButton.setText("Hapus");
+        hapusDokterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusDokterButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout dokterButtonPanelLayout = new javax.swing.GroupLayout(dokterButtonPanel);
         dokterButtonPanel.setLayout(dokterButtonPanelLayout);
@@ -370,7 +483,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                             .addComponent(formInputDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dokterButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dokterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)))
+                        .addComponent(dokterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -406,13 +519,153 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void batalDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalDokterButtonActionPerformed
+        clearTextDokter();
+        action = null;
+        selectedId = null;
+        setComponentsDokter(false);
+        setEditDeleteButtonDokter(false);
+        tambahDokterButton.setEnabled(true);
+    }//GEN-LAST:event_batalDokterButtonActionPerformed
+
+    private void inputStatusDokterButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputStatusDokterButtonMouseClicked
+        
+    }//GEN-LAST:event_inputStatusDokterButtonMouseClicked
+
     private void inputStatusDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputStatusDokterButtonActionPerformed
-        // TODO add your handling code here:
+        statusAktif = !statusAktif; 
+        inputStatusDokterButton.setText(statusAktif ? "Aktif" : "Tidak Aktif");
     }//GEN-LAST:event_inputStatusDokterButtonActionPerformed
 
-    private void batalDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalDokterButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_batalDokterButtonActionPerformed
+    private void tambahDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahDokterButtonActionPerformed
+        action = "tambah";
+        clearTextDokter();
+        setComponentsDokter(true);
+        setEditDeleteButtonDokter(false);
+    }//GEN-LAST:event_tambahDokterButtonActionPerformed
+
+    private void barukanDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanDokterButtonActionPerformed
+        action = "ubah";
+        setComponentsDokter(true);
+        setEditDeleteButtonDokter(true);
+    }//GEN-LAST:event_barukanDokterButtonActionPerformed
+
+    private void hapusDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusDokterButtonActionPerformed
+        action = "hapus";
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            dokterControl.delete(selectedId); 
+            clearTextDokter();
+            setComponentsDokter(false);
+            setEditDeleteButtonDokter(false);
+            showDokter();
+            tambahDokterButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_hapusDokterButtonActionPerformed
+
+    private void simpanDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanDokterButtonActionPerformed
+        try {
+            inputKosongException();
+            
+            if(!isDouble(inputTarifDokterTextField.getText())){
+                javax.swing.JOptionPane.showMessageDialog(this, "Tarif Konsultasi harus berupa angka!");
+                return;
+            }
+
+            // Dialog Konfirmasi dengan YES_NO_CANCEL_OPTION
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                this, 
+                "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Dokter ini?", 
+                "Konfirmasi Simpan", 
+                javax.swing.JOptionPane.YES_NO_CANCEL_OPTION
+            );
+
+            if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+                return; 
+            }
+
+            String nama = inputNamaDokterTextField.getText();
+            String noSTR = inputNomorSTRTextField.getText();
+            String spesialis = inputSpesialisasiDokterTextField.getText();
+            double tarif = Double.parseDouble(inputTarifDokterTextField.getText());
+            
+            // AUTO GENERATE data yang formnya tidak tersedia di UI
+            String idDokter = action.equals("tambah") ? "DKT-" + System.currentTimeMillis() : selectedId;
+            String noTelepon = "-"; // Dummy
+            String username = nama.replaceAll("\\s+", "").toLowerCase(); // Dummy dari nama
+            String password = "123"; // Dummy
+
+            model.Dokter d = new model.Dokter(idDokter, noSTR, nama, noTelepon, spesialis, tarif, username, password);
+            d.setStatusAktif(statusAktif);
+
+            if(action.equals("tambah")) {
+                dokterControl.insert(d);
+            } else if(action.equals("ubah")) {
+                dokterControl.update(d, selectedId);
+            }
+
+            clearTextDokter();
+            setComponentsDokter(false);
+            setEditDeleteButtonDokter(false);
+            tambahDokterButton.setEnabled(true);
+            showDokter();
+            
+            selectedId = null;
+            action = null;
+
+        } catch(Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_simpanDokterButtonActionPerformed
+
+    private void pencarianDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianDokterButtonActionPerformed
+        doSearchDokter();
+    }//GEN-LAST:event_pencarianDokterButtonActionPerformed
+
+    private void pencarianDokterTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianDokterTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n') doSearchDokter();
+    }//GEN-LAST:event_pencarianDokterTextFieldKeyPressed
+
+    private void dokterScrollPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dokterScrollPaneMouseClicked
+        
+    }//GEN-LAST:event_dokterScrollPaneMouseClicked
+
+    private void dokterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dokterTableMouseClicked
+        int clickedRow = dokterTable.getSelectedRow();
+        if(clickedRow < 0) return;
+
+        javax.swing.table.TableModel tableModel = dokterTable.getModel();
+
+        setComponentsDokter(false); 
+        setEditDeleteButtonDokter(true);
+        tambahDokterButton.setEnabled(true);
+
+       
+        Object idVal = tableModel.getValueAt(clickedRow, 0);
+        selectedId = idVal != null ? idVal.toString() : "";
+        
+        Object namaVal = tableModel.getValueAt(clickedRow, 1);
+        inputNamaDokterTextField.setText(namaVal != null ? namaVal.toString() : "");
+        
+        Object strVal = tableModel.getValueAt(clickedRow, 2);
+        inputNomorSTRTextField.setText(strVal != null ? strVal.toString() : "");
+        
+        Object spesialisVal = tableModel.getValueAt(clickedRow, 3);
+        inputSpesialisasiDokterTextField.setText(spesialisVal != null ? spesialisVal.toString() : "");
+        
+        Object tarifVal = tableModel.getValueAt(clickedRow, 4);
+        inputTarifDokterTextField.setText(tarifVal != null ? tarifVal.toString() : "");
+        
+        Object statusVal = tableModel.getValueAt(clickedRow, 5);
+        if(statusVal != null && statusVal.toString().equals("Aktif")) {
+            statusAktif = true;
+            inputStatusDokterButton.setText("Aktif");
+        } else {
+            statusAktif = false;
+            inputStatusDokterButton.setText("Tidak Aktif");
+        }
+    }//GEN-LAST:event_dokterTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -433,7 +686,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     private javax.swing.JLabel inputSpesialisasiDokterLabel;
     private javax.swing.JPanel inputSpesialisasiDokterPanel;
     private javax.swing.JTextField inputSpesialisasiDokterTextField;
-    private javax.swing.JToggleButton inputStatusDokterButton;
+    private javax.swing.JButton inputStatusDokterButton;
     private javax.swing.JLabel inputStatusDokterLabel;
     private javax.swing.JPanel inputStatusDokterPanel;
     private javax.swing.JLabel inputTarifDokterLabel;

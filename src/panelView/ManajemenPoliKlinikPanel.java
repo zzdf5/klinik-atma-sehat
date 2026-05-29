@@ -3,11 +3,70 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panelView;
+import control.PoliklinikControl;
+import model.Poliklinik;
+import exception.InputKosongException;
+
 
 public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
+    private PoliklinikControl poliControl = new PoliklinikControl();
+    private String action = null;
+    private String selectedId = null;
 
     public ManajemenPoliKlinikPanel() {
         initComponents();
+        setOpaque(false);
+        showPoliKlinik();
+        setComponentsPoli(false);
+        setEditDeleteButtonPoli(false);
+        clearTextPoli();
+    }
+    
+    public void setComponentsPoli(boolean value) {
+        inputIdPoliKlinikTextField.setEnabled(value);
+        inputNamaPoliKlinikTextField.setEnabled(value);
+        inputLokasiRuanganTextField.setEnabled(value);
+        inputJamOperasionalTextField.setEnabled(value);
+        simpanPoliKlinikButton.setEnabled(value);
+        batalPoliKlinikButton.setEnabled(value);
+    }
+
+    public void setEditDeleteButtonPoli(boolean value) {
+        barukanPoliKlinikButton.setEnabled(value);
+        hapusPoliKlinikButton.setEnabled(value);
+    }
+    
+    public void clearTextPoli() {
+        inputIdPoliKlinikTextField.setText("");
+        inputNamaPoliKlinikTextField.setText("");
+        inputLokasiRuanganTextField.setText("");
+        inputJamOperasionalTextField.setText("");
+        pencarianPoliKlinikTextField.setText("");
+    }
+
+    public void showPoliKlinik() {
+        PoliKlinikTable.setModel(poliControl.showTable(""));
+    }
+
+    public void doSearchPoli() {
+        if(pencarianPoliKlinikTextField.getText().isEmpty()){
+            showPoliKlinik();
+            return;
+        }
+        PoliKlinikTable.setModel(poliControl.showTable(pencarianPoliKlinikTextField.getText()));
+        setComponentsPoli(false);
+        setEditDeleteButtonPoli(false);
+        clearTextPoli();
+        tambahPoliKlinikButton.setEnabled(true);
+    }
+
+    public void inputKosongException() throws Exception {
+        if(inputIdPoliKlinikTextField.getText().isEmpty() ||
+           inputNamaPoliKlinikTextField.getText().isEmpty() ||
+           inputLokasiRuanganTextField.getText().isEmpty() ||
+           inputJamOperasionalTextField.getText().isEmpty()) {
+            throw new Exception("Seluruh Data Input Tidak Boleh Kosong!");
+        }
     }
 
     /**
@@ -58,10 +117,21 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         pencarianPoliKlinikLabel.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 18)); // NOI18N
         pencarianPoliKlinikLabel.setText("Pencarian Poli Klinik");
 
+        pencarianPoliKlinikTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pencarianPoliKlinikTextFieldKeyPressed(evt);
+            }
+        });
+
         pencarianPoliKlinikButton.setBackground(new java.awt.Color(51, 0, 153));
         pencarianPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         pencarianPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
         pencarianPoliKlinikButton.setText("Cari");
+        pencarianPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pencarianPoliKlinikButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pencarianPoliKlinikPanelLayout = new javax.swing.GroupLayout(pencarianPoliKlinikPanel);
         pencarianPoliKlinikPanel.setLayout(pencarianPoliKlinikPanelLayout);
@@ -127,6 +197,11 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         simpanPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         simpanPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanPoliKlinikButton.setText("Simpan");
+        simpanPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanPoliKlinikButtonActionPerformed(evt);
+            }
+        });
 
         batalPoliKlinikButton.setBackground(new java.awt.Color(237, 8, 0));
         batalPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
@@ -269,6 +344,11 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        PoliKlinikTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PoliKlinikTableMouseClicked(evt);
+            }
+        });
         PoliKlinikScrollPane.setViewportView(PoliKlinikTable);
 
         poliKlinikButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -278,16 +358,31 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         tambahPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
         tambahPoliKlinikButton.setText("Tambah");
         tambahPoliKlinikButton.setPreferredSize(new java.awt.Dimension(124, 24));
+        tambahPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahPoliKlinikButtonActionPerformed(evt);
+            }
+        });
 
         barukanPoliKlinikButton.setBackground(new java.awt.Color(255, 189, 3));
         barukanPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         barukanPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
         barukanPoliKlinikButton.setText("Barukan");
+        barukanPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barukanPoliKlinikButtonActionPerformed(evt);
+            }
+        });
 
         hapusPoliKlinikButton.setBackground(new java.awt.Color(237, 8, 0));
         hapusPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         hapusPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
         hapusPoliKlinikButton.setText("Hapus");
+        hapusPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusPoliKlinikButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout poliKlinikButtonPanelLayout = new javax.swing.GroupLayout(poliKlinikButtonPanel);
         poliKlinikButtonPanel.setLayout(poliKlinikButtonPanelLayout);
@@ -364,8 +459,113 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void batalPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalPoliKlinikButtonActionPerformed
-        // TODO add your handling code here:
+        clearTextPoli();
+        action = null;
+        selectedId = null;
+        setComponentsPoli(false);
+        setEditDeleteButtonPoli(false);
+        tambahPoliKlinikButton.setEnabled(true);
     }//GEN-LAST:event_batalPoliKlinikButtonActionPerformed
+
+    private void tambahPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahPoliKlinikButtonActionPerformed
+        action = "tambah";
+        clearTextPoli();
+        setComponentsPoli(true);
+        setEditDeleteButtonPoli(false);
+    }//GEN-LAST:event_tambahPoliKlinikButtonActionPerformed
+
+    private void barukanPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanPoliKlinikButtonActionPerformed
+        action = "ubah";
+        setComponentsPoli(true);
+        inputIdPoliKlinikTextField.setEnabled(false); // ID jangan diubah saat edit
+        setEditDeleteButtonPoli(true);
+    }//GEN-LAST:event_barukanPoliKlinikButtonActionPerformed
+
+    private void hapusPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusPoliKlinikButtonActionPerformed
+        action = "hapus";
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Poli Klinik ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            poliControl.delete(selectedId); 
+            clearTextPoli();
+            setComponentsPoli(false);
+            setEditDeleteButtonPoli(false);
+            showPoliKlinik();
+            tambahPoliKlinikButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_hapusPoliKlinikButtonActionPerformed
+
+    private void simpanPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanPoliKlinikButtonActionPerformed
+        try {
+            // Pengecekan input kosong
+            inputKosongException();
+
+            // Memunculkan Dialog Konfirmasi (Yes/No/Cancel)
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                this, 
+                "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Poli Klinik ini?", 
+                "Konfirmasi Simpan", 
+                javax.swing.JOptionPane.YES_NO_CANCEL_OPTION
+            );
+            
+            if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+                return; 
+            }
+
+            
+            model.Poliklinik poli = new model.Poliklinik(
+                inputIdPoliKlinikTextField.getText(),
+                inputNamaPoliKlinikTextField.getText(),
+                inputLokasiRuanganTextField.getText(),
+                inputJamOperasionalTextField.getText()
+            );
+
+            if(action.equals("tambah")) {
+                poliControl.insert(poli);
+            } else if(action.equals("ubah")) {
+                poliControl.update(poli, selectedId);
+            }
+            clearTextPoli();
+            setComponentsPoli(false);
+            setEditDeleteButtonPoli(false);
+            tambahPoliKlinikButton.setEnabled(true);
+            showPoliKlinik();
+            
+            selectedId = null;
+            action = null;
+
+        } catch(Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_simpanPoliKlinikButtonActionPerformed
+
+    private void PoliKlinikTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PoliKlinikTableMouseClicked
+        int clickedRow = PoliKlinikTable.getSelectedRow();
+        if(clickedRow < 0) return;
+
+        javax.swing.table.TableModel tableModel = PoliKlinikTable.getModel();
+
+        setComponentsPoli(false); 
+        setEditDeleteButtonPoli(true);
+        tambahPoliKlinikButton.setEnabled(true);
+
+        selectedId = tableModel.getValueAt(clickedRow, 0).toString();
+
+        inputIdPoliKlinikTextField.setText(selectedId);
+        inputNamaPoliKlinikTextField.setText(tableModel.getValueAt(clickedRow, 1).toString());
+        inputLokasiRuanganTextField.setText(tableModel.getValueAt(clickedRow, 2).toString());
+        inputJamOperasionalTextField.setText(tableModel.getValueAt(clickedRow, 3).toString());
+    }//GEN-LAST:event_PoliKlinikTableMouseClicked
+
+    private void pencarianPoliKlinikTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianPoliKlinikTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n'){
+            doSearchPoli();
+        }
+    }//GEN-LAST:event_pencarianPoliKlinikTextFieldKeyPressed
+
+    private void pencarianPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianPoliKlinikButtonActionPerformed
+        doSearchPoli();
+    }//GEN-LAST:event_pencarianPoliKlinikButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

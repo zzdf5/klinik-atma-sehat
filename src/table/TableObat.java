@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package table;
 
 import java.util.List;
@@ -10,10 +6,6 @@ import model.Obat;
 import model.ObatHerbal;
 import model.ObatPaten;
 
-/**
- *
- * @author HP
- */
 public class TableObat extends AbstractTableModel{
     private List<Obat> listObat;
 
@@ -28,26 +20,36 @@ public class TableObat extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 7;
+        return 8; // Sudah benar 8 kolom
     }
     
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        Obat o = listObat.get(rowIndex); // Ambil objek pada baris tersebut
+        
         switch(columnIndex){
             case 0:
-                return listObat.get(rowIndex).getIdObat();
+                return o.getIdObat();
             case 1:
-                return listObat.get(rowIndex).getNamaObat();
+                return o.getNamaObat();
             case 2:
-                return listObat.get(rowIndex).getBentukSediaan();
+                return o.getBentukSediaan();
             case 3:
-                return listObat.get(rowIndex).getDosis();
+                return o.getDosis();
             case 4:
-                return listObat.get(rowIndex).getKategori();
+                return o.getKategori();
             case 5:
-                return listObat.get(rowIndex).getHargaSatuan();
+                // Cek tipe objek secara dinamis untuk mengambil atribut khusus
+                if (o instanceof ObatHerbal) {
+                    return ((ObatHerbal) o).getBahanUtama();
+                } else if (o instanceof ObatPaten) {
+                    return ((ObatPaten) o).getMerk();
+                }
+                return "-"; // Default jika tidak ada
             case 6:
-                return listObat.get(rowIndex).getStok();
+                return o.getHargaSatuan();
+            case 7:
+                return o.getStok();
             default:
                 return null;
         }
@@ -67,8 +69,10 @@ public class TableObat extends AbstractTableModel{
             case 4:
                 return "Kategori";
             case 5:
-                return "Harga Satuan";
+                return "Atribut Khusus"; // Kolom untuk Bahan Utama / Merk
             case 6:
+                return "Harga Satuan";
+            case 7:
                 return "Stok";
             default:
                 return null;

@@ -714,7 +714,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                             .addComponent(obatButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(obatScrollPane)))
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -781,6 +781,10 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         action = "ubah";
         setComponentsObat(true);
         setEditDeleteButtonObat(true);
+        inputIdObatTextField.setEnabled(false);
+        inputNamaObatTextField.setEnabled(false);
+        obatHerbalRadioButton.setEnabled(false);
+        obatPatenRadioButton.setEnabled(false);
     }//GEN-LAST:event_barukanObatButtonActionPerformed
 
     private void hapusObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusObatButtonActionPerformed
@@ -799,13 +803,23 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
     private void simpanObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanObatButtonActionPerformed
         try {
+            
             inputKosongException();
 
+            
             if(!isDouble(inputHargaSatuanTextField.getText()) || !isInteger(inputStokObatTextField.getText())){
                 JOptionPane.showMessageDialog(this, "Harga harus berupa angka/desimal, dan Stok harus berupa angka bulat!");
                 return;
             }
-
+            int confirm = JOptionPane.showConfirmDialog(
+                this, 
+                "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Obat ini?", 
+                "Konfirmasi Simpan", 
+                JOptionPane.YES_NO_CANCEL_OPTION
+            );
+            if (confirm != JOptionPane.YES_OPTION) {
+                return; 
+            }
             String idObat = inputIdObatTextField.getText();
             String namaObat = inputNamaObatTextField.getText();
             String bentukSediaan = pilihBentukSediaanDropDown.getSelectedItem().toString();
@@ -813,10 +827,8 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             double harga = Double.parseDouble(inputHargaSatuanTextField.getText());
             int stok = Integer.parseInt(inputStokObatTextField.getText());
             String specialAttr = inputSpecialAtributeTextField.getText();
-
-   
+            
             if(obatHerbalRadioButton.isSelected()){
-                // Panggil constructor ObatHerbal
                 ObatHerbal herbal = new ObatHerbal(specialAttr, idObat, namaObat, bentukSediaan, dosis, "Obat Herbal", harga, stok);
                 
                 if(action.equals("tambah")){
@@ -825,17 +837,15 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                     obatControl.updateHerbal(herbal, selectedId);
                 }
             } else {
-             
                 ObatPaten paten = new ObatPaten(specialAttr, idObat, namaObat, bentukSediaan, dosis, "Obat Paten", harga, stok);
                 
                 if(action.equals("tambah")){
-                    obatControl.insertPaten(paten); // Memanggil Paten DAO
+                    obatControl.insertPaten(paten); 
                 } else if(action.equals("ubah")){
-                    obatControl.updatePaten(paten, selectedId); // Memanggil Paten DAO Update
+                    obatControl.updatePaten(paten, selectedId); 
                 }
             }
-
-
+            
             clearTextObat();
             setComponentsObat(false);
             setEditDeleteButtonObat(false);
@@ -879,25 +889,27 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         if(clickedRow < 0) return;
 
         TableModel tableModel = obatTable.getModel();
-
-        // 1. Kunci form input (false) agar hanya tampil saja dan tidak bisa langsung diedit
-        setComponentsObat(false); 
-
-        // 2. Aktifkan tombol Barukan & Hapus agar user bisa menentukan aksi via button
+        setComponentsObat(false);
         setEditDeleteButtonObat(true);
         tambahObatButton.setEnabled(true);
-
-        // Ambil data ID Obat dari kolom index 0 dan simpan ke variabel global selectedId
-        selectedId = tableModel.getValueAt(clickedRow, 0).toString();
-
-        // 3. Isi seluruh field form dengan data dari baris yang diklik
+        
+        // Pengecekan aman untuk mencegah NullPointerException
+        Object idVal = tableModel.getValueAt(clickedRow, 0);
+        selectedId = idVal != null ? idVal.toString() : "";
         inputIdObatTextField.setText(selectedId);
-        inputNamaObatTextField.setText(tableModel.getValueAt(clickedRow, 1).toString());
-        pilihBentukSediaanDropDown.setSelectedItem(tableModel.getValueAt(clickedRow, 2).toString());
-        inputDosisTextField.setText(tableModel.getValueAt(clickedRow, 3).toString());
-
-        // Cek kategori untuk menentukan pilihan Radio Button dan teks Label Atribut Khusus
-        String kategori = tableModel.getValueAt(clickedRow, 4).toString();
+        
+        Object namaVal = tableModel.getValueAt(clickedRow, 1);
+        inputNamaObatTextField.setText(namaVal != null ? namaVal.toString() : "");
+        
+        Object bentukVal = tableModel.getValueAt(clickedRow, 2);
+        if(bentukVal != null) pilihBentukSediaanDropDown.setSelectedItem(bentukVal.toString());
+        
+        Object dosisVal = tableModel.getValueAt(clickedRow, 3);
+        inputDosisTextField.setText(dosisVal != null ? dosisVal.toString() : "");
+        
+        Object kategoriVal = tableModel.getValueAt(clickedRow, 4);
+        String kategori = kategoriVal != null ? kategoriVal.toString() : "";
+        
         if(kategori.equalsIgnoreCase("Obat Herbal")){
             obatHerbalRadioButton.setSelected(true);
             inputSpecialAtributeLabel.setText("Bahan Utama");
@@ -906,11 +918,14 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             inputSpecialAtributeLabel.setText("Merk");
         }
 
-        // Mengisi nilai atribut khusus (Bahan Utama / Merk)
-        inputSpecialAtributeTextField.setText(tableModel.getValueAt(clickedRow, 5).toString());
+        Object specialAttrVal = tableModel.getValueAt(clickedRow, 5);
+        inputSpecialAtributeTextField.setText(specialAttrVal != null ? specialAttrVal.toString() : "");
 
-        inputHargaSatuanTextField.setText(tableModel.getValueAt(clickedRow, 6).toString());
-        inputStokObatTextField.setText(tableModel.getValueAt(clickedRow, 7).toString());
+        Object hargaVal = tableModel.getValueAt(clickedRow, 6);
+        inputHargaSatuanTextField.setText(hargaVal != null ? hargaVal.toString() : "");
+        
+        Object stokVal = tableModel.getValueAt(clickedRow, 7);
+        inputStokObatTextField.setText(stokVal != null ? stokVal.toString() : "");
     }//GEN-LAST:event_obatTableMouseClicked
 
 

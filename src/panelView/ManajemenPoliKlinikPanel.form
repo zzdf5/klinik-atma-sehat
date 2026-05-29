@@ -144,6 +144,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="pencarianPoliKlinikTextField">
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pencarianPoliKlinikTextFieldKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="pencarianPoliKlinikButton">
               <Properties>
@@ -158,6 +161,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cari"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pencarianPoliKlinikButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -284,6 +290,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Simpan"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="simpanPoliKlinikButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="batalPoliKlinikButton">
               <Properties>
@@ -456,6 +465,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PoliKlinikTableMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -513,6 +525,9 @@
                   <Dimension value="[124, 24]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tambahPoliKlinikButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="barukanPoliKlinikButton">
               <Properties>
@@ -527,6 +542,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Barukan"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="barukanPoliKlinikButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="hapusPoliKlinikButton">
               <Properties>
@@ -541,6 +559,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Hapus"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hapusPoliKlinikButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
