@@ -23,6 +23,9 @@ public class ObatControl {
     public void updateHerbal(ObatHerbal data, String id) { herbalDAO.update(data, id); }
     public void updatePaten(ObatPaten data, String id) { patenDAO.update(data, id); }
 
+    public String generateIdHerbal() { return herbalDAO.generateId(); }
+    public String generateIdPaten() { return patenDAO.generateId(); }
+
     public void delete(String id) { dao.delete(id); }
 
     public Obat search(String id) { return dao.search(id); }

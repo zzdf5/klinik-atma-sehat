@@ -8,8 +8,10 @@ import table.TablePoliKlinik;
 public class PoliklinikControl {
     private final PoliklinikDAO dao = new PoliklinikDAO();
 
-    public void insert(Poliklinik data) { 
-        dao.insert(data); 
+    public String generateId() { return dao.generateId(); }
+
+    public void insert(Poliklinik data) {
+        dao.insert(data);
     }
     
     public void update(Poliklinik data, String id) { 
@@ -29,14 +31,9 @@ public class PoliklinikControl {
     }
     
     public TablePoliKlinik showTable(String target) {
-        List<Poliklinik> dataPoliKlinik = dao.showData();
-        TablePoliKlinik tablePoliKlinik = new TablePoliKlinik(dataPoliKlinik);
-
-      
-        for (Poliklinik p : dataPoliKlinik) {
-            System.out.println(p.getNamaPoliklinik());
-        }
-
-        return tablePoliKlinik;
+        List<Poliklinik> dataPoliKlinik = (target == null || target.isBlank())
+                ? dao.showData()
+                : dao.searchByKeyword(target);
+        return new TablePoliKlinik(dataPoliKlinik);
     }
 }

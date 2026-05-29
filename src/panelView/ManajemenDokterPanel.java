@@ -19,9 +19,11 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         setComponentsDokter(false);
         setEditDeleteButtonDokter(false);
         clearTextDokter();
+        
     }
     
     public void setComponentsDokter(boolean value) {
+        inputIdDokterTextField.setEnabled(false);
         inputNamaDokterTextField.setEnabled(value);
         inputNomorSTRTextField.setEnabled(value);
         inputSpesialisasiDokterTextField.setEnabled(value);
@@ -37,6 +39,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     }
 
     public void clearTextDokter() {
+        inputIdDokterTextField.setText("");
         inputNamaDokterTextField.setText("");
         inputNomorSTRTextField.setText("");
         inputSpesialisasiDokterTextField.setText("");
@@ -51,15 +54,29 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     }
 
     public void doSearchDokter() {
-        if(pencarianDokterTextField.getText().isEmpty()){
-            showDokter();
-            return;
-        }
-        dokterTable.setModel(dokterControl.showTable(pencarianDokterTextField.getText()));
+        String keyword = pencarianDokterTextField.getText().trim();
+        javax.swing.table.TableModel model = dokterControl.showTable(keyword);
+        dokterTable.setModel(model);
         setComponentsDokter(false);
         setEditDeleteButtonDokter(false);
         clearTextDokter();
+        action = null;
+        selectedId = null;
         tambahDokterButton.setEnabled(true);
+
+        if (model.getRowCount() == 1) {
+            dokterTable.setRowSelectionInterval(0, 0);
+            selectedId = model.getValueAt(0, 0) != null ? model.getValueAt(0, 0).toString() : "";
+            inputIdDokterTextField.setText(selectedId);
+            inputNamaDokterTextField.setText(model.getValueAt(0, 1) != null ? model.getValueAt(0, 1).toString() : "");
+            inputNomorSTRTextField.setText(model.getValueAt(0, 2) != null ? model.getValueAt(0, 2).toString() : "");
+            inputSpesialisasiDokterTextField.setText(model.getValueAt(0, 3) != null ? model.getValueAt(0, 3).toString() : "");
+            inputTarifDokterTextField.setText(model.getValueAt(0, 4) != null ? model.getValueAt(0, 4).toString() : "");
+            Object statusVal = model.getValueAt(0, 5);
+            statusAktif = statusVal != null && statusVal.toString().equals("Aktif");
+            inputStatusDokterButton.setText(statusAktif ? "Aktif" : "Tidak Aktif");
+            setEditDeleteButtonDokter(true);
+        }
     }
 
     public void inputKosongException() throws Exception {
@@ -101,14 +118,17 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputSpesialisasiDokterPanel = new javax.swing.JPanel();
         inputSpesialisasiDokterLabel = new javax.swing.JLabel();
         inputSpesialisasiDokterTextField = new javax.swing.JTextField();
-        inputNamaDokterPanel = new javax.swing.JPanel();
-        inputNamaDokterLabel = new javax.swing.JLabel();
-        inputNamaDokterTextField = new javax.swing.JTextField();
+        inputIdDokterPanel = new javax.swing.JPanel();
+        inputIdDokterLabel = new javax.swing.JLabel();
+        inputIdDokterTextField = new javax.swing.JTextField();
         simpanDokterButton = new javax.swing.JButton();
         batalDokterButton = new javax.swing.JButton();
         inputTarifDokterPanel = new javax.swing.JPanel();
         inputTarifDokterLabel = new javax.swing.JLabel();
         inputTarifDokterTextField = new javax.swing.JTextField();
+        inputNamaDokterPanel = new javax.swing.JPanel();
+        inputNamaDokterLabel = new javax.swing.JLabel();
+        inputNamaDokterTextField = new javax.swing.JTextField();
         dokterScrollPane = new javax.swing.JScrollPane();
         dokterTable = new javax.swing.JTable();
         dokterButtonPanel = new javax.swing.JPanel();
@@ -265,30 +285,30 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        inputNamaDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
+        inputIdDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputNamaDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
-        inputNamaDokterLabel.setText("Nama Lengkap");
+        inputIdDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputIdDokterLabel.setText("ID Dokter");
 
-        javax.swing.GroupLayout inputNamaDokterPanelLayout = new javax.swing.GroupLayout(inputNamaDokterPanel);
-        inputNamaDokterPanel.setLayout(inputNamaDokterPanelLayout);
-        inputNamaDokterPanelLayout.setHorizontalGroup(
-            inputNamaDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(inputNamaDokterPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout inputIdDokterPanelLayout = new javax.swing.GroupLayout(inputIdDokterPanel);
+        inputIdDokterPanel.setLayout(inputIdDokterPanelLayout);
+        inputIdDokterPanelLayout.setHorizontalGroup(
+            inputIdDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputIdDokterPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputNamaDokterLabel)
+                .addComponent(inputIdDokterLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(inputNamaDokterPanelLayout.createSequentialGroup()
-                .addComponent(inputNamaDokterTextField)
+            .addGroup(inputIdDokterPanelLayout.createSequentialGroup()
+                .addComponent(inputIdDokterTextField)
                 .addContainerGap())
         );
-        inputNamaDokterPanelLayout.setVerticalGroup(
-            inputNamaDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(inputNamaDokterPanelLayout.createSequentialGroup()
+        inputIdDokterPanelLayout.setVerticalGroup(
+            inputIdDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputIdDokterPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputNamaDokterLabel)
+                .addComponent(inputIdDokterLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(inputNamaDokterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputIdDokterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -339,6 +359,33 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        inputNamaDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        inputNamaDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputNamaDokterLabel.setText("Nama Lengkap");
+
+        javax.swing.GroupLayout inputNamaDokterPanelLayout = new javax.swing.GroupLayout(inputNamaDokterPanel);
+        inputNamaDokterPanel.setLayout(inputNamaDokterPanelLayout);
+        inputNamaDokterPanelLayout.setHorizontalGroup(
+            inputNamaDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputNamaDokterPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(inputNamaDokterLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(inputNamaDokterPanelLayout.createSequentialGroup()
+                .addComponent(inputNamaDokterTextField)
+                .addContainerGap())
+        );
+        inputNamaDokterPanelLayout.setVerticalGroup(
+            inputNamaDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputNamaDokterPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(inputNamaDokterLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(inputNamaDokterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout formInputDokterPanelLayout = new javax.swing.GroupLayout(formInputDokterPanel);
         formInputDokterPanel.setLayout(formInputDokterPanelLayout);
         formInputDokterPanelLayout.setHorizontalGroup(
@@ -346,6 +393,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             .addGroup(formInputDokterPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputIdDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(inputNamaDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(formInputDokterPanelLayout.createSequentialGroup()
                         .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,7 +407,6 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(inputStatusDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(formInputDokterPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
                                 .addComponent(simpanDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(batalDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -371,13 +418,15 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             .addGroup(formInputDokterPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(inputDokterLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(inputIdDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputNamaDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputNomorSTRPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inputSpesialisasiDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputTarifDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inputStatusDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -497,7 +546,8 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(dokterButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(formInputDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(formInputDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(16, 16, 16)))
                 .addContainerGap())
         );
 
@@ -540,6 +590,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     private void tambahDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahDokterButtonActionPerformed
         action = "tambah";
         clearTextDokter();
+        inputIdDokterTextField.setText(dokterControl.generateId());
         setComponentsDokter(true);
         setEditDeleteButtonDokter(false);
     }//GEN-LAST:event_tambahDokterButtonActionPerformed
@@ -590,8 +641,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             String spesialis = inputSpesialisasiDokterTextField.getText();
             double tarif = Double.parseDouble(inputTarifDokterTextField.getText());
             
-            // AUTO GENERATE data yang formnya tidak tersedia di UI
-            String idDokter = action.equals("tambah") ? "DKT-" + System.currentTimeMillis() : selectedId;
+            String idDokter = action.equals("tambah") ? dokterControl.generateId() : selectedId;
             String noTelepon = "-"; // Dummy
             String username = nama.replaceAll("\\s+", "").toLowerCase(); // Dummy dari nama
             String password = "123"; // Dummy
@@ -644,6 +694,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
        
         Object idVal = tableModel.getValueAt(clickedRow, 0);
         selectedId = idVal != null ? idVal.toString() : "";
+        inputIdDokterTextField.setText(selectedId);
         
         Object namaVal = tableModel.getValueAt(clickedRow, 1);
         inputNamaDokterTextField.setText(namaVal != null ? namaVal.toString() : "");
@@ -677,6 +728,9 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     private javax.swing.JPanel formInputDokterPanel;
     private javax.swing.JButton hapusDokterButton;
     private javax.swing.JLabel inputDokterLabel;
+    private javax.swing.JLabel inputIdDokterLabel;
+    private javax.swing.JPanel inputIdDokterPanel;
+    private javax.swing.JTextField inputIdDokterTextField;
     private javax.swing.JLabel inputNamaDokterLabel;
     private javax.swing.JPanel inputNamaDokterPanel;
     private javax.swing.JTextField inputNamaDokterTextField;

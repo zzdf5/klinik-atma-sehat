@@ -30,15 +30,18 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     public MainViewFormAdmin() {
         initComponents();
         recolorDefaultSwitchPanel();
-        
-        kunjunganPanel.setBackground(
-            new Color(245,245,245)
-        );
 
+        kunjunganPanel.setBackground(new Color(245, 245, 245));
         setForm(new ManajemenKunjunganPanel());
-
         selectedIndex = 1;
-        setLocationRelativeTo(null); 
+        setLocationRelativeTo(null);
+
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new LoginForm().setVisible(true);
+                dispose();
+            }
+        });
     }
     
     private void setForm(JComponent com) {
@@ -138,7 +141,7 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
                     .addGroup(logoPanelLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel3)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         logoPanelLayout.setVerticalGroup(
             logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,7 +291,7 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
             .addGroup(antrianPanelLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel7)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         antrianPanelLayout.setVerticalGroup(
             antrianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,7 +488,7 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1573, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1335, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

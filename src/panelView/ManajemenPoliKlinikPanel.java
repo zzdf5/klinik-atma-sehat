@@ -23,7 +23,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     }
     
     public void setComponentsPoli(boolean value) {
-        inputIdPoliKlinikTextField.setEnabled(value);
+        inputIdPoliKlinikTextField.setEnabled(false);
         inputNamaPoliKlinikTextField.setEnabled(value);
         inputLokasiRuanganTextField.setEnabled(value);
         inputJamOperasionalTextField.setEnabled(value);
@@ -49,15 +49,25 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     }
 
     public void doSearchPoli() {
-        if(pencarianPoliKlinikTextField.getText().isEmpty()){
-            showPoliKlinik();
-            return;
-        }
-        PoliKlinikTable.setModel(poliControl.showTable(pencarianPoliKlinikTextField.getText()));
+        String keyword = pencarianPoliKlinikTextField.getText().trim();
+        javax.swing.table.TableModel model = poliControl.showTable(keyword);
+        PoliKlinikTable.setModel(model);
         setComponentsPoli(false);
         setEditDeleteButtonPoli(false);
         clearTextPoli();
+        action = null;
+        selectedId = null;
         tambahPoliKlinikButton.setEnabled(true);
+
+        if (model.getRowCount() == 1) {
+            PoliKlinikTable.setRowSelectionInterval(0, 0);
+            selectedId = model.getValueAt(0, 0) != null ? model.getValueAt(0, 0).toString() : "";
+            inputIdPoliKlinikTextField.setText(selectedId);
+            inputNamaPoliKlinikTextField.setText(model.getValueAt(0, 1) != null ? model.getValueAt(0, 1).toString() : "");
+            inputLokasiRuanganTextField.setText(model.getValueAt(0, 2) != null ? model.getValueAt(0, 2).toString() : "");
+            inputJamOperasionalTextField.setText(model.getValueAt(0, 3) != null ? model.getValueAt(0, 3).toString() : "");
+            setEditDeleteButtonPoli(true);
+        }
     }
 
     public void inputKosongException() throws Exception {
@@ -311,7 +321,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
                                 .addComponent(batalPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(inputLokasiRuanganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(inputNamaPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 13, Short.MAX_VALUE))))
         );
         formInputDataPoliKlinikPanelLayout.setVerticalGroup(
             formInputDataPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,6 +480,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     private void tambahPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahPoliKlinikButtonActionPerformed
         action = "tambah";
         clearTextPoli();
+        inputIdPoliKlinikTextField.setText(poliControl.generateId());
         setComponentsPoli(true);
         setEditDeleteButtonPoli(false);
     }//GEN-LAST:event_tambahPoliKlinikButtonActionPerformed
@@ -477,7 +488,6 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     private void barukanPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanPoliKlinikButtonActionPerformed
         action = "ubah";
         setComponentsPoli(true);
-        inputIdPoliKlinikTextField.setEnabled(false); // ID jangan diubah saat edit
         setEditDeleteButtonPoli(true);
     }//GEN-LAST:event_barukanPoliKlinikButtonActionPerformed
 

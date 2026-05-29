@@ -1,6 +1,6 @@
 package dao;
 
-import Connection.DBConnection;
+import connection.DBConnection;
 import interfaceDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class RekamMedisDAO implements IDAO<RekamMedis, String> {
 
         String sqlRekam = "INSERT INTO rekam_medis (nomor_rekam_medis, id_pasien, tanggal_buat) VALUES (?,?,?)";
         String sqlAlergi = "INSERT INTO rekam_medis_alergi (nomor_rekam_medis, alergi) VALUES (?,?)";
-        String sqlRiwayat = "INSERT INTO rekam_medis_riwayat_penyakit (nomor_rekam_medis, riwayat_penyakit) VALUES (?,?)";
+        String sqlRiwayat = "INSERT INTO rekam_medis_riwayat (nomor_rekam_medis, riwayat_penyakit) VALUES (?,?)";
 
         try {
             PreparedStatement ps1 = con.prepareStatement(sqlRekam);
@@ -59,9 +59,9 @@ public class RekamMedisDAO implements IDAO<RekamMedis, String> {
 
         String sqlRekam = "UPDATE rekam_medis SET id_pasien=?, tanggal_buat=? WHERE nomor_rekam_medis=?";
         String sqlHapusAlergi = "DELETE FROM rekam_medis_alergi WHERE nomor_rekam_medis=?";
-        String sqlHapusRiwayat = "DELETE FROM rekam_medis_riwayat_penyakit WHERE nomor_rekam_medis=?";
+        String sqlHapusRiwayat = "DELETE FROM rekam_medis_riwayat WHERE nomor_rekam_medis=?";
         String sqlAlergi = "INSERT INTO rekam_medis_alergi (nomor_rekam_medis, alergi) VALUES (?,?)";
-        String sqlRiwayat = "INSERT INTO rekam_medis_riwayat_penyakit (nomor_rekam_medis, riwayat_penyakit) VALUES (?,?)";
+        String sqlRiwayat = "INSERT INTO rekam_medis_riwayat (nomor_rekam_medis, riwayat_penyakit) VALUES (?,?)";
 
         try {
             PreparedStatement ps1 = con.prepareStatement(sqlRekam);
@@ -188,7 +188,7 @@ public class RekamMedisDAO implements IDAO<RekamMedis, String> {
 
     private void loadAlergiDanRiwayat(RekamMedis rm) {
         String sqlAlergi = "SELECT alergi FROM rekam_medis_alergi WHERE nomor_rekam_medis=?";
-        String sqlRiwayat = "SELECT riwayat_penyakit FROM rekam_medis_riwayat_penyakit WHERE nomor_rekam_medis=?";
+        String sqlRiwayat = "SELECT riwayat_penyakit FROM rekam_medis_riwayat WHERE nomor_rekam_medis=?";
 
         try {
             PreparedStatement ps1 = con.prepareStatement(sqlAlergi);

@@ -1,6 +1,6 @@
 package dao;
 
-import Connection.DBConnection;
+import connection.DBConnection;
 import interfaceDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,23 +17,23 @@ public class AdminDAO implements IDAO<Admin, String> {
     public void insert(Admin data) {
         con = dbCon.makeConnection();
 
-        String sqlPengguna = "INSERT INTO pengguna (id, nama, no_telepon, username, password, peran) VALUES (?,?,?,?,?,'ADMIN')";
-        String sqlAdmin = "INSERT INTO admin (id, jabatan, status_aktif) VALUES (?,?,?)";
+        String sqlPengguna = "INSERT INTO pengguna (id, username, password, peran) VALUES (?,?,?,'ADMIN')";
+        String sqlAdmin = "INSERT INTO admin (id, nama, no_telepon, jabatan, status_aktif) VALUES (?,?,?,?,?)";
 
         try {
             PreparedStatement ps1 = con.prepareStatement(sqlPengguna);
             ps1.setString(1, data.getId());
-            ps1.setString(2, data.getNama());
-            ps1.setString(3, data.getNoTelepon());
-            ps1.setString(4, data.getUsername());
-            ps1.setString(5, data.getPassword());
+            ps1.setString(2, data.getUsername());
+            ps1.setString(3, data.getPassword());
             ps1.executeUpdate();
             ps1.close();
 
             PreparedStatement ps2 = con.prepareStatement(sqlAdmin);
             ps2.setString(1, data.getId());
-            ps2.setString(2, data.getJabatan().name());
-            ps2.setBoolean(3, data.isStatusAktif());
+            ps2.setString(2, data.getNama());
+            ps2.setString(3, data.getNoTelepon());
+            ps2.setString(4, data.getJabatan().name());
+            ps2.setBoolean(5, data.isStatusAktif());
             ps2.executeUpdate();
             ps2.close();
 
@@ -49,23 +49,23 @@ public class AdminDAO implements IDAO<Admin, String> {
     public void update(Admin data, String id) {
         con = dbCon.makeConnection();
 
-        String sqlPengguna = "UPDATE pengguna SET nama=?, no_telepon=?, username=?, password=? WHERE id=?";
-        String sqlAdmin = "UPDATE admin SET jabatan=?, status_aktif=? WHERE id=?";
+        String sqlPengguna = "UPDATE pengguna SET username=?, password=? WHERE id=?";
+        String sqlAdmin = "UPDATE admin SET nama=?, no_telepon=?, jabatan=?, status_aktif=? WHERE id=?";
 
         try {
             PreparedStatement ps1 = con.prepareStatement(sqlPengguna);
-            ps1.setString(1, data.getNama());
-            ps1.setString(2, data.getNoTelepon());
-            ps1.setString(3, data.getUsername());
-            ps1.setString(4, data.getPassword());
-            ps1.setString(5, id);
+            ps1.setString(1, data.getUsername());
+            ps1.setString(2, data.getPassword());
+            ps1.setString(3, id);
             ps1.executeUpdate();
             ps1.close();
 
             PreparedStatement ps2 = con.prepareStatement(sqlAdmin);
-            ps2.setString(1, data.getJabatan().name());
-            ps2.setBoolean(2, data.isStatusAktif());
-            ps2.setString(3, id);
+            ps2.setString(1, data.getNama());
+            ps2.setString(2, data.getNoTelepon());
+            ps2.setString(3, data.getJabatan().name());
+            ps2.setBoolean(4, data.isStatusAktif());
+            ps2.setString(5, id);
             ps2.executeUpdate();
             ps2.close();
 
@@ -81,6 +81,7 @@ public class AdminDAO implements IDAO<Admin, String> {
     public void delete(String id) {
         con = dbCon.makeConnection();
 
+        // CASCADE di FK akan hapus baris admin otomatis
         String sql = "DELETE FROM pengguna WHERE id=?";
 
         try {
@@ -100,7 +101,7 @@ public class AdminDAO implements IDAO<Admin, String> {
     public List<Admin> showData() {
         con = dbCon.makeConnection();
 
-        String sql = "SELECT p.id, p.nama, p.no_telepon, a.jabatan, a.status_aktif "
+        String sql = "SELECT p.id, p.username, p.password, a.nama, a.no_telepon, a.jabatan, a.status_aktif "
                 + "FROM pengguna p JOIN admin a ON p.id = a.id";
         List<Admin> list = new ArrayList<>();
 
@@ -114,8 +115,8 @@ public class AdminDAO implements IDAO<Admin, String> {
                             rs.getString("id"),
                             rs.getString("nama"),
                             rs.getString("no_telepon"),
-                            null,
-                            null,
+                            rs.getString("username"),
+                            rs.getString("password"),
                             Admin.Jabatan.valueOf(rs.getString("jabatan")));
                     admin.setStatusAktif(rs.getBoolean("status_aktif"));
                     list.add(admin);
@@ -135,9 +136,9 @@ public class AdminDAO implements IDAO<Admin, String> {
     public Admin searchByCredential(String username, String password) {
         con = dbCon.makeConnection();
 
-        String sql = "SELECT p.id, p.nama, p.no_telepon, p.username, p.password, a.jabatan, a.status_aktif "
+        String sql = "SELECT p.id, p.username, p.password, a.nama, a.no_telepon, a.jabatan, a.status_aktif "
                 + "FROM pengguna p JOIN admin a ON p.id = a.id "
-                + "WHERE p.username=? AND p.password=?";
+                + "WHERE p.username=? AND p.password=? AND p.peran='ADMIN'";
         Admin admin = null;
 
         try {
@@ -171,7 +172,7 @@ public class AdminDAO implements IDAO<Admin, String> {
     public Admin search(String id) {
         con = dbCon.makeConnection();
 
-        String sql = "SELECT p.id, p.nama, p.no_telepon, p.username, p.password, a.jabatan, a.status_aktif "
+        String sql = "SELECT p.id, p.username, p.password, a.nama, a.no_telepon, a.jabatan, a.status_aktif "
                 + "FROM pengguna p JOIN admin a ON p.id = a.id WHERE p.id=?";
         Admin admin = null;
 

@@ -13,7 +13,7 @@ public class AdminControl {
         if (username == null || username.isBlank()) throw new InputKosongException();
         if (password == null || password.isBlank()) throw new InputKosongException();
 
-        Admin admin = dao.searchByCredential(username, hash(password));
+        Admin admin = dao.searchByCredential(username, password);
         if (admin == null) throw new DataTidakDitemukanException("Admin", username);
 
         return admin;
@@ -26,7 +26,7 @@ public class AdminControl {
         if (username == null || username.isBlank()) throw new InputKosongException();
         if (password == null || password.isBlank()) throw new InputKosongException();
 
-        dao.insert(new Admin(id, nama, noTelepon, username, hash(password), jabatan));
+        dao.insert(new Admin(id, nama, noTelepon, username, password, jabatan));
     }
 
     public void insert(Admin data) { dao.insert(data); }
@@ -34,12 +34,4 @@ public class AdminControl {
     public void delete(String id) { dao.delete(id); }
     public List<Admin> showData() { return dao.showData(); }
     public Admin search(String id) { return dao.search(id); }
-
-    private static String hash(String input) {
-        long result = 0;
-        for (int i = 0; i < input.length(); i++) {
-            result = (result + input.charAt(i) * (i + 1)) % 1_000_000_007;
-        }
-        return String.valueOf(result);
-    }
 }

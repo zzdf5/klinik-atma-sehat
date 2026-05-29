@@ -85,7 +85,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     }
     
     public void setComponentsObat(boolean value){
-        inputIdObatTextField.setEnabled(value); 
+        inputIdObatTextField.setEnabled(false);
         inputNamaObatTextField.setEnabled(value);
         pilihBentukSediaanDropDown.setEnabled(value);
         inputDosisTextField.setEnabled(value);
@@ -781,7 +781,6 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         action = "ubah";
         setComponentsObat(true);
         setEditDeleteButtonObat(true);
-        inputIdObatTextField.setEnabled(false);
         inputNamaObatTextField.setEnabled(false);
         obatHerbalRadioButton.setEnabled(false);
         obatPatenRadioButton.setEnabled(false);
@@ -867,11 +866,17 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_inputSpecialAtributeTextFieldActionPerformed
 
     private void obatHerbalRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obatHerbalRadioButtonActionPerformed
-       inputSpecialAtributeLabel.setText("Bahan Utama");
+        inputSpecialAtributeLabel.setText("Bahan Utama");
+        if ("tambah".equals(action)) {
+            inputIdObatTextField.setText(obatControl.generateIdHerbal());
+        }
     }//GEN-LAST:event_obatHerbalRadioButtonActionPerformed
 
     private void obatPatenRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obatPatenRadioButtonActionPerformed
-       inputSpecialAtributeLabel.setText("Merk");
+        inputSpecialAtributeLabel.setText("Merk");
+        if ("tambah".equals(action)) {
+            inputIdObatTextField.setText(obatControl.generateIdPaten());
+        }
     }//GEN-LAST:event_obatPatenRadioButtonActionPerformed
 
     private void pencarianObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianObatButtonActionPerformed

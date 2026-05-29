@@ -7,6 +7,9 @@ import model.Pasien;
 public class PasienControl {
     private final PasienDAO dao = new PasienDAO();
 
+    public String generateId() { return dao.generateId(); }
+    public String generateNomorRekamMedis() { return dao.generateNomorRekamMedis(); }
+    public List<Pasien> searchByNama(String nama) { return dao.searchByNama(nama); }
     public void insert(Pasien data) { dao.insert(data); }
     public void update(Pasien data, String id) { dao.update(data, id); }
     public void delete(String id) { dao.delete(id); }

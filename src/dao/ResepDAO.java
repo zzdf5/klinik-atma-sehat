@@ -1,6 +1,6 @@
 package dao;
 
-import Connection.DBConnection;
+import connection.DBConnection;
 import interfaceDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

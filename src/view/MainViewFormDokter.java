@@ -13,7 +13,15 @@ import javax.swing.JComponent;
  *
  * @author 
  */
-public class MainViewFormDokter extends javax.swing.JFrame {    
+public class MainViewFormDokter extends javax.swing.JFrame {
+    private ManajemenAntrianPanel manajemenAntrianPanel = new ManajemenAntrianPanel();
+    private ManajemenDokterPanel manajemenDokterPanel = new ManajemenDokterPanel();
+    private ManajemenJadwalDokterPanel manajemenJadwalDokterPanel = new ManajemenJadwalDokterPanel();
+    private ManajemenKunjunganPanel manajemenKunjunganPanel = new ManajemenKunjunganPanel();
+    private ManajemenObatPanel manajemenObatPanel = new ManajemenObatPanel();
+    private ManajemenPasienPanel manajemenPasienPanel = new ManajemenPasienPanel();
+    private ManajemenPoliKlinikPanel manajemenPoliKlinikPanel = new ManajemenPoliKlinikPanel();
+    private ManajemenTagihanPanel manajemenTagihanPanel = new ManajemenTagihanPanel();
     
     private int selectedIndex = -1;
     /**
@@ -21,18 +29,19 @@ public class MainViewFormDokter extends javax.swing.JFrame {
      */
     public MainViewFormDokter() {
         initComponents();
-
         recolorDefaultSwitchPanel();
 
-        konsultasiPanel.setBackground(
-            new Color(245,245,245)
-        );
-
+        kunjunganPanel.setBackground(new Color(245, 245, 245));
         setForm(new DokterPanel());
-
         selectedIndex = 1;
-
         setLocationRelativeTo(null);
+
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new LoginForm().setVisible(true);
+                dispose();
+            }
+        });
     }
     
     private void setForm(JComponent com) {
@@ -44,7 +53,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
 
     private void recolorDefaultSwitchPanel() {
         repaint();
-        konsultasiPanel.setBackground(new Color(0, 0, 0, 0));
+        kunjunganPanel.setBackground(new Color(0, 0, 0, 0));
     }
 
     /**
@@ -63,8 +72,8 @@ public class MainViewFormDokter extends javax.swing.JFrame {
         logoLabel1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        konsultasiPanel = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        kunjunganPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         contentPanel = new javax.swing.JPanel();
@@ -111,7 +120,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                     .addGroup(logoPanelLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel3)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         logoPanelLayout.setVerticalGroup(
             logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,32 +135,32 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                 .addComponent(jLabel1))
         );
 
-        konsultasiPanel.setBackground(new java.awt.Color(255, 255, 255));
-        konsultasiPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        kunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
+        kunjunganPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                konsultasiPanelMouseClicked(evt);
+                kunjunganPanelMouseClicked(evt);
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/healthcare.png"))); // NOI18N
-        jLabel8.setText("   Konsultasi");
+        jLabel2.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/visit.png"))); // NOI18N
+        jLabel2.setText("  Kunjungan");
 
-        javax.swing.GroupLayout konsultasiPanelLayout = new javax.swing.GroupLayout(konsultasiPanel);
-        konsultasiPanel.setLayout(konsultasiPanelLayout);
-        konsultasiPanelLayout.setHorizontalGroup(
-            konsultasiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, konsultasiPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(23, 23, 23))
+        javax.swing.GroupLayout kunjunganPanelLayout = new javax.swing.GroupLayout(kunjunganPanel);
+        kunjunganPanel.setLayout(kunjunganPanelLayout);
+        kunjunganPanelLayout.setHorizontalGroup(
+            kunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kunjunganPanelLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        konsultasiPanelLayout.setVerticalGroup(
-            konsultasiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, konsultasiPanelLayout.createSequentialGroup()
+        kunjunganPanelLayout.setVerticalGroup(
+            kunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kunjunganPanelLayout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jLabel8)
+                .addComponent(jLabel2)
                 .addContainerGap())
         );
 
@@ -187,7 +196,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(logoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(konsultasiPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(kunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -197,10 +206,10 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(konsultasiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(445, 445, 445)
+                .addComponent(kunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
 
         contentPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -234,7 +243,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1573, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1335, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -248,19 +257,14 @@ public class MainViewFormDokter extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void konsultasiPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_konsultasiPanelMouseClicked
+    private void kunjunganPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kunjunganPanelMouseClicked
         if(selectedIndex == 1) return;
 
         recolorDefaultSwitchPanel();
-
-        konsultasiPanel.setBackground(
-            new Color(245,245,245)
-        );
-
-        setForm(new DokterPanel());
-
+        kunjunganPanel.setBackground(new Color(245, 245, 245, 200));
+        setForm(new ManajemenKunjunganPanel());
         selectedIndex = 1;
-    }//GEN-LAST:event_konsultasiPanelMouseClicked
+    }//GEN-LAST:event_kunjunganPanelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -295,6 +299,14 @@ public class MainViewFormDokter extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -310,10 +322,10 @@ public class MainViewFormDokter extends javax.swing.JFrame {
     private javax.swing.JPanel contentPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel konsultasiPanel;
+    private javax.swing.JPanel kunjunganPanel;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel logoLabel1;
     private javax.swing.JPanel logoPanel;

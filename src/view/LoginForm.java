@@ -1,12 +1,100 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
 
-public class LoginPanel extends javax.swing.JPanel {
-    
-    
+import control.AdminControl;
+import control.DokterControl;
+import exception.DataTidakDitemukanException;
+import exception.InputKosongException;
+import model.Admin;
+import model.Dokter;
+
+/**
+ *
+ * @author Divo Pratama
+ */
+public class LoginForm extends javax.swing.JFrame {
+
+    private final StringBuilder passwordBuffer = new StringBuilder();
+
+    public LoginForm() {
+        initComponents();
+        inputLoginPassword.addActionListener(e -> handleLogin());
+        inputPasswordTextField.addActionListener(e -> handleLogin());
+        inputUsernameTextField.addActionListener(e -> handleLogin());
+
+        ((javax.swing.text.AbstractDocument) inputPasswordTextField.getDocument())
+            .setDocumentFilter(new javax.swing.text.DocumentFilter() {
+                @Override
+                public void insertString(FilterBypass fb, int offset, String string,
+                        javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
+                    if (string == null) return;
+                    passwordBuffer.insert(offset, string);
+                    super.insertString(fb, offset, mask(string.length()), attr);
+                }
+                @Override
+                public void replace(FilterBypass fb, int offset, int length, String string,
+                        javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
+                    if (length > 0) passwordBuffer.delete(offset, offset + length);
+                    if (string != null) passwordBuffer.insert(offset, string);
+                    super.replace(fb, offset, length, string != null ? mask(string.length()) : "", attr);
+                }
+                @Override
+                public void remove(FilterBypass fb, int offset, int length)
+                        throws javax.swing.text.BadLocationException {
+                    passwordBuffer.delete(offset, offset + length);
+                    super.remove(fb, offset, length);
+                }
+                private String mask(int length) {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < length; i++) sb.append('*');
+                    return sb.toString();
+                }
+            });
+
+        setLocationRelativeTo(null);
+    }
+
+    private void handleLogin() {
+        String username = inputUsernameTextField.getText().trim();
+        String password = passwordBuffer.toString().trim();
+
+        AdminControl adminControl = new AdminControl();
+        try {
+            Admin admin = adminControl.masuk(username, password);
+            new MainViewFormAdmin().setVisible(true);
+            this.dispose();
+            return;
+        } catch (InputKosongException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Username dan password tidak boleh kosong!",
+                    "Peringatan",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        } catch (DataTidakDitemukanException e) {
+            // bukan admin, coba sebagai dokter
+        }
+
+        DokterControl dokterControl = new DokterControl();
+        try {
+            Dokter dokter = dokterControl.masuk(username, password);
+            new MainViewFormDokter().setVisible(true);
+            this.dispose();
+        } catch (InputKosongException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Username dan password tidak boleh kosong!",
+                    "Peringatan",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        } catch (DataTidakDitemukanException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Username atau password salah!",
+                    "Login Gagal",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,6 +120,8 @@ public class LoginPanel extends javax.swing.JPanel {
         inputPasswordTextField = new javax.swing.JTextField();
         inputLoginPassword = new javax.swing.JButton();
         imageFormInput = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainPanel.setBackground(new java.awt.Color(250, 250, 253));
 
@@ -112,6 +202,11 @@ public class LoginPanel extends javax.swing.JPanel {
         inputPasswordLabel.setText("Password");
 
         inputPasswordTextField.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        inputPasswordTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inputPasswordTextFieldKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout inputPasswordPanelLayout = new javax.swing.GroupLayout(inputPasswordPanel);
         inputPasswordPanel.setLayout(inputPasswordPanelLayout);
@@ -140,6 +235,11 @@ public class LoginPanel extends javax.swing.JPanel {
         inputLoginPassword.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         inputLoginPassword.setForeground(new java.awt.Color(255, 255, 255));
         inputLoginPassword.setText("Masuk");
+        inputLoginPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputLoginPasswordActionPerformed(evt);
+            }
+        });
 
         imageFormInput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Img Login.jpg"))); // NOI18N
 
@@ -212,35 +312,79 @@ public class LoginPanel extends javax.swing.JPanel {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(NavbarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NavbarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(FormInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(369, Short.MAX_VALUE)
-                .addComponent(FormInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(327, 327, 327))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(NavbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FormInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void inputLoginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputLoginPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputLoginPasswordActionPerformed
+
+    private void inputPasswordTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputPasswordTextFieldKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputPasswordTextFieldKeyTyped
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new LoginForm().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel FormInputLabel1;

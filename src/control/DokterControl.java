@@ -1,6 +1,8 @@
 package control;
 
 import dao.DokterDAO;
+import exception.DataTidakDitemukanException;
+import exception.InputKosongException;
 import java.util.List;
 import model.Dokter;
 import table.TableDokter;
@@ -8,8 +10,20 @@ import table.TableDokter;
 public class DokterControl {
     private final DokterDAO dao = new DokterDAO();
 
-    public void insert(Dokter data) { 
-        dao.insert(data); 
+    public Dokter masuk(String username, String password) throws InputKosongException, DataTidakDitemukanException {
+        if (username == null || username.isBlank()) throw new InputKosongException();
+        if (password == null || password.isBlank()) throw new InputKosongException();
+
+        Dokter dokter = dao.searchByCredential(username, password);
+        if (dokter == null) throw new DataTidakDitemukanException("Dokter", username);
+
+        return dokter;
+    }
+
+    public String generateId() { return dao.generateId(); }
+
+    public void insert(Dokter data) {
+        dao.insert(data);
     }
     
     public void update(Dokter data, String id) { 
@@ -29,13 +43,9 @@ public class DokterControl {
     }
     
     public TableDokter showTable(String target) {
-        List<Dokter> dataDokter = dao.showData();
-        TableDokter tableDokter = new TableDokter(dataDokter);
-        
-        for (Dokter d : dataDokter) {
-            System.out.println(d.getNama());
-        }
-
-        return tableDokter;
+        List<Dokter> dataDokter = (target == null || target.isBlank())
+                ? dao.showData()
+                : dao.searchByKeyword(target);
+        return new TableDokter(dataDokter);
     }
 }

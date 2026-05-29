@@ -1,6 +1,6 @@
 package dao;
 
-import Connection.DBConnection;
+import connection.DBConnection;
 import interfaceDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -105,6 +105,59 @@ public class PoliklinikDAO implements IDAO<Poliklinik, String> {
 
         dbCon.closeConnection();
         return list;
+    }
+
+    public List<Poliklinik> searchByKeyword(String keyword) {
+        con = dbCon.makeConnection();
+
+        String sql = "SELECT * FROM poliklinik WHERE id_poliklinik LIKE ? OR nama_poliklinik LIKE ?";
+        List<Poliklinik> list = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            String param = "%" + keyword + "%";
+            ps.setString(1, param);
+            ps.setString(2, param);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    list.add(new Poliklinik(
+                            rs.getString("id_poliklinik"),
+                            rs.getString("nama_poliklinik"),
+                            rs.getString("lokasi_ruangan"),
+                            rs.getString("jam_operasional")));
+                }
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error searchByKeyword Poliklinik: " + e);
+        }
+
+        dbCon.closeConnection();
+        return list;
+    }
+
+    public String generateId() {
+        con = dbCon.makeConnection();
+        String newId = "POL001";
+        String sql = "SELECT MAX(CAST(SUBSTRING(id_poliklinik, 4) AS UNSIGNED)) AS max_num FROM poliklinik WHERE id_poliklinik LIKE 'POL%'";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                int maxNum = rs.getInt("max_num");
+                newId = String.format("POL%03d", maxNum + 1);
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error generateId Poliklinik: " + e);
+        }
+        dbCon.closeConnection();
+        return newId;
     }
 
     @Override

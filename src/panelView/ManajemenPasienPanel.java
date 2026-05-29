@@ -4,10 +4,304 @@
  */
 package panelView;
 
+import control.PasienControl;
+import control.RekamMedisControl;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Pasien;
+import model.RekamMedis;
+
 public class ManajemenPasienPanel extends javax.swing.JPanel {
+
+    private final PasienControl pc = new PasienControl();
+    private final RekamMedisControl rmc = new RekamMedisControl();
+    private String action = null;
+    private String selectedId = null;
 
     public ManajemenPasienPanel() {
         initComponents();
+        setOpaque(false);
+
+        inputJenisKelaminDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"L", "P"}));
+
+        ((javax.swing.text.AbstractDocument) inputNoTeleponTextField.getDocument())
+            .setDocumentFilter(new javax.swing.text.DocumentFilter() {
+                @Override
+                public void insertString(javax.swing.text.DocumentFilter.FilterBypass fb, int off, String str,
+                        javax.swing.text.AttributeSet a) throws javax.swing.text.BadLocationException {
+                    if (str != null && str.matches("[0-9]+")) super.insertString(fb, off, str, a);
+                }
+                @Override
+                public void replace(javax.swing.text.DocumentFilter.FilterBypass fb, int off, int len, String str,
+                        javax.swing.text.AttributeSet a) throws javax.swing.text.BadLocationException {
+                    if (str == null || str.matches("[0-9]*")) super.replace(fb, off, len, str, a);
+                }
+            });
+
+        setupTable();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        setRekamMedisEnabled(false);
+        showPasien();
+
+        tambahPasienButton.addActionListener(e -> {
+            action = "add";
+            selectedId = null;
+            clearForm();
+            inputIdPasienTextField.setText(pc.generateId());
+            inputNomorRekamMedisTextField.setText(pc.generateNomorRekamMedis());
+            setFormEnabled(true);
+            setEditDeleteEnabled(false);
+            setRekamMedisEnabled(true);
+            inputTanggalPembuatanDateChooser.setDate(new java.util.Date());
+        });
+
+        barukanPasienButton.addActionListener(e -> {
+            if (selectedId == null) return;
+            action = "update";
+            setFormEnabled(true);
+            setRekamMedisEnabled(true);
+        });
+
+        hapusPasienButton.addActionListener(e -> {
+            if (selectedId == null) return;
+            int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin hapus pasien ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
+            if (opsi != JOptionPane.YES_OPTION) return;
+            pc.delete(selectedId);
+            selectedId = null;
+            clearForm();
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+            showPasien();
+            JOptionPane.showMessageDialog(this, "Pasien berhasil dihapus.");
+        });
+
+        simpanPasienButton.addActionListener(e -> simpanPasien());
+
+        batalPasienButton.addActionListener(e -> {
+            action = null;
+            selectedId = null;
+            clearForm();
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+            setRekamMedisEnabled(false);
+        });
+
+        pencarianPasienButton.addActionListener(e -> doSearch());
+        pencarianPasienTextField.addActionListener(e -> doSearch());
+
+        pasienTable.getSelectionModel().addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting()) return;
+            int row = pasienTable.getSelectedRow();
+            if (row < 0) return;
+            selectedId = (String) pasienTable.getValueAt(row, 0);
+            Pasien p = pc.search(selectedId);
+            if (p != null) {
+                fillForm(p);
+                setEditDeleteEnabled(true);
+                setFormEnabled(false);
+                setRekamMedisEnabled(false);
+                action = null;
+            }
+        });
+    }
+
+    private void setupTable() {
+        DefaultTableModel model = new DefaultTableModel(
+            new String[]{"ID Pasien", "No. Rekam Medis", "Nama", "Tgl Lahir", "J/K", "No. Telepon", "Alamat"}, 0
+        ) {
+            @Override public boolean isCellEditable(int r, int c) { return false; }
+        };
+        pasienTable.setModel(model);
+    }
+
+    private void showPasien() {
+        DefaultTableModel model = (DefaultTableModel) pasienTable.getModel();
+        model.setRowCount(0);
+        for (Pasien p : pc.showData()) {
+            model.addRow(new Object[]{
+                p.getId(), p.getNomorRekamMedis(), p.getNama(),
+                p.getTanggalLahir(), p.getJenisKelamin(), p.getNoTelepon(), p.getAlamat()
+            });
+        }
+    }
+
+    private void setFormEnabled(boolean value) {
+        inputIdPasienTextField.setEnabled(false);
+        inputNomorRekamMedisTextField.setEnabled(false);
+        inputNamaLengkapTextField.setEnabled(value);
+        inputTanggalLahirDateChooser.setEnabled(value);
+        inputJenisKelaminDropDown.setEnabled(value);
+        inputNoTeleponTextField.setEnabled(value);
+        inputAlamatTextField.setEnabled(value);
+        simpanPasienButton.setEnabled(value);
+        batalPasienButton.setEnabled(value);
+    }
+
+    private void setEditDeleteEnabled(boolean value) {
+        barukanPasienButton.setEnabled(value);
+        hapusPasienButton.setEnabled(value);
+    }
+
+    private void setRekamMedisEnabled(boolean value) {
+        inputAlergiTextField.setEnabled(value);
+        inputRiwayatPenyakitTextField.setEnabled(value);
+        inputTanggalPembuatanDateChooser.setEnabled(false);
+    }
+
+    private void clearForm() {
+        inputIdPasienTextField.setText("");
+        inputNomorRekamMedisTextField.setText("");
+        inputNamaLengkapTextField.setText("");
+        inputTanggalLahirDateChooser.setDate(null);
+        inputJenisKelaminDropDown.setSelectedIndex(0);
+        inputNoTeleponTextField.setText("");
+        inputAlamatTextField.setText("");
+        inputAlergiTextField.setText("");
+        inputRiwayatPenyakitTextField.setText("");
+        inputTanggalPembuatanDateChooser.setDate(null);
+    }
+
+    private void fillForm(Pasien p) {
+        inputIdPasienTextField.setText(p.getId());
+        inputNomorRekamMedisTextField.setText(p.getNomorRekamMedis());
+        inputNamaLengkapTextField.setText(p.getNama());
+        if (p.getTanggalLahir() != null && !p.getTanggalLahir().isEmpty()) {
+            try {
+                inputTanggalLahirDateChooser.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(p.getTanggalLahir()));
+            } catch (Exception ex) { inputTanggalLahirDateChooser.setDate(null); }
+        }
+        inputJenisKelaminDropDown.setSelectedItem(p.getJenisKelamin());
+        inputNoTeleponTextField.setText(p.getNoTelepon());
+        inputAlamatTextField.setText(p.getAlamat());
+
+        inputAlergiTextField.setText("");
+        inputRiwayatPenyakitTextField.setText("");
+        inputTanggalPembuatanDateChooser.setDate(null);
+        RekamMedis rm = rmc.search(p.getNomorRekamMedis());
+        if (rm != null) {
+            inputAlergiTextField.setText(String.join(", ", rm.getAlergi()));
+            inputRiwayatPenyakitTextField.setText(String.join(", ", rm.getRiwayatPenyakit()));
+            if (rm.getTanggalBuat() != null && !rm.getTanggalBuat().isEmpty()) {
+                try {
+                    inputTanggalPembuatanDateChooser.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(rm.getTanggalBuat()));
+                } catch (Exception ex) { inputTanggalPembuatanDateChooser.setDate(null); }
+            }
+        }
+    }
+
+    private void doSearch() {
+        String keyword = pencarianPasienTextField.getText().trim();
+        if (keyword.isEmpty()) {
+            showPasien();
+            clearForm();
+            selectedId = null;
+            action = null;
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+            setRekamMedisEnabled(false);
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) pasienTable.getModel();
+        model.setRowCount(0);
+        selectedId = null;
+        setEditDeleteEnabled(false);
+        setFormEnabled(false);
+        clearForm();
+
+        // Coba exact match by ID dulu
+        Pasien byId = pc.search(keyword);
+        if (byId != null) {
+            model.addRow(new Object[]{
+                byId.getId(), byId.getNomorRekamMedis(), byId.getNama(),
+                byId.getTanggalLahir(), byId.getJenisKelamin(), byId.getNoTelepon(), byId.getAlamat()
+            });
+            fillForm(byId);
+            selectedId = byId.getId();
+            setEditDeleteEnabled(true);
+            return;
+        }
+
+        // Kalau tidak ketemu by ID, cari by nama (LIKE)
+        List<Pasien> byNama = pc.searchByNama(keyword);
+        if (byNama.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Pasien tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        for (Pasien p : byNama) {
+            model.addRow(new Object[]{
+                p.getId(), p.getNomorRekamMedis(), p.getNama(),
+                p.getTanggalLahir(), p.getJenisKelamin(), p.getNoTelepon(), p.getAlamat()
+            });
+        }
+        // Jika hanya satu hasil, langsung isi form
+        if (byNama.size() == 1) {
+            fillForm(byNama.get(0));
+            selectedId = byNama.get(0).getId();
+            setEditDeleteEnabled(true);
+        }
+    }
+
+    private void simpanPasien() {
+        if (action == null) return;
+
+        String id    = inputIdPasienTextField.getText().trim();
+        String noRm  = inputNomorRekamMedisTextField.getText().trim();
+        String nama  = inputNamaLengkapTextField.getText().trim();
+        String jk    = (String) inputJenisKelaminDropDown.getSelectedItem();
+        String telp  = inputNoTeleponTextField.getText().trim();
+        String alamat = inputAlamatTextField.getText().trim();
+        java.util.Date tglLahir = inputTanggalLahirDateChooser.getDate();
+
+        if (id.isEmpty() || noRm.isEmpty() || nama.isEmpty() || tglLahir == null || telp.isEmpty() || alamat.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String tgl = new SimpleDateFormat("yyyy-MM-dd").format(tglLahir);
+
+        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin " + action + " data pasien?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (opsi != JOptionPane.YES_OPTION) return;
+
+        Pasien p = new Pasien(id, noRm, nama, tgl, jk, telp, alamat);
+        if ("add".equals(action)) {
+            pc.insert(p);
+            java.util.Date tglRm = inputTanggalPembuatanDateChooser.getDate();
+            String tglRmStr = tglRm != null
+                ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm)
+                : new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            RekamMedis rm = new RekamMedis(noRm, id, tglRmStr);
+            String alergi  = inputAlergiTextField.getText().trim();
+            String riwayat = inputRiwayatPenyakitTextField.getText().trim();
+            if (!alergi.isEmpty())  rm.tambahAlergi(alergi);
+            if (!riwayat.isEmpty()) rm.tambahRiwayatPenyakit(riwayat);
+            rmc.insert(rm);
+            JOptionPane.showMessageDialog(this, "Pasien dan rekam medis berhasil ditambahkan.");
+        } else {
+            pc.update(p, selectedId);
+            java.util.Date tglRm = inputTanggalPembuatanDateChooser.getDate();
+            String tglRmStr = tglRm != null
+                ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm)
+                : new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            RekamMedis rm = new RekamMedis(noRm, id, tglRmStr);
+            String alergi  = inputAlergiTextField.getText().trim();
+            String riwayat = inputRiwayatPenyakitTextField.getText().trim();
+            for (String a : alergi.split(",\\s*"))  { if (!a.isEmpty()) rm.tambahAlergi(a); }
+            for (String r : riwayat.split(",\\s*")) { if (!r.isEmpty()) rm.tambahRiwayatPenyakit(r); }
+            rmc.update(rm, noRm);
+            JOptionPane.showMessageDialog(this, "Pasien dan rekam medis berhasil diupdate.");
+        }
+
+        action = null;
+        selectedId = null;
+        clearForm();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        setRekamMedisEnabled(false);
+        showPasien();
     }
 
     /**
@@ -40,7 +334,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         inputJenisKelaminDropDown = new javax.swing.JComboBox<>();
         inputTanggalLahirPanel = new javax.swing.JPanel();
         inputTanggalLahirLabel = new javax.swing.JLabel();
-        inputTanggalLahirTextField = new javax.swing.JTextField();
+        inputTanggalLahirDateChooser = new com.toedter.calendar.JDateChooser();
         inputNamaLengkapPanel = new javax.swing.JPanel();
         inputNamaLengkapLabel = new javax.swing.JLabel();
         inputNamaLengkapTextField = new javax.swing.JTextField();
@@ -57,8 +351,6 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         inputRiwayatPenyakitPanel = new javax.swing.JPanel();
         inputRiwayatPenyakitLabel = new javax.swing.JLabel();
         inputRiwayatPenyakitTextField = new javax.swing.JTextField();
-        simpanRekamMedisButton = new javax.swing.JButton();
-        batalRekamMedisButton = new javax.swing.JButton();
         inputTanggalPembuatanPanel = new javax.swing.JPanel();
         inputTanggalPembuatanLabel = new javax.swing.JLabel();
         inputTanggalPembuatanDateChooser = new com.toedter.calendar.JDateChooser();
@@ -233,16 +525,18 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(inputTanggalLahirLabel)
                 .addContainerGap(239, Short.MAX_VALUE))
-            .addComponent(inputTanggalLahirTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(inputTanggalLahirPanelLayout.createSequentialGroup()
+                .addComponent(inputTanggalLahirDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         inputTanggalLahirPanelLayout.setVerticalGroup(
             inputTanggalLahirPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputTanggalLahirPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(inputTanggalLahirLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(inputTanggalLahirTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(inputTanggalLahirDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         inputNamaLengkapPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -418,16 +712,6 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        simpanRekamMedisButton.setBackground(new java.awt.Color(51, 178, 73));
-        simpanRekamMedisButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
-        simpanRekamMedisButton.setForeground(new java.awt.Color(255, 255, 255));
-        simpanRekamMedisButton.setText("Simpan");
-
-        batalRekamMedisButton.setBackground(new java.awt.Color(237, 8, 0));
-        batalRekamMedisButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
-        batalRekamMedisButton.setForeground(new java.awt.Color(255, 255, 255));
-        batalRekamMedisButton.setText("Batal");
-
         inputTanggalPembuatanPanel.setBackground(new java.awt.Color(255, 255, 255));
         inputTanggalPembuatanPanel.setPreferredSize(new java.awt.Dimension(47, 90));
 
@@ -443,7 +727,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
                 .addGroup(inputTanggalPembuatanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inputTanggalPembuatanPanelLayout.createSequentialGroup()
                         .addComponent(inputTanggalPembuatanLabel)
-                        .addGap(0, 304, Short.MAX_VALUE))
+                        .addGap(0, 306, Short.MAX_VALUE))
                     .addComponent(inputTanggalPembuatanDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -464,36 +748,24 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
             .addGroup(formInputRekamMedisPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(formInputRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(formInputRekamMedisPanelLayout.createSequentialGroup()
-                        .addComponent(simpanRekamMedisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(batalRekamMedisButton, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
-                    .addGroup(formInputRekamMedisPanelLayout.createSequentialGroup()
-                        .addGroup(formInputRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputRekamMedisLabel)
-                            .addGroup(formInputRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(inputTanggalPembuatanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-                                .addComponent(inputAlergiPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(inputRiwayatPenyakitPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(inputRekamMedisLabel)
+                    .addGroup(formInputRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(inputTanggalPembuatanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                        .addComponent(inputAlergiPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(inputRiwayatPenyakitPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         formInputRekamMedisPanelLayout.setVerticalGroup(
             formInputRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputRekamMedisPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputRekamMedisLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputTanggalPembuatanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputAlergiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputRiwayatPenyakitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(formInputRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(simpanRekamMedisButton)
-                    .addComponent(batalRekamMedisButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(inputRiwayatPenyakitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pasienTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -516,6 +788,11 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         tambahPasienButton.setForeground(new java.awt.Color(255, 255, 255));
         tambahPasienButton.setText("Tambah");
         tambahPasienButton.setPreferredSize(new java.awt.Dimension(124, 24));
+        tambahPasienButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahPasienButtonActionPerformed(evt);
+            }
+        });
 
         barukanPasienButton.setBackground(new java.awt.Color(255, 189, 3));
         barukanPasienButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
@@ -595,7 +872,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -606,11 +883,14 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tambahPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahPasienButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tambahPasienButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton barukanPasienButton;
     private javax.swing.JButton batalPasienButton;
-    private javax.swing.JButton batalRekamMedisButton;
     private javax.swing.JPanel formInputDataPasienPanel;
     private javax.swing.JPanel formInputRekamMedisPanel;
     private javax.swing.JButton hapusPasienButton;
@@ -640,9 +920,9 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
     private javax.swing.JLabel inputRiwayatPenyakitLabel;
     private javax.swing.JPanel inputRiwayatPenyakitPanel;
     private javax.swing.JTextField inputRiwayatPenyakitTextField;
+    private com.toedter.calendar.JDateChooser inputTanggalLahirDateChooser;
     private javax.swing.JLabel inputTanggalLahirLabel;
     private javax.swing.JPanel inputTanggalLahirPanel;
-    private javax.swing.JTextField inputTanggalLahirTextField;
     private com.toedter.calendar.JDateChooser inputTanggalPembuatanDateChooser;
     private javax.swing.JLabel inputTanggalPembuatanLabel;
     private javax.swing.JPanel inputTanggalPembuatanPanel;
@@ -655,7 +935,6 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pencarianPasienPanel;
     private javax.swing.JTextField pencarianPasienTextField;
     private javax.swing.JButton simpanPasienButton;
-    private javax.swing.JButton simpanRekamMedisButton;
     private javax.swing.JButton tambahPasienButton;
     // End of variables declaration//GEN-END:variables
 }

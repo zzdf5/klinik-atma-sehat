@@ -1,6 +1,6 @@
 package dao;
 
-import Connection.DBConnection;
+import connection.DBConnection;
 import interfaceDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -134,6 +134,26 @@ public class ObatHerbalDAO implements IDAO<ObatHerbal, String> {
 
         dbCon.closeConnection();
         return list;
+    }
+
+    public String generateId() {
+        con = dbCon.makeConnection();
+        String newId = "OBTH001";
+        String sql = "SELECT MAX(CAST(SUBSTRING(id_obat, 5) AS UNSIGNED)) AS max_num FROM obat WHERE id_obat LIKE 'OBTH%'";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                int maxNum = rs.getInt("max_num");
+                newId = String.format("OBTH%03d", maxNum + 1);
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error generateId ObatHerbal: " + e);
+        }
+        dbCon.closeConnection();
+        return newId;
     }
 
     @Override
