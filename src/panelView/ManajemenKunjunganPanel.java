@@ -4,10 +4,123 @@
  */
 package panelView;
 
+import control.AntrianControl;
+import control.DokterControl;
+import control.JadwalDokterControl;
+import control.KunjunganControl;
+import control.PasienControl;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.table.DefaultTableModel;
+import model.Antrian;
+import model.Dokter;
+import model.JadwalDokter;
+import model.Kunjungan;
+import model.Pasien;
+
 public class ManajemenKunjunganPanel extends javax.swing.JPanel {
+
+    private final KunjunganControl kc = new KunjunganControl();
+    private final DokterControl dc = new DokterControl();
+    private final PasienControl pasienCtrl = new PasienControl();
+    private final JadwalDokterControl jdc = new JadwalDokterControl();
+    private final AntrianControl ac = new AntrianControl();
+    private List<Dokter> dokterList;
+    private List<Pasien> cachedPasienList;
+    private boolean suppressAutoComplete = false;
+    private JPopupMenu autoCompletePopup = null;
+    private javax.swing.JComboBox<String> jamJadwalComboBox;
+    private java.util.List<Object[]> jadwalList = new java.util.ArrayList<>();
+    private javax.swing.JTextArea keluhanUtamaArea;
+    private javax.swing.JTextArea hasilPemeriksaanArea;
+    private String action = null;
+    private String selectedId = null;
 
     public ManajemenKunjunganPanel() {
         initComponents();
+        setOpaque(false);
+
+        totalPendapatanNumber.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 20));
+
+        keluhanUtamaArea = new javax.swing.JTextArea();
+        keluhanUtamaArea.setLineWrap(true);
+        keluhanUtamaArea.setWrapStyleWord(true);
+        keluhanUtamaArea.setFont(inputKeluhanUtamaTextField.getFont());
+        inputKeluhanUtamaScrollPane.setViewportView(keluhanUtamaArea);
+
+        hasilPemeriksaanArea = new javax.swing.JTextArea();
+        hasilPemeriksaanArea.setLineWrap(true);
+        hasilPemeriksaanArea.setWrapStyleWord(true);
+        hasilPemeriksaanArea.setFont(inputHasilPemeriksaanTextField.getFont());
+        inputHasilPemeriksaanScrollPane.setViewportView(hasilPemeriksaanArea);
+
+        setupTable();
+        loadDokterComboBox();
+        cachedPasienList = pasienCtrl.showData();
+        setupAutoComplete();
+
+        // Gunakan jComboBox1 dari GEN sebagai jam jadwal combo
+        jamJadwalComboBox = jComboBox1;
+        jamJadwalComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"-- Pilih Dokter Dulu --"}));
+        jamJadwalComboBox.setEnabled(false);
+
+        inputStatusKunjunganComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
+            new String[]{"BELUM_DILAKUKAN", "SELESAI", "BATAL"}
+        ));
+
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        showKunjungan();
+        updateMetrics();
+
+        // Listeners yang tidak ada di GEN code
+        batalButton.addActionListener(e -> {
+            action = null;
+            selectedId = null;
+            clearForm();
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+        });
+
+        searchKunjunganButton.addActionListener(e -> doSearch());
+        searchKunjunganTextField.addActionListener(e -> doSearch());
+
+        inputPilihDokterComboBox.addActionListener(e -> {
+            String selected = (String) inputPilihDokterComboBox.getSelectedItem();
+            if (selected == null || selected.startsWith("--")) {
+                inputBiayaKonsultasiTextField.setText("0");
+                jadwalList.clear();
+                jamJadwalComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
+                        new String[]{"-- Pilih Dokter Dulu --"}));
+                return;
+            }
+            String idDokter = selected.split(" - ")[0];
+            for (Dokter d : dokterList) {
+                if (d.getId().equals(idDokter)) {
+                    inputBiayaKonsultasiTextField.setText(String.valueOf(d.getTarifKonsultasi()));
+                    break;
+                }
+            }
+            loadJamComboBox(idDokter);
+        });
+
+        kunjunganTable.getSelectionModel().addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting()) return;
+            int row = kunjunganTable.getSelectedRow();
+            if (row < 0) return;
+            selectedId = (String) kunjunganTable.getValueAt(row, 0);
+            Kunjungan k = kc.search(selectedId);
+            if (k != null) {
+                fillForm(k);
+                setEditDeleteEnabled(true);
+                setFormEnabled(false);
+                action = null;
+            }
+        });
     }
 
     /**
@@ -37,7 +150,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputPilihDokterComboBox = new javax.swing.JComboBox<>();
         inputJamKunjunganPanel = new javax.swing.JPanel();
         inputJamKunjunganLabel = new javax.swing.JLabel();
-        inputJamKunjunganTextField = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         inputStatusKunjunganPanel = new javax.swing.JPanel();
         inputStatusKunjunganLabel = new javax.swing.JLabel();
         inputStatusKunjunganComboBox = new javax.swing.JComboBox<>();
@@ -141,13 +254,12 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputNomorRekamMedisPanelLayout.setHorizontalGroup(
             inputNomorRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputNomorRekamMedisPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(inputNomorRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inputNomorRekamMedisPanelLayout.createSequentialGroup()
                         .addComponent(inputNomorRekamMedisLabel)
                         .addGap(0, 137, Short.MAX_VALUE))
-                    .addComponent(inputNomorRekamMedisTextField))
-                .addContainerGap())
+                    .addComponent(inputNomorRekamMedisTextField)))
         );
         inputNomorRekamMedisPanelLayout.setVerticalGroup(
             inputNomorRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,31 +335,25 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputJamKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputJamKunjunganLabel.setText("Jam");
 
-        inputJamKunjunganTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputJamKunjunganTextFieldActionPerformed(evt);
-            }
-        });
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout inputJamKunjunganPanelLayout = new javax.swing.GroupLayout(inputJamKunjunganPanel);
         inputJamKunjunganPanel.setLayout(inputJamKunjunganPanelLayout);
         inputJamKunjunganPanelLayout.setHorizontalGroup(
             inputJamKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputJamKunjunganPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(inputJamKunjunganLabel)
-                .addContainerGap(229, Short.MAX_VALUE))
-            .addGroup(inputJamKunjunganPanelLayout.createSequentialGroup()
-                .addComponent(inputJamKunjunganTextField)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jComboBox1, 0, 260, Short.MAX_VALUE)
         );
         inputJamKunjunganPanelLayout.setVerticalGroup(
             inputJamKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputJamKunjunganPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(inputJamKunjunganLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputJamKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jComboBox1)
+                .addContainerGap())
         );
 
         inputStatusKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -325,19 +431,19 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputIdResepPanelLayout.setHorizontalGroup(
             inputIdResepPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdResepPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(inputIdResepPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inputIdResepPanelLayout.createSequentialGroup()
                         .addComponent(inputIdResepLabel)
-                        .addContainerGap(204, Short.MAX_VALUE))
+                        .addGap(0, 198, Short.MAX_VALUE))
                     .addComponent(inputIdResepTextField)))
         );
         inputIdResepPanelLayout.setVerticalGroup(
             inputIdResepPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdResepPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(inputIdResepLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputIdResepTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -403,8 +509,8 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(inputKeluhanUtamaLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputKeluhanUtamaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(inputKeluhanUtamaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         simpanButton.setBackground(new java.awt.Color(51, 178, 73));
@@ -448,8 +554,8 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(inputHasilPemeriksaanLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputHasilPemeriksaanScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(inputHasilPemeriksaanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout formInputDataKunjunganPanelLayout = new javax.swing.GroupLayout(formInputDataKunjunganPanel);
@@ -477,17 +583,14 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(inputPilihDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(inputStatusKunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(simpanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(batalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inputKeluhanUtamaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inputHasilPemeriksaanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(simpanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(inputKeluhanUtamaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inputHasilPemeriksaanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(batalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         formInputDataKunjunganPanelLayout.setVerticalGroup(
@@ -518,12 +621,12 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                             .addComponent(inputBiayaKonsultasiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputKeluhanUtamaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inputHasilPemeriksaanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(inputHasilPemeriksaanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputKeluhanUtamaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(simpanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(batalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(batalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(simpanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -651,7 +754,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         totalPendapatanCardLabel.setForeground(new java.awt.Color(255, 255, 255));
         totalPendapatanCardLabel.setText("Total Pendapatan");
 
-        totalPendapatanNumber.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        totalPendapatanNumber.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         totalPendapatanNumber.setForeground(new java.awt.Color(255, 255, 255));
         totalPendapatanNumber.setText("Rp0");
 
@@ -660,13 +763,10 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         totalPendapatanCardPanelLayout.setHorizontalGroup(
             totalPendapatanCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(totalPendapatanCardPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(totalPendapatanCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(totalPendapatanCardPanelLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(totalPendapatanCardLabel))
-                    .addGroup(totalPendapatanCardPanelLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(totalPendapatanNumber)))
+                    .addComponent(totalPendapatanNumber)
+                    .addComponent(totalPendapatanCardLabel))
                 .addContainerGap(147, Short.MAX_VALUE))
         );
         totalPendapatanCardPanelLayout.setVerticalGroup(
@@ -674,9 +774,9 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             .addGroup(totalPendapatanCardPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(totalPendapatanCardLabel)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(totalPendapatanNumber)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
 
         javax.swing.GroupLayout metricCardPanelLayout = new javax.swing.GroupLayout(metricCardPanel);
@@ -760,7 +860,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 .addGroup(kunjunganButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(kunjunganButtonLabel)
                     .addComponent(tanbahKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(barukanKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(hapusKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -829,45 +929,402 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inputNomorRekamMedisTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNomorRekamMedisTextFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_inputNomorRekamMedisTextFieldActionPerformed
 
-    private void inputJamKunjunganTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputJamKunjunganTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputJamKunjunganTextFieldActionPerformed
-
     private void inputIdResepTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputIdResepTextFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_inputIdResepTextFieldActionPerformed
 
     private void inputBiayaKonsultasiTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBiayaKonsultasiTextFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_inputBiayaKonsultasiTextFieldActionPerformed
 
     private void inputKeluhanUtamaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputKeluhanUtamaTextFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_inputKeluhanUtamaTextFieldActionPerformed
 
     private void inputHasilPemeriksaanTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputHasilPemeriksaanTextFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_inputHasilPemeriksaanTextFieldActionPerformed
 
     private void simpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanButtonActionPerformed
-        // TODO add your handling code here:
+        simpanKunjungan();
     }//GEN-LAST:event_simpanButtonActionPerformed
 
     private void tanbahKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tanbahKunjunganButtonActionPerformed
-        // TODO add your handling code here:
+        action = "add";
+        selectedId = null;
+        clearForm();
+        inputIdKunjunganTextField.setText(kc.generateId());
+        inputTanggalKunjunganDateChooser.setDate(new java.util.Date());
+        inputStatusKunjunganComboBox.setSelectedItem("BELUM_DILAKUKAN");
+        setFormEnabled(true);
+        setEditDeleteEnabled(false);
     }//GEN-LAST:event_tanbahKunjunganButtonActionPerformed
 
     private void barukanKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanKunjunganButtonActionPerformed
-        // TODO add your handling code here:
+        if (selectedId == null) return;
+        action = "update";
+        setFormEnabled(true);
+        inputNomorRekamMedisTextField.setEnabled(false);
     }//GEN-LAST:event_barukanKunjunganButtonActionPerformed
 
     private void hapusKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusKunjunganButtonActionPerformed
-        // TODO add your handling code here:
+        if (selectedId == null) return;
+        int opsi = JOptionPane.showConfirmDialog(this,
+            "Yakin ingin hapus kunjungan ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
+        if (opsi != JOptionPane.YES_OPTION) return;
+        kc.delete(selectedId);
+        selectedId = null;
+        clearForm();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        showKunjungan();
+        updateMetrics();
+        JOptionPane.showMessageDialog(this, "Kunjungan berhasil dihapus.");
     }//GEN-LAST:event_hapusKunjunganButtonActionPerformed
 
+    // -------------------------------------------------------------------------
+
+    private void setupTable() {
+        DefaultTableModel model = new DefaultTableModel(
+            new String[]{"ID Kunjungan", "No. Rekam Medis", "Nama Pasien", "Nama Dokter", "Tanggal", "Jam", "Status"}, 0
+        ) {
+            @Override public boolean isCellEditable(int r, int c) { return false; }
+        };
+        kunjunganTable.setModel(model);
+    }
+
+    private void loadDokterComboBox() {
+        dokterList = dc.showData();
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        model.addElement("-- Pilih Dokter --");
+        for (Dokter d : dokterList) {
+            model.addElement(d.getId() + " - " + d.getNama());
+        }
+        inputPilihDokterComboBox.setModel(model);
+    }
+
+    private void showKunjungan() {
+        DefaultTableModel model = (DefaultTableModel) kunjunganTable.getModel();
+        model.setRowCount(0);
+        for (Object[] row : kc.showDataWithNames()) {
+            model.addRow(row);
+        }
+    }
+
+    private void updateMetrics() {
+        List<Kunjungan> all = kc.showData();
+        long antrian = all.stream()
+            .filter(k -> k.getStatus() == Kunjungan.Status.BELUM_DILAKUKAN).count();
+        long selesai = all.stream()
+            .filter(k -> k.getStatus() == Kunjungan.Status.SELESAI).count();
+        double totalPendapatan = all.stream()
+            .filter(k -> k.getStatus() == Kunjungan.Status.SELESAI)
+            .mapToDouble(Kunjungan::getBiayaKonsultasi).sum();
+        antrianNumber.setText(String.valueOf(antrian));
+        kunjunganAntrianNumber.setText(String.valueOf(selesai));
+        totalPendapatanNumber.setText("Rp" + String.format("%,.0f", totalPendapatan));
+    }
+
+    private void setFormEnabled(boolean value) {
+        inputIdKunjunganTextField.setEnabled(false);         // selalu disabled (auto-generate)
+        inputNomorRekamMedisTextField.setEnabled(value);
+        inputTanggalKunjunganDateChooser.setEnabled(value);
+        inputPilihDokterComboBox.setEnabled(value);
+        jamJadwalComboBox.setEnabled(value && !jadwalList.isEmpty());
+        inputStatusKunjunganComboBox.setEnabled(false);      // selalu disabled, diatur sistem
+        keluhanUtamaArea.setEnabled(value);
+        hasilPemeriksaanArea.setEnabled(false);              // diisi dokter
+        inputIdDiagnosaTextField.setEnabled(false);          // diisi dokter
+        inputIdResepTextField.setEnabled(false);             // diisi dokter
+        inputBiayaKonsultasiTextField.setEnabled(false);     // diisi dokter
+        simpanButton.setEnabled(value);
+        batalButton.setEnabled(value);
+    }
+
+    private String findIdPasien(String nomorRekamMedis) {
+        for (Pasien p : cachedPasienList) {
+            if (p.getNomorRekamMedis().equals(nomorRekamMedis)) return p.getId();
+        }
+        return "";
+    }
+
+    private String extractNomorRekamMedis() {
+        String text = inputNomorRekamMedisTextField.getText().trim();
+        if (text.contains(" - ")) return text.split(" - ")[0].trim();
+        return text;
+    }
+
+    private String findNamaPasien(String nomorRekamMedis) {
+        for (Pasien p : cachedPasienList) {
+            if (p.getNomorRekamMedis().equals(nomorRekamMedis)) return p.getNama();
+        }
+        return "";
+    }
+
+    private void loadJamComboBox(String idDokter) {
+        jadwalList = jdc.searchByDokterWithNames(idDokter);
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        if (jadwalList.isEmpty()) {
+            model.addElement("-- Tidak ada jadwal --");
+        } else {
+            model.addElement("-- Pilih Jadwal --");
+            for (Object[] j : jadwalList) {
+                // [idJadwal, jamMulai, jamSelesai, namaPoliklinik]
+                model.addElement(j[1] + " - " + j[2] + "  |  Poli: " + j[3]);
+            }
+        }
+        jamJadwalComboBox.setModel(model);
+        jamJadwalComboBox.setEnabled(!jadwalList.isEmpty() && (action != null));
+    }
+
+    private void setupAutoComplete() {
+        inputNomorRekamMedisTextField.getDocument().addDocumentListener(
+            new javax.swing.event.DocumentListener() {
+                @Override public void insertUpdate(javax.swing.event.DocumentEvent e) { triggerAutoComplete(); }
+                @Override public void removeUpdate(javax.swing.event.DocumentEvent e) { triggerAutoComplete(); }
+                @Override public void changedUpdate(javax.swing.event.DocumentEvent e) {}
+            }
+        );
+    }
+
+    private void triggerAutoComplete() {
+        if (suppressAutoComplete || !inputNomorRekamMedisTextField.isEnabled()) return;
+        String keyword = inputNomorRekamMedisTextField.getText().trim();
+
+        if (autoCompletePopup != null && autoCompletePopup.isVisible()) {
+            autoCompletePopup.setVisible(false);
+        }
+
+        if (keyword.length() < 2) return;
+
+        String kw = keyword.toLowerCase();
+        java.util.List<Pasien> hasil = new java.util.ArrayList<>();
+        for (Pasien p : cachedPasienList) {
+            if (p.getNomorRekamMedis().toLowerCase().contains(kw)
+                    || p.getNama().toLowerCase().contains(kw)) {
+                hasil.add(p);
+                if (hasil.size() >= 8) break;
+            }
+        }
+        if (hasil.isEmpty()) return;
+
+        autoCompletePopup = new JPopupMenu();
+        autoCompletePopup.setFocusable(false);
+        for (Pasien p : hasil) {
+            JMenuItem item = new JMenuItem(p.getNomorRekamMedis() + "  –  " + p.getNama());
+            item.setFocusable(false);
+            item.addActionListener(e -> {
+                suppressAutoComplete = true;
+                inputNomorRekamMedisTextField.setText(p.getNomorRekamMedis() + " - " + p.getNama());
+                suppressAutoComplete = false;
+                autoCompletePopup.setVisible(false);
+                inputNomorRekamMedisTextField.requestFocusInWindow();
+            });
+            autoCompletePopup.add(item);
+        }
+        autoCompletePopup.show(inputNomorRekamMedisTextField, 0, inputNomorRekamMedisTextField.getHeight());
+        inputNomorRekamMedisTextField.requestFocusInWindow();
+    }
+
+    private void setEditDeleteEnabled(boolean value) {
+        barukanKunjunganButton.setEnabled(value);
+        hapusKunjunganButton.setEnabled(value);
+    }
+
+    private void clearForm() {
+        inputIdKunjunganTextField.setText("");
+        inputNomorRekamMedisTextField.setText("");
+        inputTanggalKunjunganDateChooser.setDate(null);
+        inputPilihDokterComboBox.setSelectedIndex(0);
+        jadwalList.clear();
+        jamJadwalComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"-- Pilih Dokter Dulu --"}));
+        inputStatusKunjunganComboBox.setSelectedIndex(0);
+        keluhanUtamaArea.setText("");
+        hasilPemeriksaanArea.setText("");
+        inputIdDiagnosaTextField.setText("");
+        inputIdResepTextField.setText("");
+        inputBiayaKonsultasiTextField.setText("");
+    }
+
+    private void fillForm(Kunjungan k) {
+        inputIdKunjunganTextField.setText(k.getIdKunjungan());
+        String noRm = k.getNomorRekamMedis();
+        String namaPasien = findNamaPasien(noRm);
+        suppressAutoComplete = true;
+        inputNomorRekamMedisTextField.setText(namaPasien.isEmpty() ? noRm : noRm + " - " + namaPasien);
+        suppressAutoComplete = false;
+        if (k.getTanggal() != null && !k.getTanggal().isEmpty()) {
+            try {
+                inputTanggalKunjunganDateChooser.setDate(
+                    new SimpleDateFormat("yyyy-MM-dd").parse(k.getTanggal()));
+            } catch (Exception ex) {
+                inputTanggalKunjunganDateChooser.setDate(null);
+            }
+        }
+        inputPilihDokterComboBox.setSelectedIndex(0);
+        String idDokter = k.getIdDokter();
+        if (idDokter != null) {
+            for (int i = 1; i < inputPilihDokterComboBox.getItemCount(); i++) {
+                if (((String) inputPilihDokterComboBox.getItemAt(i)).startsWith(idDokter + " - ")) {
+                    inputPilihDokterComboBox.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+        // Pilih jam yang sesuai dari combo (jadwalList sudah di-load saat set dokter di atas)
+        String existingJam = k.getJam() != null ? k.getJam() : "";
+        jamJadwalComboBox.setSelectedIndex(0);
+        for (int i = 0; i < jadwalList.size(); i++) {
+            if (existingJam.equals(jadwalList.get(i)[1])) {
+                jamJadwalComboBox.setSelectedIndex(i + 1);
+                break;
+            }
+        }
+        inputStatusKunjunganComboBox.setSelectedItem(k.getStatus().name());
+        keluhanUtamaArea.setText(k.getKeluhanUtama() != null ? k.getKeluhanUtama() : "");
+        hasilPemeriksaanArea.setText(k.getHasilPemeriksaan() != null ? k.getHasilPemeriksaan() : "");
+        inputIdDiagnosaTextField.setText(k.getIdDiagnosa() != null ? k.getIdDiagnosa() : "");
+        inputIdResepTextField.setText(k.getIdResep() != null ? k.getIdResep() : "");
+        inputBiayaKonsultasiTextField.setText(String.valueOf(k.getBiayaKonsultasi()));
+    }
+
+    private void doSearch() {
+        String keyword = searchKunjunganTextField.getText().trim();
+        if (keyword.isEmpty()) {
+            showKunjungan();
+            clearForm();
+            selectedId = null;
+            action = null;
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) kunjunganTable.getModel();
+        model.setRowCount(0);
+        selectedId = null;
+        setEditDeleteEnabled(false);
+        setFormEnabled(false);
+        clearForm();
+
+        List<Object[]> hasil = kc.searchByKeyword(keyword);
+        if (hasil.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Kunjungan tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        for (Object[] row : hasil) {
+            model.addRow(row);
+        }
+        if (hasil.size() == 1) {
+            Kunjungan k = kc.search((String) hasil.get(0)[0]);
+            if (k != null) {
+                fillForm(k);
+                selectedId = k.getIdKunjungan();
+                setEditDeleteEnabled(true);
+            }
+        }
+    }
+
+    private void simpanKunjungan() {
+        if (action == null) return;
+
+        String id      = inputIdKunjunganTextField.getText().trim();
+        String noRm    = extractNomorRekamMedis();
+        java.util.Date tgl = inputTanggalKunjunganDateChooser.getDate();
+        String keluhan = keluhanUtamaArea.getText().trim();
+
+        // Ambil jam mulai dari jadwal yang dipilih
+        int jamIdx = jamJadwalComboBox.getSelectedIndex();
+        String jam = (jamIdx > 0 && jamIdx - 1 < jadwalList.size())
+                ? (String) jadwalList.get(jamIdx - 1)[1] : "";
+
+        if (id.isEmpty() || noRm.isEmpty() || tgl == null || keluhan.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "ID Kunjungan, No. Rekam Medis, Tanggal, dan Keluhan Utama wajib diisi!",
+                "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (jam.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Pilih dokter dan jadwal jam terlebih dahulu.",
+                "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        boolean rmValid = cachedPasienList.stream()
+                .anyMatch(p -> p.getNomorRekamMedis().equals(noRm));
+        if (!rmValid) {
+            JOptionPane.showMessageDialog(this,
+                "Nomor rekam medis tidak valid.\nGunakan kolom pencarian untuk memilih pasien yang terdaftar.",
+                "Rekam Medis Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
+            inputNomorRekamMedisTextField.requestFocus();
+            return;
+        }
+
+        String selectedDokter = (String) inputPilihDokterComboBox.getSelectedItem();
+        String idDokter = null;
+        if (selectedDokter != null && !selectedDokter.startsWith("--")) {
+            idDokter = selectedDokter.split(" - ")[0];
+        }
+
+        String tanggal   = new SimpleDateFormat("yyyy-MM-dd").format(tgl);
+        String statusStr = (String) inputStatusKunjunganComboBox.getSelectedItem();
+
+        int opsi = JOptionPane.showConfirmDialog(this,
+            "Yakin ingin " + ("add".equals(action) ? "tambah" : "update") + " data kunjungan?",
+            "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (opsi != JOptionPane.YES_OPTION) return;
+
+        Kunjungan k = new Kunjungan(id, noRm, tanggal, jam, keluhan);
+        k.setIdDokter(idDokter);
+        k.setStatus(Kunjungan.Status.valueOf(statusStr));
+
+        double biaya = 0;
+        try {
+            String biayaStr = inputBiayaKonsultasiTextField.getText().trim();
+            if (!biayaStr.isEmpty()) biaya = Double.parseDouble(biayaStr);
+        } catch (NumberFormatException ex) { biaya = 0; }
+        k.setBiayaKonsultasi(biaya);
+
+        if ("add".equals(action)) {
+            k.setHasilPemeriksaan(null);
+            k.setIdDiagnosa(null);
+            k.setIdResep(null);
+            kc.insert(k);
+
+            // Otomatis buat antrian untuk kunjungan baru
+            String idPasien = findIdPasien(noRm);
+            String idPoliklinik = "";
+            if (jamIdx > 0 && jamIdx - 1 < jadwalList.size()) {
+                String idJadwal = (String) jadwalList.get(jamIdx - 1)[0];
+                JadwalDokter jadwal = jdc.search(idJadwal);
+                if (jadwal != null) idPoliklinik = jadwal.getIdPoliklinik();
+            }
+            int nomorUrut = ac.generateNomorUrut(tanggal);
+            Antrian antrian = new Antrian(0, nomorUrut, idPasien, idDokter != null ? idDokter : "",
+                    idPoliklinik, tanggal, Antrian.JenisKunjungan.BARU);
+            ac.insert(antrian);
+
+            JOptionPane.showMessageDialog(this, "Kunjungan berhasil ditambahkan.");
+        } else {
+            Kunjungan existing = kc.search(selectedId);
+            if (existing != null) {
+                k.setHasilPemeriksaan(existing.getHasilPemeriksaan());
+                k.setIdDiagnosa(existing.getIdDiagnosa());
+                k.setIdResep(existing.getIdResep());
+            }
+            kc.update(k, selectedId);
+            JOptionPane.showMessageDialog(this, "Kunjungan berhasil diupdate.");
+        }
+
+        action = null;
+        selectedId = null;
+        clearForm();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        showKunjungan();
+        updateMetrics();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel antrianCardLabel;
@@ -896,7 +1353,6 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     private javax.swing.JTextField inputIdResepTextField;
     private javax.swing.JLabel inputJamKunjunganLabel;
     private javax.swing.JPanel inputJamKunjunganPanel;
-    private javax.swing.JTextField inputJamKunjunganTextField;
     private javax.swing.JLabel inputKeluhanUtamaLabel;
     private javax.swing.JPanel inputKeluhanUtamaPanel;
     private javax.swing.JScrollPane inputKeluhanUtamaScrollPane;
@@ -913,6 +1369,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser inputTanggalKunjunganDateChooser;
     private javax.swing.JLabel inputTanggalKunjunganLabel;
     private javax.swing.JPanel inputTanggalKunjunganPanel;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel judulKunjunganLabel;
     private javax.swing.JLabel kunjunganAntrianNumber;
     private javax.swing.JLabel kunjunganButtonLabel;

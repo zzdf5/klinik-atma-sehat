@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.referencedLibraries": [
+        "dist/lib/jcalendar-1.4.jar",
+        "dist/lib/mysql-connector-java-5.1.23-bin.jar",
+        "C:\\Users\\Divo Pratama\\OneDrive\\Documents\\jcalendar-1.4.jar",
+        "C:\\Users\\Divo Pratama\\OneDrive\\Documents\\mysql-connector-java-5.1.23-bin.jar"
+    ]
+}

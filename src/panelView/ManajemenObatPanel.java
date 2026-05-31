@@ -10,6 +10,7 @@ import exception.*;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.Component;
 
@@ -58,12 +59,50 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         obatPatenRadioButton.setActionCommand("Obat Paten");
     }
     
-    public void showObat(){
-        obatTable.setModel(obatControl.showTable(""));
+    public void showObat() {
+        obatPatenTable.setModel(buildPatenModel(""));
+        obatHerbalTable.setModel(buildHerbalModel(""));
     }
-    
-    public void searchObat(String target){
-        obatTable.setModel(obatControl.showTable(target));
+
+    public void searchObat(String target) {
+        obatPatenTable.setModel(buildPatenModel(target));
+        obatHerbalTable.setModel(buildHerbalModel(target));
+    }
+
+    private DefaultTableModel buildPatenModel(String keyword) {
+        DefaultTableModel m = new DefaultTableModel(
+            new String[]{"ID Obat", "Nama Obat", "Bentuk Sediaan", "Dosis", "Merk", "Harga Satuan", "Stok"}, 0
+        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
+        String kw = keyword == null ? "" : keyword.toLowerCase();
+        for (ObatPaten p : obatControl.showDataPaten()) {
+            if (kw.isEmpty() || p.getIdObat().toLowerCase().contains(kw)
+                    || p.getNamaObat().toLowerCase().contains(kw)
+                    || p.getMerk().toLowerCase().contains(kw)) {
+                m.addRow(new Object[]{
+                    p.getIdObat(), p.getNamaObat(), p.getBentukSediaan(),
+                    p.getDosis(), p.getMerk(), p.getHargaSatuan(), p.getStok()
+                });
+            }
+        }
+        return m;
+    }
+
+    private DefaultTableModel buildHerbalModel(String keyword) {
+        DefaultTableModel m = new DefaultTableModel(
+            new String[]{"ID Obat", "Nama Obat", "Bentuk Sediaan", "Dosis", "Bahan Utama", "Harga Satuan", "Stok"}, 0
+        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
+        String kw = keyword == null ? "" : keyword.toLowerCase();
+        for (ObatHerbal h : obatControl.showDataHerbal()) {
+            if (kw.isEmpty() || h.getIdObat().toLowerCase().contains(kw)
+                    || h.getNamaObat().toLowerCase().contains(kw)
+                    || h.getBahanUtama().toLowerCase().contains(kw)) {
+                m.addRow(new Object[]{
+                    h.getIdObat(), h.getNamaObat(), h.getBentukSediaan(),
+                    h.getDosis(), h.getBahanUtama(), h.getHargaSatuan(), h.getStok()
+                });
+            }
+        }
+        return m;
     }
     
     public boolean isInteger(String str) {
@@ -209,12 +248,16 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputSpecialAtributePanel = new javax.swing.JPanel();
         inputSpecialAtributeLabel = new javax.swing.JLabel();
         inputSpecialAtributeTextField = new javax.swing.JTextField();
-        obatScrollPane = new javax.swing.JScrollPane();
-        obatTable = new javax.swing.JTable();
+        obatPatenScrollPane = new javax.swing.JScrollPane();
+        obatPatenTable = new javax.swing.JTable();
         obatButtonPanel = new javax.swing.JPanel();
         tambahObatButton = new javax.swing.JButton();
         barukanObatButton = new javax.swing.JButton();
         hapusObatButton = new javax.swing.JButton();
+        obatPatenLabel = new javax.swing.JLabel();
+        obatHerbalScrollPane = new javax.swing.JScrollPane();
+        obatHerbalTable = new javax.swing.JTable();
+        obatHerbalLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
@@ -620,11 +663,11 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        obatScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        obatPatenScrollPane.setBackground(new java.awt.Color(255, 255, 255));
 
-        obatTable.setAutoCreateRowSorter(true);
-        obatTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        obatTable.setModel(new javax.swing.table.DefaultTableModel(
+        obatPatenTable.setAutoCreateRowSorter(true);
+        obatPatenTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        obatPatenTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -635,12 +678,12 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        obatTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        obatPatenTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                obatTableMouseClicked(evt);
+                obatPatenTableMouseClicked(evt);
             }
         });
-        obatScrollPane.setViewportView(obatTable);
+        obatPatenScrollPane.setViewportView(obatPatenTable);
 
         obatButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -700,6 +743,34 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        obatPatenLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 18)); // NOI18N
+        obatPatenLabel.setText("Obat Paten");
+
+        obatHerbalScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+
+        obatHerbalTable.setAutoCreateRowSorter(true);
+        obatHerbalTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        obatHerbalTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        obatHerbalTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                obatHerbalTableMouseClicked(evt);
+            }
+        });
+        obatHerbalScrollPane.setViewportView(obatHerbalTable);
+
+        obatHerbalLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 18)); // NOI18N
+        obatHerbalLabel.setText("Obat Herbal");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -713,7 +784,14 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                             .addComponent(formInputDataObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(obatButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(obatScrollPane)))
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(obatPatenScrollPane)
+                            .addComponent(obatHerbalScrollPane)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(obatPatenLabel)
+                                    .addComponent(obatHerbalLabel))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap(174, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -723,11 +801,19 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addComponent(pencarianObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(obatScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(obatButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(formInputDataObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(formInputDataObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(obatPatenLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(obatPatenScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(obatHerbalLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(obatHerbalScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -889,11 +975,11 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_pencarianObatTextFieldKeyPressed
 
-    private void obatTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_obatTableMouseClicked
-        int clickedRow = obatTable.getSelectedRow();
+    private void obatPatenTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_obatPatenTableMouseClicked
+        int clickedRow = obatPatenTable.getSelectedRow();
         if(clickedRow < 0) return;
 
-        TableModel tableModel = obatTable.getModel();
+        TableModel tableModel = obatPatenTable.getModel();
         setComponentsObat(false);
         setEditDeleteButtonObat(true);
         tambahObatButton.setEnabled(true);
@@ -912,26 +998,55 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         Object dosisVal = tableModel.getValueAt(clickedRow, 3);
         inputDosisTextField.setText(dosisVal != null ? dosisVal.toString() : "");
         
-        Object kategoriVal = tableModel.getValueAt(clickedRow, 4);
-        String kategori = kategoriVal != null ? kategoriVal.toString() : "";
-        
-        if(kategori.equalsIgnoreCase("Obat Herbal")){
-            obatHerbalRadioButton.setSelected(true);
-            inputSpecialAtributeLabel.setText("Bahan Utama");
-        } else {
-            obatPatenRadioButton.setSelected(true);
-            inputSpecialAtributeLabel.setText("Merk");
-        }
+        // Tabel paten: col 4=Merk, 5=Harga, 6=Stok (Kategori tidak ditampilkan)
+        obatPatenRadioButton.setSelected(true);
+        inputSpecialAtributeLabel.setText("Merk");
 
-        Object specialAttrVal = tableModel.getValueAt(clickedRow, 5);
-        inputSpecialAtributeTextField.setText(specialAttrVal != null ? specialAttrVal.toString() : "");
+        Object merkVal = tableModel.getValueAt(clickedRow, 4);
+        inputSpecialAtributeTextField.setText(merkVal != null ? merkVal.toString() : "");
 
-        Object hargaVal = tableModel.getValueAt(clickedRow, 6);
+        Object hargaVal = tableModel.getValueAt(clickedRow, 5);
         inputHargaSatuanTextField.setText(hargaVal != null ? hargaVal.toString() : "");
-        
-        Object stokVal = tableModel.getValueAt(clickedRow, 7);
+
+        Object stokVal = tableModel.getValueAt(clickedRow, 6);
         inputStokObatTextField.setText(stokVal != null ? stokVal.toString() : "");
-    }//GEN-LAST:event_obatTableMouseClicked
+    }//GEN-LAST:event_obatPatenTableMouseClicked
+
+    private void obatHerbalTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_obatHerbalTableMouseClicked
+        int clickedRow = obatHerbalTable.getSelectedRow();
+        if (clickedRow < 0) return;
+
+        TableModel tableModel = obatHerbalTable.getModel();
+        setComponentsObat(false);
+        setEditDeleteButtonObat(true);
+        tambahObatButton.setEnabled(true);
+
+        Object idVal = tableModel.getValueAt(clickedRow, 0);
+        selectedId = idVal != null ? idVal.toString() : "";
+        inputIdObatTextField.setText(selectedId);
+
+        Object namaVal = tableModel.getValueAt(clickedRow, 1);
+        inputNamaObatTextField.setText(namaVal != null ? namaVal.toString() : "");
+
+        Object bentukVal = tableModel.getValueAt(clickedRow, 2);
+        if (bentukVal != null) pilihBentukSediaanDropDown.setSelectedItem(bentukVal.toString());
+
+        Object dosisVal = tableModel.getValueAt(clickedRow, 3);
+        inputDosisTextField.setText(dosisVal != null ? dosisVal.toString() : "");
+
+        // Tabel herbal: col 4=Bahan Utama, 5=Harga, 6=Stok
+        obatHerbalRadioButton.setSelected(true);
+        inputSpecialAtributeLabel.setText("Bahan Utama");
+
+        Object bahanVal = tableModel.getValueAt(clickedRow, 4);
+        inputSpecialAtributeTextField.setText(bahanVal != null ? bahanVal.toString() : "");
+
+        Object hargaVal = tableModel.getValueAt(clickedRow, 5);
+        inputHargaSatuanTextField.setText(hargaVal != null ? hargaVal.toString() : "");
+
+        Object stokVal = tableModel.getValueAt(clickedRow, 6);
+        inputStokObatTextField.setText(stokVal != null ? stokVal.toString() : "");
+    }//GEN-LAST:event_obatHerbalTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -961,10 +1076,14 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private javax.swing.ButtonGroup kategoriObatRadioGroup;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel obatButtonPanel;
+    private javax.swing.JLabel obatHerbalLabel;
     private javax.swing.JRadioButton obatHerbalRadioButton;
+    private javax.swing.JScrollPane obatHerbalScrollPane;
+    private javax.swing.JTable obatHerbalTable;
+    private javax.swing.JLabel obatPatenLabel;
     private javax.swing.JRadioButton obatPatenRadioButton;
-    private javax.swing.JScrollPane obatScrollPane;
-    private javax.swing.JTable obatTable;
+    private javax.swing.JScrollPane obatPatenScrollPane;
+    private javax.swing.JTable obatPatenTable;
     private javax.swing.JButton pencarianObatButton;
     private javax.swing.JLabel pencarianObatLabel;
     private javax.swing.JPanel pencarianObatPanel;

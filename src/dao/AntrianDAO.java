@@ -120,6 +120,88 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
         return list;
     }
 
+    public int generateNomorUrut(String tanggal) {
+        con = dbCon.makeConnection();
+        int next = 1;
+        String sql = "SELECT MAX(nomor_urut) FROM antrian WHERE tanggal = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, tanggal);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                int max = rs.getInt(1);
+                if (max > 0) next = max + 1;
+            }
+            rs.close(); ps.close();
+        } catch (Exception e) { System.out.println("Error generateNomorUrut: " + e); }
+        dbCon.closeConnection();
+        return next;
+    }
+
+    // [id_antrian, nomor_urut, nama_pasien, nama_dokter, nama_poliklinik, tanggal, jenis_kunjungan, status]
+    public List<Object[]> showDataWithNames() {
+        con = dbCon.makeConnection();
+        String sql = "SELECT a.id_antrian, a.nomor_urut, "
+                + "COALESCE(p.nama, a.id_pasien) AS nama_pasien, "
+                + "COALESCE(d.nama, a.id_dokter) AS nama_dokter, "
+                + "COALESCE(pk.nama_poliklinik, a.id_poliklinik) AS nama_poliklinik, "
+                + "a.tanggal, a.jenis_kunjungan, a.status "
+                + "FROM antrian a "
+                + "LEFT JOIN pasien p ON a.id_pasien = p.id_pasien "
+                + "LEFT JOIN dokter d ON a.id_dokter = d.id "
+                + "LEFT JOIN poliklinik pk ON a.id_poliklinik = pk.id_poliklinik "
+                + "ORDER BY a.tanggal DESC, a.nomor_urut ASC";
+        List<Object[]> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Object[]{
+                    rs.getInt("id_antrian"), rs.getInt("nomor_urut"),
+                    rs.getString("nama_pasien"), rs.getString("nama_dokter"),
+                    rs.getString("nama_poliklinik"), rs.getString("tanggal"),
+                    rs.getString("jenis_kunjungan"), rs.getString("status")
+                });
+            }
+            rs.close(); ps.close();
+        } catch (Exception e) { System.out.println("Error showDataWithNames Antrian: " + e); }
+        dbCon.closeConnection();
+        return list;
+    }
+
+    public List<Object[]> searchByKeyword(String keyword) {
+        con = dbCon.makeConnection();
+        String sql = "SELECT a.id_antrian, a.nomor_urut, "
+                + "COALESCE(p.nama, a.id_pasien) AS nama_pasien, "
+                + "COALESCE(d.nama, a.id_dokter) AS nama_dokter, "
+                + "COALESCE(pk.nama_poliklinik, a.id_poliklinik) AS nama_poliklinik, "
+                + "a.tanggal, a.jenis_kunjungan, a.status "
+                + "FROM antrian a "
+                + "LEFT JOIN pasien p ON a.id_pasien = p.id_pasien "
+                + "LEFT JOIN dokter d ON a.id_dokter = d.id "
+                + "LEFT JOIN poliklinik pk ON a.id_poliklinik = pk.id_poliklinik "
+                + "WHERE p.nama LIKE ? OR d.nama LIKE ? OR pk.nama_poliklinik LIKE ? "
+                + "ORDER BY a.tanggal DESC, a.nomor_urut ASC";
+        List<Object[]> list = new ArrayList<>();
+        String param = "%" + keyword + "%";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, param); ps.setString(2, param); ps.setString(3, param);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Object[]{
+                    rs.getInt("id_antrian"), rs.getInt("nomor_urut"),
+                    rs.getString("nama_pasien"), rs.getString("nama_dokter"),
+                    rs.getString("nama_poliklinik"), rs.getString("tanggal"),
+                    rs.getString("jenis_kunjungan"), rs.getString("status")
+                });
+            }
+            rs.close(); ps.close();
+        } catch (Exception e) { System.out.println("Error searchByKeyword Antrian: " + e); }
+        dbCon.closeConnection();
+        return list;
+    }
+
     @Override
     public Antrian search(Integer id) {
         con = dbCon.makeConnection();

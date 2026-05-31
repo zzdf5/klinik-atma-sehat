@@ -4,10 +4,195 @@
  */
 package panelView;
 
+import control.AntrianControl;
+import control.PoliklinikControl;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Poliklinik;
+
 public class ManajemenAntrianPanel extends javax.swing.JPanel {
+
+    private final AntrianControl ac = new AntrianControl();
+    private final PoliklinikControl pkc = new PoliklinikControl();
+    private List<Poliklinik> poliklinikList;
+    private List<Object[]> todayAntrian;
+    private final String TODAY = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
 
     public ManajemenAntrianPanel() {
         initComponents();
+        setOpaque(false);
+
+        loadPoliklinikCombo();
+        refreshAll();
+
+        // Listener filter poliklinik
+        jComboBox2.addActionListener(e -> loadTable2ByPoliklinik());
+
+        // jTextField1 enter → search
+        jTextField1.addActionListener(e -> doSearch());
+
+        // Listener klik tabel antrian (jTable2)
+        jTable2.getSelectionModel().addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting()) return;
+            int row = jTable2.getSelectedRow();
+            if (row >= 0) fillDetailCard(row);
+        });
+
+        // jButton1/2/5 dan jButton4 ditangani di GEN handler masing-masing
+    }
+
+    private void loadPoliklinikCombo() {
+        poliklinikList = pkc.showData();
+        javax.swing.DefaultComboBoxModel<String> m = new javax.swing.DefaultComboBoxModel<>();
+        m.addElement("-- Semua Poliklinik --");
+        for (Poliklinik p : poliklinikList) m.addElement(p.getIdPoliklinik() + " - " + p.getNamaPoliklinik());
+        jComboBox2.setModel(m);
+    }
+
+    private void refreshAll() {
+        todayAntrian = ac.showDataWithNames();
+        loadCards();
+        loadTable2ByPoliklinik();
+        loadTable1("");
+        resetDetailCard();
+    }
+
+    private void loadCards() {
+        // Ambil maks 3 poliklinik unik yang punya antrian hari ini
+        List<String[]> idPoliList = new ArrayList<>(); // [idPoli, namaPoli, namaDokter]
+        for (Object[] row : todayAntrian) {
+            if (TODAY.equals(String.valueOf(row[5]))) {
+                String idPoli = extractIdPoliklinik(String.valueOf(row[4]));
+                boolean found = idPoliList.stream().anyMatch(x -> x[0].equals(idPoli));
+                if (!found) {
+                    idPoliList.add(new String[]{idPoli, String.valueOf(row[4]), String.valueOf(row[3])});
+                    if (idPoliList.size() == 3) break;
+                }
+            }
+        }
+        fillCard(0, idPoliList.size() > 0 ? idPoliList.get(0) : null);
+        fillCard(1, idPoliList.size() > 1 ? idPoliList.get(1) : null);
+        fillCard(2, idPoliList.size() > 2 ? idPoliList.get(2) : null);
+    }
+
+    private String extractIdPoliklinik(String namaPoli) {
+        for (Poliklinik p : poliklinikList) {
+            if (p.getNamaPoliklinik().equals(namaPoli)) return p.getIdPoliklinik();
+        }
+        return namaPoli;
+    }
+
+    private void fillCard(int idx, String[] info) {
+        String namaDokter = info != null ? info[2] : "-";
+        String namaPoli   = info != null ? info[1] : "-";
+        String idPoli     = info != null ? info[0] : null;
+
+        // Cari nomor yang DALAM_PEMERIKSAAN, sebelumnya, dan berikutnya untuk poliklinik ini hari ini
+        String sedang = "-";
+        String prev   = "-";
+        String next   = "-";
+        if (idPoli != null) {
+            int prevNum = -1, nextNum = Integer.MAX_VALUE;
+            for (Object[] row : todayAntrian) {
+                if (!TODAY.equals(String.valueOf(row[5]))) continue;
+                if (!info[1].equals(String.valueOf(row[4]))) continue;
+                int no = (int) row[1];
+                String status = String.valueOf(row[7]);
+                if ("DALAM_PEMERIKSAAN".equals(status)) { sedang = String.valueOf(no); }
+                else if ("SELESAI".equals(status) && no > prevNum) prevNum = no;
+                else if ("MENUNGGU".equals(status) && no < nextNum) nextNum = no;
+            }
+            if (prevNum >= 0) prev = String.valueOf(prevNum);
+            if (nextNum < Integer.MAX_VALUE) next = String.valueOf(nextNum);
+        }
+
+        switch (idx) {
+            case 0:
+                jLabel1.setText("Dr. " + namaDokter);
+                jLabel3.setText(namaPoli);
+                jLabel4.setText(sedang);
+                jLabel5.setText(prev);
+                jLabel6.setText(next);
+                break;
+            case 1:
+                jLabel7.setText("Dr. " + namaDokter);
+                jLabel8.setText(namaPoli);
+                jLabel9.setText(sedang);
+                jLabel10.setText(prev);
+                jLabel11.setText(next);
+                break;
+            case 2:
+                jLabel13.setText("Dr. " + namaDokter);
+                jLabel20.setText(namaPoli);
+                jLabel21.setText(sedang);
+                jLabel22.setText(prev);
+                jLabel23.setText(next);
+                break;
+        }
+    }
+
+    private void loadTable2ByPoliklinik() {
+        String selected = (String) jComboBox2.getSelectedItem();
+        String filterPoli = (selected == null || selected.startsWith("--")) ? null
+                : selected.split(" - ")[1].trim();
+
+        DefaultTableModel m = new DefaultTableModel(
+            new String[]{"No. Urut", "Nama Pasien", "Nama Dokter", "Poliklinik", "Jenis", "Status"}, 0
+        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
+
+        for (Object[] row : todayAntrian) {
+            if (!TODAY.equals(String.valueOf(row[5]))) continue;
+            if (filterPoli != null && !filterPoli.equals(String.valueOf(row[4]))) continue;
+            m.addRow(new Object[]{row[1], row[2], row[3], row[4], row[6], row[7]});
+        }
+        jTable2.setModel(m);
+        resetDetailCard();
+    }
+
+    private void loadTable1(String keyword) {
+        DefaultTableModel m = new DefaultTableModel(
+            new String[]{"ID", "No. Urut", "Nama Pasien", "Nama Dokter", "Poliklinik", "Tanggal", "Jenis", "Status"}, 0
+        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
+
+        List<Object[]> data = keyword.isEmpty() ? todayAntrian : ac.searchByKeyword(keyword);
+        for (Object[] row : data) m.addRow(row);
+        jTable1.setModel(m);
+    }
+
+    private void fillDetailCard(int row) {
+        DefaultTableModel m = (DefaultTableModel) jTable2.getModel();
+        String namaPasien = String.valueOf(m.getValueAt(row, 1));
+        String namaPoli   = String.valueOf(m.getValueAt(row, 3));
+        String noUrut     = String.valueOf(m.getValueAt(row, 0));
+
+        jLabel12.setText(namaPasien);
+        jLabel14.setText(namaPoli);
+        jLabel15.setText(String.valueOf(noUrut));
+    }
+
+    private void resetDetailCard() {
+        jLabel12.setText("-");
+        jLabel14.setText("-");
+        jLabel15.setText("-");
+    }
+
+    private void filterByCardPoliklinik(int cardIdx) {
+        String[] names = {jLabel3.getText(), jLabel8.getText(), jLabel20.getText()};
+        String namaPoli = names[cardIdx];
+        if ("-".equals(namaPoli)) return;
+        // Pilih di combo
+        for (int i = 0; i < jComboBox2.getItemCount(); i++) {
+            String item = (String) jComboBox2.getItemAt(i);
+            if (item.contains(namaPoli)) { jComboBox2.setSelectedIndex(i); return; }
+        }
+    }
+
+    private void doSearch() {
+        String keyword = jTextField1.getText().trim();
+        if (keyword.isEmpty()) { refreshAll(); return; }
+        loadTable1(keyword);
     }
 
     /**
@@ -227,7 +412,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(jLabel1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,7 +529,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(jLabel8)
                     .addComponent(jLabel7)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,7 +637,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(jLabel14)
                     .addComponent(jLabel12)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,7 +698,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 775, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 774, Short.MAX_VALUE)
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(129, 129, 129))
         );
@@ -636,7 +821,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(jLabel20)
                     .addComponent(jLabel13)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -722,19 +907,19 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        filterByCardPoliklinik(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        filterByCardPoliklinik(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        doSearch();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        filterByCardPoliklinik(2);
     }//GEN-LAST:event_jButton5ActionPerformed
 
 

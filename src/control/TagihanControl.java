@@ -10,6 +10,10 @@ import model.Tagihan.Status;
 public class TagihanControl {
     private final TagihanDAO dao = new TagihanDAO();
 
+    public String generateId() { return dao.generateId(); }
+    public List<Object[]> showDataWithNames() { return dao.showDataWithNames(); }
+    public List<Object[]> searchByKeyword(String keyword) { return dao.searchByKeyword(keyword); }
+
     public void insert(Tagihan data) {
         hitungTotal(data);
         dao.insert(data);

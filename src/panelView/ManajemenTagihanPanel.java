@@ -4,10 +4,336 @@
  */
 package panelView;
 
+import control.KunjunganControl;
+import control.TagihanControl;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Kunjungan;
+import model.Tagihan;
+
 public class ManajemenTagihanPanel extends javax.swing.JPanel {
+
+    private final TagihanControl tc = new TagihanControl();
+    private final KunjunganControl kc = new KunjunganControl();
+
+    private javax.swing.JTable sedangDiperiksaTable;
+    private javax.swing.JTable antrianTable;
+    private javax.swing.ButtonGroup statusBayarGroup = new javax.swing.ButtonGroup();
+
+    private String selectedTagihanId = null;
+    private String selectedKunjunganId = null;
 
     public ManajemenTagihanPanel() {
         initComponents();
+        setOpaque(false);
+
+        // Setup radio button group untuk status bayar
+        statusBayarGroup.add(lunasRadioButton);
+        statusBayarGroup.add(belumLunasRadioButton);
+
+        // Isi dropdown metode pembayaran
+        inputMetodePembayaranComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
+            new String[]{"TUNAI", "BPJS", "TRANSFER", "DEBIT"}
+        ));
+
+        // Bangun dua tabel atas dalam itemTagihanPanel (kiri=diperiksa, kanan=antrian)
+        buildQueuePanel();
+
+        // Setup tabel tagihan bawah
+        setupTagihanTable();
+
+        // Form kanan disabled sampai ada pilihan
+        setFormEnabled(false);
+
+        // Load data
+        loadSedangDiperiksa();
+        loadAntrian();
+        loadTagihanTable("");
+
+        // Auto-hitung kembalian saat jumlah bayar berubah
+        inputJumlahBayarTextField.getDocument().addDocumentListener(
+            new javax.swing.event.DocumentListener() {
+                @Override public void insertUpdate(javax.swing.event.DocumentEvent e) { hitungKembalian(); }
+                @Override public void removeUpdate(javax.swing.event.DocumentEvent e) { hitungKembalian(); }
+                @Override public void changedUpdate(javax.swing.event.DocumentEvent e) {}
+            }
+        );
+
+        // Listener search
+        pencarianTagihanButton.addActionListener(e -> doSearch());
+        pencarianTagihanTextField.addActionListener(e -> doSearch());
+
+        // Listener simpan
+        simpanButton.addActionListener(e -> simpanTagihan());
+
+        // Listener klik tabel tagihan bawah
+        TagihanTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tagihanTableClicked();
+            }
+        });
+    }
+
+    // -------------------------------------------------------------------------
+
+    private void buildQueuePanel() {
+        sedangDiperiksaTable = new javax.swing.JTable();
+        sedangDiperiksaTable.setAutoCreateRowSorter(true);
+
+        antrianTable = new javax.swing.JTable();
+        antrianTable.setAutoCreateRowSorter(true);
+
+        // Panel kiri: sedang diperiksa
+        javax.swing.JPanel leftPane = new javax.swing.JPanel(new java.awt.BorderLayout(0, 4));
+        leftPane.setBackground(itemTagihanPanel.getBackground());
+        javax.swing.JLabel lblDiperiksa = new javax.swing.JLabel("Sedang Diperiksa");
+        lblDiperiksa.setFont(new java.awt.Font("sansserif", java.awt.Font.BOLD, 12));
+        leftPane.add(lblDiperiksa, java.awt.BorderLayout.NORTH);
+        leftPane.add(new javax.swing.JScrollPane(sedangDiperiksaTable), java.awt.BorderLayout.CENTER);
+
+        // Panel kanan: antrian
+        javax.swing.JPanel rightPane = new javax.swing.JPanel(new java.awt.BorderLayout(0, 4));
+        rightPane.setBackground(itemTagihanPanel.getBackground());
+        javax.swing.JLabel lblAntrian = new javax.swing.JLabel("Masih Dalam Antrian");
+        lblAntrian.setFont(new java.awt.Font("sansserif", java.awt.Font.BOLD, 12));
+        rightPane.add(lblAntrian, java.awt.BorderLayout.NORTH);
+        rightPane.add(new javax.swing.JScrollPane(antrianTable), java.awt.BorderLayout.CENTER);
+
+        // Ganti isi itemTagihanPanel dengan split dua kolom
+        itemTagihanPanel.removeAll();
+        itemTagihanPanel.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
+        itemTagihanPanel.add(leftPane);
+        itemTagihanPanel.add(rightPane);
+
+        // Klik baris sedang diperiksa → siapkan form buat tagihan baru
+        sedangDiperiksaTable.getSelectionModel().addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting()) return;
+            int row = sedangDiperiksaTable.getSelectedRow();
+            if (row < 0) return;
+            antrianTable.clearSelection();
+            TagihanTable.clearSelection();
+            selectedKunjunganId = (String) sedangDiperiksaTable.getValueAt(row, 0);
+            prepareNewTagihan(selectedKunjunganId);
+        });
+    }
+
+    private void setupTagihanTable() {
+        DefaultTableModel m = new DefaultTableModel(
+            new String[]{"ID Tagihan", "Nama Pasien", "ID Kunjungan", "Tanggal", "Total", "Metode", "Status"}, 0
+        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
+        TagihanTable.setModel(m);
+    }
+
+    private void loadSedangDiperiksa() {
+        DefaultTableModel m = new DefaultTableModel(
+            new String[]{"ID Kunjungan", "Nama Pasien", "Nama Dokter", "Tanggal", "Jam"}, 0
+        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
+        for (Object[] row : kc.showDataWithNames()) {
+            if ("SELESAI".equals(String.valueOf(row[6]))) {
+                m.addRow(new Object[]{row[0], row[2], row[3], row[4], row[5]});
+            }
+        }
+        sedangDiperiksaTable.setModel(m);
+    }
+
+    private void loadAntrian() {
+        DefaultTableModel m = new DefaultTableModel(
+            new String[]{"ID Kunjungan", "Nama Pasien", "Nama Dokter", "Tanggal", "Jam"}, 0
+        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
+        for (Object[] row : kc.showDataWithNames()) {
+            if ("BELUM_DILAKUKAN".equals(String.valueOf(row[6]))) {
+                m.addRow(new Object[]{row[0], row[2], row[3], row[4], row[5]});
+            }
+        }
+        antrianTable.setModel(m);
+    }
+
+    private void loadTagihanTable(String keyword) {
+        DefaultTableModel m = (DefaultTableModel) TagihanTable.getModel();
+        m.setRowCount(0);
+        List<Object[]> data = keyword.isEmpty()
+                ? tc.showDataWithNames()
+                : tc.searchByKeyword(keyword);
+        for (Object[] row : data) m.addRow(row);
+    }
+
+    private void prepareNewTagihan(String idKunjungan) {
+        selectedTagihanId = null;
+        inputIdTagihanTextField.setText(tc.generateId());
+        inputIdKunjunganTextField.setText(idKunjungan);
+        inputTanggalTagihanDateChooser.setDate(new java.util.Date());
+
+        // Ambil biaya konsultasi dari kunjungan sebagai item awal
+        Kunjungan k = kc.search(idKunjungan);
+        totalHargaTagihanLabel.setText(k != null
+                ? "Rp" + String.format("%,.0f", k.getBiayaKonsultasi())
+                : "Rp0");
+
+        inputJumlahBayarTextField.setText("");
+        kembalianTextField.setText("");
+        statusBayarGroup.clearSelection();
+        setFormEnabled(true);
+        inputIdTagihanTextField.setEnabled(false);
+        inputIdKunjunganTextField.setEnabled(false);
+        inputTanggalTagihanDateChooser.setEnabled(false);
+    }
+
+    private void tagihanTableClicked() {
+        int row = TagihanTable.getSelectedRow();
+        if (row < 0) return;
+        sedangDiperiksaTable.clearSelection();
+        antrianTable.clearSelection();
+
+        selectedTagihanId = (String) TagihanTable.getValueAt(row, 0);
+        selectedKunjunganId = (String) TagihanTable.getValueAt(row, 2);
+
+        Tagihan t = tc.search(selectedTagihanId);
+        if (t == null) return;
+
+        inputIdTagihanTextField.setText(t.getIdTagihan());
+        inputIdKunjunganTextField.setText(t.getIdKunjungan());
+        if (t.getTanggalTagihan() != null) {
+            try {
+                inputTanggalTagihanDateChooser.setDate(
+                    new SimpleDateFormat("yyyy-MM-dd").parse(t.getTanggalTagihan()));
+            } catch (Exception ex) { inputTanggalTagihanDateChooser.setDate(null); }
+        }
+
+        totalHargaTagihanLabel.setText("Rp" + String.format("%,.0f", t.getTotalTagihan()));
+        inputJumlahBayarTextField.setText(String.valueOf(t.getJumlahBayar()));
+        kembalianTextField.setText(String.format("%.0f", t.getKembalian()));
+
+        if (t.getMetodePembayaran() != null)
+            inputMetodePembayaranComboBox.setSelectedItem(t.getMetodePembayaran().name());
+
+        if (t.getStatus() == Tagihan.Status.LUNAS) {
+            lunasRadioButton.setSelected(true);
+        } else {
+            belumLunasRadioButton.setSelected(true);
+        }
+
+        setFormEnabled(true);
+        inputIdTagihanTextField.setEnabled(false);
+        inputIdKunjunganTextField.setEnabled(false);
+        inputTanggalTagihanDateChooser.setEnabled(false);
+    }
+
+    private void hitungKembalian() {
+        try {
+            String totalText = totalHargaTagihanLabel.getText()
+                .replace("Rp", "").replace(",", "").trim();
+            double total = Double.parseDouble(totalText);
+            double bayar = Double.parseDouble(inputJumlahBayarTextField.getText().trim());
+            kembalianTextField.setText(String.format("%.0f", bayar - total));
+        } catch (NumberFormatException ex) {
+            kembalianTextField.setText("");
+        }
+    }
+
+    private void simpanTagihan() {
+        String idTagihan = inputIdTagihanTextField.getText().trim();
+        String idKunjungan = inputIdKunjunganTextField.getText().trim();
+
+        if (idTagihan.isEmpty() || idKunjungan.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Pilih kunjungan dari tabel terlebih dahulu.",
+                "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (statusBayarGroup.getSelection() == null) {
+            JOptionPane.showMessageDialog(this, "Pilih status bayar.",
+                "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        double total = 0;
+        try {
+            String totalText = totalHargaTagihanLabel.getText()
+                .replace("Rp", "").replace(",", "").trim();
+            total = Double.parseDouble(totalText);
+        } catch (NumberFormatException ex) {}
+
+        double bayar = 0;
+        try {
+            bayar = Double.parseDouble(inputJumlahBayarTextField.getText().trim());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Jumlah bayar tidak valid.",
+                "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(
+                inputTanggalTagihanDateChooser.getDate() != null
+                ? inputTanggalTagihanDateChooser.getDate() : new java.util.Date());
+
+        Tagihan.MetodePembayaran metode = Tagihan.MetodePembayaran.valueOf(
+                (String) inputMetodePembayaranComboBox.getSelectedItem());
+        Tagihan.Status status = lunasRadioButton.isSelected()
+                ? Tagihan.Status.LUNAS : Tagihan.Status.BELUM_BAYAR;
+
+        int opsi = JOptionPane.showConfirmDialog(this,
+            "Yakin ingin simpan tagihan ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (opsi != JOptionPane.YES_OPTION) return;
+
+        Tagihan tagihan = new Tagihan(idTagihan, idKunjungan, tanggal);
+        tagihan.setTotalTagihan(total);
+        tagihan.setJumlahBayar(bayar);
+        tagihan.setKembalian(bayar - total);
+        tagihan.setMetodePembayaran(metode);
+        tagihan.setStatus(status);
+
+        // Tambahkan item konsultasi dari kunjungan
+        Kunjungan k = kc.search(idKunjungan);
+        if (k != null && k.getBiayaKonsultasi() > 0) {
+            tagihan.tambahItem(new Tagihan.ItemTagihan("Biaya Konsultasi", 1, k.getBiayaKonsultasi()));
+        }
+
+        if (selectedTagihanId != null) {
+            tc.update(tagihan, selectedTagihanId);
+            JOptionPane.showMessageDialog(this, "Tagihan berhasil diupdate.");
+        } else {
+            tc.insert(tagihan);
+            JOptionPane.showMessageDialog(this, "Tagihan berhasil disimpan.");
+        }
+
+        clearForm();
+        setFormEnabled(false);
+        loadSedangDiperiksa();
+        loadAntrian();
+        loadTagihanTable("");
+    }
+
+    private void doSearch() {
+        String keyword = pencarianTagihanTextField.getText().trim();
+        loadTagihanTable(keyword);
+        if (!keyword.isEmpty()) {
+            clearForm();
+            setFormEnabled(false);
+        }
+    }
+
+    private void setFormEnabled(boolean value) {
+        inputMetodePembayaranComboBox.setEnabled(value);
+        inputJumlahBayarTextField.setEnabled(value);
+        lunasRadioButton.setEnabled(value);
+        belumLunasRadioButton.setEnabled(value);
+        kembalianTextField.setEnabled(false); // always readonly
+        simpanButton.setEnabled(value);
+    }
+
+    private void clearForm() {
+        selectedTagihanId = null;
+        selectedKunjunganId = null;
+        inputIdTagihanTextField.setText("");
+        inputIdKunjunganTextField.setText("");
+        inputTanggalTagihanDateChooser.setDate(null);
+        totalHargaTagihanLabel.setText("Rp0");
+        inputJumlahBayarTextField.setText("");
+        kembalianTextField.setText("");
+        statusBayarGroup.clearSelection();
+        inputMetodePembayaranComboBox.setSelectedIndex(0);
     }
 
     /**
@@ -517,7 +843,6 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lunasRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lunasRadioButtonActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_lunasRadioButtonActionPerformed
 
 

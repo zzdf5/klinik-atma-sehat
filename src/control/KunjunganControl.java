@@ -7,6 +7,9 @@ import model.Kunjungan;
 public class KunjunganControl {
     private final KunjunganDAO dao = new KunjunganDAO();
 
+    public String generateId() { return dao.generateId(); }
+    public List<Object[]> showDataWithNames() { return dao.showDataWithNames(); }
+    public List<Object[]> searchByKeyword(String keyword) { return dao.searchByKeyword(keyword); }
     public void insert(Kunjungan data) { dao.insert(data); }
     public void update(Kunjungan data, String id) { dao.update(data, id); }
     public void delete(String id) { dao.delete(id); }

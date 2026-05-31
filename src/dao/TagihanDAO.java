@@ -95,6 +95,82 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
         dbCon.closeConnection();
     }
 
+    public String generateId() {
+        con = dbCon.makeConnection();
+        String newId = "TAG001";
+        String sql = "SELECT id_tagihan FROM tagihan ORDER BY id_tagihan DESC LIMIT 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                String last = rs.getString("id_tagihan");
+                int num = Integer.parseInt(last.substring(3)) + 1;
+                newId = String.format("TAG%03d", num);
+            }
+            rs.close(); ps.close();
+        } catch (Exception e) { System.out.println("Error generateId Tagihan: " + e); }
+        dbCon.closeConnection();
+        return newId;
+    }
+
+    // [id_tagihan, nama_pasien, id_kunjungan, tanggal_tagihan, total_tagihan, metode_pembayaran, status]
+    public List<Object[]> showDataWithNames() {
+        con = dbCon.makeConnection();
+        String sql = "SELECT t.id_tagihan, COALESCE(p.nama, k.nomor_rekam_medis) AS nama_pasien, "
+                + "t.id_kunjungan, t.tanggal_tagihan, t.total_tagihan, "
+                + "COALESCE(t.metode_pembayaran, '-') AS metode, t.status "
+                + "FROM tagihan t "
+                + "LEFT JOIN kunjungan k ON t.id_kunjungan = k.id_kunjungan "
+                + "LEFT JOIN pasien p ON k.nomor_rekam_medis = p.nomor_rekam_medis "
+                + "ORDER BY t.tanggal_tagihan DESC";
+        List<Object[]> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Object[]{
+                    rs.getString("id_tagihan"), rs.getString("nama_pasien"),
+                    rs.getString("id_kunjungan"), rs.getString("tanggal_tagihan"),
+                    rs.getDouble("total_tagihan"), rs.getString("metode"),
+                    rs.getString("status")
+                });
+            }
+            rs.close(); ps.close();
+        } catch (Exception e) { System.out.println("Error showDataWithNames Tagihan: " + e); }
+        dbCon.closeConnection();
+        return list;
+    }
+
+    public List<Object[]> searchByKeyword(String keyword) {
+        con = dbCon.makeConnection();
+        String sql = "SELECT t.id_tagihan, COALESCE(p.nama, k.nomor_rekam_medis) AS nama_pasien, "
+                + "t.id_kunjungan, t.tanggal_tagihan, t.total_tagihan, "
+                + "COALESCE(t.metode_pembayaran, '-') AS metode, t.status "
+                + "FROM tagihan t "
+                + "LEFT JOIN kunjungan k ON t.id_kunjungan = k.id_kunjungan "
+                + "LEFT JOIN pasien p ON k.nomor_rekam_medis = p.nomor_rekam_medis "
+                + "WHERE t.id_tagihan LIKE ? OR p.nama LIKE ? OR t.id_kunjungan LIKE ? "
+                + "ORDER BY t.tanggal_tagihan DESC";
+        List<Object[]> list = new ArrayList<>();
+        String param = "%" + keyword + "%";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, param); ps.setString(2, param); ps.setString(3, param);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Object[]{
+                    rs.getString("id_tagihan"), rs.getString("nama_pasien"),
+                    rs.getString("id_kunjungan"), rs.getString("tanggal_tagihan"),
+                    rs.getDouble("total_tagihan"), rs.getString("metode"),
+                    rs.getString("status")
+                });
+            }
+            rs.close(); ps.close();
+        } catch (Exception e) { System.out.println("Error searchByKeyword Tagihan: " + e); }
+        dbCon.closeConnection();
+        return list;
+    }
+
     @Override
     public void delete(String id) {
         con = dbCon.makeConnection();

@@ -129,6 +129,100 @@ public class KunjunganDAO implements IDAO<Kunjungan, String> {
         return list;
     }
 
+    public List<Object[]> showDataWithNames() {
+        con = dbCon.makeConnection();
+        String sql = "SELECT k.id_kunjungan, k.nomor_rekam_medis, "
+                + "COALESCE(p.nama, '-') AS nama_pasien, "
+                + "COALESCE(d.nama, '-') AS nama_dokter, "
+                + "k.tanggal, k.jam, k.status "
+                + "FROM kunjungan k "
+                + "LEFT JOIN pasien p ON k.nomor_rekam_medis = p.nomor_rekam_medis "
+                + "LEFT JOIN dokter d ON k.id_dokter = d.id "
+                + "ORDER BY k.tanggal DESC, k.jam DESC";
+        List<Object[]> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Object[]{
+                    rs.getString("id_kunjungan"),
+                    rs.getString("nomor_rekam_medis"),
+                    rs.getString("nama_pasien"),
+                    rs.getString("nama_dokter"),
+                    rs.getString("tanggal"),
+                    rs.getString("jam"),
+                    rs.getString("status")
+                });
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error showDataWithNames Kunjungan: " + e);
+        }
+        dbCon.closeConnection();
+        return list;
+    }
+
+    public List<Object[]> searchByKeyword(String keyword) {
+        con = dbCon.makeConnection();
+        String sql = "SELECT k.id_kunjungan, k.nomor_rekam_medis, "
+                + "COALESCE(p.nama, '-') AS nama_pasien, "
+                + "COALESCE(d.nama, '-') AS nama_dokter, "
+                + "k.tanggal, k.jam, k.status "
+                + "FROM kunjungan k "
+                + "LEFT JOIN pasien p ON k.nomor_rekam_medis = p.nomor_rekam_medis "
+                + "LEFT JOIN dokter d ON k.id_dokter = d.id "
+                + "WHERE k.id_kunjungan LIKE ? OR p.nama LIKE ? OR d.nama LIKE ? "
+                + "ORDER BY k.tanggal DESC, k.jam DESC";
+        List<Object[]> list = new ArrayList<>();
+        String param = "%" + keyword + "%";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, param);
+            ps.setString(2, param);
+            ps.setString(3, param);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Object[]{
+                    rs.getString("id_kunjungan"),
+                    rs.getString("nomor_rekam_medis"),
+                    rs.getString("nama_pasien"),
+                    rs.getString("nama_dokter"),
+                    rs.getString("tanggal"),
+                    rs.getString("jam"),
+                    rs.getString("status")
+                });
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error searchByKeyword Kunjungan: " + e);
+        }
+        dbCon.closeConnection();
+        return list;
+    }
+
+    public String generateId() {
+        con = dbCon.makeConnection();
+        String newId = "KUN001";
+        String sql = "SELECT id_kunjungan FROM kunjungan ORDER BY id_kunjungan DESC LIMIT 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                String lastId = rs.getString("id_kunjungan");
+                int num = Integer.parseInt(lastId.substring(3)) + 1;
+                newId = String.format("KUN%03d", num);
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error generateId Kunjungan: " + e);
+        }
+        dbCon.closeConnection();
+        return newId;
+    }
+
     @Override
     public Kunjungan search(String id) {
         con = dbCon.makeConnection();
