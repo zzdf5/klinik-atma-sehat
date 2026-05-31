@@ -8,14 +8,21 @@
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/DokterPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenPoliKlinikPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenObatPanel.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Dokter.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Antrian.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/view/LoginForm.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/PasienControl.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Kunjungan.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/view/MainViewFormAdmin.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/AdminControl.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenJadwalDokterPanel.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenTagihanPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/dao/AdminDAO.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenAntrianPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenPasienPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/Pasien.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/dao/KunjunganDAO.java</file>
+            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/model/RekamMedis.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/Connections/DBConnection.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenDokterPanel.java</file>
             <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/dao/PasienDAO.java</file>

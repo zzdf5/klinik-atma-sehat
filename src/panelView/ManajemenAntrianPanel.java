@@ -24,19 +24,47 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
 
+        // Ukuran kartu dan kotak biru konstan, tidak ikut teks
+        java.awt.Dimension cardSize = new java.awt.Dimension(371, 354);
+        java.awt.Dimension blueSize = new java.awt.Dimension(344, 93);
+        for (javax.swing.JPanel p : new javax.swing.JPanel[]{panelAntrian1, panelAntrian2, panelAntrian3}) {
+            p.setPreferredSize(cardSize); p.setMinimumSize(cardSize); p.setMaximumSize(cardSize);
+        }
+        for (javax.swing.JPanel p : new javax.swing.JPanel[]{kodeAntrianPanel1, kodeAntrianPanel2, kodeAntrianPanel3}) {
+            p.setPreferredSize(blueSize); p.setMinimumSize(blueSize); p.setMaximumSize(blueSize);
+        }
+
+        // Kotak kecil kiri & kanan tiap kartu
+        java.awt.Dimension smallSize = new java.awt.Dimension(167, 71);
+        for (javax.swing.JPanel p : new javax.swing.JPanel[]{
+                namaDokterPanel1, statusAntrianPanel1, namaDokterPanel2, statusAntrianPanel2, namaDokterPanel3, statusAntrianPanel3}) {
+            p.setPreferredSize(smallSize); p.setMinimumSize(smallSize); p.setMaximumSize(smallSize);
+        }
+
+        // Ganti layout kotak biru & kotak kecil ke BorderLayout agar label tepat di tengah
+        centerLabelInPanel(kodeAntrianPanel1,  kodeAntrianLabel1);
+        centerLabelInPanel(kodeAntrianPanel2,  kodeAntrianLabel2);
+        centerLabelInPanel(kodeAntrianPanel3, kodeAntrianLabel3);
+        centerLabelInPanel(namaDokterPanel1,  namaDokterLabel1);
+        centerLabelInPanel(statusAntrianPanel1,  statusAntrianLabel1);
+        centerLabelInPanel(namaDokterPanel2,  namaDokterLabel2);
+        centerLabelInPanel(statusAntrianPanel2,  jLabel11);
+        centerLabelInPanel(namaDokterPanel3, namaDokterLabel3);
+        centerLabelInPanel(statusAntrianPanel3, statusAntrianLabel3);
+
         loadPoliklinikCombo();
         refreshAll();
 
         // Listener filter poliklinik
-        jComboBox2.addActionListener(e -> loadTable2ByPoliklinik());
+        pilihPoliklinikComboBox.addActionListener(e -> loadTable2ByPoliklinik());
 
         // jTextField1 enter → search
-        jTextField1.addActionListener(e -> doSearch());
+        searchAntrianPasienTextField.addActionListener(e -> doSearch());
 
         // Listener klik tabel antrian (jTable2)
-        jTable2.getSelectionModel().addListSelectionListener(e -> {
+        antrianPasienTable.getSelectionModel().addListSelectionListener(e -> {
             if (e.getValueIsAdjusting()) return;
-            int row = jTable2.getSelectedRow();
+            int row = antrianPasienTable.getSelectedRow();
             if (row >= 0) fillDetailCard(row);
         });
 
@@ -48,7 +76,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         javax.swing.DefaultComboBoxModel<String> m = new javax.swing.DefaultComboBoxModel<>();
         m.addElement("-- Semua Poliklinik --");
         for (Poliklinik p : poliklinikList) m.addElement(p.getIdPoliklinik() + " - " + p.getNamaPoliklinik());
-        jComboBox2.setModel(m);
+        pilihPoliklinikComboBox.setModel(m);
     }
 
     private void refreshAll() {
@@ -56,85 +84,80 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         loadCards();
         loadTable2ByPoliklinik();
         loadTable1("");
-        resetDetailCard();
     }
 
     private void loadCards() {
-        // Ambil maks 3 poliklinik unik yang punya antrian hari ini
-        List<String[]> idPoliList = new ArrayList<>(); // [idPoli, namaPoli, namaDokter]
-        for (Object[] row : todayAntrian) {
-            if (TODAY.equals(String.valueOf(row[5]))) {
-                String idPoli = extractIdPoliklinik(String.valueOf(row[4]));
-                boolean found = idPoliList.stream().anyMatch(x -> x[0].equals(idPoli));
-                if (!found) {
-                    idPoliList.add(new String[]{idPoli, String.valueOf(row[4]), String.valueOf(row[3])});
-                    if (idPoliList.size() == 3) break;
-                }
-            }
+        // Urutkan semua antrian: tanggal terbaru dulu, lalu nomor urut terkecil
+        List<Object[]> all = new ArrayList<>(todayAntrian);
+        all.sort((a, b) -> {
+            int d = String.valueOf(b[5]).compareTo(String.valueOf(a[5]));
+            return d != 0 ? d : Integer.compare((int) a[1], (int) b[1]);
+        });
+
+        // Kiri: sedang diperiksa (DALAM_PEMERIKSAAN)
+        Object[] sedang = null;
+        for (Object[] row : all) {
+            if ("DALAM_PEMERIKSAAN".equals(String.valueOf(row[7]))) { sedang = row; break; }
         }
-        fillCard(0, idPoliList.size() > 0 ? idPoliList.get(0) : null);
-        fillCard(1, idPoliList.size() > 1 ? idPoliList.get(1) : null);
-        fillCard(2, idPoliList.size() > 2 ? idPoliList.get(2) : null);
+
+        // Tengah & kanan: menunggu (MENUNGGU), urut nomor terkecil
+        List<Object[]> menunggu = new ArrayList<>();
+        for (Object[] row : all) {
+            if ("MENUNGGU".equals(String.valueOf(row[7]))) menunggu.add(row);
+        }
+
+        fillCardByStatus(0, sedang);
+        fillCardByStatus(1, menunggu.size() > 0 ? menunggu.get(0) : null);
+        fillCardByStatus(2, menunggu.size() > 1 ? menunggu.get(1) : null);
     }
 
-    private String extractIdPoliklinik(String namaPoli) {
-        for (Poliklinik p : poliklinikList) {
-            if (p.getNamaPoliklinik().equals(namaPoli)) return p.getIdPoliklinik();
-        }
-        return namaPoli;
+    private void centerLabelInPanel(javax.swing.JPanel panel, javax.swing.JLabel label) {
+        panel.removeAll();
+        panel.setLayout(new java.awt.GridBagLayout());
+        label.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        panel.add(label);
     }
 
-    private void fillCard(int idx, String[] info) {
-        String namaDokter = info != null ? info[2] : "-";
-        String namaPoli   = info != null ? info[1] : "-";
-        String idPoli     = info != null ? info[0] : null;
+    private String trunc(String text, int max) {
+        if (text == null || text.length() <= max) return text;
+        return text.substring(0, max - 2) + "..";
+    }
 
-        // Cari nomor yang DALAM_PEMERIKSAAN, sebelumnya, dan berikutnya untuk poliklinik ini hari ini
-        String sedang = "-";
-        String prev   = "-";
-        String next   = "-";
-        if (idPoli != null) {
-            int prevNum = -1, nextNum = Integer.MAX_VALUE;
-            for (Object[] row : todayAntrian) {
-                if (!TODAY.equals(String.valueOf(row[5]))) continue;
-                if (!info[1].equals(String.valueOf(row[4]))) continue;
-                int no = (int) row[1];
-                String status = String.valueOf(row[7]);
-                if ("DALAM_PEMERIKSAAN".equals(status)) { sedang = String.valueOf(no); }
-                else if ("SELESAI".equals(status) && no > prevNum) prevNum = no;
-                else if ("MENUNGGU".equals(status) && no < nextNum) nextNum = no;
-            }
-            if (prevNum >= 0) prev = String.valueOf(prevNum);
-            if (nextNum < Integer.MAX_VALUE) next = String.valueOf(nextNum);
-        }
+    // row: [id_antrian, nomor_urut, nama_pasien, nama_dokter, nama_poliklinik, tanggal, jenis, status]
+    private void fillCardByStatus(int idx, Object[] row) {
+        String namaPasien = trunc(row != null ? String.valueOf(row[2]) : "-", 20);
+        String namaPoli   = trunc(row != null ? String.valueOf(row[4]) : "-", 22);
+        String noUrut     = row != null ? String.valueOf(row[1]) : "-";
+        String namaDokter = trunc(row != null ? String.valueOf(row[3]) : "-", 18);
+        String status     = row != null ? String.valueOf(row[7]) : "-";
 
         switch (idx) {
             case 0:
-                jLabel1.setText("Dr. " + namaDokter);
-                jLabel3.setText(namaPoli);
-                jLabel4.setText(sedang);
-                jLabel5.setText(prev);
-                jLabel6.setText(next);
+                namaPemeriksaanLabel1.setText(namaPasien);
+                namaPoliklinik1.setText(namaPoli);
+                kodeAntrianLabel1.setText(noUrut);
+                namaDokterLabel1.setText(namaDokter);
+                statusAntrianLabel1.setText(status);
                 break;
             case 1:
-                jLabel7.setText("Dr. " + namaDokter);
-                jLabel8.setText(namaPoli);
-                jLabel9.setText(sedang);
-                jLabel10.setText(prev);
-                jLabel11.setText(next);
+                namaPemeriksaanLabel2.setText(namaPasien);
+                namaPoliklinik2.setText(namaPoli);
+                kodeAntrianLabel2.setText(noUrut);
+                namaDokterLabel2.setText(namaDokter);
+                jLabel11.setText(status);
                 break;
             case 2:
-                jLabel13.setText("Dr. " + namaDokter);
-                jLabel20.setText(namaPoli);
-                jLabel21.setText(sedang);
-                jLabel22.setText(prev);
-                jLabel23.setText(next);
+                namaPemeriksaanLabel3.setText(namaPasien);
+                namaPoliklinik3.setText(namaPoli);
+                kodeAntrianLabel3.setText(noUrut);
+                namaDokterLabel3.setText(namaDokter);
+                statusAntrianLabel3.setText(status);
                 break;
         }
     }
 
     private void loadTable2ByPoliklinik() {
-        String selected = (String) jComboBox2.getSelectedItem();
+        String selected = (String) pilihPoliklinikComboBox.getSelectedItem();
         String filterPoli = (selected == null || selected.startsWith("--")) ? null
                 : selected.split(" - ")[1].trim();
 
@@ -147,8 +170,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
             if (filterPoli != null && !filterPoli.equals(String.valueOf(row[4]))) continue;
             m.addRow(new Object[]{row[1], row[2], row[3], row[4], row[6], row[7]});
         }
-        jTable2.setModel(m);
-        resetDetailCard();
+        antrianPasienTable.setModel(m);
     }
 
     private void loadTable1(String keyword) {
@@ -158,41 +180,47 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
 
         List<Object[]> data = keyword.isEmpty() ? todayAntrian : ac.searchByKeyword(keyword);
         for (Object[] row : data) m.addRow(row);
-        jTable1.setModel(m);
+        tableRahasia.setModel(m);
     }
 
     private void fillDetailCard(int row) {
-        DefaultTableModel m = (DefaultTableModel) jTable2.getModel();
+        DefaultTableModel m = (DefaultTableModel) antrianPasienTable.getModel();
         String namaPasien = String.valueOf(m.getValueAt(row, 1));
         String namaPoli   = String.valueOf(m.getValueAt(row, 3));
         String noUrut     = String.valueOf(m.getValueAt(row, 0));
-
-        jLabel12.setText(namaPasien);
-        jLabel14.setText(namaPoli);
-        jLabel15.setText(String.valueOf(noUrut));
     }
 
-    private void resetDetailCard() {
-        jLabel12.setText("-");
-        jLabel14.setText("-");
-        jLabel15.setText("-");
-    }
+    
 
     private void filterByCardPoliklinik(int cardIdx) {
-        String[] names = {jLabel3.getText(), jLabel8.getText(), jLabel20.getText()};
+        String[] names = {namaPoliklinik1.getText(), namaPoliklinik2.getText(), namaPoliklinik3.getText()};
         String namaPoli = names[cardIdx];
         if ("-".equals(namaPoli)) return;
         // Pilih di combo
-        for (int i = 0; i < jComboBox2.getItemCount(); i++) {
-            String item = (String) jComboBox2.getItemAt(i);
-            if (item.contains(namaPoli)) { jComboBox2.setSelectedIndex(i); return; }
+        for (int i = 0; i < pilihPoliklinikComboBox.getItemCount(); i++) {
+            String item = (String) pilihPoliklinikComboBox.getItemAt(i);
+            if (item.contains(namaPoli)) { pilihPoliklinikComboBox.setSelectedIndex(i); return; }
         }
     }
 
     private void doSearch() {
-        String keyword = jTextField1.getText().trim();
+        String keyword = searchAntrianPasienTextField.getText().trim();
         if (keyword.isEmpty()) { refreshAll(); return; }
-        loadTable1(keyword);
+        filterTableByNamaPasien(keyword);
+    }
+
+    private void filterTableByNamaPasien(String keyword) {
+        String kw = keyword.toLowerCase();
+        DefaultTableModel m = new DefaultTableModel(
+            new String[]{"No. Urut", "Nama Pasien", "Nama Dokter", "Poliklinik", "Jenis", "Status"}, 0
+        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
+
+        for (Object[] row : todayAntrian) {
+            if (String.valueOf(row[2]).toLowerCase().contains(kw)) {
+                m.addRow(new Object[]{row[1], row[2], row[3], row[4], row[6], row[7]});
+            }
+        }
+        antrianPasienTable.setModel(m);
     }
 
     /**
@@ -205,104 +233,95 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel15 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jPanel16 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
+        searchAntrianPasienPanel = new javax.swing.JPanel();
+        searchAntrianPasienLabel = new javax.swing.JLabel();
+        searchAntrianPasienTextField = new javax.swing.JTextField();
+        searchAntrianPasienButton = new javax.swing.JButton();
+        scrollPaneRahasia = new javax.swing.JScrollPane();
+        tableRahasia = new javax.swing.JTable();
+        panelAntrian1 = new javax.swing.JPanel();
+        namaPemeriksaanLabel1 = new javax.swing.JLabel();
+        namaPoliklinik1 = new javax.swing.JLabel();
+        kodeAntrianPanel1 = new javax.swing.JPanel();
+        kodeAntrianLabel1 = new javax.swing.JLabel();
+        namaDokterPanel1 = new javax.swing.JPanel();
+        namaDokterLabel1 = new javax.swing.JLabel();
+        statusAntrianPanel1 = new javax.swing.JPanel();
+        statusAntrianLabel1 = new javax.swing.JLabel();
+        liihatButton1 = new javax.swing.JButton();
+        panelAntrian2 = new javax.swing.JPanel();
+        namaPemeriksaanLabel2 = new javax.swing.JLabel();
+        namaPoliklinik2 = new javax.swing.JLabel();
+        kodeAntrianPanel2 = new javax.swing.JPanel();
+        kodeAntrianLabel2 = new javax.swing.JLabel();
+        namaDokterPanel2 = new javax.swing.JPanel();
+        namaDokterLabel2 = new javax.swing.JLabel();
+        statusAntrianPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
-        jPanel13 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jPanel18 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel21 = new javax.swing.JLabel();
-        jPanel19 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
-        jPanel20 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        liihatButton2 = new javax.swing.JButton();
+        antrianPasienHeaderPanel = new javax.swing.JPanel();
+        antrianPasienHeaderLabel = new javax.swing.JLabel();
+        pilihPoliklinikPanel = new javax.swing.JPanel();
+        pilihPoliklinikLabel = new javax.swing.JLabel();
+        pilihPoliklinikComboBox = new javax.swing.JComboBox<>();
+        antrianPasienScrollPane = new javax.swing.JScrollPane();
+        antrianPasienTable = new javax.swing.JTable();
+        panelAntrian3 = new javax.swing.JPanel();
+        namaPemeriksaanLabel3 = new javax.swing.JLabel();
+        namaPoliklinik3 = new javax.swing.JLabel();
+        kodeAntrianPanel3 = new javax.swing.JPanel();
+        kodeAntrianLabel3 = new javax.swing.JLabel();
+        namaDokterPanel3 = new javax.swing.JPanel();
+        namaDokterLabel3 = new javax.swing.JLabel();
+        statusAntrianPanel3 = new javax.swing.JPanel();
+        statusAntrianLabel3 = new javax.swing.JLabel();
+        liihatButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
 
         mainPanel.setBackground(new java.awt.Color(238, 239, 253));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(600, 70));
+        searchAntrianPasienPanel.setBackground(new java.awt.Color(255, 255, 255));
+        searchAntrianPasienPanel.setPreferredSize(new java.awt.Dimension(600, 70));
 
-        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        jLabel2.setText("Antrian Pasien");
+        searchAntrianPasienLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        searchAntrianPasienLabel.setText("Antrian Pasien");
 
-        jButton4.setText("Cari");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        searchAntrianPasienButton.setText("Cari");
+        searchAntrianPasienButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                searchAntrianPasienButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout searchAntrianPasienPanelLayout = new javax.swing.GroupLayout(searchAntrianPasienPanel);
+        searchAntrianPasienPanel.setLayout(searchAntrianPasienPanelLayout);
+        searchAntrianPasienPanelLayout.setHorizontalGroup(
+            searchAntrianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchAntrianPasienPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 1019, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(searchAntrianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchAntrianPasienLabel)
+                    .addGroup(searchAntrianPasienPanelLayout.createSequentialGroup()
+                        .addComponent(searchAntrianPasienTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1019, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addComponent(searchAntrianPasienButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        searchAntrianPasienPanelLayout.setVerticalGroup(
+            searchAntrianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchAntrianPasienPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addComponent(searchAntrianPasienLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                .addGroup(searchAntrianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchAntrianPasienTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchAntrianPasienButton))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableRahasia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -313,405 +332,299 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        scrollPaneRahasia.setViewportView(tableRahasia);
 
-        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel15.setPreferredSize(new java.awt.Dimension(371, 354));
+        panelAntrian1.setBackground(new java.awt.Color(255, 255, 255));
+        panelAntrian1.setPreferredSize(new java.awt.Dimension(371, 354));
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel1.setText("Nama Pemeriksaan");
+        namaPemeriksaanLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        namaPemeriksaanLabel1.setText("Nama Pemeriksaan");
 
-        jLabel3.setText("Poliklinik A");
+        namaPoliklinik1.setText("Poliklinik A");
 
-        jPanel1.setBackground(new java.awt.Color(91, 101, 220));
+        kodeAntrianPanel1.setBackground(new java.awt.Color(91, 101, 220));
 
-        jLabel4.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("P-105");
+        kodeAntrianLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        kodeAntrianLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        kodeAntrianLabel1.setText("P-105");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout kodeAntrianPanel1Layout = new javax.swing.GroupLayout(kodeAntrianPanel1);
+        kodeAntrianPanel1.setLayout(kodeAntrianPanel1Layout);
+        kodeAntrianPanel1Layout.setHorizontalGroup(
+            kodeAntrianPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kodeAntrianPanel1Layout.createSequentialGroup()
                 .addGap(138, 138, 138)
-                .addComponent(jLabel4)
+                .addComponent(kodeAntrianLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        kodeAntrianPanel1Layout.setVerticalGroup(
+            kodeAntrianPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kodeAntrianPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jLabel4)
+                .addComponent(kodeAntrianLabel1)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(238, 239, 253));
+        namaDokterPanel1.setBackground(new java.awt.Color(238, 239, 253));
 
-        jLabel5.setText("jLabel5");
+        namaDokterLabel1.setText("jLabel5");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout namaDokterPanel1Layout = new javax.swing.GroupLayout(namaDokterPanel1);
+        namaDokterPanel1.setLayout(namaDokterPanel1Layout);
+        namaDokterPanel1Layout.setHorizontalGroup(
+            namaDokterPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(namaDokterPanel1Layout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(jLabel5)
+                .addComponent(namaDokterLabel1)
                 .addContainerGap(63, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        namaDokterPanel1Layout.setVerticalGroup(
+            namaDokterPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(namaDokterPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel5)
+                .addComponent(namaDokterLabel1)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(238, 239, 253));
+        statusAntrianPanel1.setBackground(new java.awt.Color(238, 239, 253));
 
-        jLabel6.setText("jLabel6");
+        statusAntrianLabel1.setText("jLabel6");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout statusAntrianPanel1Layout = new javax.swing.GroupLayout(statusAntrianPanel1);
+        statusAntrianPanel1.setLayout(statusAntrianPanel1Layout);
+        statusAntrianPanel1Layout.setHorizontalGroup(
+            statusAntrianPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusAntrianPanel1Layout.createSequentialGroup()
                 .addContainerGap(64, Short.MAX_VALUE)
-                .addComponent(jLabel6)
+                .addComponent(statusAntrianLabel1)
                 .addGap(61, 61, 61))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        statusAntrianPanel1Layout.setVerticalGroup(
+            statusAntrianPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusAntrianPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel6)
+                .addComponent(statusAntrianLabel1)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jButton1.setBackground(new java.awt.Color(91, 101, 220));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Lihat ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        liihatButton1.setBackground(new java.awt.Color(91, 101, 220));
+        liihatButton1.setForeground(new java.awt.Color(255, 255, 255));
+        liihatButton1.setText("Lihat ");
+        liihatButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                liihatButton1ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelAntrian1Layout = new javax.swing.GroupLayout(panelAntrian1);
+        panelAntrian1.setLayout(panelAntrian1Layout);
+        panelAntrian1Layout.setHorizontalGroup(
+            panelAntrian1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAntrian1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelAntrian1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(liihatButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelAntrian1Layout.createSequentialGroup()
+                        .addComponent(namaDokterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(statusAntrianPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaPoliklinik1)
+                    .addComponent(namaPemeriksaanLabel1)
+                    .addComponent(kodeAntrianPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
+        panelAntrian1Layout.setVerticalGroup(
+            panelAntrian1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAntrian1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel1)
+                .addComponent(namaPemeriksaanLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(namaPoliklinik1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(kodeAntrianPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelAntrian1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(statusAntrianPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaDokterPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(liihatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel16.setPreferredSize(new java.awt.Dimension(371, 354));
+        panelAntrian2.setBackground(new java.awt.Color(255, 255, 255));
+        panelAntrian2.setPreferredSize(new java.awt.Dimension(371, 354));
 
-        jLabel7.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel7.setText("Nama Pemeriksaan");
+        namaPemeriksaanLabel2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        namaPemeriksaanLabel2.setText("Nama Pemeriksaan");
 
-        jLabel8.setText("Poliklinik A");
+        namaPoliklinik2.setText("Poliklinik A");
 
-        jPanel6.setBackground(new java.awt.Color(91, 101, 220));
+        kodeAntrianPanel2.setBackground(new java.awt.Color(91, 101, 220));
 
-        jLabel9.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("P-105");
+        kodeAntrianLabel2.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        kodeAntrianLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        kodeAntrianLabel2.setText("P-105");
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout kodeAntrianPanel2Layout = new javax.swing.GroupLayout(kodeAntrianPanel2);
+        kodeAntrianPanel2.setLayout(kodeAntrianPanel2Layout);
+        kodeAntrianPanel2Layout.setHorizontalGroup(
+            kodeAntrianPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kodeAntrianPanel2Layout.createSequentialGroup()
                 .addGap(138, 138, 138)
-                .addComponent(jLabel9)
+                .addComponent(kodeAntrianLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        kodeAntrianPanel2Layout.setVerticalGroup(
+            kodeAntrianPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kodeAntrianPanel2Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jLabel9)
+                .addComponent(kodeAntrianLabel2)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        jPanel7.setBackground(new java.awt.Color(238, 239, 253));
+        namaDokterPanel2.setBackground(new java.awt.Color(238, 239, 253));
 
-        jLabel10.setText("jLabel5");
+        namaDokterLabel2.setText("jLabel5");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout namaDokterPanel2Layout = new javax.swing.GroupLayout(namaDokterPanel2);
+        namaDokterPanel2.setLayout(namaDokterPanel2Layout);
+        namaDokterPanel2Layout.setHorizontalGroup(
+            namaDokterPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(namaDokterPanel2Layout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(jLabel10)
+                .addComponent(namaDokterLabel2)
                 .addContainerGap(63, Short.MAX_VALUE))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        namaDokterPanel2Layout.setVerticalGroup(
+            namaDokterPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(namaDokterPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel10)
+                .addComponent(namaDokterLabel2)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jPanel8.setBackground(new java.awt.Color(238, 239, 253));
+        statusAntrianPanel2.setBackground(new java.awt.Color(238, 239, 253));
 
         jLabel11.setText("jLabel6");
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+        javax.swing.GroupLayout statusAntrianPanel2Layout = new javax.swing.GroupLayout(statusAntrianPanel2);
+        statusAntrianPanel2.setLayout(statusAntrianPanel2Layout);
+        statusAntrianPanel2Layout.setHorizontalGroup(
+            statusAntrianPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusAntrianPanel2Layout.createSequentialGroup()
                 .addContainerGap(64, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(61, 61, 61))
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        statusAntrianPanel2Layout.setVerticalGroup(
+            statusAntrianPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusAntrianPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel11)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jButton2.setBackground(new java.awt.Color(91, 101, 220));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Lihat ");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        liihatButton2.setBackground(new java.awt.Color(91, 101, 220));
+        liihatButton2.setForeground(new java.awt.Color(255, 255, 255));
+        liihatButton2.setText("Lihat ");
+        liihatButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                liihatButton2ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelAntrian2Layout = new javax.swing.GroupLayout(panelAntrian2);
+        panelAntrian2.setLayout(panelAntrian2Layout);
+        panelAntrian2Layout.setHorizontalGroup(
+            panelAntrian2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAntrian2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelAntrian2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(liihatButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelAntrian2Layout.createSequentialGroup()
+                        .addComponent(namaDokterPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(statusAntrianPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaPoliklinik2)
+                    .addComponent(namaPemeriksaanLabel2)
+                    .addComponent(kodeAntrianPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
+        panelAntrian2Layout.setVerticalGroup(
+            panelAntrian2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAntrian2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel7)
+                .addComponent(namaPemeriksaanLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(namaPoliklinik2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(kodeAntrianPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelAntrian2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(statusAntrianPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaDokterPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(liihatButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel17.setPreferredSize(new java.awt.Dimension(371, 354));
+        antrianPasienHeaderPanel.setBackground(new java.awt.Color(18, 32, 86));
+        antrianPasienHeaderPanel.setPreferredSize(new java.awt.Dimension(800, 70));
 
-        jLabel12.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel12.setText("Nama Pemeriksaan");
+        antrianPasienHeaderLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        antrianPasienHeaderLabel.setForeground(new java.awt.Color(255, 255, 255));
+        antrianPasienHeaderLabel.setText("Antrian Pasien");
 
-        jLabel14.setText("Poliklinik A");
+        pilihPoliklinikPanel.setBackground(new java.awt.Color(91, 101, 220));
 
-        jPanel9.setBackground(new java.awt.Color(91, 101, 220));
-        jPanel9.setForeground(new java.awt.Color(255, 255, 255));
+        pilihPoliklinikLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        pilihPoliklinikLabel.setForeground(new java.awt.Color(255, 255, 255));
+        pilihPoliklinikLabel.setText("PILIH POLIKLINIK");
 
-        jLabel15.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("P-105");
+        pilihPoliklinikComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addComponent(jLabel15)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel15)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-
-        jPanel10.setBackground(new java.awt.Color(238, 239, 253));
-
-        jLabel16.setText("jLabel5");
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(jLabel16)
-                .addContainerGap(63, Short.MAX_VALUE))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel16)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-
-        jPanel11.setBackground(new java.awt.Color(238, 239, 253));
-
-        jLabel17.setText("jLabel6");
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
-                .addComponent(jLabel17)
-                .addGap(61, 61, 61))
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel17)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel12)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
+        javax.swing.GroupLayout pilihPoliklinikPanelLayout = new javax.swing.GroupLayout(pilihPoliklinikPanel);
+        pilihPoliklinikPanel.setLayout(pilihPoliklinikPanelLayout);
+        pilihPoliklinikPanelLayout.setHorizontalGroup(
+            pilihPoliklinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pilihPoliklinikPanelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-
-        jPanel12.setBackground(new java.awt.Color(18, 32, 86));
-        jPanel12.setPreferredSize(new java.awt.Dimension(800, 70));
-
-        jLabel18.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Antrian Pasien");
-
-        jPanel13.setBackground(new java.awt.Color(91, 101, 220));
-
-        jLabel19.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("PILIH POLIKLINIK");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pilihPoliklinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pilihPoliklinikLabel)
+                    .addComponent(pilihPoliklinikComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        pilihPoliklinikPanelLayout.setVerticalGroup(
+            pilihPoliklinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pilihPoliklinikPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel19)
+                .addComponent(pilihPoliklinikLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pilihPoliklinikComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
+        javax.swing.GroupLayout antrianPasienHeaderPanelLayout = new javax.swing.GroupLayout(antrianPasienHeaderPanel);
+        antrianPasienHeaderPanel.setLayout(antrianPasienHeaderPanelLayout);
+        antrianPasienHeaderPanelLayout.setHorizontalGroup(
+            antrianPasienHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(antrianPasienHeaderPanelLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel18)
+                .addComponent(antrianPasienHeaderLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 774, Short.MAX_VALUE)
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pilihPoliklinikPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(129, 129, 129))
         );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel12Layout.createSequentialGroup()
+        antrianPasienHeaderPanelLayout.setVerticalGroup(
+            antrianPasienHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pilihPoliklinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(antrianPasienHeaderPanelLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel18)
+                .addComponent(antrianPasienHeaderLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        antrianPasienTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -722,122 +635,122 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        antrianPasienScrollPane.setViewportView(antrianPasienTable);
 
-        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel18.setPreferredSize(new java.awt.Dimension(371, 354));
+        panelAntrian3.setBackground(new java.awt.Color(255, 255, 255));
+        panelAntrian3.setPreferredSize(new java.awt.Dimension(371, 354));
 
-        jLabel13.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel13.setText("Nama Pemeriksaan");
+        namaPemeriksaanLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        namaPemeriksaanLabel3.setText("Nama Pemeriksaan");
 
-        jLabel20.setText("Poliklinik A");
+        namaPoliklinik3.setText("Poliklinik A");
 
-        jPanel14.setBackground(new java.awt.Color(91, 101, 220));
+        kodeAntrianPanel3.setBackground(new java.awt.Color(91, 101, 220));
 
-        jLabel21.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("P-105");
+        kodeAntrianLabel3.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        kodeAntrianLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        kodeAntrianLabel3.setText("P-105");
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
+        javax.swing.GroupLayout kodeAntrianPanel3Layout = new javax.swing.GroupLayout(kodeAntrianPanel3);
+        kodeAntrianPanel3.setLayout(kodeAntrianPanel3Layout);
+        kodeAntrianPanel3Layout.setHorizontalGroup(
+            kodeAntrianPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kodeAntrianPanel3Layout.createSequentialGroup()
                 .addGap(138, 138, 138)
-                .addComponent(jLabel21)
+                .addComponent(kodeAntrianLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
+        kodeAntrianPanel3Layout.setVerticalGroup(
+            kodeAntrianPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kodeAntrianPanel3Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jLabel21)
+                .addComponent(kodeAntrianLabel3)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        jPanel19.setBackground(new java.awt.Color(238, 239, 253));
+        namaDokterPanel3.setBackground(new java.awt.Color(238, 239, 253));
 
-        jLabel22.setText("jLabel5");
+        namaDokterLabel3.setText("jLabel5");
 
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
+        javax.swing.GroupLayout namaDokterPanel3Layout = new javax.swing.GroupLayout(namaDokterPanel3);
+        namaDokterPanel3.setLayout(namaDokterPanel3Layout);
+        namaDokterPanel3Layout.setHorizontalGroup(
+            namaDokterPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(namaDokterPanel3Layout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(jLabel22)
+                .addComponent(namaDokterLabel3)
                 .addContainerGap(63, Short.MAX_VALUE))
         );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
+        namaDokterPanel3Layout.setVerticalGroup(
+            namaDokterPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(namaDokterPanel3Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel22)
+                .addComponent(namaDokterLabel3)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jPanel20.setBackground(new java.awt.Color(238, 239, 253));
+        statusAntrianPanel3.setBackground(new java.awt.Color(238, 239, 253));
 
-        jLabel23.setText("jLabel6");
+        statusAntrianLabel3.setText("jLabel6");
 
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+        javax.swing.GroupLayout statusAntrianPanel3Layout = new javax.swing.GroupLayout(statusAntrianPanel3);
+        statusAntrianPanel3.setLayout(statusAntrianPanel3Layout);
+        statusAntrianPanel3Layout.setHorizontalGroup(
+            statusAntrianPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusAntrianPanel3Layout.createSequentialGroup()
                 .addContainerGap(64, Short.MAX_VALUE)
-                .addComponent(jLabel23)
+                .addComponent(statusAntrianLabel3)
                 .addGap(61, 61, 61))
         );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
+        statusAntrianPanel3Layout.setVerticalGroup(
+            statusAntrianPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusAntrianPanel3Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel23)
+                .addComponent(statusAntrianLabel3)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jButton5.setBackground(new java.awt.Color(91, 101, 220));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Lihat ");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        liihatButton3.setBackground(new java.awt.Color(91, 101, 220));
+        liihatButton3.setForeground(new java.awt.Color(255, 255, 255));
+        liihatButton3.setText("Lihat ");
+        liihatButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                liihatButton3ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelAntrian3Layout = new javax.swing.GroupLayout(panelAntrian3);
+        panelAntrian3.setLayout(panelAntrian3Layout);
+        panelAntrian3Layout.setHorizontalGroup(
+            panelAntrian3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAntrian3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelAntrian3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(liihatButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelAntrian3Layout.createSequentialGroup()
+                        .addComponent(namaDokterPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel13)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(statusAntrianPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaPoliklinik3)
+                    .addComponent(namaPemeriksaanLabel3)
+                    .addComponent(kodeAntrianPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
+        panelAntrian3Layout.setVerticalGroup(
+            panelAntrian3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAntrian3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel13)
+                .addComponent(namaPemeriksaanLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel20)
+                .addComponent(namaPoliklinik3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(kodeAntrianPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelAntrian3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(statusAntrianPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaDokterPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(liihatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -848,44 +761,40 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(scrollPaneRahasia)
                         .addGap(132, 132, 132))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 1269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(antrianPasienHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(searchAntrianPasienPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1143, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                                .addComponent(panelAntrian1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(panelAntrian2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(panelAntrian3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(antrianPasienScrollPane, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(antrianPasienHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelAntrian1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelAntrian2, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelAntrian3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchAntrianPasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
+                .addComponent(antrianPasienScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+                .addComponent(scrollPaneRahasia, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -906,76 +815,67 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void liihatButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liihatButton1ActionPerformed
         filterByCardPoliklinik(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_liihatButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void liihatButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liihatButton2ActionPerformed
         filterByCardPoliklinik(1);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_liihatButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void searchAntrianPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAntrianPasienButtonActionPerformed
         doSearch();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_searchAntrianPasienButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void liihatButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liihatButton3ActionPerformed
         filterByCardPoliklinik(2);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_liihatButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel antrianPasienHeaderLabel;
+    private javax.swing.JPanel antrianPasienHeaderPanel;
+    private javax.swing.JScrollPane antrianPasienScrollPane;
+    private javax.swing.JTable antrianPasienTable;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel kodeAntrianLabel1;
+    private javax.swing.JLabel kodeAntrianLabel2;
+    private javax.swing.JLabel kodeAntrianLabel3;
+    private javax.swing.JPanel kodeAntrianPanel1;
+    private javax.swing.JPanel kodeAntrianPanel2;
+    private javax.swing.JPanel kodeAntrianPanel3;
+    private javax.swing.JButton liihatButton1;
+    private javax.swing.JButton liihatButton2;
+    private javax.swing.JButton liihatButton3;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel namaDokterLabel1;
+    private javax.swing.JLabel namaDokterLabel2;
+    private javax.swing.JLabel namaDokterLabel3;
+    private javax.swing.JPanel namaDokterPanel1;
+    private javax.swing.JPanel namaDokterPanel2;
+    private javax.swing.JPanel namaDokterPanel3;
+    private javax.swing.JLabel namaPemeriksaanLabel1;
+    private javax.swing.JLabel namaPemeriksaanLabel2;
+    private javax.swing.JLabel namaPemeriksaanLabel3;
+    private javax.swing.JLabel namaPoliklinik1;
+    private javax.swing.JLabel namaPoliklinik2;
+    private javax.swing.JLabel namaPoliklinik3;
+    private javax.swing.JPanel panelAntrian1;
+    private javax.swing.JPanel panelAntrian2;
+    private javax.swing.JPanel panelAntrian3;
+    private javax.swing.JComboBox<String> pilihPoliklinikComboBox;
+    private javax.swing.JLabel pilihPoliklinikLabel;
+    private javax.swing.JPanel pilihPoliklinikPanel;
+    private javax.swing.JScrollPane scrollPaneRahasia;
+    private javax.swing.JButton searchAntrianPasienButton;
+    private javax.swing.JLabel searchAntrianPasienLabel;
+    private javax.swing.JPanel searchAntrianPasienPanel;
+    private javax.swing.JTextField searchAntrianPasienTextField;
+    private javax.swing.JLabel statusAntrianLabel1;
+    private javax.swing.JLabel statusAntrianLabel3;
+    private javax.swing.JPanel statusAntrianPanel1;
+    private javax.swing.JPanel statusAntrianPanel2;
+    private javax.swing.JPanel statusAntrianPanel3;
+    private javax.swing.JTable tableRahasia;
     // End of variables declaration//GEN-END:variables
 }
