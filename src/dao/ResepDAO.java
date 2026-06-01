@@ -204,4 +204,25 @@ public class ResepDAO implements IDAO<Resep, String> {
             System.out.println("Error loading item resep: " + e);
         }
     }
+
+    public String generateId() {
+        con = dbCon.makeConnection();
+        String newId = "RES001";
+        String sql = "SELECT id_resep FROM resep ORDER BY id_resep DESC LIMIT 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                String lastId = rs.getString("id_resep");
+                int num = Integer.parseInt(lastId.substring(3)) + 1;
+                newId = String.format("RES%03d", num);
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error generateId Resep: " + e);
+        }
+        dbCon.closeConnection();
+        return newId;
+    }
 }

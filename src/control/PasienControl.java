@@ -15,4 +15,9 @@ public class PasienControl {
     public void delete(String id) { dao.delete(id); }
     public List<Pasien> showData() { return dao.showData(); }
     public Pasien search(String id) { return dao.search(id); }
+    
+    public Pasien searchByNomorRM(String nomorRM){
+        return dao.searchByNomorRM(nomorRM);
+    }
+    
 }

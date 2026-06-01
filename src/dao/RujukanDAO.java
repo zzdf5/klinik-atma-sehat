@@ -157,4 +157,25 @@ public class RujukanDAO implements IDAO<Rujukan, String> {
         dbCon.closeConnection();
         return rujukan;
     }
+
+    public String generateId() {
+        con = dbCon.makeConnection();
+        String newId = "RUJ001";
+        String sql = "SELECT id_rujukan FROM rujukan ORDER BY id_rujukan DESC LIMIT 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                String lastId = rs.getString("id_rujukan");
+                int num = Integer.parseInt(lastId.substring(3)) + 1;
+                newId = String.format("RUJ%03d", num);
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error generateId Rujukan: " + e);
+        }
+        dbCon.closeConnection();
+        return newId;
+    }
 }

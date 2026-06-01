@@ -80,7 +80,7 @@ public class LoginForm extends javax.swing.JFrame {
         DokterControl dokterControl = new DokterControl();
         try {
             Dokter dokter = dokterControl.masuk(username, password);
-            new MainViewFormDokter().setVisible(true);
+            new MainViewFormDokter(dokter.getId()).setVisible(true);
             this.dispose();
         } catch (InputKosongException e) {
             javax.swing.JOptionPane.showMessageDialog(this,

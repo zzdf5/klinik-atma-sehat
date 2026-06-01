@@ -7,6 +7,7 @@ import model.Rujukan;
 public class RujukanControl {
     private final RujukanDAO dao = new RujukanDAO();
 
+    public String generateIdRujukan() { return dao.generateId(); }
     public void insert(Rujukan data) { dao.insert(data); }
     public void update(Rujukan data, String id) { dao.update(data, id); }
     public void delete(String id) { dao.delete(id); }

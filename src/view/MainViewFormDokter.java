@@ -24,15 +24,18 @@ public class MainViewFormDokter extends javax.swing.JFrame {
     private ManajemenTagihanPanel manajemenTagihanPanel = new ManajemenTagihanPanel();
     
     private int selectedIndex = -1;
+    private String idDokter = null;
+    
     /**
      * Creates new form MainViewForm
      */
-    public MainViewFormDokter() {
+    public MainViewFormDokter(String idDokter) {
+        this.idDokter = idDokter;
         initComponents();
         recolorDefaultSwitchPanel();
 
         kunjunganPanel.setBackground(new Color(245, 245, 245));
-        setForm(new DokterPanel());
+        setForm(new DokterPanel(idDokter));
         selectedIndex = 1;
         setLocationRelativeTo(null);
 
@@ -42,6 +45,11 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                 dispose();
             }
         });
+    }
+    
+    @Deprecated
+    public MainViewFormDokter() {
+        this("DOK-001");
     }
     
     private void setForm(JComponent com) {

@@ -249,4 +249,39 @@ public class PasienDAO implements IDAO<Pasien, String> {
         dbCon.closeConnection();
         return list;
     }
+    
+    public Pasien searchByNomorRM(String nomorRM){
+        con = dbCon.makeConnection();
+
+        String sql = "SELECT * FROM pasien WHERE nomor_rekam_medis=?";
+        Pasien pasien = null;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nomorRM);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null && rs.next()) {
+                pasien = new Pasien(
+                        rs.getString("id_pasien"),
+                        rs.getString("nomor_rekam_medis"),
+                        rs.getString("nama"),
+                        rs.getString("tanggal_lahir"),
+                        rs.getString("jenis_kelamin"),
+                        rs.getString("no_telepon"),
+                        rs.getString("alamat"));
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (Exception e) {
+            System.out.println("Error searchByNomorRM Pasien: " + e);
+        }
+
+        dbCon.closeConnection();
+
+        return pasien;
+    }
 }

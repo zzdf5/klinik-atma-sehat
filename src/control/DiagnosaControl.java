@@ -7,6 +7,7 @@ import model.Diagnosa;
 public class DiagnosaControl {
     private final DiagnosaDAO dao = new DiagnosaDAO();
 
+    public String generateIdDiagnosa() { return dao.generateId(); }
     public void insert(Diagnosa data) { dao.insert(data); }
     public void update(Diagnosa data, String id) { dao.update(data, id); }
     public void delete(String id) { dao.delete(id); }

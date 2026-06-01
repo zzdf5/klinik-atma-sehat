@@ -144,4 +144,25 @@ public class DiagnosaDAO implements IDAO<Diagnosa, String> {
         dbCon.closeConnection();
         return diagnosa;
     }
+
+    public String generateId() {
+        con = dbCon.makeConnection();
+        String newId = "DIS001";
+        String sql = "SELECT id_diagnosa FROM diagnosa ORDER BY id_diagnosa DESC LIMIT 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                String lastId = rs.getString("id_diagnosa");
+                int num = Integer.parseInt(lastId.substring(3)) + 1;
+                newId = String.format("DIS%03d", num);
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error generateId Diagnosa: " + e);
+        }
+        dbCon.closeConnection();
+        return newId;
+    }
 }
