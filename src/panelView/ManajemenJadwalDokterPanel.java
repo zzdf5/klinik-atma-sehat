@@ -23,6 +23,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     private List<Poliklinik> poliklinikList;
     private String action = null;
     private String selectedId = null;
+    
 
     public ManajemenJadwalDokterPanel() {
         initComponents();
@@ -38,48 +39,15 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         setFormEnabled(false);
         setEditDeleteEnabled(false);
         showJadwal();
-
-        // Batal tidak ada di GEN code
-        batalJadwalButton.addActionListener(e -> {
-            action = null;
-            selectedId = null;
-            clearForm();
-            setFormEnabled(false);
-            setEditDeleteEnabled(false);
-        });
+        
+        
 
         pencarianJadwalButton.addActionListener(e -> doSearch());
         pencarianJadwalTextField.addActionListener(e -> doSearch());
 
-        tambahJadwalButton.addActionListener(e -> {
-            action = "add";
-            selectedId = null;
-            clearForm();
-            inputIdJadwalTextField.setText(jdc.generateId());
-            setFormEnabled(true);
-            setEditDeleteEnabled(false);
-        });
+        
 
-        barukanJadwalButton.addActionListener(e -> {
-            if (selectedId == null) return;
-            action = "update";
-            setFormEnabled(true);
-            inputIdJadwalTextField.setEnabled(false);
-        });
-
-        hapusJadwalButton.addActionListener(e -> {
-            if (selectedId == null) return;
-            int opsi = JOptionPane.showConfirmDialog(this,
-                "Yakin ingin hapus jadwal ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
-            if (opsi != JOptionPane.YES_OPTION) return;
-            jdc.delete(selectedId);
-            selectedId = null;
-            clearForm();
-            setFormEnabled(false);
-            setEditDeleteEnabled(false);
-            showJadwal();
-            JOptionPane.showMessageDialog(this, "Jadwal berhasil dihapus.");
-        });
+        
 
         simpanJadwalButton.addActionListener(e -> simpanJadwal());
 
@@ -96,6 +64,17 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
                 action = null;
             }
         });
+    }
+    
+    public void setFormEnabled(boolean value) {
+        inputIdJadwalTextField.setEnabled(false);
+        inputJamMulaiTextField.setEnabled(value);
+        inputJamSelesaiTextField.setEnabled(value);
+        inputKuotaPasienTextField.setEnabled(value);
+        pilihDokterDropDown.setEnabled(value);
+        pilihPoliKlinikDropDown.setEnabled(value);
+        simpanJadwalButton.setEnabled(value);
+        batalJadwalButton.setEnabled(value);
     }
 
     /**
@@ -152,7 +131,18 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         pencarianJadwalLabel.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 18)); // NOI18N
         pencarianJadwalLabel.setText("Pencarian Jadwal");
 
+        pencarianJadwalTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pencarianJadwalTextFieldKeyPressed(evt);
+            }
+        });
+
         pencarianJadwalButton.setText("Cari");
+        pencarianJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pencarianJadwalButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pencarianJadwalPanelLayout = new javax.swing.GroupLayout(pencarianJadwalPanel);
         pencarianJadwalPanel.setLayout(pencarianJadwalPanelLayout);
@@ -268,11 +258,21 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         simpanJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         simpanJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanJadwalButton.setText("Simpan");
+        simpanJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanJadwalButtonActionPerformed(evt);
+            }
+        });
 
         batalJadwalButton.setBackground(new java.awt.Color(237, 8, 0));
         batalJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         batalJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
         batalJadwalButton.setText("Batal");
+        batalJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                batalJadwalButtonActionPerformed(evt);
+            }
+        });
 
         pilihPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -438,16 +438,31 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         tambahJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
         tambahJadwalButton.setText("Tambah");
         tambahJadwalButton.setPreferredSize(new java.awt.Dimension(124, 24));
+        tambahJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahJadwalButtonActionPerformed(evt);
+            }
+        });
 
         barukanJadwalButton.setBackground(new java.awt.Color(255, 189, 3));
         barukanJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         barukanJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
         barukanJadwalButton.setText("Barukan");
+        barukanJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barukanJadwalButtonActionPerformed(evt);
+            }
+        });
 
         hapusJadwalButton.setBackground(new java.awt.Color(237, 8, 0));
         hapusJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         hapusJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
         hapusJadwalButton.setText("Hapus");
+        hapusJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusJadwalButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jadwalButtonPanelLayout = new javax.swing.GroupLayout(jadwalButtonPanel);
         jadwalButtonPanel.setLayout(jadwalButtonPanelLayout);
@@ -520,8 +535,58 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     private void inputKuotaPasienTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputKuotaPasienTextFieldActionPerformed
     }//GEN-LAST:event_inputKuotaPasienTextFieldActionPerformed
 
+    private void tambahJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahJadwalButtonActionPerformed
+        action = "tambah";
+        clearForm();
+        inputIdJadwalTextField.setText(jdc.generateId());
+        setFormEnabled(true);
+        setEditDeleteEnabled(false);
+    }//GEN-LAST:event_tambahJadwalButtonActionPerformed
+
+    private void barukanJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanJadwalButtonActionPerformed
+        action = "update";
+        setFormEnabled(true);
+        inputIdJadwalTextField.setEnabled(false);
+    }//GEN-LAST:event_barukanJadwalButtonActionPerformed
+
+    private void hapusJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusJadwalButtonActionPerformed
+        action = "hapus";
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            jdc.delete(selectedId); 
+            clearForm();
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+            showJadwal();
+            tambahJadwalButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_hapusJadwalButtonActionPerformed
+
+    private void simpanJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanJadwalButtonActionPerformed
+        simpanJadwal();
+    }//GEN-LAST:event_simpanJadwalButtonActionPerformed
+
+    private void batalJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalJadwalButtonActionPerformed
+        action = null;
+        selectedId = null;
+        clearForm();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        tambahJadwalButton.setEnabled(true);
+    }//GEN-LAST:event_batalJadwalButtonActionPerformed
+
+    private void pencarianJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianJadwalButtonActionPerformed
+        doSearch();
+    }//GEN-LAST:event_pencarianJadwalButtonActionPerformed
+
+    private void pencarianJadwalTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianJadwalTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n') doSearch();
+    }//GEN-LAST:event_pencarianJadwalTextFieldKeyPressed
+
     // -------------------------------------------------------------------------
 
+    
     private void setupTable() {
         DefaultTableModel m = new DefaultTableModel(
             new String[]{"ID Jadwal", "Nama Dokter", "Jam Mulai", "Jam Selesai", "Poliklinik", "Kuota"}, 0
@@ -551,16 +616,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         for (Object[] row : jdc.showDataWithNames()) m.addRow(row);
     }
 
-    private void setFormEnabled(boolean value) {
-        inputIdJadwalTextField.setEnabled(false);
-        pilihDokterDropDown.setEnabled(value);
-        pilihPoliKlinikDropDown.setEnabled(value);
-        inputJamMulaiTextField.setEnabled(value);
-        inputJamSelesaiTextField.setEnabled(value);
-        inputKuotaPasienTextField.setEnabled(value);
-        simpanJadwalButton.setEnabled(value);
-        batalJadwalButton.setEnabled(value);
-    }
+    
 
     private void setEditDeleteEnabled(boolean value) {
         barukanJadwalButton.setEnabled(value);
@@ -657,7 +713,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         if (opsi != JOptionPane.YES_OPTION) return;
 
         JadwalDokter j = new JadwalDokter(id, idDokter, idPoli, jamMulai, jamSelesai, kuota);
-        if ("add".equals(action)) { jdc.insert(j); JOptionPane.showMessageDialog(this, "Jadwal berhasil ditambahkan."); }
+        if ("tambah".equals(action)) { jdc.insert(j); JOptionPane.showMessageDialog(this, "Jadwal berhasil ditambahkan."); }
         else { jdc.update(j, selectedId); JOptionPane.showMessageDialog(this, "Jadwal berhasil diupdate."); }
 
         action = null; selectedId = null;

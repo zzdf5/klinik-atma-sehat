@@ -713,6 +713,11 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         simpanButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
         simpanButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanButton.setText("Simpan");
+        simpanButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout formInputRingkasanTagihanPanelLayout = new javax.swing.GroupLayout(formInputRingkasanTagihanPanel);
         formInputRingkasanTagihanPanel.setLayout(formInputRingkasanTagihanPanelLayout);
@@ -844,6 +849,10 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
     private void lunasRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lunasRadioButtonActionPerformed
     }//GEN-LAST:event_lunasRadioButtonActionPerformed
+
+    private void simpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_simpanButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

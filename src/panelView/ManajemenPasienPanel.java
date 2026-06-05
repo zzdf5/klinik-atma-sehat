@@ -372,8 +372,19 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         pencarianPasienLabel.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 18)); // NOI18N
         pencarianPasienLabel.setText("Pencarian Pasien");
 
+        pencarianPasienTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pencarianPasienTextFieldKeyPressed(evt);
+            }
+        });
+
         pencarianPasienButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         pencarianPasienButton.setText("Cari");
+        pencarianPasienButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pencarianPasienButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pencarianPasienPanelLayout = new javax.swing.GroupLayout(pencarianPasienPanel);
         pencarianPasienPanel.setLayout(pencarianPasienPanelLayout);
@@ -593,11 +604,21 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         simpanPasienButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         simpanPasienButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanPasienButton.setText("Simpan");
+        simpanPasienButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanPasienButtonActionPerformed(evt);
+            }
+        });
 
         batalPasienButton.setBackground(new java.awt.Color(237, 8, 0));
         batalPasienButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         batalPasienButton.setForeground(new java.awt.Color(255, 255, 255));
         batalPasienButton.setText("Batal");
+        batalPasienButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                batalPasienButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout formInputDataPasienPanelLayout = new javax.swing.GroupLayout(formInputDataPasienPanel);
         formInputDataPasienPanel.setLayout(formInputDataPasienPanelLayout);
@@ -798,11 +819,21 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         barukanPasienButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         barukanPasienButton.setForeground(new java.awt.Color(255, 255, 255));
         barukanPasienButton.setText("Barukan");
+        barukanPasienButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barukanPasienButtonActionPerformed(evt);
+            }
+        });
 
         hapusPasienButton.setBackground(new java.awt.Color(237, 8, 0));
         hapusPasienButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
         hapusPasienButton.setForeground(new java.awt.Color(255, 255, 255));
         hapusPasienButton.setText("Hapus");
+        hapusPasienButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusPasienButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pasienButtonPanelLayout = new javax.swing.GroupLayout(pasienButtonPanel);
         pasienButtonPanel.setLayout(pasienButtonPanelLayout);
@@ -837,7 +868,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(pasienButtonPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1269, Short.MAX_VALUE)
+                            .addComponent(pasienButtonPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pencarianPasienPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1269, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
@@ -885,8 +916,52 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tambahPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahPasienButtonActionPerformed
-        // TODO add your handling code here:
+        action = "tambah";
+        clearForm();
+        setFormEnabled(true);
+        setEditDeleteEnabled(false);
     }//GEN-LAST:event_tambahPasienButtonActionPerformed
+
+    private void barukanPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanPasienButtonActionPerformed
+        action = "update";
+        setFormEnabled(true);
+        inputIdPasienTextField.setEnabled(false);
+    }//GEN-LAST:event_barukanPasienButtonActionPerformed
+
+    private void hapusPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusPasienButtonActionPerformed
+        action = "hapus";
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            pc.delete(selectedId); 
+            clearForm();
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+            showPasien();
+            tambahPasienButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_hapusPasienButtonActionPerformed
+
+    private void batalPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalPasienButtonActionPerformed
+        action = null;
+        selectedId = null;
+        clearForm();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        tambahPasienButton.setEnabled(true);
+    }//GEN-LAST:event_batalPasienButtonActionPerformed
+
+    private void simpanPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanPasienButtonActionPerformed
+        simpanPasien();
+    }//GEN-LAST:event_simpanPasienButtonActionPerformed
+
+    private void pencarianPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianPasienButtonActionPerformed
+        doSearch();
+    }//GEN-LAST:event_pencarianPasienButtonActionPerformed
+
+    private void pencarianPasienTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianPasienTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n') doSearch();
+    }//GEN-LAST:event_pencarianPasienTextFieldKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

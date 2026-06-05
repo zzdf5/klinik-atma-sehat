@@ -78,13 +78,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         updateMetrics();
 
         // Listeners yang tidak ada di GEN code
-        batalButton.addActionListener(e -> {
-            action = null;
-            selectedId = null;
-            clearForm();
-            setFormEnabled(false);
-            setEditDeleteEnabled(false);
-        });
+        
 
         searchKunjunganButton.addActionListener(e -> doSearch());
         searchKunjunganTextField.addActionListener(e -> doSearch());
@@ -300,6 +294,11 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         batalButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         batalButton.setForeground(new java.awt.Color(255, 255, 255));
         batalButton.setText("Batal");
+        batalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                batalButtonActionPerformed(evt);
+            }
+        });
 
         inputPilihDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -637,9 +636,20 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
         subJudulKunjunganLabel.setText("Pencatatan data kunjungan pasien, diagnosa, dan administrasi konsultasi");
 
+        searchKunjunganTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchKunjunganTextFieldKeyPressed(evt);
+            }
+        });
+
         searchKunjunganButton.setBackground(new java.awt.Color(0, 0, 153));
         searchKunjunganButton.setForeground(new java.awt.Color(255, 255, 255));
         searchKunjunganButton.setText("Cari");
+        searchKunjunganButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchKunjunganButtonActionPerformed(evt);
+            }
+        });
 
         searchKunjunganLabel.setText("Pencarian Kunjungan");
 
@@ -979,6 +989,22 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         updateMetrics();
         JOptionPane.showMessageDialog(this, "Kunjungan berhasil dihapus.");
     }//GEN-LAST:event_hapusKunjunganButtonActionPerformed
+
+    private void searchKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchKunjunganButtonActionPerformed
+        doSearch();
+    }//GEN-LAST:event_searchKunjunganButtonActionPerformed
+
+    private void batalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalButtonActionPerformed
+        action = null;
+        selectedId = null;
+        clearForm();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+    }//GEN-LAST:event_batalButtonActionPerformed
+
+    private void searchKunjunganTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKunjunganTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n') doSearch();
+    }//GEN-LAST:event_searchKunjunganTextFieldKeyPressed
 
     // -------------------------------------------------------------------------
 
