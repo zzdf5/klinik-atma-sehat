@@ -9,6 +9,8 @@ import control.DokterControl;
 import control.JadwalDokterControl;
 import control.KunjunganControl;
 import control.PasienControl;
+import control.ResepControl;
+import control.TagihanControl;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JMenuItem;
@@ -20,6 +22,7 @@ import model.Dokter;
 import model.JadwalDokter;
 import model.Kunjungan;
 import model.Pasien;
+import model.Resep;
 
 public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
@@ -1341,6 +1344,17 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             }
             kc.update(k, selectedId);
             JOptionPane.showMessageDialog(this, "Kunjungan berhasil diupdate.");
+        }
+
+        // Otomatis buat tagihan jika status SELESAI
+        if (k.getStatus() == Kunjungan.Status.SELESAI) {
+            TagihanControl tc = new TagihanControl();
+            ResepControl rc = new ResepControl();
+            Resep resep = null;
+            if (k.getIdResep() != null && !k.getIdResep().isEmpty()) {
+                resep = rc.search(k.getIdResep());
+            }
+            tc.buatDariKunjungan(k, resep);
         }
 
         action = null;

@@ -2,6 +2,8 @@ package control;
 
 import dao.TagihanDAO;
 import java.util.List;
+import model.Kunjungan;
+import model.Resep;
 import model.Tagihan;
 import model.Tagihan.ItemTagihan;
 import model.Tagihan.MetodePembayaran;
@@ -27,6 +29,26 @@ public class TagihanControl {
     public void delete(String id) { dao.delete(id); }
     public List<Tagihan> showData() { return dao.showData(); }
     public Tagihan search(String id) { return dao.search(id); }
+    public Tagihan searchByIdKunjungan(String idKunjungan) { return dao.searchByIdKunjungan(idKunjungan); }
+
+    public void buatDariKunjungan(Kunjungan kunjungan, Resep resep) {
+        if (dao.searchByIdKunjungan(kunjungan.getIdKunjungan()) != null) return;
+
+        String idTagihan = dao.generateId();
+        Tagihan tagihan = new Tagihan(idTagihan, kunjungan.getIdKunjungan(), kunjungan.getTanggal());
+
+        if (kunjungan.getBiayaKonsultasi() > 0) {
+            tagihan.tambahItem(new ItemTagihan("Biaya Konsultasi", 1, kunjungan.getBiayaKonsultasi()));
+        }
+
+        if (resep != null) {
+            for (Resep.ItemResep item : resep.getDaftarObat()) {
+                tagihan.tambahItem(new ItemTagihan(item.getNamaObat(), item.getJumlah(), item.getHarga()));
+            }
+        }
+
+        insert(tagihan);
+    }
 
     public void bayar(Tagihan tagihan, double jumlahBayar, MetodePembayaran metode) {
         hitungTotal(tagihan);

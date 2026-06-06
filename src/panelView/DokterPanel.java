@@ -42,6 +42,9 @@ public class DokterPanel extends javax.swing.JPanel {
         loadQueuePasien();
     }
     
+    private static final int CARD_HEIGHT = 145;
+    private static final int CARD_GAP   = 10;
+
     private void setupQueuePanel() {
         diplayQueuePasienPanel.removeAll();
         diplayQueuePasienPanel.setLayout(new BorderLayout());
@@ -53,10 +56,15 @@ public class DokterPanel extends javax.swing.JPanel {
         JScrollPane scrollPane = new JScrollPane(queueContainer);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBorder(null); // ← hapus border scrollpane
+        scrollPane.setBorder(null);
         scrollPane.getViewport().setBackground(new java.awt.Color(245, 246, 250));
 
         diplayQueuePasienPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Tampilkan tepat 3 card; card lebih banyak bisa discroll
+        int visibleHeight = CARD_GAP + 4 * (CARD_HEIGHT + CARD_GAP);
+        diplayQueuePasienPanel.setPreferredSize(new java.awt.Dimension(205, visibleHeight));
+
         diplayQueuePasienPanel.revalidate();
         diplayQueuePasienPanel.repaint();
     }
@@ -75,7 +83,7 @@ public class DokterPanel extends javax.swing.JPanel {
         rekamMedisControl = new RekamMedisControl();
     }
     
-   private void loadQueuePasien() {
+    private void loadQueuePasien() {
         clearForm();
 
         queueContainer.removeAll();
@@ -86,28 +94,30 @@ public class DokterPanel extends javax.swing.JPanel {
 
         for (Kunjungan k : queueList) {
             if (k.getStatus() == Kunjungan.Status.BELUM_DILAKUKAN
-                    && k.getIdDokter().equals(idDokterLogin)) {
+                    && idDokterLogin.equals(k.getIdDokter())) {
                 filteredQueue.add(k);
             }
         }
 
-        System.out.println("DEBUG: Total kunjungan: " + queueList.size() 
-            + ", filtered: " + filteredQueue.size());
+        // Urutkan berdasarkan jam terdahulu (nomor antrian paling kecil duluan)
+        filteredQueue.sort((a, b) -> {
+            String jamA = a.getJam() != null ? a.getJam() : "";
+            String jamB = b.getJam() != null ? b.getJam() : "";
+            return jamA.compareTo(jamB);
+        });
 
-        int yPos = 10;
+        int yPos = CARD_GAP;
         for (Kunjungan kunjungan : filteredQueue) {
             Pasien pasien = pasienControl.searchByNomorRM(kunjungan.getNomorRekamMedis());
-            System.out.println("Pasien = " + (pasien == null ? "NULL" : pasien.getNama()));
-
             if (pasien != null) {
                 JPanel card = createPatientCard(pasien, kunjungan, yPos);
                 queueContainer.add(card);
-                yPos += 155;
+                yPos += CARD_HEIGHT + CARD_GAP;
             }
         }
 
-        // Pastikan container cukup tinggi untuk semua card
-        int totalHeight = Math.max(yPos + 10, diplayQueuePasienPanel.getHeight());
+        // Container setinggi konten asli — scroll aktif otomatis jika melebihi 3 card
+        int totalHeight = yPos + CARD_GAP;
         queueContainer.setPreferredSize(new java.awt.Dimension(
             diplayQueuePasienPanel.getWidth() > 0 ? diplayQueuePasienPanel.getWidth() : 205,
             totalHeight
@@ -119,7 +129,7 @@ public class DokterPanel extends javax.swing.JPanel {
     private JPanel createPatientCard(Pasien pasien, Kunjungan kunjungan, int yPos) {
         JPanel card = new JPanel();
         card.setBackground(java.awt.Color.WHITE);
-        card.setBounds(10, yPos, 185, 145);
+        card.setBounds(10, yPos, 185, CARD_HEIGHT);
         card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         card.setLayout(new java.awt.GridBagLayout());
 
@@ -345,18 +355,17 @@ public class DokterPanel extends javax.swing.JPanel {
             
             // Create Resep if ada obat
             String idResep = null;
+            Resep resepObj = null;
             if (!daftarObatResep.isEmpty()) {
                 idResep = resepControl.generateIdResep();
-                Resep resep = new Resep(idResep, idDokterLogin, selectedPasien.getNomorRekamMedis(), 
+                resepObj = new Resep(idResep, idDokterLogin, selectedPasien.getNomorRekamMedis(),
                     new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()));
-                
                 for (Resep.ItemResep item : daftarObatResep) {
-                    resep.tambahObat(item);
+                    resepObj.tambahObat(item);
                 }
-                
-                resepControl.insert(resep);
+                resepControl.insert(resepObj);
             }
-            
+
             // Create Rujukan if diperlukan
             if (rujukanRadioButton != null && rujukanRadioButton.isSelected()) {
                 if (tanggalRujukanDateChooser != null && tanggalRujukanDateChooser.getDate() != null &&
@@ -378,10 +387,13 @@ public class DokterPanel extends javax.swing.JPanel {
                     return;
                 }
             }
-            
-            // Update Kunjungan
+
+            // Update Kunjungan ke SELESAI
             kunjunganControl.selesaikan(selectedKunjungan, hasilPemeriksaanTextField.getText(), idDiagnosa, idResep);
-            
+
+            // Otomatis buat tagihan dari kunjungan yang selesai
+            new TagihanControl().buatDariKunjungan(selectedKunjungan, resepObj);
+
             JOptionPane.showMessageDialog(this, "Konsultasi berhasil diselesaikan", "Success", JOptionPane.INFORMATION_MESSAGE);
             
             clearForm();

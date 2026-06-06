@@ -18,7 +18,7 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
         con = dbCon.makeConnection();
 
         String sqlTagihan = "INSERT INTO tagihan (id_tagihan, id_kunjungan, tanggal_tagihan, total_tagihan, jumlah_bayar, kembalian, metode_pembayaran, status) VALUES (?,?,?,?,?,?,?,?)";
-        String sqlItem = "INSERT INTO item_tagihan (id_tagihan, nama_item, jumlah, harga_satuan) VALUES (?,?,?,?)";
+        String sqlItem = "INSERT INTO tagihan_detail (id_tagihan, nama_item, jumlah, harga_satuan) VALUES (?,?,?,?)";
 
         try {
             PreparedStatement ps1 = con.prepareStatement(sqlTagihan);
@@ -56,8 +56,8 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
         con = dbCon.makeConnection();
 
         String sqlTagihan = "UPDATE tagihan SET id_kunjungan=?, tanggal_tagihan=?, total_tagihan=?, jumlah_bayar=?, kembalian=?, metode_pembayaran=?, status=? WHERE id_tagihan=?";
-        String sqlHapusItem = "DELETE FROM item_tagihan WHERE id_tagihan=?";
-        String sqlItem = "INSERT INTO item_tagihan (id_tagihan, nama_item, jumlah, harga_satuan) VALUES (?,?,?,?)";
+        String sqlHapusItem = "DELETE FROM tagihan_detail WHERE id_tagihan=?";
+        String sqlItem = "INSERT INTO tagihan_detail (id_tagihan, nama_item, jumlah, harga_satuan) VALUES (?,?,?,?)";
 
         try {
             PreparedStatement ps1 = con.prepareStatement(sqlTagihan);
@@ -122,7 +122,7 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                 + "FROM tagihan t "
                 + "LEFT JOIN kunjungan k ON t.id_kunjungan = k.id_kunjungan "
                 + "LEFT JOIN pasien p ON k.nomor_rekam_medis = p.nomor_rekam_medis "
-                + "ORDER BY t.tanggal_tagihan DESC";
+                + "ORDER BY t.tanggal_tagihan DESC, t.id_tagihan DESC";
         List<Object[]> list = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -150,7 +150,7 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                 + "LEFT JOIN kunjungan k ON t.id_kunjungan = k.id_kunjungan "
                 + "LEFT JOIN pasien p ON k.nomor_rekam_medis = p.nomor_rekam_medis "
                 + "WHERE t.id_tagihan LIKE ? OR p.nama LIKE ? OR t.id_kunjungan LIKE ? "
-                + "ORDER BY t.tanggal_tagihan DESC";
+                + "ORDER BY t.tanggal_tagihan DESC, t.id_tagihan DESC";
         List<Object[]> list = new ArrayList<>();
         String param = "%" + keyword + "%";
         try {
@@ -171,14 +171,35 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
         return list;
     }
 
+    public Tagihan searchByIdKunjungan(String idKunjungan) {
+        con = dbCon.makeConnection();
+        String sql = "SELECT * FROM tagihan WHERE id_kunjungan = ? LIMIT 1";
+        Tagihan tagihan = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, idKunjungan);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                tagihan = new Tagihan(rs.getString("id_tagihan"), rs.getString("id_kunjungan"), rs.getString("tanggal_tagihan"));
+                tagihan.setTotalTagihan(rs.getDouble("total_tagihan"));
+                tagihan.setJumlahBayar(rs.getDouble("jumlah_bayar"));
+                tagihan.setKembalian(rs.getDouble("kembalian"));
+                String metode = rs.getString("metode_pembayaran");
+                if (metode != null) tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
+                tagihan.setStatus(Tagihan.Status.valueOf(rs.getString("status")));
+                loadItemTagihan(tagihan);
+            }
+            rs.close(); ps.close();
+        } catch (Exception e) { System.out.println("Error searchByIdKunjungan: " + e); }
+        dbCon.closeConnection();
+        return tagihan;
+    }
+
     @Override
     public void delete(String id) {
         con = dbCon.makeConnection();
-
-        String sql = "DELETE FROM tagihan WHERE id_tagihan=?";
-
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement("DELETE FROM tagihan WHERE id_tagihan=?");
             ps.setString(1, id);
             ps.executeUpdate();
             ps.close();
@@ -186,21 +207,16 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
         } catch (Exception e) {
             System.out.println("Error delete Tagihan: " + e);
         }
-
         dbCon.closeConnection();
     }
 
     @Override
     public List<Tagihan> showData() {
         con = dbCon.makeConnection();
-
-        String sql = "SELECT * FROM tagihan";
         List<Tagihan> list = new ArrayList<>();
-
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM tagihan");
             ResultSet rs = ps.executeQuery();
-
             if (rs != null) {
                 while (rs.next()) {
                     Tagihan tagihan = new Tagihan(
@@ -211,21 +227,17 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                     tagihan.setJumlahBayar(rs.getDouble("jumlah_bayar"));
                     tagihan.setKembalian(rs.getDouble("kembalian"));
                     String metode = rs.getString("metode_pembayaran");
-                    if (metode != null) {
-                        tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
-                    }
+                    if (metode != null) tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
                     tagihan.setStatus(Tagihan.Status.valueOf(rs.getString("status")));
                     loadItemTagihan(tagihan);
                     list.add(tagihan);
                 }
             }
-
             rs.close();
             ps.close();
         } catch (Exception e) {
             System.out.println("Error showData Tagihan: " + e);
         }
-
         dbCon.closeConnection();
         return list;
     }
@@ -233,15 +245,11 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
     @Override
     public Tagihan search(String id) {
         con = dbCon.makeConnection();
-
-        String sql = "SELECT * FROM tagihan WHERE id_tagihan=?";
         Tagihan tagihan = null;
-
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM tagihan WHERE id_tagihan=?");
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
-
             if (rs != null && rs.next()) {
                 tagihan = new Tagihan(
                         rs.getString("id_tagihan"),
@@ -251,40 +259,59 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                 tagihan.setJumlahBayar(rs.getDouble("jumlah_bayar"));
                 tagihan.setKembalian(rs.getDouble("kembalian"));
                 String metode = rs.getString("metode_pembayaran");
-                if (metode != null) {
-                    tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
-                }
+                if (metode != null) tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
                 tagihan.setStatus(Tagihan.Status.valueOf(rs.getString("status")));
                 loadItemTagihan(tagihan);
             }
-
             rs.close();
             ps.close();
         } catch (Exception e) {
             System.out.println("Error search Tagihan: " + e);
         }
-
         dbCon.closeConnection();
         return tagihan;
     }
 
     private void loadItemTagihan(Tagihan tagihan) {
-        String sql = "SELECT * FROM item_tagihan WHERE id_tagihan=?";
-
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            // Baca dari tagihan_detail
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT nama_item, jumlah, harga_satuan FROM tagihan_detail WHERE id_tagihan=?");
             ps.setString(1, tagihan.getIdTagihan());
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 tagihan.tambahItem(new Tagihan.ItemTagihan(
                         rs.getString("nama_item"),
                         rs.getInt("jumlah"),
                         rs.getDouble("harga_satuan")));
             }
+            rs.close(); ps.close();
 
-            rs.close();
-            ps.close();
+            // Fallback: jika tagihan_detail kosong, ambil dari kunjungan + resep
+            if (tagihan.getDaftarItem().isEmpty()) {
+                String sqlFallback =
+                    "SELECT 'Biaya Konsultasi' AS nama_item, 1 AS jumlah, k.biaya_konsultasi AS harga_satuan " +
+                    "FROM tagihan t JOIN kunjungan k ON t.id_kunjungan = k.id_kunjungan " +
+                    "WHERE t.id_tagihan = ? AND k.biaya_konsultasi > 0 " +
+                    "UNION ALL " +
+                    "SELECT o.nama_obat, rd.jumlah, o.harga_satuan " +
+                    "FROM tagihan t " +
+                    "JOIN kunjungan k ON t.id_kunjungan = k.id_kunjungan " +
+                    "JOIN resep_detail rd ON k.id_resep = rd.id_resep " +
+                    "JOIN obat o ON rd.id_obat = o.id_obat " +
+                    "WHERE t.id_tagihan = ?";
+                PreparedStatement ps2 = con.prepareStatement(sqlFallback);
+                ps2.setString(1, tagihan.getIdTagihan());
+                ps2.setString(2, tagihan.getIdTagihan());
+                ResultSet rs2 = ps2.executeQuery();
+                while (rs2.next()) {
+                    tagihan.tambahItem(new Tagihan.ItemTagihan(
+                            rs2.getString("nama_item"),
+                            rs2.getInt("jumlah"),
+                            rs2.getDouble("harga_satuan")));
+                }
+                rs2.close(); ps2.close();
+            }
         } catch (Exception e) {
             System.out.println("Error loading item tagihan: " + e);
         }
