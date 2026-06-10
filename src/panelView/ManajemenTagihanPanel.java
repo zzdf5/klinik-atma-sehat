@@ -215,12 +215,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        pencarianTagihanPanel = new javax.swing.JPanel();
-        pencarianTagihanLabel = new javax.swing.JLabel();
-        pencarianTagihanTextField = new javax.swing.JTextField();
-        pencarianTagihanButton = new javax.swing.JButton();
         formInputTagihanPanel = new javax.swing.JPanel();
-        formInputTagihanLabel = new javax.swing.JLabel();
         inputIdTagihanPanel = new javax.swing.JPanel();
         inputIdTagihanLabel = new javax.swing.JLabel();
         inputIdTagihanTextField = new javax.swing.JTextField();
@@ -234,8 +229,8 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         itemTagihanLabel = new javax.swing.JLabel();
         itemTagihanScrollPane = new javax.swing.JScrollPane();
         itemTagihanTable = new javax.swing.JTable();
+        inputDataTagihanLabel = new javax.swing.JLabel();
         formRingkasanTagihanPanel = new javax.swing.JPanel();
-        formRingkasanTagihanLabel = new javax.swing.JLabel();
         formInputRingkasanTagihanPanel = new javax.swing.JPanel();
         totalTagihanLabel = new javax.swing.JLabel();
         totalHargaTagihanLabel = new javax.swing.JLabel();
@@ -253,52 +248,23 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         kembalianLabel = new javax.swing.JLabel();
         kembalianTextField = new javax.swing.JTextField();
         simpanButton = new javax.swing.JButton();
+        inputRingkasanTagihanLabel = new javax.swing.JLabel();
         TagihanScrollPane = new javax.swing.JScrollPane();
         TagihanTable = new javax.swing.JTable();
+        pencarianTagihanPanel = new javax.swing.JPanel();
+        judulTagihanLabel = new javax.swing.JLabel();
+        subJudulTagihanLabel = new javax.swing.JLabel();
+        pencarianTagihanTextField = new javax.swing.JTextField();
+        pencarianTagihanButton = new javax.swing.JButton();
+        pencarianTagihanLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
 
         mainPanel.setBackground(new java.awt.Color(238, 239, 253));
-
-        pencarianTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
-        pencarianTagihanPanel.setPreferredSize(new java.awt.Dimension(800, 70));
-
-        pencarianTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        pencarianTagihanLabel.setText("Pencarian Tagihan");
-
-        pencarianTagihanButton.setText("Cari");
-
-        javax.swing.GroupLayout pencarianTagihanPanelLayout = new javax.swing.GroupLayout(pencarianTagihanPanel);
-        pencarianTagihanPanel.setLayout(pencarianTagihanPanelLayout);
-        pencarianTagihanPanelLayout.setHorizontalGroup(
-            pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pencarianTagihanPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pencarianTagihanLabel)
-                    .addGroup(pencarianTagihanPanelLayout.createSequentialGroup()
-                        .addComponent(pencarianTagihanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1050, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pencarianTagihanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pencarianTagihanPanelLayout.setVerticalGroup(
-            pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pencarianTagihanPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pencarianTagihanLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pencarianTagihanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pencarianTagihanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
+        mainPanel.setPreferredSize(new java.awt.Dimension(1155, 799));
 
         formInputTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        formInputTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        formInputTagihanLabel.setText("Data Tagihan");
 
         inputIdTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -311,9 +277,11 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
             inputIdTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdTagihanPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputIdTagihanLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(inputIdTagihanTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(inputIdTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputIdTagihanPanelLayout.createSequentialGroup()
+                        .addComponent(inputIdTagihanLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputIdTagihanTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         inputIdTagihanPanelLayout.setVerticalGroup(
             inputIdTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,16 +304,18 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
             inputIdKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdKunjunganPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputIdKunjunganLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(inputIdKunjunganTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(inputIdKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputIdKunjunganPanelLayout.createSequentialGroup()
+                        .addComponent(inputIdKunjunganLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputIdKunjunganTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         inputIdKunjunganPanelLayout.setVerticalGroup(
             inputIdKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdKunjunganPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(inputIdKunjunganLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputIdKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -361,24 +331,24 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
             inputTanggalTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputTanggalTagihanPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputTanggalTagihanLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(inputTanggalTagihanPanelLayout.createSequentialGroup()
-                .addComponent(inputTanggalTagihanDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGroup(inputTanggalTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputTanggalTagihanPanelLayout.createSequentialGroup()
+                        .addComponent(inputTanggalTagihanLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputTanggalTagihanDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)))
         );
         inputTanggalTagihanPanelLayout.setVerticalGroup(
             inputTanggalTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputTanggalTagihanPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(inputTanggalTagihanLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(inputTanggalTagihanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputTanggalTagihanDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         itemTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        itemTagihanLabel.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        itemTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         itemTagihanLabel.setText("Item Tagihan");
 
         itemTagihanTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -400,9 +370,10 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
             itemTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(itemTagihanPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(itemTagihanLabel)
+                .addGroup(itemTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(itemTagihanScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemTagihanLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(itemTagihanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
         );
         itemTagihanPanelLayout.setVerticalGroup(
             itemTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,29 +384,32 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 .addComponent(itemTagihanScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
+        inputDataTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        inputDataTagihanLabel.setText("Data Tagihan");
+
         javax.swing.GroupLayout formInputTagihanPanelLayout = new javax.swing.GroupLayout(formInputTagihanPanel);
         formInputTagihanPanel.setLayout(formInputTagihanPanelLayout);
         formInputTagihanPanelLayout.setHorizontalGroup(
             formInputTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputTagihanPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(formInputTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(formInputTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(formInputTagihanPanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(formInputTagihanLabel))
-                    .addComponent(inputIdKunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inputIdTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inputTanggalTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(itemTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(formInputTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputIdKunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputIdTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputTanggalTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(itemTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputDataTagihanLabel))
+                .addGap(0, 0, 0))
         );
         formInputTagihanPanelLayout.setVerticalGroup(
             formInputTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputTagihanPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(formInputTagihanLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(inputDataTagihanLabel)
+                .addGap(22, 22, 22)
                 .addGroup(formInputTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(formInputTagihanPanelLayout.createSequentialGroup()
                         .addComponent(inputIdTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -444,13 +418,10 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(inputTanggalTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(itemTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         formRingkasanTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        formRingkasanTagihanLabel.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        formRingkasanTagihanLabel.setText("Ringkasan Tagihan");
 
         formInputRingkasanTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -462,6 +433,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
         inputMetodePembayaranPanel.setBackground(new java.awt.Color(255, 255, 255));
 
+        inputMetodePembayaranLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputMetodePembayaranLabel.setText("Metode Pembayaran");
 
         inputMetodePembayaranComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -473,9 +445,10 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
             .addGroup(inputMetodePembayaranPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inputMetodePembayaranPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputMetodePembayaranComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputMetodePembayaranLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(inputMetodePembayaranPanelLayout.createSequentialGroup()
+                        .addComponent(inputMetodePembayaranLabel)
+                        .addContainerGap(108, Short.MAX_VALUE))
+                    .addComponent(inputMetodePembayaranComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         inputMetodePembayaranPanelLayout.setVerticalGroup(
             inputMetodePembayaranPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,6 +462,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
         inputJumlahBayarPanel.setBackground(new java.awt.Color(255, 255, 255));
 
+        inputJumlahBayarLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputJumlahBayarLabel.setText("Jumlah Bayar");
 
         javax.swing.GroupLayout inputJumlahBayarPanelLayout = new javax.swing.GroupLayout(inputJumlahBayarPanel);
@@ -516,6 +490,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
         inputStatusBayarPanel.setBackground(new java.awt.Color(255, 255, 255));
 
+        inputStatusBayarLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputStatusBayarLabel.setText("Status Bayar");
 
         lunasRadioButton.setText("LUNAS");
@@ -553,6 +528,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
         kembalianPanel.setBackground(new java.awt.Color(255, 255, 255));
 
+        kembalianLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         kembalianLabel.setText("Kembalian");
 
         javax.swing.GroupLayout kembalianPanelLayout = new javax.swing.GroupLayout(kembalianPanel);
@@ -579,7 +555,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         );
 
         simpanButton.setBackground(new java.awt.Color(51, 178, 73));
-        simpanButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
+        simpanButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         simpanButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanButton.setText("Simpan");
         simpanButton.addActionListener(new java.awt.event.ActionListener() {
@@ -602,31 +578,29 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                     .addComponent(kembalianPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(inputJumlahBayarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(formInputRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(formInputRingkasanTagihanPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(totalTagihanLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(totalHargaTagihanLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formInputRingkasanTagihanPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(simpanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))))
+                        .addGap(21, 21, 21))
+                    .addGroup(formInputRingkasanTagihanPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(formInputRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(totalHargaTagihanLabel)
+                            .addComponent(totalTagihanLabel))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         formInputRingkasanTagihanPanelLayout.setVerticalGroup(
             formInputRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputRingkasanTagihanPanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
                 .addGroup(formInputRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(formInputRingkasanTagihanPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(formInputRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(inputJumlahBayarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputMetodePembayaranPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(formInputRingkasanTagihanPanelLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(formInputRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(totalTagihanLabel)
-                            .addComponent(totalHargaTagihanLabel))))
+                        .addComponent(totalTagihanLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalHargaTagihanLabel))
+                    .addGroup(formInputRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(inputJumlahBayarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(inputMetodePembayaranPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formInputRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputStatusBayarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -636,6 +610,9 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        inputRingkasanTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        inputRingkasanTagihanLabel.setText("Ringkasan Tagihan");
+
         javax.swing.GroupLayout formRingkasanTagihanPanelLayout = new javax.swing.GroupLayout(formRingkasanTagihanPanel);
         formRingkasanTagihanPanel.setLayout(formRingkasanTagihanPanelLayout);
         formRingkasanTagihanPanelLayout.setHorizontalGroup(
@@ -643,20 +620,20 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
             .addGroup(formRingkasanTagihanPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(formRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(formInputRingkasanTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(formRingkasanTagihanPanelLayout.createSequentialGroup()
-                        .addComponent(formRingkasanTagihanLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(formInputRingkasanTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(inputRingkasanTagihanLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         formRingkasanTagihanPanelLayout.setVerticalGroup(
             formRingkasanTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formRingkasanTagihanPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(formRingkasanTagihanLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(formInputRingkasanTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(inputRingkasanTagihanLabel)
+                .addGap(1, 1, 1)
+                .addComponent(formInputRingkasanTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 165, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         TagihanTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -672,30 +649,93 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         ));
         TagihanScrollPane.setViewportView(TagihanTable);
 
+        pencarianTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
+        pencarianTagihanPanel.setPreferredSize(new java.awt.Dimension(778, 74));
+
+        judulTagihanLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulTagihanLabel.setText("Data Master Manajemen Tagihan");
+
+        subJudulTagihanLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        subJudulTagihanLabel.setText("Tagihan");
+
+        pencarianTagihanTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pencarianTagihanTextFieldKeyPressed(evt);
+            }
+        });
+
+        pencarianTagihanButton.setBackground(new java.awt.Color(0, 0, 153));
+        pencarianTagihanButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianTagihanButton.setForeground(new java.awt.Color(255, 255, 255));
+        pencarianTagihanButton.setText("Cari");
+        pencarianTagihanButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pencarianTagihanButtonActionPerformed(evt);
+            }
+        });
+
+        pencarianTagihanLabel.setText("Pencarian Tagihan");
+
+        javax.swing.GroupLayout pencarianTagihanPanelLayout = new javax.swing.GroupLayout(pencarianTagihanPanel);
+        pencarianTagihanPanel.setLayout(pencarianTagihanPanelLayout);
+        pencarianTagihanPanelLayout.setHorizontalGroup(
+            pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pencarianTagihanPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(subJudulTagihanLabel)
+                    .addComponent(judulTagihanLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 400, Short.MAX_VALUE)
+                .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pencarianTagihanPanelLayout.createSequentialGroup()
+                        .addComponent(pencarianTagihanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pencarianTagihanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pencarianTagihanLabel))
+                .addGap(20, 20, 20))
+        );
+        pencarianTagihanPanelLayout.setVerticalGroup(
+            pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pencarianTagihanPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(judulTagihanLabel)
+                    .addComponent(pencarianTagihanLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pencarianTagihanButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pencarianTagihanPanelLayout.createSequentialGroup()
+                        .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pencarianTagihanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subJudulTagihanLabel))
+                        .addContainerGap())))
+        );
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pencarianTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1143, Short.MAX_VALUE)
+                    .addComponent(formInputTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(formRingkasanTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pencarianTagihanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1141, Short.MAX_VALUE)
-                    .addComponent(formInputTagihanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(TagihanScrollPane))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addComponent(pencarianTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addContainerGap()
+                .addComponent(pencarianTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formInputTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formRingkasanTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TagihanScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(TagihanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -705,14 +745,14 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(240, 240, 240))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -757,16 +797,23 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_simpanButtonActionPerformed
 
+    private void pencarianTagihanTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianTagihanTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n') doSearch();
+    }//GEN-LAST:event_pencarianTagihanTextFieldKeyPressed
+
+    private void pencarianTagihanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianTagihanButtonActionPerformed
+        doSearch();
+    }//GEN-LAST:event_pencarianTagihanButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane TagihanScrollPane;
     private javax.swing.JTable TagihanTable;
     private javax.swing.JRadioButton belumLunasRadioButton;
     private javax.swing.JPanel formInputRingkasanTagihanPanel;
-    private javax.swing.JLabel formInputTagihanLabel;
     private javax.swing.JPanel formInputTagihanPanel;
-    private javax.swing.JLabel formRingkasanTagihanLabel;
     private javax.swing.JPanel formRingkasanTagihanPanel;
+    private javax.swing.JLabel inputDataTagihanLabel;
     private javax.swing.JLabel inputIdKunjunganLabel;
     private javax.swing.JPanel inputIdKunjunganPanel;
     private javax.swing.JTextField inputIdKunjunganTextField;
@@ -779,6 +826,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> inputMetodePembayaranComboBox;
     private javax.swing.JLabel inputMetodePembayaranLabel;
     private javax.swing.JPanel inputMetodePembayaranPanel;
+    private javax.swing.JLabel inputRingkasanTagihanLabel;
     private javax.swing.JLabel inputStatusBayarLabel;
     private javax.swing.JPanel inputStatusBayarPanel;
     private com.toedter.calendar.JDateChooser inputTanggalTagihanDateChooser;
@@ -788,6 +836,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     private javax.swing.JPanel itemTagihanPanel;
     private javax.swing.JScrollPane itemTagihanScrollPane;
     private javax.swing.JTable itemTagihanTable;
+    private javax.swing.JLabel judulTagihanLabel;
     private javax.swing.JLabel kembalianLabel;
     private javax.swing.JPanel kembalianPanel;
     private javax.swing.JTextField kembalianTextField;
@@ -798,6 +847,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pencarianTagihanPanel;
     private javax.swing.JTextField pencarianTagihanTextField;
     private javax.swing.JButton simpanButton;
+    private javax.swing.JLabel subJudulTagihanLabel;
     private javax.swing.JLabel totalHargaTagihanLabel;
     private javax.swing.JLabel totalTagihanLabel;
     // End of variables declaration//GEN-END:variables

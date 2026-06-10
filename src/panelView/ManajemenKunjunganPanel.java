@@ -169,12 +169,6 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputHasilPemeriksaanLabel = new javax.swing.JLabel();
         inputHasilPemeriksaanScrollPane = new javax.swing.JScrollPane();
         inputHasilPemeriksaanTextField = new javax.swing.JTextField();
-        searchKunjunganPanel = new javax.swing.JPanel();
-        judulKunjunganLabel = new javax.swing.JLabel();
-        subJudulKunjunganLabel = new javax.swing.JLabel();
-        searchKunjunganTextField = new javax.swing.JTextField();
-        searchKunjunganButton = new javax.swing.JButton();
-        searchKunjunganLabel = new javax.swing.JLabel();
         metricCardPanel = new javax.swing.JPanel();
         antrianCardPanel = new javax.swing.JPanel();
         antrianCardLabel = new javax.swing.JLabel();
@@ -192,11 +186,18 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         barukanKunjunganButton = new javax.swing.JButton();
         hapusKunjunganButton = new javax.swing.JButton();
         kunjunganButtonLabel = new javax.swing.JLabel();
+        searchKunjunganPanel = new javax.swing.JPanel();
+        judulKunjunganLabel = new javax.swing.JLabel();
+        subJudulKunjunganLabel = new javax.swing.JLabel();
+        searchKunjunganTextField = new javax.swing.JTextField();
+        searchKunjunganButton = new javax.swing.JButton();
+        searchKunjunganLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
 
         mainPanel.setBackground(new java.awt.Color(238, 239, 253));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1155, 799));
 
         formInputDataKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -214,25 +215,20 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             inputIdKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdKunjunganPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputIdKunjunganLabel)
-                .addContainerGap(171, Short.MAX_VALUE))
-            .addGroup(inputIdKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(inputIdKunjunganPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(inputIdKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(inputIdKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputIdKunjunganPanelLayout.createSequentialGroup()
+                        .addComponent(inputIdKunjunganLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(inputIdKunjunganTextField))
+                .addContainerGap())
         );
         inputIdKunjunganPanelLayout.setVerticalGroup(
             inputIdKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdKunjunganPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(inputIdKunjunganLabel)
-                .addContainerGap(50, Short.MAX_VALUE))
-            .addGroup(inputIdKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputIdKunjunganPanelLayout.createSequentialGroup()
-                    .addContainerGap(27, Short.MAX_VALUE)
-                    .addComponent(inputIdKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(16, 16, 16)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(inputIdKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         inputNomorRekamMedisPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -256,7 +252,9 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                     .addGroup(inputNomorRekamMedisPanelLayout.createSequentialGroup()
                         .addComponent(inputNomorRekamMedisLabel)
                         .addGap(0, 137, Short.MAX_VALUE))
-                    .addComponent(inputNomorRekamMedisTextField)))
+                    .addGroup(inputNomorRekamMedisPanelLayout.createSequentialGroup()
+                        .addComponent(inputNomorRekamMedisTextField)
+                        .addContainerGap())))
         );
         inputNomorRekamMedisPanelLayout.setVerticalGroup(
             inputNomorRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,9 +277,11 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             .addGroup(inputTanggalKunjunganPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inputTanggalKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputTanggalKunjunganDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputTanggalKunjunganLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(inputTanggalKunjunganPanelLayout.createSequentialGroup()
+                        .addComponent(inputTanggalKunjunganLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(inputTanggalKunjunganDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
+                .addContainerGap())
         );
         inputTanggalKunjunganPanelLayout.setVerticalGroup(
             inputTanggalKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,12 +315,10 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputPilihDokterPanelLayout.setHorizontalGroup(
             inputPilihDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputPilihDokterPanelLayout.createSequentialGroup()
-                .addComponent(inputPilihDokterLabel)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(inputPilihDokterPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(inputPilihDokterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(inputPilihDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputPilihDokterLabel)
+                    .addComponent(inputPilihDokterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 23, Short.MAX_VALUE))
         );
         inputPilihDokterPanelLayout.setVerticalGroup(
             inputPilihDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,9 +342,12 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputJamKunjunganPanelLayout.setHorizontalGroup(
             inputJamKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputJamKunjunganPanelLayout.createSequentialGroup()
-                .addComponent(inputJamKunjunganLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jComboBox1, 0, 260, Short.MAX_VALUE)
+                .addGroup(inputJamKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputJamKunjunganPanelLayout.createSequentialGroup()
+                        .addComponent(inputJamKunjunganLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jComboBox1, 0, 254, Short.MAX_VALUE))
+                .addContainerGap())
         );
         inputJamKunjunganPanelLayout.setVerticalGroup(
             inputJamKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,6 +360,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         );
 
         inputStatusKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
+        inputStatusKunjunganPanel.setPreferredSize(new java.awt.Dimension(260, 59));
 
         inputStatusKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputStatusKunjunganLabel.setText("Status Kunjungan");
@@ -370,19 +372,19 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputStatusKunjunganPanelLayout.setHorizontalGroup(
             inputStatusKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputStatusKunjunganPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(inputStatusKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputStatusKunjunganComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputStatusKunjunganLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputStatusKunjunganLabel)
+                    .addComponent(inputStatusKunjunganComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         inputStatusKunjunganPanelLayout.setVerticalGroup(
             inputStatusKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputStatusKunjunganPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputStatusKunjunganLabel)
-                .addGap(8, 8, 8)
-                .addComponent(inputStatusKunjunganComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(inputStatusKunjunganComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         inputIdDiagnosaPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -396,25 +398,18 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             inputIdDiagnosaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdDiagnosaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputIdDiagnosaLabel)
-                .addContainerGap(179, Short.MAX_VALUE))
-            .addGroup(inputIdDiagnosaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(inputIdDiagnosaPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(inputIdDiagnosaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(inputIdDiagnosaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputIdDiagnosaLabel)
+                    .addComponent(inputIdDiagnosaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         inputIdDiagnosaPanelLayout.setVerticalGroup(
             inputIdDiagnosaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdDiagnosaPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(inputIdDiagnosaLabel)
-                .addContainerGap(50, Short.MAX_VALUE))
-            .addGroup(inputIdDiagnosaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputIdDiagnosaPanelLayout.createSequentialGroup()
-                    .addContainerGap(27, Short.MAX_VALUE)
-                    .addComponent(inputIdDiagnosaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(16, 16, 16)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(inputIdDiagnosaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         inputIdResepPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -465,13 +460,10 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputBiayaKonsultasiPanelLayout.setHorizontalGroup(
             inputBiayaKonsultasiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputBiayaKonsultasiPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(inputBiayaKonsultasiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(inputBiayaKonsultasiPanelLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(inputBiayaKonsultasiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputBiayaKonsultasiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inputBiayaKonsultasiLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
         inputBiayaKonsultasiPanelLayout.setVerticalGroup(
             inputBiayaKonsultasiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,7 +476,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
         inputKeluhanUtamaPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputKeluhanUtamaLabel.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        inputKeluhanUtamaLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputKeluhanUtamaLabel.setText("Keluhan Utama");
 
         inputKeluhanUtamaTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -501,9 +493,9 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             .addGroup(inputKeluhanUtamaPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inputKeluhanUtamaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputKeluhanUtamaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputKeluhanUtamaLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputKeluhanUtamaLabel)
+                    .addComponent(inputKeluhanUtamaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         inputKeluhanUtamaPanelLayout.setVerticalGroup(
             inputKeluhanUtamaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -527,7 +519,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
         inputHasilPemeriksaanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputHasilPemeriksaanLabel.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        inputHasilPemeriksaanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputHasilPemeriksaanLabel.setText("Hasil Pemeriksaan");
 
         inputHasilPemeriksaanTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -541,14 +533,11 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputHasilPemeriksaanPanel.setLayout(inputHasilPemeriksaanPanelLayout);
         inputHasilPemeriksaanPanelLayout.setHorizontalGroup(
             inputHasilPemeriksaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(inputHasilPemeriksaanPanelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputHasilPemeriksaanPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(inputHasilPemeriksaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(inputHasilPemeriksaanPanelLayout.createSequentialGroup()
-                        .addComponent(inputHasilPemeriksaanLabel)
-                        .addGap(0, 56, Short.MAX_VALUE))
-                    .addComponent(inputHasilPemeriksaanScrollPane))
-                .addContainerGap())
+                    .addComponent(inputHasilPemeriksaanLabel)
+                    .addComponent(inputHasilPemeriksaanScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         inputHasilPemeriksaanPanelLayout.setVerticalGroup(
             inputHasilPemeriksaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,15 +557,16 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(formInputDataKunjunganLabel)
-                    .addComponent(inputIdKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputTanggalKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputIdDiagnosaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputIdDiagnosaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(inputIdKunjunganPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(inputTanggalKunjunganPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(6, 6, 6)
-                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
                         .addComponent(inputIdResepPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(inputBiayaKonsultasiPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(inputBiayaKonsultasiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(inputNomorRekamMedisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -586,108 +576,54 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                             .addComponent(inputPilihDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(inputStatusKunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(simpanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inputKeluhanUtamaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputKeluhanUtamaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(simpanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(inputHasilPemeriksaanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(batalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(batalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(inputHasilPemeriksaanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         formInputDataKunjunganPanelLayout.setVerticalGroup(
             formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
-                        .addComponent(formInputDataKunjunganLabel)
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addGap(39, 39, 39)
                                 .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(inputPilihDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                     .addComponent(inputNomorRekamMedisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formInputDataKunjunganPanelLayout.createSequentialGroup()
+                                .addComponent(formInputDataKunjunganLabel)
                                 .addGap(18, 18, 18)
                                 .addComponent(inputIdKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(22, 22, 22)
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputTanggalKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inputJamKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inputStatusKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
+                            .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(inputStatusKunjunganPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inputJamKunjunganPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputIdResepPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inputIdDiagnosaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inputBiayaKonsultasiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(inputIdResepPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inputIdDiagnosaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(inputBiayaKonsultasiPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(formInputDataKunjunganPanelLayout.createSequentialGroup()
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputHasilPemeriksaanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(inputKeluhanUtamaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(batalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(simpanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        searchKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        judulKunjunganLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 18)); // NOI18N
-        judulKunjunganLabel.setText("Data Master Manajemen Kunjungan");
-
-        subJudulKunjunganLabel.setText("Pencatatan data kunjungan pasien, diagnosa, dan administrasi konsultasi");
-
-        searchKunjunganTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                searchKunjunganTextFieldKeyPressed(evt);
-            }
-        });
-
-        searchKunjunganButton.setBackground(new java.awt.Color(0, 0, 153));
-        searchKunjunganButton.setForeground(new java.awt.Color(255, 255, 255));
-        searchKunjunganButton.setText("Cari");
-        searchKunjunganButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchKunjunganButtonActionPerformed(evt);
-            }
-        });
-
-        searchKunjunganLabel.setText("Pencarian Kunjungan");
-
-        javax.swing.GroupLayout searchKunjunganPanelLayout = new javax.swing.GroupLayout(searchKunjunganPanel);
-        searchKunjunganPanel.setLayout(searchKunjunganPanelLayout);
-        searchKunjunganPanelLayout.setHorizontalGroup(
-            searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchKunjunganPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(subJudulKunjunganLabel)
-                    .addComponent(judulKunjunganLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(searchKunjunganPanelLayout.createSequentialGroup()
-                        .addComponent(searchKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(searchKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(searchKunjunganLabel))
-                .addGap(20, 20, 20))
-        );
-        searchKunjunganPanelLayout.setVerticalGroup(
-            searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchKunjunganPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(judulKunjunganLabel)
-                    .addComponent(searchKunjunganLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchKunjunganButton)
-                    .addComponent(subJudulKunjunganLabel)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchKunjunganPanelLayout.createSequentialGroup()
-                        .addComponent(searchKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         metricCardPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -861,7 +797,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             }
         });
 
-        kunjunganButtonLabel.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
+        kunjunganButtonLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         kunjunganButtonLabel.setText("Aksi");
 
         javax.swing.GroupLayout kunjunganButtonPanelLayout = new javax.swing.GroupLayout(kunjunganButtonPanel);
@@ -869,27 +805,89 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         kunjunganButtonPanelLayout.setHorizontalGroup(
             kunjunganButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kunjunganButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(kunjunganButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(kunjunganButtonLabel)
-                    .addComponent(tanbahKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(barukanKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(hapusKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(12, 12, 12)
+                .addGroup(kunjunganButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(kunjunganButtonLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(kunjunganButtonPanelLayout.createSequentialGroup()
+                        .addComponent(tanbahKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(barukanKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hapusKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         kunjunganButtonPanelLayout.setVerticalGroup(
             kunjunganButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kunjunganButtonPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(kunjunganButtonLabel)
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(kunjunganButtonLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(kunjunganButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tanbahKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(barukanKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hapusKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        searchKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        judulKunjunganLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulKunjunganLabel.setText("Data Master Manajemen Kunjungan");
+
+        subJudulKunjunganLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        subJudulKunjunganLabel.setText("Kunjungan");
+
+        searchKunjunganTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchKunjunganTextFieldKeyPressed(evt);
+            }
+        });
+
+        searchKunjunganButton.setBackground(new java.awt.Color(0, 0, 153));
+        searchKunjunganButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        searchKunjunganButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchKunjunganButton.setText("Cari");
+        searchKunjunganButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchKunjunganButtonActionPerformed(evt);
+            }
+        });
+
+        searchKunjunganLabel.setText("Pencarian Kunjungan");
+
+        javax.swing.GroupLayout searchKunjunganPanelLayout = new javax.swing.GroupLayout(searchKunjunganPanel);
+        searchKunjunganPanel.setLayout(searchKunjunganPanelLayout);
+        searchKunjunganPanelLayout.setHorizontalGroup(
+            searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchKunjunganPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(subJudulKunjunganLabel)
+                    .addComponent(judulKunjunganLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(searchKunjunganPanelLayout.createSequentialGroup()
+                        .addComponent(searchKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchKunjunganButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchKunjunganLabel))
+                .addGap(20, 20, 20))
+        );
+        searchKunjunganPanelLayout.setVerticalGroup(
+            searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchKunjunganPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(judulKunjunganLabel)
+                    .addComponent(searchKunjunganLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchKunjunganButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchKunjunganPanelLayout.createSequentialGroup()
+                        .addGroup(searchKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(searchKunjunganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subJudulKunjunganLabel))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -898,20 +896,22 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(formInputDataKunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchKunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(metricCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(kunjunganButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(kunjunganButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(searchKunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(kunjunganScrollPane))
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addComponent(searchKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(searchKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(kunjunganButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -919,7 +919,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formInputDataKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(kunjunganScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addComponent(kunjunganScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -927,10 +927,10 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -993,10 +993,6 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Kunjungan berhasil dihapus.");
     }//GEN-LAST:event_hapusKunjunganButtonActionPerformed
 
-    private void searchKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchKunjunganButtonActionPerformed
-        doSearch();
-    }//GEN-LAST:event_searchKunjunganButtonActionPerformed
-
     private void batalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalButtonActionPerformed
         action = null;
         selectedId = null;
@@ -1008,6 +1004,10 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     private void searchKunjunganTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKunjunganTextFieldKeyPressed
         if(evt.getKeyChar() == '\n') doSearch();
     }//GEN-LAST:event_searchKunjunganTextFieldKeyPressed
+
+    private void searchKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchKunjunganButtonActionPerformed
+        doSearch();
+    }//GEN-LAST:event_searchKunjunganButtonActionPerformed
 
     // -------------------------------------------------------------------------
 

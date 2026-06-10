@@ -8,6 +8,7 @@ import control.AdminControl;
 import control.DokterControl;
 import exception.DataTidakDitemukanException;
 import exception.InputKosongException;
+import javax.swing.UIManager;
 import model.Admin;
 import model.Dokter;
 
@@ -146,13 +147,14 @@ public class LoginForm extends javax.swing.JFrame {
         NavbarPanelLayout.setVerticalGroup(
             NavbarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NavbarPanelLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(NavbarLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NavbarPanelLayout.createSequentialGroup()
                 .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(NavbarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NavbarPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NavbarPanelLayout.createSequentialGroup()
+                        .addComponent(NavbarLabel)
+                        .addGap(26, 26, 26))))
         );
 
         FormInputPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -180,18 +182,18 @@ public class LoginForm extends javax.swing.JFrame {
             .addGroup(InputUsernamePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(InputUsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputUsernameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                     .addGroup(InputUsernamePanelLayout.createSequentialGroup()
                         .addComponent(inputUsernameLabel)
-                        .addGap(0, 475, Short.MAX_VALUE))
-                    .addComponent(inputUsernameTextField))
+                        .addGap(0, 475, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         InputUsernamePanelLayout.setVerticalGroup(
             InputUsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InputUsernamePanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(inputUsernameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -215,18 +217,18 @@ public class LoginForm extends javax.swing.JFrame {
             .addGroup(inputPasswordPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inputPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputPasswordTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                     .addGroup(inputPasswordPanelLayout.createSequentialGroup()
                         .addComponent(inputPasswordLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(inputPasswordTextField))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         inputPasswordPanelLayout.setVerticalGroup(
             inputPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputPasswordPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(inputPasswordLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -360,21 +362,14 @@ public class LoginForm extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+       try {
+            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+            UIManager.put("Button.arc", 12);
+            UIManager.put("Component.arc", 10);
+            UIManager.put("TextComponent.arc", 8);
+            UIManager.put("Label.arc", 12);
+        } catch (Exception ex) {
+            System.err.println("Gagal load FlatLaf: " + ex);
         }
         //</editor-fold>
 

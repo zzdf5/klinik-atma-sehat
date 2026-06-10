@@ -215,15 +215,14 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
         kategoriObatRadioGroup = new javax.swing.ButtonGroup();
         mainPanel = new javax.swing.JPanel();
-        pencarianObatPanel = new javax.swing.JPanel();
-        pencarianObatLabel = new javax.swing.JLabel();
-        pencarianObatTextField = new javax.swing.JTextField();
-        pencarianObatButton = new javax.swing.JButton();
         formInputDataObatPanel = new javax.swing.JPanel();
-        inputDataObatLabel = new javax.swing.JLabel();
         pilihBentukSediaanPanel = new javax.swing.JPanel();
         pilihBentukSediaanLabel = new javax.swing.JLabel();
         pilihBentukSediaanDropDown = new javax.swing.JComboBox<>();
+        pilihKategoriObatPanel = new javax.swing.JPanel();
+        pilihKategoriObatLabel = new javax.swing.JLabel();
+        obatHerbalRadioButton = new javax.swing.JRadioButton();
+        obatPatenRadioButton = new javax.swing.JRadioButton();
         inputNamaObatPanel = new javax.swing.JPanel();
         inputNamaObatLabel = new javax.swing.JLabel();
         inputNamaObatTextField = new javax.swing.JTextField();
@@ -235,109 +234,109 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputDosisPanel = new javax.swing.JPanel();
         inputDosisLabel = new javax.swing.JLabel();
         inputDosisTextField = new javax.swing.JTextField();
-        pilihKategoriObatPanel = new javax.swing.JPanel();
-        pilihKategoriObatLabel = new javax.swing.JLabel();
-        obatHerbalRadioButton = new javax.swing.JRadioButton();
-        obatPatenRadioButton = new javax.swing.JRadioButton();
         inputHargaSatuanPanel = new javax.swing.JPanel();
         inputHargaSatuanLabel = new javax.swing.JLabel();
         inputHargaSatuanTextField = new javax.swing.JTextField();
         inputStokObatPanel = new javax.swing.JPanel();
         inputStokObatLabel = new javax.swing.JLabel();
         inputStokObatTextField = new javax.swing.JTextField();
+        inputDataObatLabel = new javax.swing.JLabel();
         inputSpecialAtributePanel = new javax.swing.JPanel();
         inputSpecialAtributeLabel = new javax.swing.JLabel();
         inputSpecialAtributeTextField = new javax.swing.JTextField();
         obatPatenScrollPane = new javax.swing.JScrollPane();
         obatPatenTable = new javax.swing.JTable();
-        obatButtonPanel = new javax.swing.JPanel();
-        tambahObatButton = new javax.swing.JButton();
-        barukanObatButton = new javax.swing.JButton();
-        hapusObatButton = new javax.swing.JButton();
         obatPatenLabel = new javax.swing.JLabel();
         obatHerbalScrollPane = new javax.swing.JScrollPane();
         obatHerbalTable = new javax.swing.JTable();
         obatHerbalLabel = new javax.swing.JLabel();
+        dokterButtonPanel = new javax.swing.JPanel();
+        tambahObatButton = new javax.swing.JButton();
+        barukanObatButton = new javax.swing.JButton();
+        hapusObatButton = new javax.swing.JButton();
+        pencarianPasienPanel = new javax.swing.JPanel();
+        judulObatLabel = new javax.swing.JLabel();
+        subJudulObatLabel = new javax.swing.JLabel();
+        pencarianObatTextField = new javax.swing.JTextField();
+        pencarianObatButton = new javax.swing.JButton();
+        pencarianObatLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
 
         mainPanel.setBackground(new java.awt.Color(238, 239, 253));
-
-        pencarianObatPanel.setBackground(new java.awt.Color(18, 32, 86));
-        pencarianObatPanel.setForeground(new java.awt.Color(255, 255, 255));
-        pencarianObatPanel.setPreferredSize(new java.awt.Dimension(800, 70));
-
-        pencarianObatLabel.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 18)); // NOI18N
-        pencarianObatLabel.setForeground(new java.awt.Color(255, 255, 255));
-        pencarianObatLabel.setText("Pencarian Obat");
-
-        pencarianObatTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                pencarianObatTextFieldKeyPressed(evt);
-            }
-        });
-
-        pencarianObatButton.setBackground(new java.awt.Color(204, 204, 255));
-        pencarianObatButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
-        pencarianObatButton.setText("Cari");
-        pencarianObatButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pencarianObatButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pencarianObatPanelLayout = new javax.swing.GroupLayout(pencarianObatPanel);
-        pencarianObatPanel.setLayout(pencarianObatPanelLayout);
-        pencarianObatPanelLayout.setHorizontalGroup(
-            pencarianObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pencarianObatPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pencarianObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pencarianObatPanelLayout.createSequentialGroup()
-                        .addComponent(pencarianObatLabel)
-                        .addGap(0, 994, Short.MAX_VALUE))
-                    .addGroup(pencarianObatPanelLayout.createSequentialGroup()
-                        .addComponent(pencarianObatTextField)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pencarianObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        pencarianObatPanelLayout.setVerticalGroup(
-            pencarianObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pencarianObatPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pencarianObatLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pencarianObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pencarianObatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pencarianObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
+        mainPanel.setPreferredSize(new java.awt.Dimension(1155, 799));
 
         formInputDataObatPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputDataObatLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 18)); // NOI18N
-        inputDataObatLabel.setText("Data Obat");
-
         pilihBentukSediaanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        pilihBentukSediaanLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        pilihBentukSediaanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         pilihBentukSediaanLabel.setText("Bentuk sediaan");
 
+        pilihBentukSediaanDropDown.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         pilihBentukSediaanDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        pilihKategoriObatPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        pilihKategoriObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pilihKategoriObatLabel.setText("Kategori");
+
+        kategoriObatRadioGroup.add(obatHerbalRadioButton);
+        obatHerbalRadioButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        obatHerbalRadioButton.setText("Obat Herbal");
+        obatHerbalRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                obatHerbalRadioButtonActionPerformed(evt);
+            }
+        });
+
+        kategoriObatRadioGroup.add(obatPatenRadioButton);
+        obatPatenRadioButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        obatPatenRadioButton.setText("Obat Paten");
+        obatPatenRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                obatPatenRadioButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pilihKategoriObatPanelLayout = new javax.swing.GroupLayout(pilihKategoriObatPanel);
+        pilihKategoriObatPanel.setLayout(pilihKategoriObatPanelLayout);
+        pilihKategoriObatPanelLayout.setHorizontalGroup(
+            pilihKategoriObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pilihKategoriObatPanelLayout.createSequentialGroup()
+                .addComponent(obatHerbalRadioButton)
+                .addGap(24, 24, 24)
+                .addComponent(obatPatenRadioButton)
+                .addContainerGap(13, Short.MAX_VALUE))
+            .addGroup(pilihKategoriObatPanelLayout.createSequentialGroup()
+                .addComponent(pilihKategoriObatLabel)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        pilihKategoriObatPanelLayout.setVerticalGroup(
+            pilihKategoriObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pilihKategoriObatPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pilihKategoriObatLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pilihKategoriObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(obatHerbalRadioButton)
+                    .addComponent(obatPatenRadioButton))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout pilihBentukSediaanPanelLayout = new javax.swing.GroupLayout(pilihBentukSediaanPanel);
         pilihBentukSediaanPanel.setLayout(pilihBentukSediaanPanelLayout);
         pilihBentukSediaanPanelLayout.setHorizontalGroup(
             pilihBentukSediaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pilihBentukSediaanPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pilihBentukSediaanPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pilihBentukSediaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pilihBentukSediaanPanelLayout.createSequentialGroup()
+                .addGroup(pilihBentukSediaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pilihBentukSediaanDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pilihBentukSediaanPanelLayout.createSequentialGroup()
                         .addComponent(pilihBentukSediaanLabel)
-                        .addGap(0, 111, Short.MAX_VALUE))
-                    .addComponent(pilihBentukSediaanDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pilihBentukSediaanPanelLayout.setVerticalGroup(
@@ -347,12 +346,14 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addComponent(pilihBentukSediaanLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pilihBentukSediaanDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         inputNamaObatPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputNamaObatLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputNamaObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputNamaObatLabel.setText("Nama Obat");
 
         javax.swing.GroupLayout inputNamaObatPanelLayout = new javax.swing.GroupLayout(inputNamaObatPanel);
@@ -361,11 +362,11 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             inputNamaObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputNamaObatPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputNamaObatLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(inputNamaObatPanelLayout.createSequentialGroup()
-                .addComponent(inputNamaObatTextField)
-                .addContainerGap())
+                .addGroup(inputNamaObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputNamaObatTextField)
+                    .addGroup(inputNamaObatPanelLayout.createSequentialGroup()
+                        .addComponent(inputNamaObatLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         inputNamaObatPanelLayout.setVerticalGroup(
             inputNamaObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,11 +375,11 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addComponent(inputNamaObatLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputNamaObatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         simpanObatButton.setBackground(new java.awt.Color(51, 178, 73));
-        simpanObatButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
+        simpanObatButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         simpanObatButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanObatButton.setText("Simpan");
         simpanObatButton.addActionListener(new java.awt.event.ActionListener() {
@@ -388,7 +389,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         });
 
         batalObatButton.setBackground(new java.awt.Color(237, 8, 0));
-        batalObatButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
+        batalObatButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         batalObatButton.setForeground(new java.awt.Color(255, 255, 255));
         batalObatButton.setText("Batal");
         batalObatButton.addActionListener(new java.awt.event.ActionListener() {
@@ -399,8 +400,8 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
         inputIdObatPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputIdObatLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
-        inputIdObatLabel.setText("ID-Obat");
+        inputIdObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdObatLabel.setText("ID Obat");
 
         javax.swing.GroupLayout inputIdObatPanelLayout = new javax.swing.GroupLayout(inputIdObatPanel);
         inputIdObatPanel.setLayout(inputIdObatPanelLayout);
@@ -408,9 +409,11 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             inputIdObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdObatPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputIdObatLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(inputIdObatTextField)
+                .addGroup(inputIdObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputIdObatTextField)
+                    .addGroup(inputIdObatPanelLayout.createSequentialGroup()
+                        .addComponent(inputIdObatLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         inputIdObatPanelLayout.setVerticalGroup(
             inputIdObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,7 +427,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
         inputDosisPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputDosisLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputDosisLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputDosisLabel.setText("Dosis");
 
         inputDosisTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -438,74 +441,24 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputDosisPanelLayout.setHorizontalGroup(
             inputDosisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputDosisPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(inputDosisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputDosisTextField)
-                    .addGroup(inputDosisPanelLayout.createSequentialGroup()
-                        .addComponent(inputDosisLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(inputDosisLabel)
+                    .addComponent(inputDosisTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
         );
         inputDosisPanelLayout.setVerticalGroup(
             inputDosisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputDosisPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputDosisLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputDosisTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
-        pilihKategoriObatPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        pilihKategoriObatLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
-        pilihKategoriObatLabel.setText("Kategori");
-
-        kategoriObatRadioGroup.add(obatHerbalRadioButton);
-        obatHerbalRadioButton.setText("Obat Herbal");
-        obatHerbalRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                obatHerbalRadioButtonActionPerformed(evt);
-            }
-        });
-
-        kategoriObatRadioGroup.add(obatPatenRadioButton);
-        obatPatenRadioButton.setText("Obat Paten");
-        obatPatenRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                obatPatenRadioButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pilihKategoriObatPanelLayout = new javax.swing.GroupLayout(pilihKategoriObatPanel);
-        pilihKategoriObatPanel.setLayout(pilihKategoriObatPanelLayout);
-        pilihKategoriObatPanelLayout.setHorizontalGroup(
-            pilihKategoriObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pilihKategoriObatPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pilihKategoriObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pilihKategoriObatLabel)
-                    .addGroup(pilihKategoriObatPanelLayout.createSequentialGroup()
-                        .addComponent(obatHerbalRadioButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(obatPatenRadioButton)))
-                .addContainerGap(243, Short.MAX_VALUE))
-        );
-        pilihKategoriObatPanelLayout.setVerticalGroup(
-            pilihKategoriObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pilihKategoriObatPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pilihKategoriObatLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pilihKategoriObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(obatHerbalRadioButton)
-                    .addComponent(obatPatenRadioButton))
-                .addGap(8, 8, 8))
+                .addComponent(inputDosisTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         inputHargaSatuanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputHargaSatuanLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputHargaSatuanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputHargaSatuanLabel.setText("Harga Satuan");
 
         inputHargaSatuanTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -524,13 +477,13 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                     .addComponent(inputHargaSatuanTextField)
                     .addGroup(inputHargaSatuanPanelLayout.createSequentialGroup()
                         .addComponent(inputHargaSatuanLabel)
-                        .addGap(0, 114, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         inputHargaSatuanPanelLayout.setVerticalGroup(
             inputHargaSatuanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputHargaSatuanPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(inputHargaSatuanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputHargaSatuanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -539,7 +492,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
         inputStokObatPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputStokObatLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputStokObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputStokObatLabel.setText("Stok Obat");
 
         inputStokObatTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -553,26 +506,28 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputStokObatPanelLayout.setHorizontalGroup(
             inputStokObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputStokObatPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(inputStokObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inputStokObatPanelLayout.createSequentialGroup()
                         .addComponent(inputStokObatLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(inputStokObatTextField)))
+                        .addGap(0, 113, Short.MAX_VALUE))
+                    .addComponent(inputStokObatTextField))
+                .addContainerGap())
         );
         inputStokObatPanelLayout.setVerticalGroup(
             inputStokObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputStokObatPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputStokObatLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputStokObatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(inputStokObatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        inputDataObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        inputDataObatLabel.setText("Data Obat");
 
         inputSpecialAtributePanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputSpecialAtributeLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputSpecialAtributeLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputSpecialAtributeLabel.setText("Bahan Utama");
 
         inputSpecialAtributeTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -588,11 +543,9 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             .addGroup(inputSpecialAtributePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inputSpecialAtributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputSpecialAtributeTextField)
-                    .addGroup(inputSpecialAtributePanelLayout.createSequentialGroup()
-                        .addComponent(inputSpecialAtributeLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(inputSpecialAtributeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputSpecialAtributeLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         inputSpecialAtributePanelLayout.setVerticalGroup(
             inputSpecialAtributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -612,61 +565,56 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(formInputDataObatPanelLayout.createSequentialGroup()
-                        .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(inputDataObatLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, formInputDataObatPanelLayout.createSequentialGroup()
-                                .addComponent(pilihBentukSediaanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(inputDosisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputSpecialAtributePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputNamaObatPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(simpanObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(batalObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(formInputDataObatPanelLayout.createSequentialGroup()
-                        .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputIdObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(formInputDataObatPanelLayout.createSequentialGroup()
-                                .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(simpanObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(inputHargaSatuanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(pilihBentukSediaanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(inputSpecialAtributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(inputStokObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(batalObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap())))
+                                .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(inputDosisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(inputStokObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(inputDataObatLabel)
+                            .addComponent(inputNamaObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputIdObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputHargaSatuanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         formInputDataObatPanelLayout.setVerticalGroup(
             formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputDataObatPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(inputDataObatLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(22, 22, 22)
                 .addComponent(inputIdObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputNamaObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputDosisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pilihBentukSediaanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputSpecialAtributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputStokObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputSpecialAtributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(inputStokObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inputHargaSatuanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(inputHargaSatuanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(simpanObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(batalObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         obatPatenScrollPane.setBackground(new java.awt.Color(255, 255, 255));
 
         obatPatenTable.setAutoCreateRowSorter(true);
-        obatPatenTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        obatPatenTable.setBorder(null);
         obatPatenTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -685,71 +633,13 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         });
         obatPatenScrollPane.setViewportView(obatPatenTable);
 
-        obatButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        tambahObatButton.setBackground(new java.awt.Color(51, 178, 73));
-        tambahObatButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
-        tambahObatButton.setForeground(new java.awt.Color(255, 255, 255));
-        tambahObatButton.setText("Tambah");
-        tambahObatButton.setPreferredSize(new java.awt.Dimension(124, 24));
-        tambahObatButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tambahObatButtonActionPerformed(evt);
-            }
-        });
-
-        barukanObatButton.setBackground(new java.awt.Color(255, 189, 3));
-        barukanObatButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
-        barukanObatButton.setForeground(new java.awt.Color(255, 255, 255));
-        barukanObatButton.setText("Barukan");
-        barukanObatButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                barukanObatButtonActionPerformed(evt);
-            }
-        });
-
-        hapusObatButton.setBackground(new java.awt.Color(237, 8, 0));
-        hapusObatButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
-        hapusObatButton.setForeground(new java.awt.Color(255, 255, 255));
-        hapusObatButton.setText("Hapus");
-        hapusObatButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hapusObatButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout obatButtonPanelLayout = new javax.swing.GroupLayout(obatButtonPanel);
-        obatButtonPanel.setLayout(obatButtonPanelLayout);
-        obatButtonPanelLayout.setHorizontalGroup(
-            obatButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(obatButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tambahObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(barukanObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(hapusObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        obatButtonPanelLayout.setVerticalGroup(
-            obatButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(obatButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(obatButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tambahObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(obatButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(barukanObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                        .addComponent(hapusObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-
-        obatPatenLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 18)); // NOI18N
+        obatPatenLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         obatPatenLabel.setText("Obat Paten");
 
         obatHerbalScrollPane.setBackground(new java.awt.Color(255, 255, 255));
 
         obatHerbalTable.setAutoCreateRowSorter(true);
-        obatHerbalTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        obatHerbalTable.setBorder(null);
         obatHerbalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -768,8 +658,128 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         });
         obatHerbalScrollPane.setViewportView(obatHerbalTable);
 
-        obatHerbalLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 18)); // NOI18N
+        obatHerbalLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         obatHerbalLabel.setText("Obat Herbal");
+
+        dokterButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        tambahObatButton.setBackground(new java.awt.Color(51, 178, 73));
+        tambahObatButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        tambahObatButton.setForeground(new java.awt.Color(255, 255, 255));
+        tambahObatButton.setText("Tambah");
+        tambahObatButton.setPreferredSize(new java.awt.Dimension(124, 24));
+        tambahObatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahObatButtonActionPerformed(evt);
+            }
+        });
+
+        barukanObatButton.setBackground(new java.awt.Color(255, 189, 3));
+        barukanObatButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        barukanObatButton.setForeground(new java.awt.Color(255, 255, 255));
+        barukanObatButton.setText("Barukan");
+        barukanObatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barukanObatButtonActionPerformed(evt);
+            }
+        });
+
+        hapusObatButton.setBackground(new java.awt.Color(237, 8, 0));
+        hapusObatButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        hapusObatButton.setForeground(new java.awt.Color(255, 255, 255));
+        hapusObatButton.setText("Hapus");
+        hapusObatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusObatButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout dokterButtonPanelLayout = new javax.swing.GroupLayout(dokterButtonPanel);
+        dokterButtonPanel.setLayout(dokterButtonPanelLayout);
+        dokterButtonPanelLayout.setHorizontalGroup(
+            dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dokterButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tambahObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(barukanObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hapusObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        dokterButtonPanelLayout.setVerticalGroup(
+            dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dokterButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tambahObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(barukanObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                        .addComponent(hapusObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        pencarianPasienPanel.setBackground(new java.awt.Color(255, 255, 255));
+        pencarianPasienPanel.setPreferredSize(new java.awt.Dimension(778, 74));
+
+        judulObatLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulObatLabel.setText("Data Master Manajemen Obat");
+
+        subJudulObatLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        subJudulObatLabel.setText("Obat");
+
+        pencarianObatTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pencarianObatTextFieldKeyPressed(evt);
+            }
+        });
+
+        pencarianObatButton.setBackground(new java.awt.Color(0, 0, 153));
+        pencarianObatButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianObatButton.setForeground(new java.awt.Color(255, 255, 255));
+        pencarianObatButton.setText("Cari");
+        pencarianObatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pencarianObatButtonActionPerformed(evt);
+            }
+        });
+
+        pencarianObatLabel.setText("Pencarian Obat");
+
+        javax.swing.GroupLayout pencarianPasienPanelLayout = new javax.swing.GroupLayout(pencarianPasienPanel);
+        pencarianPasienPanel.setLayout(pencarianPasienPanelLayout);
+        pencarianPasienPanelLayout.setHorizontalGroup(
+            pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pencarianPasienPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(subJudulObatLabel)
+                    .addComponent(judulObatLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pencarianPasienPanelLayout.createSequentialGroup()
+                        .addComponent(pencarianObatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pencarianObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pencarianObatLabel))
+                .addGap(20, 20, 20))
+        );
+        pencarianPasienPanelLayout.setVerticalGroup(
+            pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pencarianPasienPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(judulObatLabel)
+                    .addComponent(pencarianObatLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pencarianObatButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pencarianPasienPanelLayout.createSequentialGroup()
+                        .addGroup(pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pencarianObatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subJudulObatLabel))
+                        .addContainerGap())))
+        );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -777,44 +787,49 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pencarianObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(formInputDataObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(obatButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(dokterButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(formInputDataObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(obatPatenScrollPane)
-                            .addComponent(obatHerbalScrollPane)
                             .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(4, 4, 4)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(obatPatenLabel)
-                                    .addComponent(obatHerbalLabel))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap(174, Short.MAX_VALUE))
+                                    .addComponent(obatPatenScrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(obatPatenLabel)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(obatHerbalScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(obatHerbalLabel)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                    .addComponent(pencarianPasienPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1143, Short.MAX_VALUE))
+                .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(pencarianObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(pencarianPasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(obatButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dokterButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(formInputDataObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(obatPatenLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(obatPatenScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addComponent(obatPatenScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(obatHerbalLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(obatHerbalScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(obatHerbalScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(6, 6, 6))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -855,36 +870,6 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private void inputStokObatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputStokObatTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputStokObatTextFieldActionPerformed
-
-    private void tambahObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahObatButtonActionPerformed
-        action = "tambah";
-        clearTextObat();
-        setComponentsObat(true);
-        setEditDeleteButtonObat(false);
-    }//GEN-LAST:event_tambahObatButtonActionPerformed
-
-    private void barukanObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanObatButtonActionPerformed
-        action = "ubah";
-        setComponentsObat(true);
-        setEditDeleteButtonObat(true);
-        inputNamaObatTextField.setEnabled(false);
-        obatHerbalRadioButton.setEnabled(false);
-        obatPatenRadioButton.setEnabled(false);
-    }//GEN-LAST:event_barukanObatButtonActionPerformed
-
-    private void hapusObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusObatButtonActionPerformed
-        action = "hapus";
-        int confirm = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin menghapus data Obat ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
-        
-        if (confirm == JOptionPane.YES_OPTION) {
-            obatControl.delete(inputIdObatTextField.getText()); 
-            clearTextObat();
-            setComponentsObat(false);
-            setEditDeleteButtonObat(false);
-            showObat();
-            tambahObatButton.setEnabled(true);
-        }
-    }//GEN-LAST:event_hapusObatButtonActionPerformed
 
     private void simpanObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanObatButtonActionPerformed
         try {
@@ -965,16 +950,6 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_obatPatenRadioButtonActionPerformed
 
-    private void pencarianObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianObatButtonActionPerformed
-        doSearchObat();
-    }//GEN-LAST:event_pencarianObatButtonActionPerformed
-
-    private void pencarianObatTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianObatTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n'){
-            doSearchObat();
-        }
-    }//GEN-LAST:event_pencarianObatTextFieldKeyPressed
-
     private void obatPatenTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_obatPatenTableMouseClicked
         int clickedRow = obatPatenTable.getSelectedRow();
         if(clickedRow < 0) return;
@@ -1048,10 +1023,46 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputStokObatTextField.setText(stokVal != null ? stokVal.toString() : "");
     }//GEN-LAST:event_obatHerbalTableMouseClicked
 
+    private void tambahObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahObatButtonActionPerformed
+        action = "tambah";
+        clearTextObat();
+        setComponentsObat(true);
+        setEditDeleteButtonObat(false);
+    }//GEN-LAST:event_tambahObatButtonActionPerformed
+
+    private void barukanObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanObatButtonActionPerformed
+        action = "ubah";
+        setComponentsObat(true);
+        setEditDeleteButtonObat(true);
+    }//GEN-LAST:event_barukanObatButtonActionPerformed
+
+    private void hapusObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusObatButtonActionPerformed
+        action = "hapus";
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            obatControl.delete(selectedId);
+            clearTextObat();
+            setComponentsObat(false);
+            setEditDeleteButtonObat(false);
+            showObat();
+            tambahObatButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_hapusObatButtonActionPerformed
+
+    private void pencarianObatTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianObatTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n') doSearchObat();
+    }//GEN-LAST:event_pencarianObatTextFieldKeyPressed
+
+    private void pencarianObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianObatButtonActionPerformed
+        doSearchObat();
+    }//GEN-LAST:event_pencarianObatButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton barukanObatButton;
     private javax.swing.JButton batalObatButton;
+    private javax.swing.JPanel dokterButtonPanel;
     private javax.swing.JPanel formInputDataObatPanel;
     private javax.swing.JButton hapusObatButton;
     private javax.swing.JLabel inputDataObatLabel;
@@ -1073,9 +1084,11 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private javax.swing.JLabel inputStokObatLabel;
     private javax.swing.JPanel inputStokObatPanel;
     private javax.swing.JTextField inputStokObatTextField;
+    private javax.swing.JLabel judulDokterLabel;
+    private javax.swing.JLabel judulDokterLabel1;
+    private javax.swing.JLabel judulObatLabel;
     private javax.swing.ButtonGroup kategoriObatRadioGroup;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JPanel obatButtonPanel;
     private javax.swing.JLabel obatHerbalLabel;
     private javax.swing.JRadioButton obatHerbalRadioButton;
     private javax.swing.JScrollPane obatHerbalScrollPane;
@@ -1084,16 +1097,27 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton obatPatenRadioButton;
     private javax.swing.JScrollPane obatPatenScrollPane;
     private javax.swing.JTable obatPatenTable;
+    private javax.swing.JButton pencarianDokterButton;
+    private javax.swing.JButton pencarianDokterButton1;
+    private javax.swing.JPanel pencarianDokterPanel;
+    private javax.swing.JPanel pencarianDokterPanel1;
+    private javax.swing.JTextField pencarianDokterTextField;
+    private javax.swing.JTextField pencarianDokterTextField1;
     private javax.swing.JButton pencarianObatButton;
     private javax.swing.JLabel pencarianObatLabel;
-    private javax.swing.JPanel pencarianObatPanel;
     private javax.swing.JTextField pencarianObatTextField;
+    private javax.swing.JPanel pencarianPasienPanel;
     private javax.swing.JComboBox<String> pilihBentukSediaanDropDown;
     private javax.swing.JLabel pilihBentukSediaanLabel;
     private javax.swing.JPanel pilihBentukSediaanPanel;
     private javax.swing.JLabel pilihKategoriObatLabel;
     private javax.swing.JPanel pilihKategoriObatPanel;
+    private javax.swing.JLabel searchDokterLabel;
+    private javax.swing.JLabel searchDokterLabel1;
     private javax.swing.JButton simpanObatButton;
+    private javax.swing.JLabel subJudulDokterLabel6;
+    private javax.swing.JLabel subJudulDokterLabel7;
+    private javax.swing.JLabel subJudulObatLabel;
     private javax.swing.JButton tambahObatButton;
     // End of variables declaration//GEN-END:variables
 }

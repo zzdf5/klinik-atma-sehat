@@ -88,11 +88,16 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
 
         mainPanel = new javax.swing.JPanel();
         pencarianJadwalPanel = new javax.swing.JPanel();
-        pencarianJadwalLabel = new javax.swing.JLabel();
+        judulJadwalLabel = new javax.swing.JLabel();
+        subJudulJadwalLabel = new javax.swing.JLabel();
         pencarianJadwalTextField = new javax.swing.JTextField();
         pencarianJadwalButton = new javax.swing.JButton();
+        pencarianJadwalLabel = new javax.swing.JLabel();
+        pasienButtonPanel = new javax.swing.JPanel();
+        tambahJadwalButton = new javax.swing.JButton();
+        barukanJadwalButton = new javax.swing.JButton();
+        hapusJadwalButton = new javax.swing.JButton();
         formInputDataJadwalPanel = new javax.swing.JPanel();
-        InputDataJadwalLabel = new javax.swing.JLabel();
         inputIdJadwalPanel = new javax.swing.JPanel();
         inputIdJadwalLabel = new javax.swing.JLabel();
         inputIdJadwalTextField = new javax.swing.JTextField();
@@ -113,23 +118,24 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         inputJamSelesaiPanel = new javax.swing.JPanel();
         inputJamSelesaiLabel = new javax.swing.JLabel();
         inputJamSelesaiTextField = new javax.swing.JTextField();
+        formInputDataJadwalLabel = new javax.swing.JLabel();
         jadwalScrollPane = new javax.swing.JScrollPane();
         jadwalTable = new javax.swing.JTable();
-        jadwalButtonPanel = new javax.swing.JPanel();
-        tambahJadwalButton = new javax.swing.JButton();
-        barukanJadwalButton = new javax.swing.JButton();
-        hapusJadwalButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
 
         mainPanel.setBackground(new java.awt.Color(238, 239, 253));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1155, 799));
 
         pencarianJadwalPanel.setBackground(new java.awt.Color(255, 255, 255));
-        pencarianJadwalPanel.setPreferredSize(new java.awt.Dimension(800, 70));
+        pencarianJadwalPanel.setPreferredSize(new java.awt.Dimension(778, 74));
 
-        pencarianJadwalLabel.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 18)); // NOI18N
-        pencarianJadwalLabel.setText("Pencarian Jadwal");
+        judulJadwalLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulJadwalLabel.setText("Data Master Manajemen Jadwal Dokter");
+
+        subJudulJadwalLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        subJudulJadwalLabel.setText("Jadwal Dokter");
 
         pencarianJadwalTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -137,12 +143,17 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             }
         });
 
+        pencarianJadwalButton.setBackground(new java.awt.Color(0, 0, 153));
+        pencarianJadwalButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
         pencarianJadwalButton.setText("Cari");
         pencarianJadwalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pencarianJadwalButtonActionPerformed(evt);
             }
         });
+
+        pencarianJadwalLabel.setText("Pencarian Jadwal Dokter");
 
         javax.swing.GroupLayout pencarianJadwalPanelLayout = new javax.swing.GroupLayout(pencarianJadwalPanel);
         pencarianJadwalPanel.setLayout(pencarianJadwalPanelLayout);
@@ -151,33 +162,96 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             .addGroup(pencarianJadwalPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pencarianJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pencarianJadwalLabel)
+                    .addComponent(subJudulJadwalLabel)
+                    .addComponent(judulJadwalLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
+                .addGroup(pencarianJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pencarianJadwalPanelLayout.createSequentialGroup()
-                        .addComponent(pencarianJadwalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pencarianJadwalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pencarianJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(pencarianJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pencarianJadwalLabel))
+                .addGap(20, 20, 20))
         );
         pencarianJadwalPanelLayout.setVerticalGroup(
             pencarianJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pencarianJadwalPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pencarianJadwalLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pencarianJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pencarianJadwalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pencarianJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                    .addComponent(judulJadwalLabel)
+                    .addComponent(pencarianJadwalLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pencarianJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pencarianJadwalButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pencarianJadwalPanelLayout.createSequentialGroup()
+                        .addGroup(pencarianJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pencarianJadwalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subJudulJadwalLabel))
+                        .addContainerGap())))
+        );
+
+        pasienButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        tambahJadwalButton.setBackground(new java.awt.Color(51, 178, 73));
+        tambahJadwalButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        tambahJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
+        tambahJadwalButton.setText("Tambah");
+        tambahJadwalButton.setPreferredSize(new java.awt.Dimension(124, 24));
+        tambahJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahJadwalButtonActionPerformed(evt);
+            }
+        });
+
+        barukanJadwalButton.setBackground(new java.awt.Color(255, 189, 3));
+        barukanJadwalButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        barukanJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
+        barukanJadwalButton.setText("Barukan");
+        barukanJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barukanJadwalButtonActionPerformed(evt);
+            }
+        });
+
+        hapusJadwalButton.setBackground(new java.awt.Color(237, 8, 0));
+        hapusJadwalButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        hapusJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
+        hapusJadwalButton.setText("Hapus");
+        hapusJadwalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusJadwalButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pasienButtonPanelLayout = new javax.swing.GroupLayout(pasienButtonPanel);
+        pasienButtonPanel.setLayout(pasienButtonPanelLayout);
+        pasienButtonPanelLayout.setHorizontalGroup(
+            pasienButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pasienButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tambahJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(barukanJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hapusJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pasienButtonPanelLayout.setVerticalGroup(
+            pasienButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pasienButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pasienButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tambahJadwalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(barukanJadwalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hapusJadwalButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         formInputDataJadwalPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        InputDataJadwalLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 18)); // NOI18N
-        InputDataJadwalLabel.setText("Data Jadwal Dokter");
-
         inputIdJadwalPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputIdJadwalLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputIdJadwalLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputIdJadwalLabel.setText("ID Jadwal");
 
         javax.swing.GroupLayout inputIdJadwalPanelLayout = new javax.swing.GroupLayout(inputIdJadwalPanel);
@@ -186,9 +260,11 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             inputIdJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdJadwalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputIdJadwalLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(inputIdJadwalTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(inputIdJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputIdJadwalPanelLayout.createSequentialGroup()
+                        .addComponent(inputIdJadwalLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputIdJadwalTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         inputIdJadwalPanelLayout.setVerticalGroup(
             inputIdJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,7 +278,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
 
         pilihDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        pilihDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        pilihDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         pilihDokterLabel.setText("Pilih Dokter");
 
         pilihDokterDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -217,7 +293,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
                     .addGroup(pilihDokterPanelLayout.createSequentialGroup()
                         .addComponent(pilihDokterLabel)
                         .addContainerGap(281, Short.MAX_VALUE))
-                    .addComponent(pilihDokterDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pilihDokterDropDown, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         pilihDokterPanelLayout.setVerticalGroup(
             pilihDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,7 +307,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
 
         inputJamMulaiPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputJamMulaiLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputJamMulaiLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputJamMulaiLabel.setText("Jam Mulai");
 
         javax.swing.GroupLayout inputJamMulaiPanelLayout = new javax.swing.GroupLayout(inputJamMulaiPanel);
@@ -240,9 +316,11 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             inputJamMulaiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputJamMulaiPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputJamMulaiLabel)
-                .addContainerGap(312, Short.MAX_VALUE))
-            .addComponent(inputJamMulaiTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(inputJamMulaiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputJamMulaiPanelLayout.createSequentialGroup()
+                        .addComponent(inputJamMulaiLabel)
+                        .addContainerGap(312, Short.MAX_VALUE))
+                    .addComponent(inputJamMulaiTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         inputJamMulaiPanelLayout.setVerticalGroup(
             inputJamMulaiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,9 +333,10 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         );
 
         simpanJadwalButton.setBackground(new java.awt.Color(51, 178, 73));
-        simpanJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
+        simpanJadwalButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         simpanJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanJadwalButton.setText("Simpan");
+        simpanJadwalButton.setPreferredSize(new java.awt.Dimension(124, 24));
         simpanJadwalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 simpanJadwalButtonActionPerformed(evt);
@@ -265,9 +344,10 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         });
 
         batalJadwalButton.setBackground(new java.awt.Color(237, 8, 0));
-        batalJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
+        batalJadwalButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         batalJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
         batalJadwalButton.setText("Batal");
+        batalJadwalButton.setPreferredSize(new java.awt.Dimension(124, 24));
         batalJadwalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 batalJadwalButtonActionPerformed(evt);
@@ -276,7 +356,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
 
         pilihPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        pilihPoliKlinikLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        pilihPoliKlinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         pilihPoliKlinikLabel.setText("Pilih Poliklinik");
 
         pilihPoliKlinikDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -288,10 +368,10 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             .addGroup(pilihPoliKlinikPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pilihPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pilihPoliKlinikDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pilihPoliKlinikPanelLayout.createSequentialGroup()
                         .addComponent(pilihPoliKlinikLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(pilihPoliKlinikDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         pilihPoliKlinikPanelLayout.setVerticalGroup(
             pilihPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +385,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
 
         inputKuotaPasienPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputKuotaPasienLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputKuotaPasienLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputKuotaPasienLabel.setText("Kuota Pasien");
 
         inputKuotaPasienTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -320,23 +400,24 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             inputKuotaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputKuotaPasienPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputKuotaPasienLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(inputKuotaPasienTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(inputKuotaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputKuotaPasienPanelLayout.createSequentialGroup()
+                        .addComponent(inputKuotaPasienLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputKuotaPasienTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         inputKuotaPasienPanelLayout.setVerticalGroup(
             inputKuotaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputKuotaPasienPanelLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(inputKuotaPasienLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputKuotaPasienTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(inputKuotaPasienTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         inputJamSelesaiPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputJamSelesaiLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputJamSelesaiLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputJamSelesaiLabel.setText("Jam selesai");
 
         javax.swing.GroupLayout inputJamSelesaiPanelLayout = new javax.swing.GroupLayout(inputJamSelesaiPanel);
@@ -345,18 +426,24 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             inputJamSelesaiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputJamSelesaiPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputJamSelesaiLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(inputJamSelesaiTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(inputJamSelesaiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputJamSelesaiTextField)
+                    .addGroup(inputJamSelesaiPanelLayout.createSequentialGroup()
+                        .addComponent(inputJamSelesaiLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         inputJamSelesaiPanelLayout.setVerticalGroup(
             inputJamSelesaiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputJamSelesaiPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(inputJamSelesaiLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(inputJamSelesaiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(inputJamSelesaiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        formInputDataJadwalLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        formInputDataJadwalLabel.setText("Data Jadwal Dokter");
 
         javax.swing.GroupLayout formInputDataJadwalPanelLayout = new javax.swing.GroupLayout(formInputDataJadwalPanel);
         formInputDataJadwalPanel.setLayout(formInputDataJadwalPanelLayout);
@@ -364,53 +451,52 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formInputDataJadwalPanelLayout.createSequentialGroup()
-                        .addComponent(InputDataJadwalLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formInputDataJadwalPanelLayout.createSequentialGroup()
-                        .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, formInputDataJadwalPanelLayout.createSequentialGroup()
-                                .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(inputIdJadwalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(inputJamMulaiPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(pilihDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(inputJamSelesaiPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pilihPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(inputKuotaPasienPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(simpanJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(batalJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18))))
+                .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, formInputDataJadwalPanelLayout.createSequentialGroup()
+                        .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputIdJadwalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputJamMulaiPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pilihDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputJamSelesaiPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pilihPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputKuotaPasienPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(simpanJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(batalJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
+            .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(formInputDataJadwalLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         formInputDataJadwalPanelLayout.setVerticalGroup(
             formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(InputDataJadwalLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(formInputDataJadwalLabel)
+                .addGap(12, 12, 12)
                 .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
                         .addComponent(pilihPoliKlinikPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(inputKuotaPasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(inputKuotaPasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
                     .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
                         .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputIdJadwalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pilihDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inputJamMulaiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(inputJamSelesaiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(formInputDataJadwalPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(inputJamMulaiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(6, 6, 6)
+                                .addComponent(inputJamSelesaiPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formInputDataJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(simpanJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -431,87 +517,31 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         ));
         jadwalScrollPane.setViewportView(jadwalTable);
 
-        jadwalButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        tambahJadwalButton.setBackground(new java.awt.Color(51, 178, 73));
-        tambahJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
-        tambahJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
-        tambahJadwalButton.setText("Tambah");
-        tambahJadwalButton.setPreferredSize(new java.awt.Dimension(124, 24));
-        tambahJadwalButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tambahJadwalButtonActionPerformed(evt);
-            }
-        });
-
-        barukanJadwalButton.setBackground(new java.awt.Color(255, 189, 3));
-        barukanJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
-        barukanJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
-        barukanJadwalButton.setText("Barukan");
-        barukanJadwalButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                barukanJadwalButtonActionPerformed(evt);
-            }
-        });
-
-        hapusJadwalButton.setBackground(new java.awt.Color(237, 8, 0));
-        hapusJadwalButton.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 12)); // NOI18N
-        hapusJadwalButton.setForeground(new java.awt.Color(255, 255, 255));
-        hapusJadwalButton.setText("Hapus");
-        hapusJadwalButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hapusJadwalButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jadwalButtonPanelLayout = new javax.swing.GroupLayout(jadwalButtonPanel);
-        jadwalButtonPanel.setLayout(jadwalButtonPanelLayout);
-        jadwalButtonPanelLayout.setHorizontalGroup(
-            jadwalButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jadwalButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tambahJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(barukanJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(hapusJadwalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jadwalButtonPanelLayout.setVerticalGroup(
-            jadwalButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jadwalButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jadwalButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tambahJadwalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(barukanJadwalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(hapusJadwalButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(pencarianJadwalPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1141, Short.MAX_VALUE)
-                    .addComponent(jadwalButtonPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(formInputDataJadwalPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pasienButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pencarianJadwalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1143, Short.MAX_VALUE)
+                    .addComponent(formInputDataJadwalPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jadwalScrollPane))
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pencarianJadwalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jadwalButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pencarianJadwalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pasienButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formInputDataJadwalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jadwalScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                .addComponent(jadwalScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -520,48 +550,20 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void inputKuotaPasienTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputKuotaPasienTextFieldActionPerformed
     }//GEN-LAST:event_inputKuotaPasienTextFieldActionPerformed
-
-    private void tambahJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahJadwalButtonActionPerformed
-        action = "tambah";
-        clearForm();
-        inputIdJadwalTextField.setText(jdc.generateId());
-        setFormEnabled(true);
-        setEditDeleteEnabled(false);
-    }//GEN-LAST:event_tambahJadwalButtonActionPerformed
-
-    private void barukanJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanJadwalButtonActionPerformed
-        action = "update";
-        setFormEnabled(true);
-        inputIdJadwalTextField.setEnabled(false);
-    }//GEN-LAST:event_barukanJadwalButtonActionPerformed
-
-    private void hapusJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusJadwalButtonActionPerformed
-        action = "hapus";
-        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
-        
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            jdc.delete(selectedId); 
-            clearForm();
-            setFormEnabled(false);
-            setEditDeleteEnabled(false);
-            showJadwal();
-            tambahJadwalButton.setEnabled(true);
-        }
-    }//GEN-LAST:event_hapusJadwalButtonActionPerformed
 
     private void simpanJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanJadwalButtonActionPerformed
         simpanJadwal();
@@ -576,13 +578,40 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         tambahJadwalButton.setEnabled(true);
     }//GEN-LAST:event_batalJadwalButtonActionPerformed
 
+    private void pencarianJadwalTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianJadwalTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n') doSearch();
+    }//GEN-LAST:event_pencarianJadwalTextFieldKeyPressed
+
     private void pencarianJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianJadwalButtonActionPerformed
         doSearch();
     }//GEN-LAST:event_pencarianJadwalButtonActionPerformed
 
-    private void pencarianJadwalTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianJadwalTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n') doSearch();
-    }//GEN-LAST:event_pencarianJadwalTextFieldKeyPressed
+    private void tambahJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahJadwalButtonActionPerformed
+        action = "tambah";
+        clearForm();
+        setFormEnabled(true);
+        setEditDeleteEnabled(false);
+    }//GEN-LAST:event_tambahJadwalButtonActionPerformed
+
+    private void barukanJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanJadwalButtonActionPerformed
+        action = "update";
+        setFormEnabled(true);
+        inputIdJadwalTextField.setEnabled(false);
+    }//GEN-LAST:event_barukanJadwalButtonActionPerformed
+
+    private void hapusJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusJadwalButtonActionPerformed
+        action = "hapus";
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            jdc.delete(selectedId);
+            clearForm();
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+            showJadwal();
+            tambahJadwalButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_hapusJadwalButtonActionPerformed
 
     // -------------------------------------------------------------------------
 
@@ -770,9 +799,9 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel InputDataJadwalLabel;
     private javax.swing.JButton barukanJadwalButton;
     private javax.swing.JButton batalJadwalButton;
+    private javax.swing.JLabel formInputDataJadwalLabel;
     private javax.swing.JPanel formInputDataJadwalPanel;
     private javax.swing.JButton hapusJadwalButton;
     private javax.swing.JLabel inputIdJadwalLabel;
@@ -787,10 +816,11 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     private javax.swing.JLabel inputKuotaPasienLabel;
     private javax.swing.JPanel inputKuotaPasienPanel;
     private javax.swing.JTextField inputKuotaPasienTextField;
-    private javax.swing.JPanel jadwalButtonPanel;
     private javax.swing.JScrollPane jadwalScrollPane;
     private javax.swing.JTable jadwalTable;
+    private javax.swing.JLabel judulJadwalLabel;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel pasienButtonPanel;
     private javax.swing.JButton pencarianJadwalButton;
     private javax.swing.JLabel pencarianJadwalLabel;
     private javax.swing.JPanel pencarianJadwalPanel;
@@ -802,6 +832,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     private javax.swing.JLabel pilihPoliKlinikLabel;
     private javax.swing.JPanel pilihPoliKlinikPanel;
     private javax.swing.JButton simpanJadwalButton;
+    private javax.swing.JLabel subJudulJadwalLabel;
     private javax.swing.JButton tambahJadwalButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -89,12 +89,11 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        pencarianPoliKlinikPanel = new javax.swing.JPanel();
-        pencarianPoliKlinikLabel = new javax.swing.JLabel();
-        pencarianPoliKlinikTextField = new javax.swing.JTextField();
-        pencarianPoliKlinikButton = new javax.swing.JButton();
+        dokterButtonPanel = new javax.swing.JPanel();
+        tambahPoliKlinikButton = new javax.swing.JButton();
+        barukanPoliKlinikButton = new javax.swing.JButton();
+        hapusPoliKlinikButton = new javax.swing.JButton();
         formInputDataPoliKlinikPanel = new javax.swing.JPanel();
-        inputDataPoliKlinikLabel = new javax.swing.JLabel();
         inputIdPoliKlinikPanel = new javax.swing.JPanel();
         inputIdPoliKlinikLabel = new javax.swing.JLabel();
         inputIdPoliKlinikTextField = new javax.swing.JTextField();
@@ -109,77 +108,86 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         inputNamaPoliKlinikPanel = new javax.swing.JPanel();
         inputNamaPoliKlinikLabel = new javax.swing.JLabel();
         inputNamaPoliKlinikTextField = new javax.swing.JTextField();
+        inputDataPasienLabel = new javax.swing.JLabel();
         PoliKlinikScrollPane = new javax.swing.JScrollPane();
         PoliKlinikTable = new javax.swing.JTable();
-        poliKlinikButtonPanel = new javax.swing.JPanel();
-        tambahPoliKlinikButton = new javax.swing.JButton();
-        barukanPoliKlinikButton = new javax.swing.JButton();
-        hapusPoliKlinikButton = new javax.swing.JButton();
+        pencarianPoliKlinikPanel = new javax.swing.JPanel();
+        judulPoliKlinikLabel = new javax.swing.JLabel();
+        subJudulPoliKlinikLabel = new javax.swing.JLabel();
+        pencarianPoliKlinikTextField = new javax.swing.JTextField();
+        pencarianPoliKlinikButton = new javax.swing.JButton();
+        pencarianPoliKlinikLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
 
         mainPanel.setBackground(new java.awt.Color(238, 239, 253));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1155, 799));
 
-        pencarianPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
-        pencarianPoliKlinikPanel.setPreferredSize(new java.awt.Dimension(800, 70));
+        dokterButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        pencarianPoliKlinikLabel.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 18)); // NOI18N
-        pencarianPoliKlinikLabel.setText("Pencarian Poli Klinik");
-
-        pencarianPoliKlinikTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                pencarianPoliKlinikTextFieldKeyPressed(evt);
-            }
-        });
-
-        pencarianPoliKlinikButton.setBackground(new java.awt.Color(51, 0, 153));
-        pencarianPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
-        pencarianPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
-        pencarianPoliKlinikButton.setText("Cari");
-        pencarianPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+        tambahPoliKlinikButton.setBackground(new java.awt.Color(51, 178, 73));
+        tambahPoliKlinikButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        tambahPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
+        tambahPoliKlinikButton.setText("Tambah");
+        tambahPoliKlinikButton.setPreferredSize(new java.awt.Dimension(124, 24));
+        tambahPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pencarianPoliKlinikButtonActionPerformed(evt);
+                tambahPoliKlinikButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout pencarianPoliKlinikPanelLayout = new javax.swing.GroupLayout(pencarianPoliKlinikPanel);
-        pencarianPoliKlinikPanel.setLayout(pencarianPoliKlinikPanelLayout);
-        pencarianPoliKlinikPanelLayout.setHorizontalGroup(
-            pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pencarianPoliKlinikPanelLayout.createSequentialGroup()
+        barukanPoliKlinikButton.setBackground(new java.awt.Color(255, 189, 3));
+        barukanPoliKlinikButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        barukanPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
+        barukanPoliKlinikButton.setText("Barukan");
+        barukanPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barukanPoliKlinikButtonActionPerformed(evt);
+            }
+        });
+
+        hapusPoliKlinikButton.setBackground(new java.awt.Color(237, 8, 0));
+        hapusPoliKlinikButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        hapusPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
+        hapusPoliKlinikButton.setText("Hapus");
+        hapusPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusPoliKlinikButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout dokterButtonPanelLayout = new javax.swing.GroupLayout(dokterButtonPanel);
+        dokterButtonPanel.setLayout(dokterButtonPanelLayout);
+        dokterButtonPanelLayout.setHorizontalGroup(
+            dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dokterButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pencarianPoliKlinikPanelLayout.createSequentialGroup()
-                        .addComponent(pencarianPoliKlinikLabel)
-                        .addGap(0, 955, Short.MAX_VALUE))
-                    .addGroup(pencarianPoliKlinikPanelLayout.createSequentialGroup()
-                        .addComponent(pencarianPoliKlinikTextField)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pencarianPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        pencarianPoliKlinikPanelLayout.setVerticalGroup(
-            pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pencarianPoliKlinikPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pencarianPoliKlinikLabel)
+                .addComponent(tambahPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pencarianPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pencarianPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addComponent(barukanPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hapusPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        dokterButtonPanelLayout.setVerticalGroup(
+            dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dokterButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tambahPoliKlinikButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(barukanPoliKlinikButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                        .addComponent(hapusPoliKlinikButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         formInputDataPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputDataPoliKlinikLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 18)); // NOI18N
-        inputDataPoliKlinikLabel.setText("Data Poli Klinik");
-
         inputIdPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputIdPoliKlinikLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
-        inputIdPoliKlinikLabel.setText("ID PoliKlinik");
+        inputIdPoliKlinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdPoliKlinikLabel.setText("ID Poliklinik");
 
         javax.swing.GroupLayout inputIdPoliKlinikPanelLayout = new javax.swing.GroupLayout(inputIdPoliKlinikPanel);
         inputIdPoliKlinikPanel.setLayout(inputIdPoliKlinikPanelLayout);
@@ -187,11 +195,10 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             inputIdPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdPoliKlinikPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputIdPoliKlinikLabel)
-                .addContainerGap(342, Short.MAX_VALUE))
-            .addGroup(inputIdPoliKlinikPanelLayout.createSequentialGroup()
-                .addComponent(inputIdPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(inputIdPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputIdPoliKlinikLabel)
+                    .addComponent(inputIdPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         inputIdPoliKlinikPanelLayout.setVerticalGroup(
             inputIdPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +211,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         );
 
         simpanPoliKlinikButton.setBackground(new java.awt.Color(51, 178, 73));
-        simpanPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
+        simpanPoliKlinikButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         simpanPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
         simpanPoliKlinikButton.setText("Simpan");
         simpanPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
@@ -214,7 +221,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         });
 
         batalPoliKlinikButton.setBackground(new java.awt.Color(237, 8, 0));
-        batalPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
+        batalPoliKlinikButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         batalPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
         batalPoliKlinikButton.setText("Batal");
         batalPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
@@ -225,7 +232,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
         inputJamOperasionalPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputJamOperasionalLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputJamOperasionalLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputJamOperasionalLabel.setText("Jam Operasional");
 
         javax.swing.GroupLayout inputJamOperasionalPanelLayout = new javax.swing.GroupLayout(inputJamOperasionalPanel);
@@ -234,11 +241,11 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             inputJamOperasionalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputJamOperasionalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputJamOperasionalLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(inputJamOperasionalPanelLayout.createSequentialGroup()
-                .addComponent(inputJamOperasionalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(inputJamOperasionalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputJamOperasionalPanelLayout.createSequentialGroup()
+                        .addComponent(inputJamOperasionalLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputJamOperasionalTextField)))
         );
         inputJamOperasionalPanelLayout.setVerticalGroup(
             inputJamOperasionalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,7 +259,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
         inputLokasiRuanganPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputLokasiRuanganLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputLokasiRuanganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputLokasiRuanganLabel.setText("Lokasi Ruangan");
 
         javax.swing.GroupLayout inputLokasiRuanganPanelLayout = new javax.swing.GroupLayout(inputLokasiRuanganPanel);
@@ -261,11 +268,11 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             inputLokasiRuanganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputLokasiRuanganPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputLokasiRuanganLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(inputLokasiRuanganPanelLayout.createSequentialGroup()
-                .addComponent(inputLokasiRuanganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(inputLokasiRuanganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputLokasiRuanganPanelLayout.createSequentialGroup()
+                        .addComponent(inputLokasiRuanganLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputLokasiRuanganTextField)))
         );
         inputLokasiRuanganPanelLayout.setVerticalGroup(
             inputLokasiRuanganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,12 +280,13 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputLokasiRuanganLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputLokasiRuanganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(inputLokasiRuanganTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         inputNamaPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        inputNamaPoliKlinikLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
+        inputNamaPoliKlinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         inputNamaPoliKlinikLabel.setText("Nama PoliKlinik");
 
         javax.swing.GroupLayout inputNamaPoliKlinikPanelLayout = new javax.swing.GroupLayout(inputNamaPoliKlinikPanel);
@@ -287,21 +295,24 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             inputNamaPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputNamaPoliKlinikPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputNamaPoliKlinikLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(inputNamaPoliKlinikPanelLayout.createSequentialGroup()
-                .addComponent(inputNamaPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(inputNamaPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputNamaPoliKlinikPanelLayout.createSequentialGroup()
+                        .addComponent(inputNamaPoliKlinikLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputNamaPoliKlinikTextField)))
         );
         inputNamaPoliKlinikPanelLayout.setVerticalGroup(
             inputNamaPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputNamaPoliKlinikPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(inputNamaPoliKlinikLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputNamaPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        inputDataPasienLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        inputDataPasienLabel.setText("Data Poliklinik");
 
         javax.swing.GroupLayout formInputDataPoliKlinikPanelLayout = new javax.swing.GroupLayout(formInputDataPoliKlinikPanel);
         formInputDataPoliKlinikPanel.setLayout(formInputDataPoliKlinikPanelLayout);
@@ -312,23 +323,24 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
                 .addGroup(formInputDataPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputIdPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(formInputDataPoliKlinikPanelLayout.createSequentialGroup()
-                        .addGroup(formInputDataPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(inputDataPoliKlinikLabel)
-                            .addComponent(inputJamOperasionalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(formInputDataPoliKlinikPanelLayout.createSequentialGroup()
-                                .addComponent(simpanPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(batalPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(inputLokasiRuanganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputNamaPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 13, Short.MAX_VALUE))))
+                        .addGroup(formInputDataPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(formInputDataPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(inputJamOperasionalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(formInputDataPoliKlinikPanelLayout.createSequentialGroup()
+                                    .addComponent(simpanPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(batalPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(inputLokasiRuanganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inputNamaPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(inputDataPasienLabel))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         formInputDataPoliKlinikPanelLayout.setVerticalGroup(
             formInputDataPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formInputDataPoliKlinikPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inputDataPoliKlinikLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(inputDataPasienLabel)
+                .addGap(22, 22, 22)
                 .addComponent(inputIdPoliKlinikPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputLokasiRuanganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -361,62 +373,66 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         });
         PoliKlinikScrollPane.setViewportView(PoliKlinikTable);
 
-        poliKlinikButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
+        pencarianPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
+        pencarianPoliKlinikPanel.setPreferredSize(new java.awt.Dimension(778, 74));
 
-        tambahPoliKlinikButton.setBackground(new java.awt.Color(51, 178, 73));
-        tambahPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
-        tambahPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
-        tambahPoliKlinikButton.setText("Tambah");
-        tambahPoliKlinikButton.setPreferredSize(new java.awt.Dimension(124, 24));
-        tambahPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tambahPoliKlinikButtonActionPerformed(evt);
+        judulPoliKlinikLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulPoliKlinikLabel.setText("Data Master Manajemen Poliklinik");
+
+        subJudulPoliKlinikLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        subJudulPoliKlinikLabel.setText("Poliklinik");
+
+        pencarianPoliKlinikTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pencarianPoliKlinikTextFieldKeyPressed(evt);
             }
         });
 
-        barukanPoliKlinikButton.setBackground(new java.awt.Color(255, 189, 3));
-        barukanPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
-        barukanPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
-        barukanPoliKlinikButton.setText("Barukan");
-        barukanPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
+        pencarianPoliKlinikButton.setBackground(new java.awt.Color(0, 0, 153));
+        pencarianPoliKlinikButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
+        pencarianPoliKlinikButton.setText("Cari");
+        pencarianPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                barukanPoliKlinikButtonActionPerformed(evt);
+                pencarianPoliKlinikButtonActionPerformed(evt);
             }
         });
 
-        hapusPoliKlinikButton.setBackground(new java.awt.Color(237, 8, 0));
-        hapusPoliKlinikButton.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 12)); // NOI18N
-        hapusPoliKlinikButton.setForeground(new java.awt.Color(255, 255, 255));
-        hapusPoliKlinikButton.setText("Hapus");
-        hapusPoliKlinikButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hapusPoliKlinikButtonActionPerformed(evt);
-            }
-        });
+        pencarianPoliKlinikLabel.setText("Pencarian Poliklinik");
 
-        javax.swing.GroupLayout poliKlinikButtonPanelLayout = new javax.swing.GroupLayout(poliKlinikButtonPanel);
-        poliKlinikButtonPanel.setLayout(poliKlinikButtonPanelLayout);
-        poliKlinikButtonPanelLayout.setHorizontalGroup(
-            poliKlinikButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(poliKlinikButtonPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout pencarianPoliKlinikPanelLayout = new javax.swing.GroupLayout(pencarianPoliKlinikPanel);
+        pencarianPoliKlinikPanel.setLayout(pencarianPoliKlinikPanelLayout);
+        pencarianPoliKlinikPanelLayout.setHorizontalGroup(
+            pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pencarianPoliKlinikPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tambahPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(barukanPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(hapusPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(subJudulPoliKlinikLabel)
+                    .addComponent(judulPoliKlinikLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pencarianPoliKlinikPanelLayout.createSequentialGroup()
+                        .addComponent(pencarianPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pencarianPoliKlinikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pencarianPoliKlinikLabel))
+                .addGap(20, 20, 20))
         );
-        poliKlinikButtonPanelLayout.setVerticalGroup(
-            poliKlinikButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(poliKlinikButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(poliKlinikButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tambahPoliKlinikButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(poliKlinikButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(barukanPoliKlinikButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                        .addComponent(hapusPoliKlinikButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)))
-                .addContainerGap())
+        pencarianPoliKlinikPanelLayout.setVerticalGroup(
+            pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pencarianPoliKlinikPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(judulPoliKlinikLabel)
+                    .addComponent(pencarianPoliKlinikLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pencarianPoliKlinikButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pencarianPoliKlinikPanelLayout.createSequentialGroup()
+                        .addGroup(pencarianPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pencarianPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subJudulPoliKlinikLabel))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -425,28 +441,28 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pencarianPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1146, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pencarianPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1143, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(poliKlinikButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dokterButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(formInputDataPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PoliKlinikScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                        .addComponent(PoliKlinikScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 702, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(pencarianPoliKlinikPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(pencarianPoliKlinikPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PoliKlinikScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(poliKlinikButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dokterButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(formInputDataPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(formInputDataPoliKlinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(PoliKlinikScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -457,7 +473,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,34 +492,6 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         setEditDeleteButtonPoli(false);
         tambahPoliKlinikButton.setEnabled(true);
     }//GEN-LAST:event_batalPoliKlinikButtonActionPerformed
-
-    private void tambahPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahPoliKlinikButtonActionPerformed
-        action = "tambah";
-        clearTextPoli();
-        inputIdPoliKlinikTextField.setText(poliControl.generateId());
-        setComponentsPoli(true);
-        setEditDeleteButtonPoli(false);
-    }//GEN-LAST:event_tambahPoliKlinikButtonActionPerformed
-
-    private void barukanPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanPoliKlinikButtonActionPerformed
-        action = "ubah";
-        setComponentsPoli(true);
-        setEditDeleteButtonPoli(true);
-    }//GEN-LAST:event_barukanPoliKlinikButtonActionPerformed
-
-    private void hapusPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusPoliKlinikButtonActionPerformed
-        action = "hapus";
-        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Poli Klinik ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
-        
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            poliControl.delete(selectedId); 
-            clearTextPoli();
-            setComponentsPoli(false);
-            setEditDeleteButtonPoli(false);
-            showPoliKlinik();
-            tambahPoliKlinikButton.setEnabled(true);
-        }
-    }//GEN-LAST:event_hapusPoliKlinikButtonActionPerformed
 
     private void simpanPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanPoliKlinikButtonActionPerformed
         try {
@@ -568,14 +556,39 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_PoliKlinikTableMouseClicked
 
     private void pencarianPoliKlinikTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianPoliKlinikTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n'){
-            doSearchPoli();
-        }
+        if(evt.getKeyChar() == '\n') doSearchPoli();
     }//GEN-LAST:event_pencarianPoliKlinikTextFieldKeyPressed
 
     private void pencarianPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianPoliKlinikButtonActionPerformed
         doSearchPoli();
     }//GEN-LAST:event_pencarianPoliKlinikButtonActionPerformed
+
+    private void tambahPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahPoliKlinikButtonActionPerformed
+        action = "tambah";
+        clearTextPoli();
+        setComponentsPoli(true);
+        setEditDeleteButtonPoli(false);
+    }//GEN-LAST:event_tambahPoliKlinikButtonActionPerformed
+
+    private void barukanPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanPoliKlinikButtonActionPerformed
+        action = "ubah";
+        setComponentsPoli(true);
+        setEditDeleteButtonPoli(true);
+    }//GEN-LAST:event_barukanPoliKlinikButtonActionPerformed
+
+    private void hapusPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusPoliKlinikButtonActionPerformed
+        action = "hapus";
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            poliControl.delete(selectedId);
+            clearTextPoli();
+            setComponentsPoli(false);
+            setEditDeleteButtonPoli(false);
+            showPoliKlinik();
+            tambahPoliKlinikButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_hapusPoliKlinikButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -583,9 +596,10 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     private javax.swing.JTable PoliKlinikTable;
     private javax.swing.JButton barukanPoliKlinikButton;
     private javax.swing.JButton batalPoliKlinikButton;
+    private javax.swing.JPanel dokterButtonPanel;
     private javax.swing.JPanel formInputDataPoliKlinikPanel;
     private javax.swing.JButton hapusPoliKlinikButton;
-    private javax.swing.JLabel inputDataPoliKlinikLabel;
+    private javax.swing.JLabel inputDataPasienLabel;
     private javax.swing.JLabel inputIdPoliKlinikLabel;
     private javax.swing.JPanel inputIdPoliKlinikPanel;
     private javax.swing.JTextField inputIdPoliKlinikTextField;
@@ -598,13 +612,14 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     private javax.swing.JLabel inputNamaPoliKlinikLabel;
     private javax.swing.JPanel inputNamaPoliKlinikPanel;
     private javax.swing.JTextField inputNamaPoliKlinikTextField;
+    private javax.swing.JLabel judulPoliKlinikLabel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton pencarianPoliKlinikButton;
     private javax.swing.JLabel pencarianPoliKlinikLabel;
     private javax.swing.JPanel pencarianPoliKlinikPanel;
     private javax.swing.JTextField pencarianPoliKlinikTextField;
-    private javax.swing.JPanel poliKlinikButtonPanel;
     private javax.swing.JButton simpanPoliKlinikButton;
+    private javax.swing.JLabel subJudulPoliKlinikLabel;
     private javax.swing.JButton tambahPoliKlinikButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -260,10 +260,11 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         liihatButton2 = new javax.swing.JButton();
         antrianPasienHeaderPanel = new javax.swing.JPanel();
-        antrianPasienHeaderLabel = new javax.swing.JLabel();
         pilihPoliklinikPanel = new javax.swing.JPanel();
         pilihPoliklinikLabel = new javax.swing.JLabel();
         pilihPoliklinikComboBox = new javax.swing.JComboBox<>();
+        antrianPasienHeaderLabel = new javax.swing.JLabel();
+        subJudulAntrianLabel = new javax.swing.JLabel();
         antrianPasienScrollPane = new javax.swing.JScrollPane();
         antrianPasienTable = new javax.swing.JTable();
         panelAntrian3 = new javax.swing.JPanel();
@@ -281,6 +282,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1224, 811));
 
         mainPanel.setBackground(new java.awt.Color(238, 239, 253));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1161, 799));
 
         searchAntrianPasienPanel.setBackground(new java.awt.Color(255, 255, 255));
         searchAntrianPasienPanel.setPreferredSize(new java.awt.Dimension(600, 70));
@@ -288,6 +290,15 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         searchAntrianPasienLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         searchAntrianPasienLabel.setText("Antrian Pasien");
 
+        searchAntrianPasienTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchAntrianPasienTextFieldActionPerformed(evt);
+            }
+        });
+
+        searchAntrianPasienButton.setBackground(new java.awt.Color(0, 0, 153));
+        searchAntrianPasienButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        searchAntrianPasienButton.setForeground(new java.awt.Color(255, 255, 255));
         searchAntrianPasienButton.setText("Cari");
         searchAntrianPasienButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,23 +313,25 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
             .addGroup(searchAntrianPasienPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(searchAntrianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchAntrianPasienLabel)
                     .addGroup(searchAntrianPasienPanelLayout.createSequentialGroup()
-                        .addComponent(searchAntrianPasienTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1019, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(searchAntrianPasienButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(searchAntrianPasienLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(searchAntrianPasienPanelLayout.createSequentialGroup()
+                        .addComponent(searchAntrianPasienTextField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchAntrianPasienButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))))
         );
         searchAntrianPasienPanelLayout.setVerticalGroup(
             searchAntrianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchAntrianPasienPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addComponent(searchAntrianPasienLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchAntrianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchAntrianPasienTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchAntrianPasienButton))
-                .addContainerGap(9, Short.MAX_VALUE))
+                    .addComponent(searchAntrianPasienButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tableRahasia.setModel(new javax.swing.table.DefaultTableModel(
@@ -342,7 +355,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
 
         namaPoliklinik1.setText("Poliklinik A");
 
-        kodeAntrianPanel1.setBackground(new java.awt.Color(91, 101, 220));
+        kodeAntrianPanel1.setBackground(new java.awt.Color(51, 204, 0));
 
         kodeAntrianLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         kodeAntrianLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -365,7 +378,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        namaDokterPanel1.setBackground(new java.awt.Color(238, 239, 253));
+        namaDokterPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         namaDokterLabel1.setText("jLabel5");
 
@@ -386,7 +399,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        statusAntrianPanel1.setBackground(new java.awt.Color(238, 239, 253));
+        statusAntrianPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         statusAntrianLabel1.setText("jLabel6");
 
@@ -407,7 +420,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        liihatButton1.setBackground(new java.awt.Color(91, 101, 220));
+        liihatButton1.setBackground(new java.awt.Color(51, 204, 0));
         liihatButton1.setForeground(new java.awt.Color(255, 255, 255));
         liihatButton1.setText("Lihat ");
         liihatButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -568,18 +581,14 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        antrianPasienHeaderPanel.setBackground(new java.awt.Color(18, 32, 86));
+        antrianPasienHeaderPanel.setBackground(new java.awt.Color(255, 255, 255));
         antrianPasienHeaderPanel.setPreferredSize(new java.awt.Dimension(800, 70));
-
-        antrianPasienHeaderLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        antrianPasienHeaderLabel.setForeground(new java.awt.Color(255, 255, 255));
-        antrianPasienHeaderLabel.setText("Antrian Pasien");
 
         pilihPoliklinikPanel.setBackground(new java.awt.Color(91, 101, 220));
 
-        pilihPoliklinikLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        pilihPoliklinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         pilihPoliklinikLabel.setForeground(new java.awt.Color(255, 255, 255));
-        pilihPoliklinikLabel.setText("PILIH POLIKLINIK");
+        pilihPoliklinikLabel.setText("Pilih Poliklinik");
 
         pilihPoliklinikComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -601,26 +610,35 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                 .addComponent(pilihPoliklinikLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pilihPoliklinikComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
+
+        antrianPasienHeaderLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        antrianPasienHeaderLabel.setText("Antrian Pasien");
+
+        subJudulAntrianLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        subJudulAntrianLabel.setText("Antrian");
 
         javax.swing.GroupLayout antrianPasienHeaderPanelLayout = new javax.swing.GroupLayout(antrianPasienHeaderPanel);
         antrianPasienHeaderPanel.setLayout(antrianPasienHeaderPanelLayout);
         antrianPasienHeaderPanelLayout.setHorizontalGroup(
             antrianPasienHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(antrianPasienHeaderPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(antrianPasienHeaderLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 774, Short.MAX_VALUE)
-                .addComponent(pilihPoliklinikPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129))
+                .addContainerGap()
+                .addGroup(antrianPasienHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(subJudulAntrianLabel)
+                    .addComponent(antrianPasienHeaderLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pilihPoliklinikPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         antrianPasienHeaderPanelLayout.setVerticalGroup(
             antrianPasienHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pilihPoliklinikPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(antrianPasienHeaderPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addComponent(antrianPasienHeaderLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(subJudulAntrianLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -760,41 +778,35 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addComponent(scrollPaneRahasia)
-                        .addGap(132, 132, 132))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(antrianPasienHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(searchAntrianPasienPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1143, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
-                                .addComponent(panelAntrian1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(panelAntrian2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(panelAntrian3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(antrianPasienScrollPane, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(scrollPaneRahasia)
+                    .addComponent(antrianPasienHeaderPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1149, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(panelAntrian1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(panelAntrian2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(panelAntrian3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(antrianPasienScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchAntrianPasienPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1149, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(antrianPasienHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addComponent(antrianPasienHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelAntrian1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelAntrian2, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelAntrian3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchAntrianPasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(antrianPasienScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(scrollPaneRahasia, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchAntrianPasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(antrianPasienScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(scrollPaneRahasia, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -802,16 +814,16 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(27, 27, 27))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -830,6 +842,10 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     private void liihatButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liihatButton3ActionPerformed
         filterByCardPoliklinik(2);
     }//GEN-LAST:event_liihatButton3ActionPerformed
+
+    private void searchAntrianPasienTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAntrianPasienTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchAntrianPasienTextFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -876,6 +892,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     private javax.swing.JPanel statusAntrianPanel1;
     private javax.swing.JPanel statusAntrianPanel2;
     private javax.swing.JPanel statusAntrianPanel3;
+    private javax.swing.JLabel subJudulAntrianLabel;
     private javax.swing.JTable tableRahasia;
     // End of variables declaration//GEN-END:variables
 }
