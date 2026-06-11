@@ -10,15 +10,12 @@ import exception.*;
 
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.Component;
 
 import model.Obat;
 import model.ObatHerbal;
 import model.ObatPaten;
-
-import table.TableObat;
 
 
 public class ManajemenObatPanel extends javax.swing.JPanel {
@@ -28,6 +25,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private Obat obat = null;
     String action = null;
     String selectedId = null;
+    boolean selectedIsHerbal = false;
     
     List<Obat> listObat;
     
@@ -60,51 +58,16 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     }
     
     public void showObat() {
-        obatPatenTable.setModel(buildPatenModel(""));
-        obatHerbalTable.setModel(buildHerbalModel(""));
+        obatPatenTable.setModel(obatControl.showTablePaten(""));
+        obatHerbalTable.setModel(obatControl.showTableHerbal(""));
     }
 
     public void searchObat(String target) {
-        obatPatenTable.setModel(buildPatenModel(target));
-        obatHerbalTable.setModel(buildHerbalModel(target));
+        obatPatenTable.setModel(obatControl.showTablePaten(target));
+        obatHerbalTable.setModel(obatControl.showTableHerbal(target));
     }
 
-    private DefaultTableModel buildPatenModel(String keyword) {
-        DefaultTableModel m = new DefaultTableModel(
-            new String[]{"ID Obat", "Nama Obat", "Bentuk Sediaan", "Dosis", "Merk", "Harga Satuan", "Stok"}, 0
-        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
-        String kw = keyword == null ? "" : keyword.toLowerCase();
-        for (ObatPaten p : obatControl.showDataPaten()) {
-            if (kw.isEmpty() || p.getIdObat().toLowerCase().contains(kw)
-                    || p.getNamaObat().toLowerCase().contains(kw)
-                    || p.getMerk().toLowerCase().contains(kw)) {
-                m.addRow(new Object[]{
-                    p.getIdObat(), p.getNamaObat(), p.getBentukSediaan(),
-                    p.getDosis(), p.getMerk(), p.getHargaSatuan(), p.getStok()
-                });
-            }
-        }
-        return m;
-    }
 
-    private DefaultTableModel buildHerbalModel(String keyword) {
-        DefaultTableModel m = new DefaultTableModel(
-            new String[]{"ID Obat", "Nama Obat", "Bentuk Sediaan", "Dosis", "Bahan Utama", "Harga Satuan", "Stok"}, 0
-        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
-        String kw = keyword == null ? "" : keyword.toLowerCase();
-        for (ObatHerbal h : obatControl.showDataHerbal()) {
-            if (kw.isEmpty() || h.getIdObat().toLowerCase().contains(kw)
-                    || h.getNamaObat().toLowerCase().contains(kw)
-                    || h.getBahanUtama().toLowerCase().contains(kw)) {
-                m.addRow(new Object[]{
-                    h.getIdObat(), h.getNamaObat(), h.getBentukSediaan(),
-                    h.getDosis(), h.getBahanUtama(), h.getHargaSatuan(), h.getStok()
-                });
-            }
-        }
-        return m;
-    }
-    
     public boolean isInteger(String str) {
         try {
             Integer.parseInt(str);
@@ -891,25 +854,36 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             double harga = Double.parseDouble(inputHargaSatuanTextField.getText());
             int stok = Integer.parseInt(inputStokObatTextField.getText());
             String specialAttr = inputSpecialAtributeTextField.getText();
-            
+
+            boolean kategoriBerubah = action.equals("ubah") && (obatHerbalRadioButton.isSelected() != selectedIsHerbal);
+            if(kategoriBerubah){
+                obatControl.delete(selectedId);
+            }
+
             if(obatHerbalRadioButton.isSelected()){
+                if(kategoriBerubah){
+                    idObat = obatControl.generateIdHerbal();
+                }
                 ObatHerbal herbal = new ObatHerbal(specialAttr, idObat, namaObat, bentukSediaan, dosis, "Obat Herbal", harga, stok);
-                
-                if(action.equals("tambah")){
-                    obatControl.insertHerbal(herbal);   
-                } else if(action.equals("ubah")){
+
+                if(action.equals("tambah") || kategoriBerubah){
+                    obatControl.insertHerbal(herbal);
+                } else {
                     obatControl.updateHerbal(herbal, selectedId);
                 }
             } else {
+                if(kategoriBerubah){
+                    idObat = obatControl.generateIdPaten();
+                }
                 ObatPaten paten = new ObatPaten(specialAttr, idObat, namaObat, bentukSediaan, dosis, "Obat Paten", harga, stok);
-                
-                if(action.equals("tambah")){
-                    obatControl.insertPaten(paten); 
-                } else if(action.equals("ubah")){
-                    obatControl.updatePaten(paten, selectedId); 
+
+                if(action.equals("tambah") || kategoriBerubah){
+                    obatControl.insertPaten(paten);
+                } else {
+                    obatControl.updatePaten(paten, selectedId);
                 }
             }
-            
+
             clearTextObat();
             setComponentsObat(false);
             setEditDeleteButtonObat(false);
@@ -956,17 +930,18 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         // Pengecekan aman untuk mencegah NullPointerException
         Object idVal = tableModel.getValueAt(clickedRow, 0);
         selectedId = idVal != null ? idVal.toString() : "";
+        selectedIsHerbal = false;
         inputIdObatTextField.setText(selectedId);
-        
+
         Object namaVal = tableModel.getValueAt(clickedRow, 1);
         inputNamaObatTextField.setText(namaVal != null ? namaVal.toString() : "");
-        
+
         Object bentukVal = tableModel.getValueAt(clickedRow, 2);
         if(bentukVal != null) pilihBentukSediaanDropDown.setSelectedItem(bentukVal.toString());
-        
+
         Object dosisVal = tableModel.getValueAt(clickedRow, 3);
         inputDosisTextField.setText(dosisVal != null ? dosisVal.toString() : "");
-        
+
         // Tabel paten: col 4=Merk, 5=Harga, 6=Stok (Kategori tidak ditampilkan)
         obatPatenRadioButton.setSelected(true);
         inputSpecialAtributeLabel.setText("Merk");
@@ -992,6 +967,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
         Object idVal = tableModel.getValueAt(clickedRow, 0);
         selectedId = idVal != null ? idVal.toString() : "";
+        selectedIsHerbal = true;
         inputIdObatTextField.setText(selectedId);
 
         Object namaVal = tableModel.getValueAt(clickedRow, 1);
@@ -1020,6 +996,9 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private void tambahObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahObatButtonActionPerformed
         action = "tambah";
         clearTextObat();
+        obatPatenRadioButton.setSelected(true);
+        inputSpecialAtributeLabel.setText("Merk");
+        inputIdObatTextField.setText(obatControl.generateIdPaten());
         setComponentsObat(true);
         setEditDeleteButtonObat(false);
     }//GEN-LAST:event_tambahObatButtonActionPerformed
@@ -1028,6 +1007,8 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         action = "ubah";
         setComponentsObat(true);
         setEditDeleteButtonObat(true);
+        obatHerbalRadioButton.setEnabled(false);
+        obatPatenRadioButton.setEnabled(false);
     }//GEN-LAST:event_barukanObatButtonActionPerformed
 
     private void hapusObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusObatButtonActionPerformed
@@ -1035,12 +1016,16 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
 
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            obatControl.delete(selectedId);
-            clearTextObat();
-            setComponentsObat(false);
-            setEditDeleteButtonObat(false);
-            showObat();
-            tambahObatButton.setEnabled(true);
+            try {
+                obatControl.delete(selectedId);
+                clearTextObat();
+                setComponentsObat(false);
+                setEditDeleteButtonObat(false);
+                showObat();
+                tambahObatButton.setEnabled(true);
+            } catch (exception.DataMasihDigunakanException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Tidak Dapat Menghapus", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_hapusObatButtonActionPerformed
 

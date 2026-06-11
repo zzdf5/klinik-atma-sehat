@@ -8,6 +8,7 @@ import model.Tagihan;
 import model.Tagihan.ItemTagihan;
 import model.Tagihan.MetodePembayaran;
 import model.Tagihan.Status;
+import table.TableTagihan;
 
 public class TagihanControl {
     private final TagihanDAO dao = new TagihanDAO();
@@ -15,6 +16,13 @@ public class TagihanControl {
     public String generateId() { return dao.generateId(); }
     public List<Object[]> showDataWithNames() { return dao.showDataWithNames(); }
     public List<Object[]> searchByKeyword(String keyword) { return dao.searchByKeyword(keyword); }
+
+    public TableTagihan showTable(String target) {
+        List<Object[]> data = (target == null || target.isBlank())
+                ? dao.showDataWithNames()
+                : dao.searchByKeyword(target);
+        return new TableTagihan(data);
+    }
 
     public void insert(Tagihan data) {
         hitungTotal(data);

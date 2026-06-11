@@ -61,8 +61,8 @@ public class LoginForm extends javax.swing.JFrame {
     private void handleLogin() {
         String username = inputUsernameTextField.getText().trim();
         String password = passwordBuffer.toString().trim();
-        username = "andi.dokter";
-        password = "dokter123";
+        username = "siti.admin";
+        password = "admin123";
 
         AdminControl adminControl = new AdminControl();
         try {

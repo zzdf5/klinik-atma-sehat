@@ -5,13 +5,15 @@
 package panelView;
 
 import control.TagihanControl;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
 import model.Tagihan;
+import table.TableItemTagihan;
+import table.TableTagihan;
 
 public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
@@ -35,18 +37,8 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
 
     private void setupTables() {
-        TagihanTable.setModel(new DefaultTableModel(
-            new String[]{"ID Tagihan", "Nama Pasien", "ID Kunjungan", "Tanggal", "Total", "Metode", "Status"}, 0
-        ) {
-            @Override public boolean isCellEditable(int row, int col) { return false; }
-        });
         TagihanTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        itemTagihanTable.setModel(new DefaultTableModel(
-            new String[]{"Nama Item", "Jumlah", "Harga Satuan", "Subtotal"}, 0
-        ) {
-            @Override public boolean isCellEditable(int row, int col) { return false; }
-        });
+        itemTagihanTable.setModel(new TableItemTagihan(new ArrayList<>()));
     }
 
     private void setupComboBox() {
@@ -133,7 +125,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputMetodePembayaranComboBox.setSelectedIndex(0);
         belumLunasRadioButton.setSelected(true);
         selectedTagihan = null;
-        ((DefaultTableModel) itemTagihanTable.getModel()).setRowCount(0);
+        itemTagihanTable.setModel(new TableItemTagihan(new ArrayList<>()));
     }
 
     private void fillForm(Tagihan tagihan) {
@@ -169,27 +161,11 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     }
 
     private void loadTagihanTable(List<Object[]> data) {
-        DefaultTableModel model = (DefaultTableModel) TagihanTable.getModel();
-        model.setRowCount(0);
-        for (Object[] row : data) {
-            Object[] display = row.clone();
-            display[4] = String.format("Rp%.0f", (Double) row[4]);
-            model.addRow(display);
-        }
+        TagihanTable.setModel(new TableTagihan(data));
     }
 
     private void loadItemTable(Tagihan tagihan) {
-        DefaultTableModel model = (DefaultTableModel) itemTagihanTable.getModel();
-        model.setRowCount(0);
-        for (Tagihan.ItemTagihan item : tagihan.getDaftarItem()) {
-            double subtotal = item.getJumlah() * item.getHargaSatuan();
-            model.addRow(new Object[]{
-                item.getNamaItem(),
-                item.getJumlah(),
-                String.format("Rp%.0f", item.getHargaSatuan()),
-                String.format("Rp%.0f", subtotal)
-            });
-        }
+        itemTagihanTable.setModel(new TableItemTagihan(tagihan.getDaftarItem()));
     }
 
     private void hitungKembalian() {

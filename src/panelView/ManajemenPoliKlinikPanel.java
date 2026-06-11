@@ -567,6 +567,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     private void tambahPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahPoliKlinikButtonActionPerformed
         action = "tambah";
         clearTextPoli();
+        inputIdPoliKlinikTextField.setText(poliControl.generateId());
         setComponentsPoli(true);
         setEditDeleteButtonPoli(false);
     }//GEN-LAST:event_tambahPoliKlinikButtonActionPerformed

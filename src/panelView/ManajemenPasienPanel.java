@@ -9,7 +9,6 @@ import control.RekamMedisControl;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Pasien;
 import model.RekamMedis;
 
@@ -40,43 +39,11 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
                 }
             });
 
-        setupTable();
         setFormEnabled(false);
         setEditDeleteEnabled(false);
         setRekamMedisEnabled(false);
         showPasien();
 
-        tambahPasienButton.addActionListener(e -> {
-            action = "add";
-            selectedId = null;
-            clearForm();
-            inputIdPasienTextField.setText(pc.generateId());
-            inputNomorRekamMedisTextField.setText(pc.generateNomorRekamMedis());
-            setFormEnabled(true);
-            setEditDeleteEnabled(false);
-            setRekamMedisEnabled(true);
-            inputTanggalPembuatanDateChooser.setDate(new java.util.Date());
-        });
-
-        barukanPasienButton.addActionListener(e -> {
-            if (selectedId == null) return;
-            action = "update";
-            setFormEnabled(true);
-            setRekamMedisEnabled(true);
-        });
-
-        hapusPasienButton.addActionListener(e -> {
-            if (selectedId == null) return;
-            int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin hapus pasien ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
-            if (opsi != JOptionPane.YES_OPTION) return;
-            pc.delete(selectedId);
-            selectedId = null;
-            clearForm();
-            setFormEnabled(false);
-            setEditDeleteEnabled(false);
-            showPasien();
-            JOptionPane.showMessageDialog(this, "Pasien berhasil dihapus.");
-        });
 
         simpanPasienButton.addActionListener(e -> simpanPasien());
 
@@ -108,24 +75,8 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         });
     }
 
-    private void setupTable() {
-        DefaultTableModel model = new DefaultTableModel(
-            new String[]{"ID Pasien", "No. Rekam Medis", "Nama", "Tgl Lahir", "J/K", "No. Telepon", "Alamat"}, 0
-        ) {
-            @Override public boolean isCellEditable(int r, int c) { return false; }
-        };
-        pasienTable.setModel(model);
-    }
-
     private void showPasien() {
-        DefaultTableModel model = (DefaultTableModel) pasienTable.getModel();
-        model.setRowCount(0);
-        for (Pasien p : pc.showData()) {
-            model.addRow(new Object[]{
-                p.getId(), p.getNomorRekamMedis(), p.getNama(),
-                p.getTanggalLahir(), p.getJenisKelamin(), p.getNoTelepon(), p.getAlamat()
-            });
-        }
+        pasienTable.setModel(pc.showTable(""));
     }
 
     private void setFormEnabled(boolean value) {
@@ -205,8 +156,6 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
             return;
         }
 
-        DefaultTableModel model = (DefaultTableModel) pasienTable.getModel();
-        model.setRowCount(0);
         selectedId = null;
         setEditDeleteEnabled(false);
         setFormEnabled(false);
@@ -215,10 +164,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         // Coba exact match by ID dulu
         Pasien byId = pc.search(keyword);
         if (byId != null) {
-            model.addRow(new Object[]{
-                byId.getId(), byId.getNomorRekamMedis(), byId.getNama(),
-                byId.getTanggalLahir(), byId.getJenisKelamin(), byId.getNoTelepon(), byId.getAlamat()
-            });
+            pasienTable.setModel(pc.showTable(keyword));
             fillForm(byId);
             selectedId = byId.getId();
             setEditDeleteEnabled(true);
@@ -231,12 +177,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Pasien tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        for (Pasien p : byNama) {
-            model.addRow(new Object[]{
-                p.getId(), p.getNomorRekamMedis(), p.getNama(),
-                p.getTanggalLahir(), p.getJenisKelamin(), p.getNoTelepon(), p.getAlamat()
-            });
-        }
+        pasienTable.setModel(pc.showTable(keyword));
         // Jika hanya satu hasil, langsung isi form
         if (byNama.size() == 1) {
             fillForm(byNama.get(0));
@@ -946,30 +887,35 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tambahPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahPasienButtonActionPerformed
-        action = "tambah";
+        action = "add";
+        selectedId = null;
         clearForm();
+        inputIdPasienTextField.setText(pc.generateId());
+        inputNomorRekamMedisTextField.setText(pc.generateNomorRekamMedis());
         setFormEnabled(true);
         setEditDeleteEnabled(false);
+        setRekamMedisEnabled(true);
+        inputTanggalPembuatanDateChooser.setDate(new java.util.Date());
     }//GEN-LAST:event_tambahPasienButtonActionPerformed
 
     private void barukanPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanPasienButtonActionPerformed
-        action = "update";
-        setFormEnabled(true);
-        inputIdPasienTextField.setEnabled(false);
+        if (selectedId == null) return;
+            action = "update";
+            setFormEnabled(true);
+            setRekamMedisEnabled(true);
     }//GEN-LAST:event_barukanPasienButtonActionPerformed
 
     private void hapusPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusPasienButtonActionPerformed
-        action = "hapus";
-        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
-        
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            pc.delete(selectedId); 
+        if (selectedId == null) return;
+            int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin hapus pasien ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
+            if (opsi != JOptionPane.YES_OPTION) return;
+            pc.delete(selectedId);
+            selectedId = null;
             clearForm();
             setFormEnabled(false);
             setEditDeleteEnabled(false);
             showPasien();
-            tambahPasienButton.setEnabled(true);
-        }
+            JOptionPane.showMessageDialog(this, "Pasien berhasil dihapus.");
     }//GEN-LAST:event_hapusPasienButtonActionPerformed
 
     private void batalPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalPasienButtonActionPerformed

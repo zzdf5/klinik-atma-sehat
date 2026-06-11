@@ -9,8 +9,10 @@ import control.PoliklinikControl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import model.Poliklinik;
+import table.TableAntrian;
+import table.TableAntrianHarian;
 
 public class ManajemenAntrianPanel extends javax.swing.JPanel {
 
@@ -161,30 +163,22 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         String filterPoli = (selected == null || selected.startsWith("--")) ? null
                 : selected.split(" - ")[1].trim();
 
-        DefaultTableModel m = new DefaultTableModel(
-            new String[]{"No. Urut", "Nama Pasien", "Nama Dokter", "Poliklinik", "Jenis", "Status"}, 0
-        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
-
+        List<Object[]> filtered = new ArrayList<>();
         for (Object[] row : todayAntrian) {
             if (!TODAY.equals(String.valueOf(row[5]))) continue;
             if (filterPoli != null && !filterPoli.equals(String.valueOf(row[4]))) continue;
-            m.addRow(new Object[]{row[1], row[2], row[3], row[4], row[6], row[7]});
+            filtered.add(row);
         }
-        antrianPasienTable.setModel(m);
+        antrianPasienTable.setModel(new TableAntrianHarian(filtered));
     }
 
     private void loadTable1(String keyword) {
-        DefaultTableModel m = new DefaultTableModel(
-            new String[]{"ID", "No. Urut", "Nama Pasien", "Nama Dokter", "Poliklinik", "Tanggal", "Jenis", "Status"}, 0
-        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
-
         List<Object[]> data = keyword.isEmpty() ? todayAntrian : ac.searchByKeyword(keyword);
-        for (Object[] row : data) m.addRow(row);
-        tableRahasia.setModel(m);
+        tableRahasia.setModel(new TableAntrian(data));
     }
 
     private void fillDetailCard(int row) {
-        DefaultTableModel m = (DefaultTableModel) antrianPasienTable.getModel();
+        TableModel m = antrianPasienTable.getModel();
         String namaPasien = String.valueOf(m.getValueAt(row, 1));
         String namaPoli   = String.valueOf(m.getValueAt(row, 3));
         String noUrut     = String.valueOf(m.getValueAt(row, 0));
@@ -211,16 +205,13 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
 
     private void filterTableByNamaPasien(String keyword) {
         String kw = keyword.toLowerCase();
-        DefaultTableModel m = new DefaultTableModel(
-            new String[]{"No. Urut", "Nama Pasien", "Nama Dokter", "Poliklinik", "Jenis", "Status"}, 0
-        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
-
+        List<Object[]> filtered = new ArrayList<>();
         for (Object[] row : todayAntrian) {
             if (String.valueOf(row[2]).toLowerCase().contains(kw)) {
-                m.addRow(new Object[]{row[1], row[2], row[3], row[4], row[6], row[7]});
+                filtered.add(row);
             }
         }
-        antrianPasienTable.setModel(m);
+        antrianPasienTable.setModel(new TableAntrianHarian(filtered));
     }
 
     /**

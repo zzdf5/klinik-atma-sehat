@@ -78,6 +78,10 @@ public class ObatDAO implements IDAO<Obat, String> {
             ps.executeUpdate();
             ps.close();
             System.out.println("Obat berhasil dihapus.");
+        } catch (java.sql.SQLIntegrityConstraintViolationException e) {
+            dbCon.closeConnection();
+            throw new exception.DataMasihDigunakanException(
+                "Obat ini tidak dapat dihapus karena masih digunakan pada data resep.");
         } catch (Exception e) {
             System.out.println("Error delete Obat: " + e);
         }

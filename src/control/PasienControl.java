@@ -1,8 +1,10 @@
 package control;
 
 import dao.PasienDAO;
+import java.util.ArrayList;
 import java.util.List;
 import model.Pasien;
+import table.TablePasien;
 
 public class PasienControl {
     private final PasienDAO dao = new PasienDAO();
@@ -15,9 +17,21 @@ public class PasienControl {
     public void delete(String id) { dao.delete(id); }
     public List<Pasien> showData() { return dao.showData(); }
     public Pasien search(String id) { return dao.search(id); }
-    
+
     public Pasien searchByNomorRM(String nomorRM){
         return dao.searchByNomorRM(nomorRM);
     }
-    
+
+    public TablePasien showTable(String target) {
+        if (target == null || target.isBlank()) {
+            return new TablePasien(dao.showData());
+        }
+        Pasien byId = dao.search(target);
+        if (byId != null) {
+            List<Pasien> hasil = new ArrayList<>();
+            hasil.add(byId);
+            return new TablePasien(hasil);
+        }
+        return new TablePasien(dao.searchByNama(target));
+    }
 }

@@ -7,11 +7,11 @@ package panelView;
 import control.*;
 import model.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.awt.Component;
 import java.awt.BorderLayout;
+import table.TableItemResep;
 
 public class DokterPanel extends javax.swing.JPanel {
     
@@ -306,22 +306,8 @@ public class DokterPanel extends javax.swing.JPanel {
     
     private void updateTabelObat() {
         if (daftarObatTabel == null) return;
-        
-        DefaultTableModel model = (DefaultTableModel) daftarObatTabel.getModel();
-        model.setRowCount(0);
-        
-        String[] columnNames = {"ID Obat", "Nama Obat", "Jumlah", "Aturan Pakai"};
-        model.setColumnIdentifiers(columnNames);
-        
-        for (Resep.ItemResep item : daftarObatResep) {
-            Object[] row = {
-                item.getObat().getIdObat(),
-                item.getObat().getNamaObat(),
-                item.getJumlah(),
-                item.getAturanPakai()
-            };
-            model.addRow(row);
-        }
+
+        daftarObatTabel.setModel(new TableItemResep(daftarObatResep));
     }
     
     private void selesaikanKonsultasi() {

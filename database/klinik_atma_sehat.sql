@@ -3,6 +3,8 @@
 --  MySQL / XAMPP
 -- ============================================================
 
+DROP DATABASE IF EXISTS klinik_atma_sehat;
+
 CREATE DATABASE IF NOT EXISTS klinik_atma_sehat
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
@@ -354,17 +356,18 @@ INSERT INTO jadwal_dokter VALUES
 
 -- Obat
 INSERT INTO obat (id_obat, nama_obat, bentuk_sediaan, dosis, kategori, harga_satuan, stok) VALUES
-('OBT001', 'Paracetamol', 'Tablet', '500mg', 'Analgesik',   2500, 100),
-('OBT002', 'Amoxicillin', 'Kapsul', '500mg', 'Antibiotik',  5000,  80),
-('OBT003', 'Jahe Merah',  'Kapsul', '250mg', 'Obat Herbal', 8000,  50),
-('OBT004', 'Ibuprofen',   'Tablet', '400mg', 'Analgesik',   3500,  60);
+('OBTP001', 'Paracetamol', 'Tablet', '500mg', 'Analgesik',   2500, 100),
+('OBTP002', 'Amoxicillin', 'Kapsul', '500mg', 'Antibiotik',  5000,  80),
+('OBTH001', 'Jahe Merah',  'Kapsul', '250mg', 'Obat Herbal', 8000,  50),
+('OBTP003', 'Ibuprofen',   'Tablet', '400mg', 'Analgesik',   3500,  60);
 
 INSERT INTO obat_herbal (id_obat, bahan_utama) VALUES
-('OBT003', 'Zingiber officinale');
+('OBTH001', 'Zingiber officinale');
 
 INSERT INTO obat_paten (id_obat, merk) VALUES
-('OBT002', 'Amoxil'),
-('OBT004', 'Proris');
+('OBTP001', 'Generik'),
+('OBTP002', 'Amoxil'),
+('OBTP003', 'Proris');
 
 -- Diagnosa
 INSERT INTO diagnosa VALUES
@@ -377,9 +380,9 @@ INSERT INTO resep VALUES
 ('RSP002', 'DOK002', 'RM-2024-002', '2024-05-02', 'DIPROSES');
 
 INSERT INTO resep_detail (id_resep, id_obat, jumlah, aturan_pakai) VALUES
-('RSP001', 'OBT001', 10, '3x1 sesudah makan'),
-('RSP001', 'OBT003',  6, '2x1 pagi dan malam'),
-('RSP002', 'OBT002', 15, '3x1 habiskan');
+('RSP001', 'OBTP001', 10, '3x1 sesudah makan'),
+('RSP001', 'OBTH001',  6, '2x1 pagi dan malam'),
+('RSP002', 'OBTP002', 15, '3x1 habiskan');
 
 -- Kunjungan
 INSERT INTO kunjungan VALUES
@@ -412,85 +415,3 @@ INSERT INTO tagihan_detail (id_tagihan, nama_item, jumlah, harga_satuan) VALUES
 -- Data sudah disesuaikan untuk ilustrasi
 ;
 
--- ============================================================
---  MIGRATION: ubah FK RESTRICT → CASCADE agar hapus pasien bisa cascade
---  Jalankan bagian ini jika database sudah ada sebelumnya
--- ============================================================
-SET FOREIGN_KEY_CHECKS = 0;
-
-ALTER TABLE rekam_medis
-    DROP FOREIGN KEY fk_rm_pasien,
-    ADD CONSTRAINT fk_rm_pasien FOREIGN KEY (id_pasien)
-        REFERENCES pasien (id_pasien) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE antrian
-    DROP FOREIGN KEY fk_antrian_pasien,
-    ADD CONSTRAINT fk_antrian_pasien FOREIGN KEY (id_pasien)
-        REFERENCES pasien (id_pasien) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE resep
-    DROP FOREIGN KEY fk_resep_rm,
-    ADD CONSTRAINT fk_resep_rm FOREIGN KEY (nomor_rekam_medis)
-        REFERENCES rekam_medis (nomor_rekam_medis) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE kunjungan
-    DROP FOREIGN KEY fk_kunjungan_rm,
-    ADD CONSTRAINT fk_kunjungan_rm FOREIGN KEY (nomor_rekam_medis)
-        REFERENCES rekam_medis (nomor_rekam_medis) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE rujukan
-    DROP FOREIGN KEY fk_rujukan_kunjungan,
-    ADD CONSTRAINT fk_rujukan_kunjungan FOREIGN KEY (id_kunjungan)
-        REFERENCES kunjungan (id_kunjungan) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE rujukan
-    DROP FOREIGN KEY fk_rujukan_rm,
-    ADD CONSTRAINT fk_rujukan_rm FOREIGN KEY (nomor_rekam_medis)
-        REFERENCES rekam_medis (nomor_rekam_medis) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE tagihan
-    DROP FOREIGN KEY fk_tagihan_kunjungan,
-    ADD CONSTRAINT fk_tagihan_kunjungan FOREIGN KEY (id_kunjungan)
-        REFERENCES kunjungan (id_kunjungan) ON UPDATE CASCADE ON DELETE CASCADE;
-
-SET FOREIGN_KEY_CHECKS = 1;
-
--- ============================================================
---  MIGRATION: pisah tabel obat → obat_herbal & obat_paten
---  Jalankan bagian ini jika database sudah ada sebelumnya
--- ============================================================
-SET FOREIGN_KEY_CHECKS = 0;
-
--- Buat tabel subtipe jika belum ada
-CREATE TABLE IF NOT EXISTS obat_herbal (
-    id_obat     VARCHAR(10)  NOT NULL,
-    bahan_utama VARCHAR(200) NOT NULL,
-    PRIMARY KEY (id_obat),
-    CONSTRAINT fk_obat_herbal FOREIGN KEY (id_obat)
-        REFERENCES obat (id_obat) ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS obat_paten (
-    id_obat VARCHAR(10)  NOT NULL,
-    merk    VARCHAR(100) NOT NULL,
-    PRIMARY KEY (id_obat),
-    CONSTRAINT fk_obat_paten FOREIGN KEY (id_obat)
-        REFERENCES obat (id_obat) ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
--- Migrasi data lama dari kolom jenis_obat/bahan_utama/merk ke subtabel
-INSERT IGNORE INTO obat_herbal (id_obat, bahan_utama)
-    SELECT id_obat, bahan_utama FROM obat
-    WHERE jenis_obat = 'HERBAL' AND bahan_utama IS NOT NULL;
-
-INSERT IGNORE INTO obat_paten (id_obat, merk)
-    SELECT id_obat, merk FROM obat
-    WHERE jenis_obat = 'PATEN' AND merk IS NOT NULL;
-
--- Hapus kolom lama dari tabel obat (jalankan setelah data berhasil dimigrasikan)
-ALTER TABLE obat
-    DROP COLUMN IF EXISTS jenis_obat,
-    DROP COLUMN IF EXISTS bahan_utama,
-    DROP COLUMN IF EXISTS merk;
-
-SET FOREIGN_KEY_CHECKS = 1;

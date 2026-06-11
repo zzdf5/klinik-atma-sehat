@@ -3,6 +3,7 @@ package control;
 import dao.JadwalDokterDAO;
 import java.util.List;
 import model.JadwalDokter;
+import table.TableJadwalDokter;
 
 public class JadwalDokterControl {
     private final JadwalDokterDAO dao = new JadwalDokterDAO();
@@ -16,4 +17,11 @@ public class JadwalDokterControl {
     public List<Object[]> showDataWithNames() { return dao.showDataWithNames(); }
     public List<Object[]> searchByKeyword(String keyword) { return dao.searchByKeyword(keyword); }
     public List<Object[]> searchByDokterWithNames(String idDokter) { return dao.searchByDokterWithNames(idDokter); }
+
+    public TableJadwalDokter showTable(String target) {
+        List<Object[]> data = (target == null || target.isBlank())
+                ? dao.showDataWithNames()
+                : dao.searchByKeyword(target);
+        return new TableJadwalDokter(data);
+    }
 }

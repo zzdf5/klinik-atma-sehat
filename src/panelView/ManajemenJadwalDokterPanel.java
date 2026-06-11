@@ -9,10 +9,10 @@ import control.JadwalDokterControl;
 import control.PoliklinikControl;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Dokter;
 import model.JadwalDokter;
 import model.Poliklinik;
+import table.TableJadwalDokter;
 
 public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
 
@@ -29,7 +29,6 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
 
-        setupTable();
         loadDokterComboBox();
         loadPoliklinikComboBox();
         setupJamFilter(inputJamMulaiTextField);
@@ -590,6 +589,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     private void tambahJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahJadwalButtonActionPerformed
         action = "tambah";
         clearForm();
+        inputIdJadwalTextField.setText(jdc.generateId());
         setFormEnabled(true);
         setEditDeleteEnabled(false);
     }//GEN-LAST:event_tambahJadwalButtonActionPerformed
@@ -617,13 +617,6 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     // -------------------------------------------------------------------------
 
     
-    private void setupTable() {
-        DefaultTableModel m = new DefaultTableModel(
-            new String[]{"ID Jadwal", "Nama Dokter", "Jam Mulai", "Jam Selesai", "Poliklinik", "Kuota"}, 0
-        ) { @Override public boolean isCellEditable(int r, int c) { return false; } };
-        jadwalTable.setModel(m);
-    }
-
     private void loadDokterComboBox() {
         dokterList = dc.showData();
         javax.swing.DefaultComboBoxModel<String> m = new javax.swing.DefaultComboBoxModel<>();
@@ -641,9 +634,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     }
 
     private void showJadwal() {
-        DefaultTableModel m = (DefaultTableModel) jadwalTable.getModel();
-        m.setRowCount(0);
-        for (Object[] row : jdc.showDataWithNames()) m.addRow(row);
+        jadwalTable.setModel(jdc.showTable(""));
     }
 
     
@@ -683,19 +674,17 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
 
     private void doSearch() {
         String keyword = pencarianJadwalTextField.getText().trim();
-        DefaultTableModel m = (DefaultTableModel) jadwalTable.getModel();
         if (keyword.isEmpty()) {
             showJadwal(); clearForm(); selectedId = null; action = null;
             setFormEnabled(false); setEditDeleteEnabled(false); return;
         }
-        m.setRowCount(0);
         selectedId = null; setEditDeleteEnabled(false); setFormEnabled(false); clearForm();
         List<Object[]> hasil = jdc.searchByKeyword(keyword);
         if (hasil.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Jadwal tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        for (Object[] row : hasil) m.addRow(row);
+        jadwalTable.setModel(new TableJadwalDokter(hasil));
         if (hasil.size() == 1) {
             JadwalDokter j = jdc.search((String) hasil.get(0)[0]);
             if (j != null) { fillForm(j); selectedId = j.getIdJadwal(); setEditDeleteEnabled(true); }

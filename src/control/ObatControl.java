@@ -9,6 +9,8 @@ import model.Obat;
 import model.ObatHerbal;
 import model.ObatPaten;
 import table.TableObat;
+import table.TableObatHerbal;
+import table.TableObatPaten;
 
 public class ObatControl {
     private final ObatDAO dao = new ObatDAO();
@@ -45,6 +47,32 @@ public class ObatControl {
         }
 
         return tableObat;
+    }
+
+    public TableObatPaten showTablePaten(String keyword) {
+        List<ObatPaten> hasil = new ArrayList<>();
+        String kw = keyword == null ? "" : keyword.toLowerCase();
+        for (ObatPaten p : patenDAO.showData()) {
+            if (kw.isEmpty() || p.getIdObat().toLowerCase().contains(kw)
+                    || p.getNamaObat().toLowerCase().contains(kw)
+                    || p.getMerk().toLowerCase().contains(kw)) {
+                hasil.add(p);
+            }
+        }
+        return new TableObatPaten(hasil);
+    }
+
+    public TableObatHerbal showTableHerbal(String keyword) {
+        List<ObatHerbal> hasil = new ArrayList<>();
+        String kw = keyword == null ? "" : keyword.toLowerCase();
+        for (ObatHerbal h : herbalDAO.showData()) {
+            if (kw.isEmpty() || h.getIdObat().toLowerCase().contains(kw)
+                    || h.getNamaObat().toLowerCase().contains(kw)
+                    || h.getBahanUtama().toLowerCase().contains(kw)) {
+                hasil.add(h);
+            }
+        }
+        return new TableObatHerbal(hasil);
     }
 
     public List<Obat> showSemua() {

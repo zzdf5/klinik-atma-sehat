@@ -16,13 +16,13 @@ import java.util.List;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.table.DefaultTableModel;
 import model.Antrian;
 import model.Dokter;
 import model.JadwalDokter;
 import model.Kunjungan;
 import model.Pasien;
 import model.Resep;
+import table.TableKunjungan;
 
 public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
@@ -60,7 +60,6 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         hasilPemeriksaanArea.setFont(inputHasilPemeriksaanTextField.getFont());
         inputHasilPemeriksaanScrollPane.setViewportView(hasilPemeriksaanArea);
 
-        setupTable();
         loadDokterComboBox();
         cachedPasienList = pasienCtrl.showData();
         setupAutoComplete();
@@ -1012,15 +1011,6 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
     // -------------------------------------------------------------------------
 
-    private void setupTable() {
-        DefaultTableModel model = new DefaultTableModel(
-            new String[]{"ID Kunjungan", "No. Rekam Medis", "Nama Pasien", "Nama Dokter", "Tanggal", "Jam", "Status"}, 0
-        ) {
-            @Override public boolean isCellEditable(int r, int c) { return false; }
-        };
-        kunjunganTable.setModel(model);
-    }
-
     private void loadDokterComboBox() {
         dokterList = dc.showData();
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
@@ -1032,11 +1022,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     }
 
     private void showKunjungan() {
-        DefaultTableModel model = (DefaultTableModel) kunjunganTable.getModel();
-        model.setRowCount(0);
-        for (Object[] row : kc.showDataWithNames()) {
-            model.addRow(row);
-        }
+        kunjunganTable.setModel(kc.showTable(""));
     }
 
     private void updateMetrics() {
@@ -1229,8 +1215,6 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             return;
         }
 
-        DefaultTableModel model = (DefaultTableModel) kunjunganTable.getModel();
-        model.setRowCount(0);
         selectedId = null;
         setEditDeleteEnabled(false);
         setFormEnabled(false);
@@ -1242,9 +1226,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 "Kunjungan tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        for (Object[] row : hasil) {
-            model.addRow(row);
-        }
+        kunjunganTable.setModel(new TableKunjungan(hasil));
         if (hasil.size() == 1) {
             Kunjungan k = kc.search((String) hasil.get(0)[0]);
             if (k != null) {
