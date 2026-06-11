@@ -3,35 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableDokter.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableTagihan.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/DokterPanel.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TablePasien.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableObatHerbal.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/PasienControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableItemResep.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/view/MainViewFormAdmin.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/ResepControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableObatPaten.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableItemTagihan.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/TagihanControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenTagihanPanel.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableJadwalDokter.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/PoliklinikControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenPasienPanel.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/DokterControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenKunjunganPanel.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenObatPanel.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/view/LoginForm.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/RekamMedisControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/AdminControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenJadwalDokterPanel.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableAntrianHarian.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableKunjungan.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenAntrianPanel.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/table/TableAntrian.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/control/RujukanControl.java</file>
-            <file>file:/C:/Users/Divo%20Pratama/OneDrive/Documents/klinik-atma-sehat/src/panelView/ManajemenDokterPanel.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/DokterPanel.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/view/LoginForm.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/table/TablePoliKlinik.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/table/TableDokter.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenKunjunganPanel.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/view/SplashScreenForm.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/table/TableObat.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenPasienPanel.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenObatPanel.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenAntrianPanel.java</file>
+            <file>file:/D:/Kuliah/Semester%204/PBO/TUBES/klinik-atma-sehat/src/panelView/ManajemenDokterPanel.java</file>
         </group>
     </open-files>
 </project-private>
