@@ -61,8 +61,8 @@ public class LoginForm extends javax.swing.JFrame {
     private void handleLogin() {
         String username = inputUsernameTextField.getText().trim();
         String password = passwordBuffer.toString().trim();
-        username = "andi.dokter";
-        password = "dokter123";
+        username = "siti.admin";
+        password = "admin123";
 
         AdminControl adminControl = new AdminControl();
         try {
@@ -115,7 +115,6 @@ public class LoginForm extends javax.swing.JFrame {
         FormInputLabel1 = new javax.swing.JLabel();
         FormInputLabel2 = new javax.swing.JLabel();
         logoLabel2 = new javax.swing.JLabel();
-        logoLabel1 = new javax.swing.JLabel();
         InputPanel = new javax.swing.JPanel();
         InputUsernamePanel = new javax.swing.JPanel();
         inputUsernameLabel = new javax.swing.JLabel();
@@ -133,7 +132,7 @@ public class LoginForm extends javax.swing.JFrame {
         NavbarPanel.setBackground(new java.awt.Color(255, 255, 255));
         NavbarPanel.setPreferredSize(new java.awt.Dimension(450, 560));
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LoginGrafisV2.png"))); // NOI18N
 
         javax.swing.GroupLayout NavbarPanelLayout = new javax.swing.GroupLayout(NavbarPanel);
@@ -164,12 +163,7 @@ public class LoginForm extends javax.swing.JFrame {
         logoLabel2.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 22)); // NOI18N
         logoLabel2.setForeground(new java.awt.Color(51, 0, 153));
         logoLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logoLabel2.setText("Klinik Atma");
-
-        logoLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 22)); // NOI18N
-        logoLabel1.setForeground(new java.awt.Color(0, 51, 153));
-        logoLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logoLabel1.setText("Sehat");
+        logoLabel2.setText("Klinik Atma Sehat");
 
         InputPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -191,8 +185,7 @@ public class LoginForm extends javax.swing.JFrame {
                     .addComponent(inputUsernameTextField)
                     .addGroup(InputUsernamePanelLayout.createSequentialGroup()
                         .addComponent(inputUsernameLabel)
-                        .addGap(0, 469, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(344, Short.MAX_VALUE))))
         );
         InputUsernamePanelLayout.setVerticalGroup(
             InputUsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,7 +215,7 @@ public class LoginForm extends javax.swing.JFrame {
             inputPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputPasswordPanelLayout.createSequentialGroup()
                 .addComponent(inputPasswordLabel)
-                .addContainerGap(473, Short.MAX_VALUE))
+                .addContainerGap(346, Short.MAX_VALUE))
             .addComponent(inputPasswordTextField)
         );
         inputPasswordPanelLayout.setVerticalGroup(
@@ -249,15 +242,18 @@ public class LoginForm extends javax.swing.JFrame {
         InputPanelLayout.setHorizontalGroup(
             InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InputPanelLayout.createSequentialGroup()
-                .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(InputUsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(InputPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(inputPasswordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(InputPanelLayout.createSequentialGroup()
+                        .addComponent(inputLoginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, InputPanelLayout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addComponent(inputLoginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(563, Short.MAX_VALUE))
+                        .addGroup(InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(InputUsernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, InputPanelLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(inputPasswordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         InputPanelLayout.setVerticalGroup(
             InputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,46 +271,41 @@ public class LoginForm extends javax.swing.JFrame {
         FormInputPanel.setLayout(FormInputPanelLayout);
         FormInputPanelLayout.setHorizontalGroup(
             FormInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FormInputPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FormInputPanelLayout.createSequentialGroup()
+                .addGap(0, 26, Short.MAX_VALUE)
                 .addComponent(InputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(FormInputPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FormInputPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(FormInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(FormInputPanelLayout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addGroup(FormInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(FormInputPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(FormInputLabel2))
-                            .addComponent(FormInputLabel1)))
-                    .addGroup(FormInputPanelLayout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addGroup(FormInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(FormInputPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(logoLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(FormInputPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(logoLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(6, 6, 6)
+                        .addComponent(FormInputLabel2))
+                    .addComponent(FormInputLabel1))
+                .addGap(69, 69, 69))
+            .addGroup(FormInputPanelLayout.createSequentialGroup()
+                .addGap(183, 183, 183)
+                .addComponent(logoLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(FormInputPanelLayout.createSequentialGroup()
+                .addGap(228, 228, 228)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         FormInputPanelLayout.setVerticalGroup(
             FormInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FormInputPanelLayout.createSequentialGroup()
-                .addGap(8, 8, 8)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoLabel2)
-                .addGap(0, 0, 0)
-                .addComponent(logoLabel1)
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addComponent(FormInputLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FormInputLabel2)
-                .addGap(15, 15, 15)
-                .addComponent(InputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(InputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -396,7 +387,6 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JTextField inputUsernameTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel logoLabel1;
     private javax.swing.JLabel logoLabel2;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
