@@ -351,9 +351,10 @@
                               </Group>
                           </Group>
                       </Group>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="simpanJadwalButton" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                          <Component id="batalJadwalButton" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="simpanJadwalButton" pref="37" max="32767" attributes="0"/>
+                          <Component id="batalJadwalButton" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="16" max="32767" attributes="0"/>
                   </Group>

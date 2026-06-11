@@ -61,8 +61,8 @@ public class LoginForm extends javax.swing.JFrame {
     private void handleLogin() {
         String username = inputUsernameTextField.getText().trim();
         String password = passwordBuffer.toString().trim();
-        username = "siti.admin";
-        password = "admin123";
+        username = "andi.dokter";
+        password = "dokter123";
 
         AdminControl adminControl = new AdminControl();
         try {
@@ -364,15 +364,7 @@ public class LoginForm extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-       try {
-            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
-            UIManager.put("Button.arc", 12);
-            UIManager.put("Component.arc", 10);
-            UIManager.put("TextComponent.arc", 8);
-            UIManager.put("Label.arc", 12);
-        } catch (Exception ex) {
-            System.err.println("Gagal load FlatLaf: " + ex);
-        }
+       
         //</editor-fold>
 
         /* Create and display the form */
