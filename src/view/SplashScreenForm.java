@@ -47,7 +47,6 @@ public class SplashScreenForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 300));
         setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -58,14 +57,14 @@ public class SplashScreenForm extends javax.swing.JFrame {
         logoLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logoLabel1.setText("Sehat");
         mainPanel.add(logoLabel1);
-        logoLabel1.setBounds(130, 70, 54, 26);
+        logoLabel1.setBounds(130, 70, 70, 26);
 
         logoLabel2.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 22)); // NOI18N
         logoLabel2.setForeground(new java.awt.Color(51, 0, 153));
         logoLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logoLabel2.setText("Klinik Atma");
         mainPanel.add(logoLabel2);
-        logoLabel2.setBounds(100, 40, 119, 26);
+        logoLabel2.setBounds(100, 40, 130, 26);
 
         logoLabel.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 22)); // NOI18N
         logoLabel.setForeground(new java.awt.Color(51, 0, 153));
@@ -73,7 +72,6 @@ public class SplashScreenForm extends javax.swing.JFrame {
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo_ss.png"))); // NOI18N
         mainPanel.add(logoLabel);
         logoLabel.setBounds(0, 0, 110, 130);
-        logoLabel.getAccessibleContext().setAccessibleName("");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ss_bg.png"))); // NOI18N
@@ -87,7 +85,7 @@ public class SplashScreenForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(

@@ -31,7 +31,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="63" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -134,34 +134,33 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="inputNamaObatPanel" max="32767" attributes="0"/>
+                          <Component id="inputHargaSatuanPanel" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="simpanObatButton" min="-2" pref="216" max="-2" attributes="0"/>
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <Component id="simpanObatButton" min="-2" pref="210" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="batalObatButton" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="pilihBentukSediaanPanel" min="-2" max="-2" attributes="0"/>
-                                          <Component id="inputSpecialAtributePanel" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="inputDosisPanel" pref="177" max="32767" attributes="0"/>
-                                          <Component id="inputStokObatPanel" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Component id="inputDataObatLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="inputNamaObatPanel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="inputIdObatPanel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="inputHargaSatuanPanel" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                              <Component id="inputDataObatLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="333" max="32767" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="pilihBentukSediaanPanel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="inputSpecialAtributePanel" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="inputStokObatPanel" max="32767" attributes="0"/>
+                                  <Component id="inputDosisPanel" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="inputIdObatPanel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -229,7 +228,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="pilihBentukSediaanLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="pilihBentukSediaanDropDown" min="-2" max="-2" attributes="0"/>
+                          <Component id="pilihBentukSediaanDropDown" min="-2" pref="25" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="pilihKategoriObatPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -480,12 +479,10 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="inputDosisLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="inputDosisTextField" min="-2" pref="174" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="inputDosisLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
+                      <Component id="inputDosisTextField" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -494,8 +491,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="inputDosisLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="inputDosisTextField" min="-2" pref="22" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="inputDosisTextField" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -532,10 +528,9 @@
                               <Component id="inputHargaSatuanTextField" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="inputHargaSatuanLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -578,15 +573,10 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="inputStokObatLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="113" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="inputStokObatTextField" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="inputStokObatLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="130" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="inputStokObatTextField" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -880,21 +870,22 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="judulObatLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="pencarianObatLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="pencarianObatButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="pencarianObatTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="subJudulObatLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="judulObatLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="subJudulObatLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="pencarianObatLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="pencarianObatButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="pencarianObatTextField" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
