@@ -151,7 +151,7 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="inputDosisPanel" pref="0" max="32767" attributes="0"/>
+                                          <Component id="inputDosisPanel" pref="177" max="32767" attributes="0"/>
                                           <Component id="inputStokObatPanel" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -160,7 +160,7 @@
                                   <Component id="inputIdObatPanel" alignment="0" max="32767" attributes="0"/>
                                   <Component id="inputHargaSatuanPanel" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -193,7 +193,7 @@
                           <Component id="simpanObatButton" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
                           <Component id="batalObatButton" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="185" max="32767" attributes="0"/>
+                      <EmptySpace pref="191" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -209,13 +209,13 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="pilihBentukSediaanDropDown" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="pilihBentukSediaanDropDown" alignment="1" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="pilihBentukSediaanLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="127" max="32767" attributes="0"/>
                               </Group>
                               <Component id="pilihKategoriObatPanel" alignment="0" max="32767" attributes="0"/>
                           </Group>
@@ -230,9 +230,8 @@
                           <Component id="pilihBentukSediaanLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="pilihBentukSediaanDropDown" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="pilihKategoriObatPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="pilihKategoriObatPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

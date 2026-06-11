@@ -329,14 +329,14 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         pilihBentukSediaanPanel.setLayout(pilihBentukSediaanPanelLayout);
         pilihBentukSediaanPanelLayout.setHorizontalGroup(
             pilihBentukSediaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pilihBentukSediaanPanelLayout.createSequentialGroup()
+            .addGroup(pilihBentukSediaanPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pilihBentukSediaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pilihBentukSediaanDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pilihBentukSediaanPanelLayout.createSequentialGroup()
+                .addGroup(pilihBentukSediaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pilihBentukSediaanDropDown, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pilihBentukSediaanPanelLayout.createSequentialGroup()
                         .addComponent(pilihBentukSediaanLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 127, Short.MAX_VALUE))
+                    .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pilihBentukSediaanPanelLayout.setVerticalGroup(
@@ -346,9 +346,8 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addComponent(pilihBentukSediaanLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pilihBentukSediaanDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         inputNamaObatPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -576,13 +575,13 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                                     .addComponent(inputSpecialAtributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(inputDosisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(inputDosisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 177, Short.MAX_VALUE)
                                     .addComponent(inputStokObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(inputDataObatLabel)
                             .addComponent(inputNamaObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(inputIdObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(inputHargaSatuanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 11, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         formInputDataObatPanelLayout.setVerticalGroup(
@@ -608,7 +607,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(simpanObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(batalObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         obatPatenScrollPane.setBackground(new java.awt.Color(255, 255, 255));
@@ -1084,8 +1083,6 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private javax.swing.JLabel inputStokObatLabel;
     private javax.swing.JPanel inputStokObatPanel;
     private javax.swing.JTextField inputStokObatTextField;
-    private javax.swing.JLabel judulDokterLabel;
-    private javax.swing.JLabel judulDokterLabel1;
     private javax.swing.JLabel judulObatLabel;
     private javax.swing.ButtonGroup kategoriObatRadioGroup;
     private javax.swing.JPanel mainPanel;
@@ -1097,12 +1094,6 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton obatPatenRadioButton;
     private javax.swing.JScrollPane obatPatenScrollPane;
     private javax.swing.JTable obatPatenTable;
-    private javax.swing.JButton pencarianDokterButton;
-    private javax.swing.JButton pencarianDokterButton1;
-    private javax.swing.JPanel pencarianDokterPanel;
-    private javax.swing.JPanel pencarianDokterPanel1;
-    private javax.swing.JTextField pencarianDokterTextField;
-    private javax.swing.JTextField pencarianDokterTextField1;
     private javax.swing.JButton pencarianObatButton;
     private javax.swing.JLabel pencarianObatLabel;
     private javax.swing.JTextField pencarianObatTextField;
@@ -1112,11 +1103,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pilihBentukSediaanPanel;
     private javax.swing.JLabel pilihKategoriObatLabel;
     private javax.swing.JPanel pilihKategoriObatPanel;
-    private javax.swing.JLabel searchDokterLabel;
-    private javax.swing.JLabel searchDokterLabel1;
     private javax.swing.JButton simpanObatButton;
-    private javax.swing.JLabel subJudulDokterLabel6;
-    private javax.swing.JLabel subJudulDokterLabel7;
     private javax.swing.JLabel subJudulObatLabel;
     private javax.swing.JButton tambahObatButton;
     // End of variables declaration//GEN-END:variables

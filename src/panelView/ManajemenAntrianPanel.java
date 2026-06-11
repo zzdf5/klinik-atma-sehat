@@ -420,7 +420,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        liihatButton1.setBackground(new java.awt.Color(51, 204, 0));
+        liihatButton1.setBackground(new java.awt.Color(51, 153, 0));
         liihatButton1.setForeground(new java.awt.Color(255, 255, 255));
         liihatButton1.setText("Lihat ");
         liihatButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -444,7 +444,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(namaPoliklinik1)
                     .addComponent(namaPemeriksaanLabel1)
                     .addComponent(kodeAntrianPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         panelAntrian1Layout.setVerticalGroup(
             panelAntrian1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -561,7 +561,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(namaPoliklinik2)
                     .addComponent(namaPemeriksaanLabel2)
                     .addComponent(kodeAntrianPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         panelAntrian2Layout.setVerticalGroup(
             panelAntrian2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -752,7 +752,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(namaPoliklinik3)
                     .addComponent(namaPemeriksaanLabel3)
                     .addComponent(kodeAntrianPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         panelAntrian3Layout.setVerticalGroup(
             panelAntrian3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -816,7 +816,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

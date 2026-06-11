@@ -622,7 +622,7 @@ public class DokterPanel extends javax.swing.JPanel {
         titlePanel.setBackground(new java.awt.Color(255, 255, 255));
         titlePanel.setPreferredSize(new java.awt.Dimension(800, 70));
 
-        titleLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
         titleLabel.setText("Antrian Pasien");
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
@@ -632,14 +632,14 @@ public class DokterPanel extends javax.swing.JPanel {
             .addGroup(titlePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titleLabel)
-                .addContainerGap(1133, Short.MAX_VALUE))
+                .addContainerGap(1111, Short.MAX_VALUE))
         );
         titlePanelLayout.setVerticalGroup(
             titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titlePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titleLabel)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         dataPasienDisplayPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -681,7 +681,7 @@ public class DokterPanel extends javax.swing.JPanel {
             .addGroup(dataPasienDisplayPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(dataPasienLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
                 .addComponent(namaPasienLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(dataPasienDisplayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -717,7 +717,7 @@ public class DokterPanel extends javax.swing.JPanel {
             .addGroup(rekamMedisPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(rekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                     .addGroup(rekamMedisPanelLayout.createSequentialGroup()
                         .addGroup(rekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rekamMedisLabel)
@@ -732,7 +732,7 @@ public class DokterPanel extends javax.swing.JPanel {
             .addGroup(rekamMedisPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(rekamMedisLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
                 .addComponent(alergiLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1065,8 +1065,8 @@ public class DokterPanel extends javax.swing.JPanel {
             .addGroup(formDiagnosaPasienPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(formDiagnosaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                     .addGroup(formDiagnosaPasienPanelLayout.createSequentialGroup()
                         .addGroup(formDiagnosaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(formDiagnosaPasienPanelLayout.createSequentialGroup()
@@ -1094,7 +1094,7 @@ public class DokterPanel extends javax.swing.JPanel {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGap(1, 1, 1))))
-                        .addGap(0, 1, Short.MAX_VALUE)))
+                        .addGap(0, 9, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         formDiagnosaPasienPanelLayout.setVerticalGroup(
@@ -1116,7 +1116,7 @@ public class DokterPanel extends javax.swing.JPanel {
                 .addComponent(keteranganDiagnosisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resepObatLabel)
                 .addGroup(formDiagnosaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(formDiagnosaPasienPanelLayout.createSequentialGroup()
@@ -1150,7 +1150,7 @@ public class DokterPanel extends javax.swing.JPanel {
                 .addComponent(tanggalRujukanLabel)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(tanggalRujukanPanelLayout.createSequentialGroup()
-                .addComponent(tanggalRujukanDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                .addComponent(tanggalRujukanDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         tanggalRujukanPanelLayout.setVerticalGroup(
@@ -1200,11 +1200,9 @@ public class DokterPanel extends javax.swing.JPanel {
             .addGroup(tujuanTanggalBerlakuPanelLayout.createSequentialGroup()
                 .addGroup(tujuanTanggalBerlakuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tanggalBerlakuLabel)
-                    .addComponent(tujuanRujukanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tujuanRujukanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tanggalBerlakuDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(tujuanTanggalBerlakuPanelLayout.createSequentialGroup()
-                .addComponent(tanggalBerlakuDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
         tujuanTanggalBerlakuPanelLayout.setVerticalGroup(
             tujuanTanggalBerlakuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1230,20 +1228,22 @@ public class DokterPanel extends javax.swing.JPanel {
             .addGroup(rujukanPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(rujukanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rujukanPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(tujuanTanggalBerlakuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rujukanPanelLayout.createSequentialGroup()
-                        .addComponent(rujukanLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rujukanRadioButton))
                     .addGroup(rujukanPanelLayout.createSequentialGroup()
                         .addGroup(rujukanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tanggalRujukanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(alasanRujukanLabel)
                             .addComponent(alasanRujukanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rujukanPanelLayout.createSequentialGroup()
+                        .addGroup(rujukanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(rujukanPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(tujuanTanggalBerlakuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tanggalRujukanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, rujukanPanelLayout.createSequentialGroup()
+                                .addComponent(rujukanLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rujukanRadioButton)))
+                        .addGap(17, 17, 17))))
         );
         rujukanPanelLayout.setVerticalGroup(
             rujukanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1284,11 +1284,11 @@ public class DokterPanel extends javax.swing.JPanel {
         diplayQueuePasienPanel.setLayout(diplayQueuePasienPanelLayout);
         diplayQueuePasienPanelLayout.setHorizontalGroup(
             diplayQueuePasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 253, Short.MAX_VALUE)
+            .addGap(0, 259, Short.MAX_VALUE)
         );
         diplayQueuePasienPanelLayout.setVerticalGroup(
             diplayQueuePasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 754, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -1304,28 +1304,26 @@ public class DokterPanel extends javax.swing.JPanel {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(diplayQueuePasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(dataPasienDisplayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(formDiagnosaPasienPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(rekamMedisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rujukanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(selesaikanKonsulButton, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(590, 590, 590))))
+                                .addComponent(selesaikanKonsulButton, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(rujukanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(rekamMedisPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(599, 599, 599))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(diplayQueuePasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(dataPasienDisplayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1335,7 +1333,8 @@ public class DokterPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rujukanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selesaikanKonsulButton)))
+                        .addComponent(selesaikanKonsulButton))
+                    .addComponent(diplayQueuePasienPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 

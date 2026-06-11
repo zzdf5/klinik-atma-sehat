@@ -103,6 +103,12 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        pencarianDokterPanel = new javax.swing.JPanel();
+        judulDokterLabel = new javax.swing.JLabel();
+        subJudulDokterLabel6 = new javax.swing.JLabel();
+        pencarianDokterTextField = new javax.swing.JTextField();
+        pencarianDokterButton = new javax.swing.JButton();
+        searchDokterLabel = new javax.swing.JLabel();
         formInputDokterPanel = new javax.swing.JPanel();
         inputNomorSTRPanel = new javax.swing.JPanel();
         inputNomorSTRLabel = new javax.swing.JLabel();
@@ -131,17 +137,72 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         tambahDokterButton = new javax.swing.JButton();
         barukanDokterButton = new javax.swing.JButton();
         hapusDokterButton = new javax.swing.JButton();
-        pencarianDokterPanel = new javax.swing.JPanel();
-        judulDokterLabel = new javax.swing.JLabel();
-        subJudulDokterLabel6 = new javax.swing.JLabel();
-        pencarianDokterTextField = new javax.swing.JTextField();
-        pencarianDokterButton = new javax.swing.JButton();
-        searchDokterLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
 
         mainPanel.setBackground(new java.awt.Color(238, 239, 253));
+
+        pencarianDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        judulDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulDokterLabel.setText("Data Master Manajemen Dokter");
+
+        subJudulDokterLabel6.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        subJudulDokterLabel6.setText("Dokter");
+
+        pencarianDokterTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pencarianDokterTextFieldKeyPressed(evt);
+            }
+        });
+
+        pencarianDokterButton.setBackground(new java.awt.Color(0, 0, 153));
+        pencarianDokterButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianDokterButton.setForeground(new java.awt.Color(255, 255, 255));
+        pencarianDokterButton.setText("Cari");
+        pencarianDokterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pencarianDokterButtonActionPerformed(evt);
+            }
+        });
+
+        searchDokterLabel.setText("Pencarian Dokter");
+
+        javax.swing.GroupLayout pencarianDokterPanelLayout = new javax.swing.GroupLayout(pencarianDokterPanel);
+        pencarianDokterPanel.setLayout(pencarianDokterPanelLayout);
+        pencarianDokterPanelLayout.setHorizontalGroup(
+            pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pencarianDokterPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(subJudulDokterLabel6)
+                    .addComponent(judulDokterLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pencarianDokterPanelLayout.createSequentialGroup()
+                        .addComponent(pencarianDokterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pencarianDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchDokterLabel))
+                .addGap(20, 20, 20))
+        );
+        pencarianDokterPanelLayout.setVerticalGroup(
+            pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pencarianDokterPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(judulDokterLabel)
+                    .addComponent(searchDokterLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pencarianDokterButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pencarianDokterPanelLayout.createSequentialGroup()
+                        .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pencarianDokterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subJudulDokterLabel6))
+                        .addContainerGap())))
+        );
 
         formInputDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -462,7 +523,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addComponent(barukanDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hapusDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         dokterButtonPanelLayout.setVerticalGroup(
             dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,82 +537,21 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        pencarianDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        judulDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
-        judulDokterLabel.setText("Data Master Manajemen Dokter");
-
-        subJudulDokterLabel6.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulDokterLabel6.setText("Dokter");
-
-        pencarianDokterTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                pencarianDokterTextFieldKeyPressed(evt);
-            }
-        });
-
-        pencarianDokterButton.setBackground(new java.awt.Color(0, 0, 153));
-        pencarianDokterButton.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        pencarianDokterButton.setForeground(new java.awt.Color(255, 255, 255));
-        pencarianDokterButton.setText("Cari");
-        pencarianDokterButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pencarianDokterButtonActionPerformed(evt);
-            }
-        });
-
-        searchDokterLabel.setText("Pencarian Dokter");
-
-        javax.swing.GroupLayout pencarianDokterPanelLayout = new javax.swing.GroupLayout(pencarianDokterPanel);
-        pencarianDokterPanel.setLayout(pencarianDokterPanelLayout);
-        pencarianDokterPanelLayout.setHorizontalGroup(
-            pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pencarianDokterPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(subJudulDokterLabel6)
-                    .addComponent(judulDokterLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 414, Short.MAX_VALUE)
-                .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pencarianDokterPanelLayout.createSequentialGroup()
-                        .addComponent(pencarianDokterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pencarianDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(searchDokterLabel))
-                .addGap(20, 20, 20))
-        );
-        pencarianDokterPanelLayout.setVerticalGroup(
-            pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pencarianDokterPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(judulDokterLabel)
-                    .addComponent(searchDokterLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pencarianDokterButton)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pencarianDokterPanelLayout.createSequentialGroup()
-                        .addGroup(pencarianDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pencarianDokterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(subJudulDokterLabel6))
-                        .addContainerGap())))
-        );
-
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pencarianDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(pencarianDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(formInputDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dokterButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(formInputDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dokterButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dokterScrollPane)))
-                .addContainerGap())
+                        .addComponent(dokterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)))
+                .addGap(16, 16, 16))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -574,8 +574,8 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
