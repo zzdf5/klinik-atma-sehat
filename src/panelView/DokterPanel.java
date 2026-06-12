@@ -599,6 +599,7 @@ public class DokterPanel extends javax.swing.JPanel {
         rujukanRadioButton = new javax.swing.JRadioButton();
         selesaikanKonsulButton = new javax.swing.JButton();
         diplayQueuePasienPanel = new javax.swing.JPanel();
+        manajemenJadwalDokterPanel1 = new panelView.ManajemenJadwalDokterPanel();
 
         setBackground(new java.awt.Color(238, 239, 253));
         setPreferredSize(new java.awt.Dimension(1224, 811));
@@ -632,6 +633,7 @@ public class DokterPanel extends javax.swing.JPanel {
         dataPasienDisplayPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         dataPasienLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        dataPasienLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/patient (1).png"))); // NOI18N
         dataPasienLabel.setText("Data Pasien");
 
         namaPasienLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
@@ -688,6 +690,7 @@ public class DokterPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(alergiTextField);
 
         alergiLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        alergiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/airborne.png"))); // NOI18N
         alergiLabel.setText("Alergi");
 
         riwayatPenyakitTextField.setColumns(20);
@@ -695,6 +698,7 @@ public class DokterPanel extends javax.swing.JPanel {
         jScrollPane2.setViewportView(riwayatPenyakitTextField);
 
         riwayatPenyakitLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        riwayatPenyakitLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/time-management.png"))); // NOI18N
         riwayatPenyakitLabel.setText("Riwayat Penyakit");
 
         javax.swing.GroupLayout rekamMedisPanelLayout = new javax.swing.GroupLayout(rekamMedisPanel);
@@ -739,6 +743,7 @@ public class DokterPanel extends javax.swing.JPanel {
         keluhanPasienPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         keluhanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        keluhanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Keluhan.png"))); // NOI18N
         keluhanLabel.setText("Keluhan Utama");
 
         javax.swing.GroupLayout keluhanPasienPanelLayout = new javax.swing.GroupLayout(keluhanPasienPanel);
@@ -766,6 +771,7 @@ public class DokterPanel extends javax.swing.JPanel {
         hasiPemeriksaanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel18.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/HasilDiagnosa.png"))); // NOI18N
         jLabel18.setText("Hasil Pemeriksaan");
 
         javax.swing.GroupLayout hasiPemeriksaanPanelLayout = new javax.swing.GroupLayout(hasiPemeriksaanPanel);
@@ -775,11 +781,9 @@ public class DokterPanel extends javax.swing.JPanel {
             .addGroup(hasiPemeriksaanPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(hasiPemeriksaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(hasiPemeriksaanPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(0, 175, Short.MAX_VALUE))
-                    .addComponent(hasilPemeriksaanTextField, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                    .addComponent(hasilPemeriksaanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         hasiPemeriksaanPanelLayout.setVerticalGroup(
             hasiPemeriksaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -809,6 +813,7 @@ public class DokterPanel extends javax.swing.JPanel {
         kodePenyakitPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         kodePenyakitLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        kodePenyakitLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Penyakit.png"))); // NOI18N
         kodePenyakitLabel.setText("Kode Penyakit");
 
         javax.swing.GroupLayout kodePenyakitPanelLayout = new javax.swing.GroupLayout(kodePenyakitPanel);
@@ -836,6 +841,7 @@ public class DokterPanel extends javax.swing.JPanel {
         aturanPakaiPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         aturanPakaiLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        aturanPakaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/book.png"))); // NOI18N
         aturanPakaiLabel.setText("Aturan Pakai");
 
         javax.swing.GroupLayout aturanPakaiPanelLayout = new javax.swing.GroupLayout(aturanPakaiPanel);
@@ -863,6 +869,7 @@ public class DokterPanel extends javax.swing.JPanel {
         namaPenyakitPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         namaPenyakitLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        namaPenyakitLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/report.png"))); // NOI18N
         namaPenyakitLabel.setText("Nama Penyakit");
 
         namaPenyakitTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -911,6 +918,7 @@ public class DokterPanel extends javax.swing.JPanel {
         formInputNamaJumlahObat.setBackground(new java.awt.Color(255, 255, 255));
 
         namaObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        namaObatLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pills.png"))); // NOI18N
         namaObatLabel.setText("Nama Obat");
 
         namaObatComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -972,6 +980,7 @@ public class DokterPanel extends javax.swing.JPanel {
         keteranganDiagnosisPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         keteranganDiagnosisLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        keteranganDiagnosisLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/HasilDiagnosa.png"))); // NOI18N
         keteranganDiagnosisLabel.setText("Keterangan Diagnosis");
 
         javax.swing.GroupLayout keteranganDiagnosisPanelLayout = new javax.swing.GroupLayout(keteranganDiagnosisPanel);
@@ -1056,8 +1065,8 @@ public class DokterPanel extends javax.swing.JPanel {
                 .addGroup(formDiagnosaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(formDiagnosaPasienPanelLayout.createSequentialGroup()
                         .addGroup(formDiagnosaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
                             .addGroup(formDiagnosaPasienPanelLayout.createSequentialGroup()
                                 .addGroup(formDiagnosaPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, formDiagnosaPasienPanelLayout.createSequentialGroup()
@@ -1135,6 +1144,7 @@ public class DokterPanel extends javax.swing.JPanel {
         tanggalRujukanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         tanggalRujukanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        tanggalRujukanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rujukan.png"))); // NOI18N
         tanggalRujukanLabel.setText("Tanggal Rujukan");
 
         javax.swing.GroupLayout tanggalRujukanPanelLayout = new javax.swing.GroupLayout(tanggalRujukanPanel);
@@ -1161,11 +1171,13 @@ public class DokterPanel extends javax.swing.JPanel {
         tujuanTanggalBerlakuPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         tanggalBerlakuLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        tanggalBerlakuLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rujukan.png"))); // NOI18N
         tanggalBerlakuLabel.setText("Tanggal Berlaku");
 
         tujuanRujukanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         tujuanRujukanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        tujuanRujukanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tujuanRujukan.png"))); // NOI18N
         tujuanRujukanLabel.setText("Tujuan Rujukan");
 
         tujuanRujukanTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -1180,11 +1192,9 @@ public class DokterPanel extends javax.swing.JPanel {
             tujuanRujukanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tujuanRujukanPanelLayout.createSequentialGroup()
                 .addGroup(tujuanRujukanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tujuanRujukanPanelLayout.createSequentialGroup()
-                        .addComponent(tujuanRujukanLabel)
-                        .addGap(0, 221, Short.MAX_VALUE))
-                    .addComponent(tujuanRujukanTextField))
-                .addContainerGap())
+                    .addComponent(tujuanRujukanLabel)
+                    .addComponent(tujuanRujukanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         tujuanRujukanPanelLayout.setVerticalGroup(
             tujuanRujukanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1201,13 +1211,11 @@ public class DokterPanel extends javax.swing.JPanel {
         tujuanTanggalBerlakuPanelLayout.setHorizontalGroup(
             tujuanTanggalBerlakuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tujuanTanggalBerlakuPanelLayout.createSequentialGroup()
-                .addGroup(tujuanTanggalBerlakuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tanggalBerlakuLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tujuanRujukanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tujuanTanggalBerlakuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tanggalBerlakuLabel)
+                    .addComponent(tujuanRujukanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tanggalBerlakuDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(tujuanTanggalBerlakuPanelLayout.createSequentialGroup()
-                .addComponent(tanggalBerlakuDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
         tujuanTanggalBerlakuPanelLayout.setVerticalGroup(
             tujuanTanggalBerlakuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1222,6 +1230,7 @@ public class DokterPanel extends javax.swing.JPanel {
         );
 
         alasanRujukanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        alasanRujukanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/communication.png"))); // NOI18N
         alasanRujukanLabel.setText("Alasan Rujukan");
 
         rujukanRadioButton.setText("Perlu Rujukan");
@@ -1304,7 +1313,7 @@ public class DokterPanel extends javax.swing.JPanel {
                     .addComponent(dataPasienDisplayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(rujukanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(rujukanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 336, Short.MAX_VALUE)
                     .addComponent(rekamMedisPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(selesaikanKonsulButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(109, 109, 109))
@@ -1332,7 +1341,7 @@ public class DokterPanel extends javax.swing.JPanel {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(formDiagnosaPasienPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(diplayQueuePasienPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -1341,15 +1350,22 @@ public class DokterPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(manajemenJadwalDokterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(manajemenJadwalDokterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1418,6 +1434,7 @@ public class DokterPanel extends javax.swing.JPanel {
     private javax.swing.JPanel kodePenyakitPanel;
     private javax.swing.JTextField kodePenyakitTextField;
     private javax.swing.JPanel mainPanel;
+    private panelView.ManajemenJadwalDokterPanel manajemenJadwalDokterPanel1;
     private javax.swing.JComboBox<String> namaObatComboBox;
     private javax.swing.JLabel namaObatLabel;
     private javax.swing.JLabel namaPasienLabel;

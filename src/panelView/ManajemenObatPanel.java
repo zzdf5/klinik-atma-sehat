@@ -235,6 +235,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         pilihBentukSediaanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         pilihBentukSediaanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pilihBentukSediaanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/drugs.png"))); // NOI18N
         pilihBentukSediaanLabel.setText("Bentuk sediaan");
 
         pilihBentukSediaanDropDown.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -271,7 +272,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addComponent(obatHerbalRadioButton)
                 .addGap(24, 24, 24)
                 .addComponent(obatPatenRadioButton)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(pilihKategoriObatPanelLayout.createSequentialGroup()
                 .addComponent(pilihKategoriObatLabel)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -296,10 +297,10 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pilihBentukSediaanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pilihBentukSediaanDropDown, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pilihBentukSediaanPanelLayout.createSequentialGroup()
                         .addComponent(pilihBentukSediaanLabel)
-                        .addGap(0, 127, Short.MAX_VALUE))
-                    .addComponent(pilihKategoriObatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pilihBentukSediaanPanelLayout.setVerticalGroup(
@@ -316,6 +317,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputNamaObatPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputNamaObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputNamaObatLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pills (1).png"))); // NOI18N
         inputNamaObatLabel.setText("Nama Obat");
 
         javax.swing.GroupLayout inputNamaObatPanelLayout = new javax.swing.GroupLayout(inputNamaObatPanel);
@@ -363,6 +365,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputIdObatPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdObatLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pills.png"))); // NOI18N
         inputIdObatLabel.setText("ID Obat");
 
         javax.swing.GroupLayout inputIdObatPanelLayout = new javax.swing.GroupLayout(inputIdObatPanel);
@@ -390,6 +393,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputDosisPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputDosisLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputDosisLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/kapsul.png"))); // NOI18N
         inputDosisLabel.setText("Dosis");
 
         inputDosisTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -402,10 +406,11 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputDosisPanel.setLayout(inputDosisPanelLayout);
         inputDosisPanelLayout.setHorizontalGroup(
             inputDosisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(inputDosisTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
             .addGroup(inputDosisPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(inputDosisLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(inputDosisTextField)
         );
         inputDosisPanelLayout.setVerticalGroup(
             inputDosisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,6 +424,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputHargaSatuanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputHargaSatuanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputHargaSatuanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tarif.png"))); // NOI18N
         inputHargaSatuanLabel.setText("Harga Satuan");
 
         inputHargaSatuanTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -434,15 +440,14 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             .addGroup(inputHargaSatuanPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inputHargaSatuanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputHargaSatuanTextField)
+                    .addComponent(inputHargaSatuanTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                     .addGroup(inputHargaSatuanPanelLayout.createSequentialGroup()
                         .addComponent(inputHargaSatuanLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         inputHargaSatuanPanelLayout.setVerticalGroup(
             inputHargaSatuanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputHargaSatuanPanelLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addComponent(inputHargaSatuanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputHargaSatuanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -484,6 +489,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputSpecialAtributePanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputSpecialAtributeLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputSpecialAtributeLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/capsule.png"))); // NOI18N
         inputSpecialAtributeLabel.setText("Bahan Utama");
 
         inputSpecialAtributeTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -498,10 +504,11 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             inputSpecialAtributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputSpecialAtributePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(inputSpecialAtributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputSpecialAtributeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputSpecialAtributeLabel))
+                .addComponent(inputSpecialAtributeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(inputSpecialAtributePanelLayout.createSequentialGroup()
+                .addComponent(inputSpecialAtributeLabel)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         inputSpecialAtributePanelLayout.setVerticalGroup(
             inputSpecialAtributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,7 +571,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 .addGroup(formInputDataObatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(simpanObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(batalObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         obatPatenScrollPane.setBackground(new java.awt.Color(255, 255, 255));
@@ -590,6 +597,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         obatPatenScrollPane.setViewportView(obatPatenTable);
 
         obatPatenLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        obatPatenLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pills-bottle.png"))); // NOI18N
         obatPatenLabel.setText("Obat Paten");
 
         obatHerbalScrollPane.setBackground(new java.awt.Color(255, 255, 255));
@@ -615,6 +623,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         obatHerbalScrollPane.setViewportView(obatHerbalTable);
 
         obatHerbalLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        obatHerbalLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/herbal24.png"))); // NOI18N
         obatHerbalLabel.setText("Obat Herbal");
 
         dokterButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -679,6 +688,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         pencarianPasienPanel.setPreferredSize(new java.awt.Dimension(778, 74));
 
         judulObatLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulObatLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/substance-abuse.png"))); // NOI18N
         judulObatLabel.setText("Data Master Manajemen Obat");
 
         subJudulObatLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -700,6 +710,8 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             }
         });
 
+        pencarianObatLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianObatLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Search.png"))); // NOI18N
         pencarianObatLabel.setText("Pencarian Obat");
 
         javax.swing.GroupLayout pencarianPasienPanelLayout = new javax.swing.GroupLayout(pencarianPasienPanel);

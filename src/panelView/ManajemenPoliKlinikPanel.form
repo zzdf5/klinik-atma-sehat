@@ -258,7 +258,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="inputIdPoliKlinikLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="inputIdPoliKlinikTextField" min="-2" pref="404" max="-2" attributes="0"/>
+                              <Component id="inputIdPoliKlinikTextField" min="-2" pref="409" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -281,6 +281,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/idPolikliinik.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="ID Poliklinik"/>
                   </Properties>
@@ -363,6 +366,9 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
                     </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/clockStart.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Jam Operasional"/>
                   </Properties>
                 </Component>
@@ -410,6 +416,9 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
                     </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/seminar-hall.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Lokasi Ruangan"/>
                   </Properties>
                 </Component>
@@ -456,6 +465,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/surgery-room.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Nama PoliKlinik"/>
                   </Properties>
@@ -557,6 +569,9 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Franklin Gothic Demi" size="24" style="0"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/medical-information.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Data Master Manajemen Poliklinik"/>
               </Properties>
             </Component>
@@ -592,6 +607,12 @@
             </Component>
             <Component class="javax.swing.JLabel" name="pencarianPoliKlinikLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Search.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Pencarian Poliklinik"/>
               </Properties>
             </Component>

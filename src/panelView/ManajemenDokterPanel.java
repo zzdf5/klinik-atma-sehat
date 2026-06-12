@@ -146,6 +146,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         pencarianDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         judulDokterLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/doktorIcon.png"))); // NOI18N
         judulDokterLabel.setText("Data Master Manajemen Dokter");
 
         subJudulDokterLabel6.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -167,6 +168,8 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             }
         });
 
+        searchDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        searchDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Search.png"))); // NOI18N
         searchDokterLabel.setText("Pencarian Dokter");
 
         javax.swing.GroupLayout pencarianDokterPanelLayout = new javax.swing.GroupLayout(pencarianDokterPanel);
@@ -210,6 +213,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputNomorSTRPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputNomorSTRLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputNomorSTRLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/STR.png"))); // NOI18N
         inputNomorSTRLabel.setText("Nomor STR");
 
         javax.swing.GroupLayout inputNomorSTRPanelLayout = new javax.swing.GroupLayout(inputNomorSTRPanel);
@@ -237,6 +241,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputStatusDokterPanel.setToolTipText("");
 
         inputStatusDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputStatusDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Status.png"))); // NOI18N
         inputStatusDokterLabel.setText("Status Aktif");
 
         inputStatusDokterButton.setText("Aktif");
@@ -274,6 +279,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputSpesialisasiDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputSpesialisasiDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputSpesialisasiDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Spesialisasi.png"))); // NOI18N
         inputSpesialisasiDokterLabel.setText("Spesialisasi");
 
         javax.swing.GroupLayout inputSpesialisasiDokterPanelLayout = new javax.swing.GroupLayout(inputSpesialisasiDokterPanel);
@@ -300,6 +306,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputIdDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/STR.png"))); // NOI18N
         inputIdDokterLabel.setText("ID Dokter");
 
         javax.swing.GroupLayout inputIdDokterPanelLayout = new javax.swing.GroupLayout(inputIdDokterPanel);
@@ -348,6 +355,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputTarifDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputTarifDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputTarifDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tarif.png"))); // NOI18N
         inputTarifDokterLabel.setText("Tarif Konsultasi");
 
         javax.swing.GroupLayout inputTarifDokterPanelLayout = new javax.swing.GroupLayout(inputTarifDokterPanel);
@@ -375,6 +383,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputNamaDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputNamaDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputNamaDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/namaDoctor.png"))); // NOI18N
         inputNamaDokterLabel.setText("Nama Lengkap");
 
         javax.swing.GroupLayout inputNamaDokterPanelLayout = new javax.swing.GroupLayout(inputNamaDokterPanel);
@@ -453,7 +462,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(simpanDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(batalDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
 
         dokterScrollPane.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -576,7 +585,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

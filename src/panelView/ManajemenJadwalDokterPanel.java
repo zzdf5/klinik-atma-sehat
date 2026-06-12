@@ -131,6 +131,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         pencarianJadwalPanel.setPreferredSize(new java.awt.Dimension(778, 74));
 
         judulJadwalLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulJadwalLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ScheduleIcon.png"))); // NOI18N
         judulJadwalLabel.setText("Data Master Manajemen Jadwal Dokter");
 
         subJudulJadwalLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -152,6 +153,8 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             }
         });
 
+        pencarianJadwalLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianJadwalLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Search.png"))); // NOI18N
         pencarianJadwalLabel.setText("Pencarian Jadwal Dokter");
 
         javax.swing.GroupLayout pencarianJadwalPanelLayout = new javax.swing.GroupLayout(pencarianJadwalPanel);
@@ -163,7 +166,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
                 .addGroup(pencarianJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(subJudulJadwalLabel)
                     .addComponent(judulJadwalLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
                 .addGroup(pencarianJadwalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pencarianJadwalPanelLayout.createSequentialGroup()
                         .addComponent(pencarianJadwalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,6 +255,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         inputIdJadwalPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdJadwalLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdJadwalLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/idSchedule.png"))); // NOI18N
         inputIdJadwalLabel.setText("ID Jadwal");
 
         javax.swing.GroupLayout inputIdJadwalPanelLayout = new javax.swing.GroupLayout(inputIdJadwalPanel);
@@ -279,6 +283,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         pilihDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         pilihDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pilihDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Spesialisasi.png"))); // NOI18N
         pilihDokterLabel.setText("Pilih Dokter");
 
         pilihDokterDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -308,6 +313,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         inputJamMulaiPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputJamMulaiLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputJamMulaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clockStart.png"))); // NOI18N
         inputJamMulaiLabel.setText("Jam Mulai");
 
         javax.swing.GroupLayout inputJamMulaiPanelLayout = new javax.swing.GroupLayout(inputJamMulaiPanel);
@@ -357,6 +363,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         pilihPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         pilihPoliKlinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pilihPoliKlinikLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/surgery-room.png"))); // NOI18N
         pilihPoliKlinikLabel.setText("Pilih Poliklinik");
 
         pilihPoliKlinikDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -380,12 +387,13 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
                 .addComponent(pilihPoliKlinikLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pilihPoliKlinikDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         inputKuotaPasienPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputKuotaPasienLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputKuotaPasienLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Keluhan.png"))); // NOI18N
         inputKuotaPasienLabel.setText("Kuota Pasien");
 
         inputKuotaPasienTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -418,6 +426,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         inputJamSelesaiPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputJamSelesaiLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputJamSelesaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clockEnd.png"))); // NOI18N
         inputJamSelesaiLabel.setText("Jam selesai");
 
         javax.swing.GroupLayout inputJamSelesaiPanelLayout = new javax.swing.GroupLayout(inputJamSelesaiPanel);
@@ -540,7 +549,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formInputDataJadwalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jadwalScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                .addComponent(jadwalScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

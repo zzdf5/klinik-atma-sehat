@@ -279,6 +279,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         searchAntrianPasienPanel.setPreferredSize(new java.awt.Dimension(600, 70));
 
         searchAntrianPasienLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        searchAntrianPasienLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Search.png"))); // NOI18N
         searchAntrianPasienLabel.setText("Cari Pasien");
 
         searchAntrianPasienTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -579,6 +580,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
 
         pilihPoliklinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         pilihPoliklinikLabel.setForeground(new java.awt.Color(255, 255, 255));
+        pilihPoliklinikLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/surgery-room.png"))); // NOI18N
         pilihPoliklinikLabel.setText("Pilih Poliklinik");
 
         pilihPoliklinikComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -605,6 +607,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         );
 
         antrianPasienHeaderLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        antrianPasienHeaderLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Antri.png"))); // NOI18N
         antrianPasienHeaderLabel.setText("Antrian Pasien");
 
         subJudulAntrianLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N

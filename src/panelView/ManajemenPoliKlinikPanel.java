@@ -187,6 +187,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         inputIdPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdPoliKlinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdPoliKlinikLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/idPolikliinik.png"))); // NOI18N
         inputIdPoliKlinikLabel.setText("ID Poliklinik");
 
         javax.swing.GroupLayout inputIdPoliKlinikPanelLayout = new javax.swing.GroupLayout(inputIdPoliKlinikPanel);
@@ -197,7 +198,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(inputIdPoliKlinikPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputIdPoliKlinikLabel)
-                    .addComponent(inputIdPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputIdPoliKlinikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         inputIdPoliKlinikPanelLayout.setVerticalGroup(
@@ -233,6 +234,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         inputJamOperasionalPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputJamOperasionalLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputJamOperasionalLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clockStart.png"))); // NOI18N
         inputJamOperasionalLabel.setText("Jam Operasional");
 
         javax.swing.GroupLayout inputJamOperasionalPanelLayout = new javax.swing.GroupLayout(inputJamOperasionalPanel);
@@ -260,6 +262,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         inputLokasiRuanganPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputLokasiRuanganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputLokasiRuanganLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seminar-hall.png"))); // NOI18N
         inputLokasiRuanganLabel.setText("Lokasi Ruangan");
 
         javax.swing.GroupLayout inputLokasiRuanganPanelLayout = new javax.swing.GroupLayout(inputLokasiRuanganPanel);
@@ -287,6 +290,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         inputNamaPoliKlinikPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputNamaPoliKlinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputNamaPoliKlinikLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/surgery-room.png"))); // NOI18N
         inputNamaPoliKlinikLabel.setText("Nama PoliKlinik");
 
         javax.swing.GroupLayout inputNamaPoliKlinikPanelLayout = new javax.swing.GroupLayout(inputNamaPoliKlinikPanel);
@@ -377,6 +381,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         pencarianPoliKlinikPanel.setPreferredSize(new java.awt.Dimension(778, 74));
 
         judulPoliKlinikLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulPoliKlinikLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medical-information.png"))); // NOI18N
         judulPoliKlinikLabel.setText("Data Master Manajemen Poliklinik");
 
         subJudulPoliKlinikLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -398,6 +403,8 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             }
         });
 
+        pencarianPoliKlinikLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianPoliKlinikLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Search.png"))); // NOI18N
         pencarianPoliKlinikLabel.setText("Pencarian Poliklinik");
 
         javax.swing.GroupLayout pencarianPoliKlinikPanelLayout = new javax.swing.GroupLayout(pencarianPoliKlinikPanel);

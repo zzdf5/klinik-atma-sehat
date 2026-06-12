@@ -206,6 +206,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputIdKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdKunjunganLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/doctor-consultation.png"))); // NOI18N
         inputIdKunjunganLabel.setText("ID Kunjungan");
 
         javax.swing.GroupLayout inputIdKunjunganPanelLayout = new javax.swing.GroupLayout(inputIdKunjunganPanel);
@@ -233,6 +234,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputNomorRekamMedisPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputNomorRekamMedisLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputNomorRekamMedisLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/health-report.png"))); // NOI18N
         inputNomorRekamMedisLabel.setText("Nomor Rekam Medis");
 
         inputNomorRekamMedisTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -250,23 +252,23 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 .addGroup(inputNomorRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inputNomorRekamMedisPanelLayout.createSequentialGroup()
                         .addComponent(inputNomorRekamMedisLabel)
-                        .addGap(0, 137, Short.MAX_VALUE))
-                    .addGroup(inputNomorRekamMedisPanelLayout.createSequentialGroup()
-                        .addComponent(inputNomorRekamMedisTextField)
-                        .addContainerGap())))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(inputNomorRekamMedisTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                .addContainerGap())
         );
         inputNomorRekamMedisPanelLayout.setVerticalGroup(
             inputNomorRekamMedisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputNomorRekamMedisPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(inputNomorRekamMedisLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputNomorRekamMedisTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         inputTanggalKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputTanggalKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputTanggalKunjunganLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rujukan.png"))); // NOI18N
         inputTanggalKunjunganLabel.setText("Tanggal");
 
         javax.swing.GroupLayout inputTanggalKunjunganPanelLayout = new javax.swing.GroupLayout(inputTanggalKunjunganPanel);
@@ -305,6 +307,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputPilihDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputPilihDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputPilihDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Spesialisasi.png"))); // NOI18N
         inputPilihDokterLabel.setText("Pilih Dokter");
 
         inputPilihDokterComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -332,6 +335,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputJamKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputJamKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputJamKunjunganLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clockStart.png"))); // NOI18N
         inputJamKunjunganLabel.setText("Jam");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -362,6 +366,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputStatusKunjunganPanel.setPreferredSize(new java.awt.Dimension(260, 59));
 
         inputStatusKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputStatusKunjunganLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Status.png"))); // NOI18N
         inputStatusKunjunganLabel.setText("Status Kunjungan");
 
         inputStatusKunjunganComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -389,6 +394,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputIdDiagnosaPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdDiagnosaLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdDiagnosaLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Penyakit.png"))); // NOI18N
         inputIdDiagnosaLabel.setText("ID Diagnosa");
 
         javax.swing.GroupLayout inputIdDiagnosaPanelLayout = new javax.swing.GroupLayout(inputIdDiagnosaPanel);
@@ -414,6 +420,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputIdResepPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdResepLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdResepLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/recipe.png"))); // NOI18N
         inputIdResepLabel.setText("ID Resep");
 
         inputIdResepTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -431,21 +438,22 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 .addGroup(inputIdResepPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inputIdResepPanelLayout.createSequentialGroup()
                         .addComponent(inputIdResepLabel)
-                        .addGap(0, 198, Short.MAX_VALUE))
-                    .addComponent(inputIdResepTextField)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(inputIdResepTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)))
         );
         inputIdResepPanelLayout.setVerticalGroup(
             inputIdResepPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputIdResepPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputIdResepLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputIdResepTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         inputBiayaKonsultasiPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputBiayaKonsultasiLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputBiayaKonsultasiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tarif.png"))); // NOI18N
         inputBiayaKonsultasiLabel.setText("Biaya Konsultasi");
 
         inputBiayaKonsultasiTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -476,6 +484,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputKeluhanUtamaPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputKeluhanUtamaLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputKeluhanUtamaLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Keluhan.png"))); // NOI18N
         inputKeluhanUtamaLabel.setText("Keluhan Utama");
 
         inputKeluhanUtamaTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -519,6 +528,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputHasilPemeriksaanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputHasilPemeriksaanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputHasilPemeriksaanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/HasilDiagnosa.png"))); // NOI18N
         inputHasilPemeriksaanLabel.setText("Hasil Pemeriksaan");
 
         inputHasilPemeriksaanTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -606,7 +616,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputTanggalKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(inputStatusKunjunganPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inputStatusKunjunganPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                                 .addComponent(inputJamKunjunganPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(formInputDataKunjunganPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -831,6 +841,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         searchKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         judulKunjunganLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulKunjunganLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/doctor-visit.png"))); // NOI18N
         judulKunjunganLabel.setText("Data Master Manajemen Kunjungan");
 
         subJudulKunjunganLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -852,6 +863,8 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             }
         });
 
+        searchKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        searchKunjunganLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Search.png"))); // NOI18N
         searchKunjunganLabel.setText("Pencarian Kunjungan");
 
         javax.swing.GroupLayout searchKunjunganPanelLayout = new javax.swing.GroupLayout(searchKunjunganPanel);
@@ -919,7 +932,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formInputDataKunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(kunjunganScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                .addComponent(kunjunganScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

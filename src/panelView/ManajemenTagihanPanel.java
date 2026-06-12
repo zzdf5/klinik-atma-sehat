@@ -245,6 +245,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputIdTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdTagihanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/invoiceId.png"))); // NOI18N
         inputIdTagihanLabel.setText("ID Tagihan");
 
         javax.swing.GroupLayout inputIdTagihanPanelLayout = new javax.swing.GroupLayout(inputIdTagihanPanel);
@@ -272,6 +273,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputIdKunjunganPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputIdKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputIdKunjunganLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/doctor-consultation.png"))); // NOI18N
         inputIdKunjunganLabel.setText("ID Kunjungan");
 
         javax.swing.GroupLayout inputIdKunjunganPanelLayout = new javax.swing.GroupLayout(inputIdKunjunganPanel);
@@ -299,6 +301,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputTanggalTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputTanggalTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputTanggalTagihanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rujukan.png"))); // NOI18N
         inputTanggalTagihanLabel.setText("Tanggal Tagihan");
 
         javax.swing.GroupLayout inputTanggalTagihanPanelLayout = new javax.swing.GroupLayout(inputTanggalTagihanPanel);
@@ -325,6 +328,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         itemTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         itemTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        itemTagihanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ListItem.png"))); // NOI18N
         itemTagihanLabel.setText("Item Tagihan");
 
         itemTagihanTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -402,6 +406,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         formInputRingkasanTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         totalTagihanLabel.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        totalTagihanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/online-payment.png"))); // NOI18N
         totalTagihanLabel.setText("Total Tagihan");
 
         totalHargaTagihanLabel.setFont(new java.awt.Font("sansserif", 1, 24)); // NOI18N
@@ -410,6 +415,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputMetodePembayaranPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputMetodePembayaranLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputMetodePembayaranLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/wallet.png"))); // NOI18N
         inputMetodePembayaranLabel.setText("Metode Pembayaran");
 
         inputMetodePembayaranComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -439,6 +445,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputJumlahBayarPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         inputJumlahBayarLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputJumlahBayarLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/credit-card.png"))); // NOI18N
         inputJumlahBayarLabel.setText("Jumlah Bayar");
 
         javax.swing.GroupLayout inputJumlahBayarPanelLayout = new javax.swing.GroupLayout(inputJumlahBayarPanel);
@@ -505,6 +512,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         kembalianPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         kembalianLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        kembalianLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/return-on-investment.png"))); // NOI18N
         kembalianLabel.setText("Kembalian");
 
         javax.swing.GroupLayout kembalianPanelLayout = new javax.swing.GroupLayout(kembalianPanel);
@@ -629,6 +637,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         pencarianTagihanPanel.setPreferredSize(new java.awt.Dimension(778, 74));
 
         judulTagihanLabel.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 24)); // NOI18N
+        judulTagihanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/invoiceUtama.png"))); // NOI18N
         judulTagihanLabel.setText("Data Master Manajemen Tagihan");
 
         subJudulTagihanLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -650,6 +659,8 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
             }
         });
 
+        pencarianTagihanLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        pencarianTagihanLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Search.png"))); // NOI18N
         pencarianTagihanLabel.setText("Pencarian Tagihan");
 
         javax.swing.GroupLayout pencarianTagihanPanelLayout = new javax.swing.GroupLayout(pencarianTagihanPanel);
@@ -661,7 +672,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(subJudulTagihanLabel)
                     .addComponent(judulTagihanLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 400, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
                 .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pencarianTagihanPanelLayout.createSequentialGroup()
                         .addComponent(pencarianTagihanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -711,7 +722,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formRingkasanTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TagihanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addComponent(TagihanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

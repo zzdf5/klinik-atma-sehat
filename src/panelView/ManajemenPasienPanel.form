@@ -59,12 +59,15 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="pasienScrollPane" max="32767" attributes="0"/>
-                      <Component id="pencarianPasienPanel" pref="1143" max="32767" attributes="0"/>
                       <Component id="pasienButtonPanel" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="formInputDataPasienPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="formInputRekamMedisPanel" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="pencarianPasienPanel" min="-2" pref="1148" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -89,7 +92,7 @@
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="pasienScrollPane" pref="194" max="32767" attributes="0"/>
+                  <Component id="pasienScrollPane" pref="190" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -211,6 +214,9 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
                     </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/Keluhan.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="ID Pasien"/>
                   </Properties>
                 </Component>
@@ -258,6 +264,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/telephone.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="No Telepon"/>
                   </Properties>
@@ -307,6 +316,9 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
                     </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/health-report.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Nomor Rekam Medis"/>
                   </Properties>
                 </Component>
@@ -354,6 +366,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/equality.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Jenis Kelamin"/>
                   </Properties>
@@ -415,6 +430,9 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
                     </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/rujukan.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Tanggal Lahir"/>
                   </Properties>
                 </Component>
@@ -462,6 +480,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/id-card.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Nama Lengkap"/>
                   </Properties>
@@ -512,6 +533,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/gps.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Alamat"/>
                   </Properties>
@@ -583,7 +607,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="inputRiwayatPenyakitPanel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="inputTanggalPembuatanPanel" pref="438" max="32767" attributes="0"/>
+                          <Component id="inputTanggalPembuatanPanel" pref="403" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -620,7 +644,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="inputAlergiLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="inputAlergiTextField" min="-2" pref="414" max="-2" attributes="0"/>
+                              <Component id="inputAlergiTextField" min="-2" pref="390" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -644,6 +668,9 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
                     </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/airborne.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alergi"/>
                   </Properties>
                 </Component>
@@ -665,7 +692,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="inputRiwayatPenyakitLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="inputRiwayatPenyakitTextField" min="-2" pref="414" max="-2" attributes="0"/>
+                              <Component id="inputRiwayatPenyakitTextField" min="-2" pref="390" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -688,6 +715,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/Penyakit.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Riwayat Penyakit"/>
                   </Properties>
@@ -712,17 +742,17 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="inputTanggalPembuatanDateChooser" min="-2" pref="415" max="-2" attributes="0"/>
                               <Component id="inputTanggalPembuatanLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputTanggalPembuatanDateChooser" min="-2" pref="390" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="17" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace pref="12" max="32767" attributes="0"/>
+                          <EmptySpace pref="11" max="32767" attributes="0"/>
                           <Component id="inputTanggalPembuatanLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="inputTanggalPembuatanDateChooser" min="-2" pref="22" max="-2" attributes="0"/>
@@ -735,6 +765,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/rujukan.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Tanggal Pembuatan"/>
                   </Properties>
@@ -882,7 +915,7 @@
                           <Component id="subJudulPasienLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="judulPasienLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="389" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="pencarianPasienTextField" min="-2" pref="287" max="-2" attributes="0"/>
@@ -925,6 +958,9 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Franklin Gothic Demi" size="24" style="0"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/medical-information.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Data Master Manajemen Pasien"/>
               </Properties>
             </Component>
@@ -960,6 +996,12 @@
             </Component>
             <Component class="javax.swing.JLabel" name="pencarianPasienLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Search.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Pencarian Pasien"/>
               </Properties>
             </Component>
