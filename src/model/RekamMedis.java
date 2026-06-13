@@ -18,18 +18,38 @@ public class RekamMedis {
         this.riwayatPenyakit = new ArrayList<>();
     }
 
-    public void setNomorRekamMedis(String nomorRekamMedis) { this.nomorRekamMedis = nomorRekamMedis; }
-    public void setIdPasien(String idPasien) { this.idPasien = idPasien; }
-    public void setTanggalBuat(String tanggalBuat) { this.tanggalBuat = tanggalBuat; }
+    public void setNomorRekamMedis(String nomorRekamMedis) {
+        this.nomorRekamMedis = nomorRekamMedis; 
+    }
+    public void setIdPasien(String idPasien) {
+        this.idPasien = idPasien; 
+    }
+    public void setTanggalBuat(String tanggalBuat) {
+        this.tanggalBuat = tanggalBuat; 
+    }
 
-    public String getNomorRekamMedis() { return nomorRekamMedis; }
-    public String getIdPasien() { return idPasien; }
-    public String getTanggalBuat() { return tanggalBuat; }
-    public List<String> getAlergi() { return alergi; }
-    public List<String> getRiwayatPenyakit() { return riwayatPenyakit; }
+    public String getNomorRekamMedis() {
+        return nomorRekamMedis; 
+    }
+    public String getIdPasien() {
+        return idPasien; 
+    }
+    public String getTanggalBuat() {
+        return tanggalBuat;
+    }
+    public List<String> getAlergi() {
+        return alergi;
+    }
+    public List<String> getRiwayatPenyakit() {
+        return riwayatPenyakit; 
+    }
 
-    public void tambahAlergi(String item) { this.alergi.add(item); }
-    public void tambahRiwayatPenyakit(String item) { this.riwayatPenyakit.add(item); }
+    public void tambahAlergi(String item) { 
+        this.alergi.add(item); 
+    }
+    public void tambahRiwayatPenyakit(String item) {
+        this.riwayatPenyakit.add(item); 
+    }
 
     public String getInfo() {
         return nomorRekamMedis + " | " + idPasien + " | " + tanggalBuat;

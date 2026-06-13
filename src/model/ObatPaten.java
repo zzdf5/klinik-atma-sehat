@@ -9,8 +9,12 @@ public class ObatPaten extends Obat {
         this.merk = merk;
     }
 
-    public void setMerk(String merk) { this.merk = merk; }
-    public String getMerk() { return merk; }
+    public void setMerk(String merk) { 
+        this.merk = merk; 
+    }
+    public String getMerk() { 
+        return merk;
+    }
 
     @Override
     public String getInfo() {

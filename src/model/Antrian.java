@@ -30,23 +30,55 @@ public class Antrian {
         this.status = Status.MENUNGGU;
     }
 
-    public void setIdAntrian(int idAntrian) { this.idAntrian = idAntrian; }
-    public void setNomorUrut(int nomorUrut) { this.nomorUrut = nomorUrut; }
-    public void setIdPasien(String idPasien) { this.idPasien = idPasien; }
-    public void setIdDokter(String idDokter) { this.idDokter = idDokter; }
-    public void setIdPoliklinik(String idPoliklinik) { this.idPoliklinik = idPoliklinik; }
-    public void setTanggal(String tanggal) { this.tanggal = tanggal; }
-    public void setStatus(Status status) { this.status = status; }
-    public void setJenisKunjungan(JenisKunjungan jenisKunjungan) { this.jenisKunjungan = jenisKunjungan; }
+    public void setIdAntrian(int idAntrian) { 
+        this.idAntrian = idAntrian; 
+    }
+    public void setNomorUrut(int nomorUrut) {
+        this.nomorUrut = nomorUrut; 
+    }
+    public void setIdPasien(String idPasien) { 
+        this.idPasien = idPasien;
+    }
+    public void setIdDokter(String idDokter) { 
+        this.idDokter = idDokter;
+    }
+    public void setIdPoliklinik(String idPoliklinik) { 
+        this.idPoliklinik = idPoliklinik; 
+    }
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal; 
+    }
+    public void setStatus(Status status) {
+        this.status = status; 
+    }
+    public void setJenisKunjungan(JenisKunjungan jenisKunjungan) {
+        this.jenisKunjungan = jenisKunjungan; 
+    }
 
-    public int getIdAntrian() { return idAntrian; }
-    public int getNomorUrut() { return nomorUrut; }
-    public String getIdPasien() { return idPasien; }
-    public String getIdDokter() { return idDokter; }
-    public String getIdPoliklinik() { return idPoliklinik; }
-    public String getTanggal() { return tanggal; }
-    public Status getStatus() { return status; }
-    public JenisKunjungan getJenisKunjungan() { return jenisKunjungan; }
+    public int getIdAntrian() {
+        return idAntrian; 
+    }
+    public int getNomorUrut() {
+        return nomorUrut; 
+    }
+    public String getIdPasien() {
+        return idPasien; 
+    }
+    public String getIdDokter() {
+        return idDokter; 
+    }
+    public String getIdPoliklinik() {
+        return idPoliklinik; 
+    }
+    public String getTanggal() { 
+        return tanggal; 
+    }
+    public Status getStatus() {
+        return status; 
+    }
+    public JenisKunjungan getJenisKunjungan() {
+        return jenisKunjungan; 
+    }
 
     public String getInfo() {
         return idAntrian + " | No." + nomorUrut + " | " + jenisKunjungan + " | " + status;

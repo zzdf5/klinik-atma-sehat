@@ -16,15 +16,31 @@ public class Dokter extends Pengguna {
         this.statusAktif = true;
     }
 
-    public void setNomorSTR(String nomorSTR) { this.nomorSTR = nomorSTR; }
-    public void setSpesialisasi(String spesialisasi) { this.spesialisasi = spesialisasi; }
-    public void setTarifKonsultasi(double tarifKonsultasi) { this.tarifKonsultasi = tarifKonsultasi; }
-    public void setStatusAktif(boolean statusAktif) { this.statusAktif = statusAktif; }
+    public void setNomorSTR(String nomorSTR) {
+        this.nomorSTR = nomorSTR; 
+    }
+    public void setSpesialisasi(String spesialisasi) {
+        this.spesialisasi = spesialisasi; 
+    }
+    public void setTarifKonsultasi(double tarifKonsultasi) {
+        this.tarifKonsultasi = tarifKonsultasi; 
+    }
+    public void setStatusAktif(boolean statusAktif) {
+        this.statusAktif = statusAktif;
+    }
 
-    public String getNomorSTR() { return nomorSTR; }
-    public String getSpesialisasi() { return spesialisasi; }
-    public double getTarifKonsultasi() { return tarifKonsultasi; }
-    public boolean isStatusAktif() { return statusAktif; }
+    public String getNomorSTR() {
+        return nomorSTR; 
+    }
+    public String getSpesialisasi() {
+        return spesialisasi;
+    }
+    public double getTarifKonsultasi() {
+        return tarifKonsultasi; 
+    }
+    public boolean isStatusAktif() {
+        return statusAktif;
+    }
 
     @Override
     public String getInfo() {

@@ -12,17 +12,37 @@ public abstract class Pengguna {
         this.password = password;
     }
 
-    public void setId(String id) { this.id = id; }
-    public void setNama(String nama) { this.nama = nama; }
-    public void setNoTelepon(String noTelepon) { this.noTelepon = noTelepon; }
-    public void setUsername(String username) { this.username = username; }
-    public void setPassword(String password) { this.password = password; }
+    public void setId(String id) {
+        this.id = id; 
+    }
+    public void setNama(String nama) {
+        this.nama = nama; 
+    }
+    public void setNoTelepon(String noTelepon) {
+        this.noTelepon = noTelepon;
+    }
+    public void setUsername(String username) {
+        this.username = username; 
+    }
+    public void setPassword(String password) {
+        this.password = password; 
+    }
 
-    public String getId() { return id; }
-    public String getNama() { return nama; }
-    public String getNoTelepon() { return noTelepon; }
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
+    public String getId() {
+        return id;
+    }
+    public String getNama() { 
+        return nama; 
+    }
+    public String getNoTelepon() { 
+        return noTelepon; 
+    }
+    public String getUsername() {
+        return username; 
+    }
+    public String getPassword() { 
+        return password; 
+    }
 
     public String getInfo() {
         return id + " | " + nama + " | " + noTelepon;

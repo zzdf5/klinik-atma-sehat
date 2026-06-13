@@ -29,21 +29,49 @@ public class Rujukan {
         this.status = Status.AKTIF;
     }
 
-    public void setIdRujukan(String idRujukan) { this.idRujukan = idRujukan; }
-    public void setTujuanRujukan(String tujuanRujukan) { this.tujuanRujukan = tujuanRujukan; }
-    public void setAlasanRujukan(String alasanRujukan) { this.alasanRujukan = alasanRujukan; }
-    public void setTanggalBerlaku(String tanggalBerlaku) { this.tanggalBerlaku = tanggalBerlaku; }
-    public void setStatus(Status status) { this.status = status; }
+    public void setIdRujukan(String idRujukan) { 
+        this.idRujukan = idRujukan; 
+    }
+    public void setTujuanRujukan(String tujuanRujukan) { 
+        this.tujuanRujukan = tujuanRujukan; 
+    }
+    public void setAlasanRujukan(String alasanRujukan) { 
+        this.alasanRujukan = alasanRujukan;
+    }
+    public void setTanggalBerlaku(String tanggalBerlaku) {
+        this.tanggalBerlaku = tanggalBerlaku; 
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
-    public String getIdRujukan() { return idRujukan; }
-    public String getIdKunjungan() { return idKunjungan; }
-    public String getNomorRekamMedis() { return nomorRekamMedis; }
-    public String getIdDokterPengirim() { return idDokterPengirim; }
-    public String getTujuanRujukan() { return tujuanRujukan; }
-    public String getAlasanRujukan() { return alasanRujukan; }
-    public String getTanggalRujukan() { return tanggalRujukan; }
-    public String getTanggalBerlaku() { return tanggalBerlaku; }
-    public Status getStatus() { return status; }
+    public String getIdRujukan() { 
+        return idRujukan;
+    }
+    public String getIdKunjungan() { 
+        return idKunjungan;
+    }
+    public String getNomorRekamMedis() { 
+        return nomorRekamMedis;
+    }
+    public String getIdDokterPengirim() {
+        return idDokterPengirim;
+    }
+    public String getTujuanRujukan() { 
+        return tujuanRujukan;
+    }
+    public String getAlasanRujukan() {
+        return alasanRujukan; 
+    }
+    public String getTanggalRujukan() { 
+        return tanggalRujukan;
+    }
+    public String getTanggalBerlaku() {
+        return tanggalBerlaku;
+    }
+    public Status getStatus() { 
+        return status; 
+    }
 
     public String getInfo() {
         return idRujukan + " | " + nomorRekamMedis + " | " + tujuanRujukan + " | " + status;

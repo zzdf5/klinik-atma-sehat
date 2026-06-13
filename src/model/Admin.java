@@ -13,12 +13,22 @@ public class Admin extends Pengguna {
         this.statusAktif = true;
     }
 
-    public void setStatusAktif(boolean statusAktif) { this.statusAktif = statusAktif; }
-    public void setJabatan(Jabatan jabatan) { this.jabatan = jabatan; }
+    public void setStatusAktif(boolean statusAktif) {
+        this.statusAktif = statusAktif; 
+    }
+    public void setJabatan(Jabatan jabatan) {
+        this.jabatan = jabatan; 
+    }
 
-    public boolean isStatusAktif() { return statusAktif; }
-    public Jabatan getJabatan() { return jabatan; }
+    public boolean isStatusAktif() { 
+        return statusAktif; 
+    }
+    public Jabatan getJabatan() {
+        return jabatan; 
+    }
 
     @Override
-    public String getPeran() { return "Admin - "+jabatan; }
+    public String getPeran() {
+        return "Admin - "+jabatan; 
+    }
 }

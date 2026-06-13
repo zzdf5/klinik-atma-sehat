@@ -30,24 +30,58 @@ public class Tagihan {
         this.daftarItem = new ArrayList<>();
     }
 
-    public void setIdTagihan(String idTagihan) { this.idTagihan = idTagihan; }
-    public void setIdKunjungan(String idKunjungan) { this.idKunjungan = idKunjungan; }
-    public void setTanggalTagihan(String tanggalTagihan) { this.tanggalTagihan = tanggalTagihan; }
-    public void setMetodePembayaran(MetodePembayaran metodePembayaran) { this.metodePembayaran = metodePembayaran; }
-    public void setStatus(Status status) { this.status = status; }
-    public void setJumlahBayar(double jumlahBayar) { this.jumlahBayar = jumlahBayar; }
-    public void setKembalian(double kembalian) { this.kembalian = kembalian; }
-    public void setTotalTagihan(double totalTagihan) { this.totalTagihan = totalTagihan; }
+    public void setIdTagihan(String idTagihan) { 
+        this.idTagihan = idTagihan;
+    }
+    public void setIdKunjungan(String idKunjungan) {
+        this.idKunjungan = idKunjungan; 
+    }
+    public void setTanggalTagihan(String tanggalTagihan) { 
+        this.tanggalTagihan = tanggalTagihan; 
+    }
+    public void setMetodePembayaran(MetodePembayaran metodePembayaran) {
+        this.metodePembayaran = metodePembayaran; 
+    }
+    public void setStatus(Status status) { 
+        this.status = status;
+    }
+    public void setJumlahBayar(double jumlahBayar) { 
+        this.jumlahBayar = jumlahBayar; 
+    }
+    public void setKembalian(double kembalian) { 
+        this.kembalian = kembalian;
+    }
+    public void setTotalTagihan(double totalTagihan) {
+        this.totalTagihan = totalTagihan;
+    }
 
-    public String getIdTagihan() { return idTagihan; }
-    public String getIdKunjungan() { return idKunjungan; }
-    public String getTanggalTagihan() { return tanggalTagihan; }
-    public double getTotalTagihan() { return totalTagihan; }
-    public double getJumlahBayar() { return jumlahBayar; }
-    public double getKembalian() { return kembalian; }
-    public MetodePembayaran getMetodePembayaran() { return metodePembayaran; }
-    public Status getStatus() { return status; }
-    public List<ItemTagihan> getDaftarItem() { return daftarItem; }
+    public String getIdTagihan() {
+        return idTagihan;
+    }
+    public String getIdKunjungan() { 
+        return idKunjungan; 
+    }
+    public String getTanggalTagihan() { 
+        return tanggalTagihan; 
+    }
+    public double getTotalTagihan() { 
+        return totalTagihan;
+    }
+    public double getJumlahBayar() {
+        return jumlahBayar; 
+    }
+    public double getKembalian() {
+        return kembalian; 
+    }
+    public MetodePembayaran getMetodePembayaran() {
+        return metodePembayaran; 
+    }
+    public Status getStatus() {
+        return status;
+    }
+    public List<ItemTagihan> getDaftarItem() {
+        return daftarItem; 
+    }
 
     public void tambahItem(ItemTagihan item) {
         this.daftarItem.add(item);
@@ -68,13 +102,25 @@ public class Tagihan {
             this.hargaSatuan = hargaSatuan;
         }
 
-        public void setNamaItem(String namaItem) { this.namaItem = namaItem; }
-        public void setJumlah(int jumlah) { this.jumlah = jumlah; }
-        public void setHargaSatuan(double hargaSatuan) { this.hargaSatuan = hargaSatuan; }
+        public void setNamaItem(String namaItem) { 
+            this.namaItem = namaItem; 
+        }
+        public void setJumlah(int jumlah) { 
+            this.jumlah = jumlah; 
+        }
+        public void setHargaSatuan(double hargaSatuan) {
+            this.hargaSatuan = hargaSatuan; 
+        }
 
-        public String getNamaItem() { return namaItem; }
-        public int getJumlah() { return jumlah; }
-        public double getHargaSatuan() { return hargaSatuan; }
+        public String getNamaItem() {
+            return namaItem; 
+        }
+        public int getJumlah() { 
+            return jumlah; 
+        }
+        public double getHargaSatuan() {
+            return hargaSatuan;
+        }
 
         @Override
         public String toString() {
