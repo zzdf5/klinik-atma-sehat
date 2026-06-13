@@ -4,11 +4,13 @@
  */
 package view;
 
+import util.DialogUtil;
+
 import control.AdminControl;
 import control.DokterControl;
 import exception.DataTidakDitemukanException;
 import exception.InputKosongException;
-import javax.swing.UIManager;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.Admin;
 import model.Dokter;
@@ -17,58 +19,17 @@ import model.Dokter;
  *
  * @author Divo Pratama
  */
-public class LoginForm extends javax.swing.JFrame {
-
-    private final StringBuilder passwordBuffer = new StringBuilder();
+public class LoginForm extends JFrame {
 
     public LoginForm() {
         initComponents();
-        inputLoginPassword.addActionListener(e -> handleLogin());
-        inputPasswordTextField.addActionListener(e -> handleLogin());
-        inputUsernameTextField.addActionListener(e -> handleLogin());
-
-        ((javax.swing.text.AbstractDocument) inputPasswordTextField.getDocument())
-            .setDocumentFilter(new javax.swing.text.DocumentFilter() {
-                @Override
-                public void insertString(FilterBypass fb, int offset, String string,
-                        javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
-                    if (string == null) {
-                        return;
-                    }
-                    passwordBuffer.insert(offset, string);
-                    super.insertString(fb, offset, mask(string.length()), attr);
-                }
-                @Override
-                public void replace(FilterBypass fb, int offset, int length, String string,
-                        javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
-                    if (length > 0) {
-                        passwordBuffer.delete(offset, offset + length);
-                    }
-                    if (string != null) {
-                        passwordBuffer.insert(offset, string);
-                    }
-                    super.replace(fb, offset, length, string != null ? mask(string.length()) : "", attr);
-                }
-                @Override
-                public void remove(FilterBypass fb, int offset, int length) throws javax.swing.text.BadLocationException {
-                    passwordBuffer.delete(offset, offset + length);
-                    super.remove(fb, offset, length);
-                }
-                private String mask(int length) {
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < length; i++){
-                        sb.append('*');
-                    } 
-                    return sb.toString();
-                }
-            });
-
+        inputPasswordPasswordField.setEchoChar('*');
         setLocationRelativeTo(null);
     }
 
     private void handleLogin() {
         String username = inputUsernameTextField.getText().trim();
-        String password = passwordBuffer.toString().trim();
+        String password = new String(inputPasswordPasswordField.getPassword()).trim();
 //        username = "hendra.dokter";
 //        password = "dokter123";
 
@@ -79,7 +40,7 @@ public class LoginForm extends javax.swing.JFrame {
             this.dispose();
             return;
         } catch (InputKosongException e) {
-            JOptionPane.showMessageDialog(this, "Username dan password tidak boleh kosong!",
+            DialogUtil.showMessageDialog(this, "Username dan password tidak boleh kosong!",
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         } catch (DataTidakDitemukanException e) {}
@@ -90,11 +51,11 @@ public class LoginForm extends javax.swing.JFrame {
             new MainViewFormDokter(dokter.getId()).setVisible(true);
             this.dispose();
         } catch (InputKosongException e) {
-            JOptionPane.showMessageDialog(this, "Username dan password tidak boleh kosong!",
-                    "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Username dan password tidak boleh kosong!",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE);
         } catch (DataTidakDitemukanException e) {
-            JOptionPane.showMessageDialog(this, "Username atau password salah!",
-                    "Login Gagal", javax.swing.JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Username atau password salah!",
+                    "Login Gagal", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -121,7 +82,7 @@ public class LoginForm extends javax.swing.JFrame {
         inputUsernameTextField = new javax.swing.JTextField();
         inputPasswordPanel = new javax.swing.JPanel();
         inputPasswordLabel = new javax.swing.JLabel();
-        inputPasswordTextField = new javax.swing.JTextField();
+        inputPasswordPasswordField = new javax.swing.JPasswordField();
         inputLoginPassword = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -174,6 +135,11 @@ public class LoginForm extends javax.swing.JFrame {
         inputUsernameLabel.setText("Username");
 
         inputUsernameTextField.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        inputUsernameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputUsernameTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout InputUsernamePanelLayout = new javax.swing.GroupLayout(InputUsernamePanel);
         InputUsernamePanel.setLayout(InputUsernamePanelLayout);
@@ -182,7 +148,7 @@ public class LoginForm extends javax.swing.JFrame {
             .addComponent(inputUsernameTextField, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(InputUsernamePanelLayout.createSequentialGroup()
                 .addComponent(inputUsernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 336, Short.MAX_VALUE))
         );
         InputUsernamePanelLayout.setVerticalGroup(
             InputUsernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +156,7 @@ public class LoginForm extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(inputUsernameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -199,10 +165,9 @@ public class LoginForm extends javax.swing.JFrame {
         inputPasswordLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         inputPasswordLabel.setText("Password");
 
-        inputPasswordTextField.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        inputPasswordTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                inputPasswordTextFieldKeyTyped(evt);
+        inputPasswordPasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputPasswordPasswordFieldActionPerformed(evt);
             }
         });
 
@@ -212,8 +177,8 @@ public class LoginForm extends javax.swing.JFrame {
             inputPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputPasswordPanelLayout.createSequentialGroup()
                 .addComponent(inputPasswordLabel)
-                .addContainerGap(346, Short.MAX_VALUE))
-            .addComponent(inputPasswordTextField)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(inputPasswordPasswordField)
         );
         inputPasswordPanelLayout.setVerticalGroup(
             inputPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +186,7 @@ public class LoginForm extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(inputPasswordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(inputPasswordPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         inputLoginPassword.setBackground(new java.awt.Color(91, 101, 220));
@@ -340,12 +305,16 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inputLoginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputLoginPasswordActionPerformed
-        // TODO add your handling code here:
+        handleLogin();
     }//GEN-LAST:event_inputLoginPasswordActionPerformed
 
-    private void inputPasswordTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputPasswordTextFieldKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputPasswordTextFieldKeyTyped
+    private void inputUsernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUsernameTextFieldActionPerformed
+        handleLogin();
+    }//GEN-LAST:event_inputUsernameTextFieldActionPerformed
+
+    private void inputPasswordPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputPasswordPasswordFieldActionPerformed
+        handleLogin();
+    }//GEN-LAST:event_inputPasswordPasswordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -377,7 +346,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JButton inputLoginPassword;
     private javax.swing.JLabel inputPasswordLabel;
     private javax.swing.JPanel inputPasswordPanel;
-    private javax.swing.JTextField inputPasswordTextField;
+    private javax.swing.JPasswordField inputPasswordPasswordField;
     private javax.swing.JLabel inputUsernameLabel;
     private javax.swing.JTextField inputUsernameTextField;
     private javax.swing.JLabel jLabel1;

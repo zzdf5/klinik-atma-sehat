@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panelView;
+
+import util.DialogUtil;
 import control.DokterControl;
 import exception.InputKosongException;
 import javax.swing.JOptionPane;
@@ -229,9 +231,10 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             .addGroup(inputNomorSTRPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inputNomorSTRPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputNomorSTRTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputNomorSTRLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputNomorSTRTextField)
+                    .addGroup(inputNomorSTRPanelLayout.createSequentialGroup()
+                        .addComponent(inputNomorSTRLabel)
+                        .addContainerGap(136, Short.MAX_VALUE))))
         );
         inputNomorSTRPanelLayout.setVerticalGroup(
             inputNomorSTRPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,13 +431,10 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                     .addComponent(inputIdDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(inputNamaDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formInputDokterPanelLayout.createSequentialGroup()
-                        .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formInputDokterPanelLayout.createSequentialGroup()
-                                .addComponent(inputTarifDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(formInputDokterPanelLayout.createSequentialGroup()
-                                .addComponent(inputNomorSTRPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)))
+                        .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputTarifDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputNomorSTRPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputStatusDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(inputSpesialisasiDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -636,7 +636,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
 
     private void hapusDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusDokterButtonActionPerformed
         action = "hapus";
-        int confirm = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+        int confirm = DialogUtil.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
         
         if (confirm == JOptionPane.YES_OPTION) {
             dokterControl.delete(selectedId); 
@@ -653,11 +653,11 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             inputKosongException();
             
             if(!isDouble(inputTarifDokterTextField.getText())){
-                JOptionPane.showMessageDialog(this, "Tarif Konsultasi harus berupa angka!");
+                DialogUtil.showMessageDialog(this, "Tarif Konsultasi harus berupa angka!");
                 return;
             }
 
-            int confirm = JOptionPane.showConfirmDialog(
+            int confirm = DialogUtil.showConfirmDialog(
                 this, 
                 "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Dokter ini?", 
                 "Konfirmasi Simpan", 
@@ -697,9 +697,9 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             action = null;
 
         } catch(InputKosongException e) {
-            JOptionPane.showMessageDialog(this, "Seluruh Data Input Tidak Boleh Kosong!");
+            DialogUtil.showMessageDialog(this, "Seluruh Data Input Tidak Boleh Kosong!");
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            DialogUtil.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_simpanDokterButtonActionPerformed
 

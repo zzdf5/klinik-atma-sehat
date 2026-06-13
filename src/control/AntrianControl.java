@@ -41,8 +41,12 @@ public class AntrianControl {
         return dao.showData(); 
     }
     
-    public Antrian search(Integer id) { 
-        return dao.search(id); 
+    public Antrian search(Integer id) {
+        return dao.search(id);
+    }
+
+    public Antrian searchByPasienTanggal(String idPasien, String tanggal) {
+        return dao.searchByPasienTanggal(idPasien, tanggal);
     }
 
     public void ubahStatus(Antrian antrian, Antrian.Status statusBaru) {

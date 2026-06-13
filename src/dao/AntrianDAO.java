@@ -120,6 +120,44 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
         return list;
     }
 
+    /**
+     * Mencari antrian milik pasien pada tanggal tertentu (antrian terbaru jika
+     * ada lebih dari satu). Dipakai untuk menyinkronkan antrian saat data
+     * kunjungan terkait diubah, karena antrian tidak menyimpan id_kunjungan.
+     */
+    public Antrian searchByPasienTanggal(String idPasien, String tanggal) {
+        con = dbCon.makeConnection();
+        Antrian antrian = null;
+
+        String sql = "SELECT * FROM antrian WHERE id_pasien=? AND tanggal=? ORDER BY id_antrian DESC LIMIT 1";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, idPasien);
+            ps.setString(2, tanggal);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                antrian = new Antrian(
+                        rs.getInt("id_antrian"),
+                        rs.getInt("nomor_urut"),
+                        rs.getString("id_pasien"),
+                        rs.getString("id_dokter"),
+                        rs.getString("id_poliklinik"),
+                        rs.getString("tanggal"),
+                        Antrian.JenisKunjungan.valueOf(rs.getString("jenis_kunjungan"))
+                );
+                antrian.setStatus(Antrian.Status.valueOf(rs.getString("status")));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error searchByPasienTanggal Antrian: " + e);
+        }
+
+        dbCon.closeConnection();
+        return antrian;
+    }
+
     public int generateNomorUrut(String tanggal) {
         con = dbCon.makeConnection();
         int next = 1;

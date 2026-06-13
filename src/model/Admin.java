@@ -4,9 +4,8 @@ public class Admin extends Pengguna {
     private boolean statusAktif;
     private Jabatan jabatan;
 
-    public enum Jabatan { 
-        KARYAWAN, 
-        MANAGER 
+    public enum Jabatan {
+        KARYAWAN
     }
 
     public Admin(String id, String nama, String noTelepon, String username, String password, Jabatan jabatan) {

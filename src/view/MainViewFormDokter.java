@@ -8,12 +8,13 @@ import panelView.*;
 import java.awt.Color;
 import java.util.Locale;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 /**
  *
- * @author 
+ * @author
  */
-public class MainViewFormDokter extends javax.swing.JFrame {
+public class MainViewFormDokter extends JFrame {
     private ManajemenAntrianPanel manajemenAntrianPanel = new ManajemenAntrianPanel();
     private ManajemenDokterPanel manajemenDokterPanel = new ManajemenDokterPanel();
     private ManajemenJadwalDokterPanel manajemenJadwalDokterPanel = new ManajemenJadwalDokterPanel();
@@ -37,13 +38,6 @@ public class MainViewFormDokter extends javax.swing.JFrame {
         setForm(new DokterPanel(idDokter));
         selectedIndex = 1;
         setLocationRelativeTo(null);
-
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                new LoginForm().setVisible(true);
-                dispose();
-            }
-        });
     }
     
     private void setForm(JComponent com) {
@@ -76,7 +70,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         kunjunganPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        logoutPanel = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         contentPanel = new javax.swing.JPanel();
 
@@ -166,25 +160,30 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        logoutPanel.setBackground(new java.awt.Color(255, 255, 255));
+        logoutPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutPanelMouseClicked(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Franklin Gothic Demi", 0, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 0, 0));
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout (1).png"))); // NOI18N
         jLabel10.setText("   Logout");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout logoutPanelLayout = new javax.swing.GroupLayout(logoutPanel);
+        logoutPanel.setLayout(logoutPanelLayout);
+        logoutPanelLayout.setHorizontalGroup(
+            logoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoutPanelLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel10)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        logoutPanelLayout.setVerticalGroup(
+            logoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logoutPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addContainerGap())
@@ -199,7 +198,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                 .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(logoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                     .addComponent(kunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(logoutPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         sidePanelLayout.setVerticalGroup(
@@ -210,7 +209,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(kunjunganPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
         );
 
@@ -268,6 +267,11 @@ public class MainViewFormDokter extends javax.swing.JFrame {
         selectedIndex = 1;
     }//GEN-LAST:event_kunjunganPanelMouseClicked
 
+    private void logoutPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutPanelMouseClicked
+        new LoginForm().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_logoutPanelMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -321,11 +325,11 @@ public class MainViewFormDokter extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel kunjunganPanel;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel logoLabel1;
     private javax.swing.JPanel logoPanel;
+    private javax.swing.JPanel logoutPanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel sidePanel;
     // End of variables declaration//GEN-END:variables

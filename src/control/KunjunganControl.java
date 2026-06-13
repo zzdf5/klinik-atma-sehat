@@ -25,8 +25,12 @@ public class KunjunganControl {
         return new TableKunjungan(data);
     }
     
-    public void insert(Kunjungan data) { 
-        dao.insert(data); 
+    public void insert(Kunjungan data) {
+        dao.insert(data);
+    }
+
+    public int countByJadwal(String idDokter, String jam, String tanggal, String excludeIdKunjungan) {
+        return dao.countByJadwal(idDokter, jam, tanggal, excludeIdKunjungan);
     }
     
     public void update(Kunjungan data, String id) { 

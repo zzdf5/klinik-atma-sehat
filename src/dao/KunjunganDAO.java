@@ -90,6 +90,43 @@ public class KunjunganDAO implements IDAO<Kunjungan, String> {
         dbCon.closeConnection();
     }
 
+    /**
+     * Menghitung jumlah kunjungan aktif (tidak BATAL) pada slot jadwal tertentu
+     * (dokter + jam) di tanggal tertentu. Dipakai untuk validasi kuota jadwal.
+     * Jika {@code excludeIdKunjungan} tidak null, kunjungan tersebut tidak ikut
+     * dihitung (berguna saat update agar tidak menghitung dirinya sendiri).
+     */
+    public int countByJadwal(String idDokter, String jam, String tanggal, String excludeIdKunjungan) {
+        con = dbCon.makeConnection();
+        int count = 0;
+
+        String sql = "SELECT COUNT(*) FROM kunjungan WHERE id_dokter=? AND jam=? AND tanggal=? AND status<>'BATAL'";
+        if (excludeIdKunjungan != null) {
+            sql += " AND id_kunjungan<>?";
+        }
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, idDokter);
+            ps.setString(2, jam);
+            ps.setString(3, tanggal);
+            if (excludeIdKunjungan != null) {
+                ps.setString(4, excludeIdKunjungan);
+            }
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error count Kunjungan: " + e);
+        }
+
+        dbCon.closeConnection();
+        return count;
+    }
+
     @Override
     public List<Kunjungan> showData() {
         con = dbCon.makeConnection();

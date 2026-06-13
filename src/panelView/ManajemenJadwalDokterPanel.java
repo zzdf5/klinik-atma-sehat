@@ -4,6 +4,8 @@
  */
 package panelView;
 
+import util.DialogUtil;
+
 import control.DokterControl;
 import control.JadwalDokterControl;
 import control.PoliklinikControl;
@@ -131,7 +133,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         clearForm();
         List<Object[]> hasil = jdc.searchByKeyword(keyword);
         if (hasil.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Jadwal tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Jadwal tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             return;
         }
         jadwalTable.setModel(new TableJadwalDokter(hasil));
@@ -717,22 +719,22 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         String kuotaStr = inputKuotaPasienTextField.getText().trim();
 
         if (id.isEmpty() || jamMulai.isEmpty() || jamSelesai.isEmpty() || kuotaStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
+            DialogUtil.showMessageDialog(this, "Semua field wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
         }
         if (!isValidJam(jamMulai) || !isValidJam(jamSelesai)) {
-            JOptionPane.showMessageDialog(this, "Format jam tidak valid. Gunakan HH:mm.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
+            DialogUtil.showMessageDialog(this, "Format jam tidak valid. Gunakan HH:mm.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
         }
         if (jamMulai.compareTo(jamSelesai) >= 0) {
-            JOptionPane.showMessageDialog(this, "Jam mulai harus lebih awal dari jam selesai.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
+            DialogUtil.showMessageDialog(this, "Jam mulai harus lebih awal dari jam selesai.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
         }
 
         String selDokter = (String) pilihDokterDropDown.getSelectedItem();
         if (selDokter == null || selDokter.startsWith("--")) {
-            JOptionPane.showMessageDialog(this, "Pilih dokter terlebih dahulu.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
+            DialogUtil.showMessageDialog(this, "Pilih dokter terlebih dahulu.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
         }
         String selPoli = (String) pilihPoliKlinikDropDown.getSelectedItem();
         if (selPoli == null || selPoli.startsWith("--")) {
-            JOptionPane.showMessageDialog(this, "Pilih poliklinik terlebih dahulu.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
+            DialogUtil.showMessageDialog(this, "Pilih poliklinik terlebih dahulu.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
         }
 
         int kuota;
@@ -743,23 +745,23 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
             } 
         }
         catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Kuota pasien harus angka positif.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
+            DialogUtil.showMessageDialog(this, "Kuota pasien harus angka positif.", "Peringatan", JOptionPane.WARNING_MESSAGE); return;
         }
 
         String idDokter = selDokter.split(" - ")[0];
         String idPoli   = selPoli.split(" - ")[0];
 
-        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin " + ("add".equals(action) ? "tambah" : "update") + " jadwal?",
+        int opsi = DialogUtil.showConfirmDialog(this, "Yakin ingin " + ("add".equals(action) ? "tambah" : "update") + " jadwal?",
             "Konfirmasi", JOptionPane.YES_NO_OPTION);
         if (opsi != JOptionPane.YES_OPTION) {
             return;
         } 
 
         JadwalDokter j = new JadwalDokter(id, idDokter, idPoli, jamMulai, jamSelesai, kuota);
-        if ("tambah".equals(action)) { 
+        if ("add".equals(action)) {
             jdc.insert(j);
-        } else { 
-            jdc.update(j, selectedId); 
+        } else {
+            jdc.update(j, selectedId);
         }
 
         action = null; 
@@ -805,7 +807,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
 
     private void hapusJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusJadwalButtonActionPerformed
         action = "hapus";
-        int confirm = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+        int confirm = DialogUtil.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
             jdc.delete(selectedId);

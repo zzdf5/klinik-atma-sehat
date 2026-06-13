@@ -142,7 +142,7 @@ public class JadwalDokterDAO implements IDAO<JadwalDokter, String> {
                 + "FROM jadwal_dokter j "
                 + "LEFT JOIN dokter d ON j.id_dokter = d.id "
                 + "LEFT JOIN poliklinik p ON j.id_poliklinik = p.id_poliklinik "
-                + "ORDER BY d.nama, j.jam_mulai";
+                + "ORDER BY j.id_jadwal";
         List<Object[]> list = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -171,7 +171,7 @@ public class JadwalDokterDAO implements IDAO<JadwalDokter, String> {
                 + "LEFT JOIN dokter d ON j.id_dokter = d.id "
                 + "LEFT JOIN poliklinik p ON j.id_poliklinik = p.id_poliklinik "
                 + "WHERE j.id_jadwal LIKE ? OR d.nama LIKE ? OR p.nama_poliklinik LIKE ? "
-                + "ORDER BY d.nama, j.jam_mulai";
+                + "ORDER BY j.id_jadwal";
         List<Object[]> list = new ArrayList<>();
         String param = "%" + keyword + "%";
         try {

@@ -4,6 +4,8 @@
  */
 package panelView;
 
+import util.DialogUtil;
+
 import control.AntrianControl;
 import control.DokterControl;
 import control.JadwalDokterControl;
@@ -301,7 +303,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
         List<Object[]> hasil = kc.searchByKeyword(keyword);
         if (hasil.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
+            DialogUtil.showMessageDialog(this,
                 "Kunjungan tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -1268,19 +1270,19 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         String jam = (jamIdx > 0 && jamIdx - 1 < jadwalList.size()) ? (String) jadwalList.get(jamIdx - 1)[1] : "";
 
         if (id.isEmpty() || noRm.isEmpty() || tgl == null || keluhan.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "ID Kunjungan, No. Rekam Medis, Tanggal, dan Keluhan Utama wajib diisi!",
+            DialogUtil.showMessageDialog(this, "ID Kunjungan, No. Rekam Medis, Tanggal, dan Keluhan Utama wajib diisi!",
                 "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (jam.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Pilih dokter dan jadwal jam terlebih dahulu.",
+            DialogUtil.showMessageDialog(this, "Pilih dokter dan jadwal jam terlebih dahulu.",
                 "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         boolean rmValid = cachedPasienList.stream().anyMatch(p -> p.getNomorRekamMedis().equals(noRm));
         if (!rmValid) {
-            JOptionPane.showMessageDialog(this, "Nomor rekam medis tidak valid.\nGunakan kolom pencarian untuk memilih pasien yang terdaftar.",
+            DialogUtil.showMessageDialog(this, "Nomor rekam medis tidak valid.\nGunakan kolom pencarian untuk memilih pasien yang terdaftar.",
                 "Rekam Medis Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             inputNomorRekamMedisTextField.requestFocus();
             return;
@@ -1295,7 +1297,25 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         String tanggal   = new SimpleDateFormat("yyyy-MM-dd").format(tgl);
         String statusStr = (String) inputStatusKunjunganComboBox.getSelectedItem();
 
-        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin " + ("add".equals(action) ? "tambah" : "update") + " data kunjungan?",
+        // Validasi kuota jadwal dokter: jumlah kunjungan aktif pada slot ini
+        // (dokter + jam + tanggal) tidak boleh melebihi kuota jadwal.
+        if (jamIdx > 0 && jamIdx - 1 < jadwalList.size()) {
+            String idJadwalCek = (String) jadwalList.get(jamIdx - 1)[0];
+            JadwalDokter jadwalCek = jdc.search(idJadwalCek);
+            if (jadwalCek != null) {
+                String excludeId = "add".equals(action) ? null : selectedId;
+                int terpakai = kc.countByJadwal(idDokter, jam, tanggal, excludeId);
+                if (terpakai >= jadwalCek.getKuotaPasien()) {
+                    DialogUtil.showMessageDialog(this,
+                        "Kuota jadwal ini sudah penuh (" + jadwalCek.getKuotaPasien()
+                            + " pasien) untuk tanggal " + tanggal + ".",
+                        "Kuota Penuh", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+        }
+
+        int opsi = DialogUtil.showConfirmDialog(this, "Yakin ingin " + ("add".equals(action) ? "tambah" : "update") + " data kunjungan?",
             "Konfirmasi", JOptionPane.YES_NO_OPTION);
         if (opsi != JOptionPane.YES_OPTION) {
             return;
@@ -1345,6 +1365,28 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             }
             kc.update(k, selectedId);
 
+            // Sinkronkan antrian terkait dengan perubahan dokter/jadwal/tanggal/pasien.
+            // Antrian dicocokkan lewat pasien + tanggal lama (tidak ada id_kunjungan di antrian).
+            if (existing != null) {
+                String oldIdPasien = findIdPasien(existing.getNomorRekamMedis());
+                Antrian antrian = ac.searchByPasienTanggal(oldIdPasien, existing.getTanggal());
+                if (antrian != null) {
+                    String idPoliklinik = antrian.getIdPoliklinik();
+                    if (jamIdx > 0 && jamIdx - 1 < jadwalList.size()) {
+                        String idJadwal = (String) jadwalList.get(jamIdx - 1)[0];
+                        JadwalDokter jadwal = jdc.search(idJadwal);
+                        if (jadwal != null) {
+                            idPoliklinik = jadwal.getIdPoliklinik();
+                        }
+                    }
+                    antrian.setIdPasien(findIdPasien(noRm));
+                    antrian.setIdDokter(idDokter != null ? idDokter : "");
+                    antrian.setIdPoliklinik(idPoliklinik);
+                    antrian.setTanggal(tanggal);
+                    ac.update(antrian, antrian.getIdAntrian());
+                }
+            }
+
         }
 
         if (k.getStatus() == Kunjungan.Status.SELESAI) {
@@ -1390,7 +1432,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         if (selectedId == null) {
             return;
         }
-        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin hapus kunjungan ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
+        int opsi = DialogUtil.showConfirmDialog(this, "Yakin ingin hapus kunjungan ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
         if (opsi != JOptionPane.YES_OPTION) {
             return;
         }

@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panelView;
+
+import util.DialogUtil;
 import control.PoliklinikControl;
 import exception.InputKosongException;
 import javax.swing.JOptionPane;
@@ -505,7 +507,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         try {
             inputKosongException();
 
-            int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Poli Klinik ini?", 
+            int confirm = DialogUtil.showConfirmDialog(this, "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Poli Klinik ini?", 
                 "Konfirmasi Simpan", 
                 JOptionPane.YES_NO_CANCEL_OPTION
             );
@@ -537,9 +539,9 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             action = null;
 
         } catch(InputKosongException e) {
-            JOptionPane.showMessageDialog(this, "Seluruh Data Input Tidak Boleh Kosong!");
+            DialogUtil.showMessageDialog(this, "Seluruh Data Input Tidak Boleh Kosong!");
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            DialogUtil.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_simpanPoliKlinikButtonActionPerformed
 
@@ -589,7 +591,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
     private void hapusPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusPoliKlinikButtonActionPerformed
         action = "hapus";
-        int confirm = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+        int confirm = DialogUtil.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
             poliControl.delete(selectedId);

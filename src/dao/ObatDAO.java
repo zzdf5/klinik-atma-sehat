@@ -66,6 +66,30 @@ public class ObatDAO implements IDAO<Obat, String> {
         dbCon.closeConnection();
     }
 
+    /**
+     * Mengurangi stok obat sebanyak {@code jumlah}. Dipakai saat obat
+     * diresepkan. Validasi kecukupan stok dilakukan di lapisan control
+     * sebelum method ini dipanggil.
+     */
+    public void kurangiStok(String idObat, int jumlah) {
+        con = dbCon.makeConnection();
+
+        String sql = "UPDATE obat SET stok = stok - ? WHERE id_obat = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, jumlah);
+            ps.setString(2, idObat);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Stok obat " + idObat + " dikurangi " + jumlah + ".");
+        } catch (Exception e) {
+            System.out.println("Error kurangiStok Obat: " + e);
+        }
+
+        dbCon.closeConnection();
+    }
+
     @Override
     public void delete(String id) {
         con = dbCon.makeConnection();

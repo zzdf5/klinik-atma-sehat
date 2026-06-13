@@ -4,6 +4,8 @@
  */
 package panelView;
 
+import util.DialogUtil;
+
 import control.TagihanControl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +67,9 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 hitungKembalian();
             }
         });
+
+        lunasRadioButton.addActionListener(e -> updatePembayaranEnabled());
+        belumLunasRadioButton.addActionListener(e -> updatePembayaranEnabled());
     }
 
     private void doSearch() {
@@ -81,10 +86,20 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     private void setFormEnabled(boolean value) {
         lunasRadioButton.setEnabled(value);
         belumLunasRadioButton.setEnabled(value);
-        inputMetodePembayaranComboBox.setEnabled(value);
-        inputJumlahBayarTextField.setEnabled(value);
         kembalianTextField.setEnabled(false);
         simpanButton.setEnabled(value);
+        // Jumlah bayar & metode hanya aktif saat status LUNAS dipilih.
+        updatePembayaranEnabled();
+    }
+
+    private void updatePembayaranEnabled() {
+        boolean aktif = lunasRadioButton.isEnabled() && lunasRadioButton.isSelected();
+        inputMetodePembayaranComboBox.setEnabled(aktif);
+        inputJumlahBayarTextField.setEnabled(aktif);
+        if (!aktif) {
+            inputJumlahBayarTextField.setText("");
+            kembalianTextField.setText("");
+        }
     }
 
     private void clearForm() {
@@ -746,36 +761,36 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
     private void simpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanButtonActionPerformed
         if (selectedTagihan == null) {
-            JOptionPane.showMessageDialog(this, "Pilih tagihan terlebih dahulu.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Pilih tagihan terlebih dahulu.", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
         try {
             if (lunasRadioButton.isSelected()) {
                 String jumlahText = inputJumlahBayarTextField.getText().trim();
                 if (jumlahText.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Masukkan jumlah bayar.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    DialogUtil.showMessageDialog(this, "Masukkan jumlah bayar.", "Peringatan", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 double jumlahBayar = Double.parseDouble(jumlahText);
                 if (jumlahBayar < selectedTagihan.getTotalTagihan()) {
-                    JOptionPane.showMessageDialog(this, "Jumlah bayar Rp" + String.format("%.0f", jumlahBayar) +
+                    DialogUtil.showMessageDialog(this, "Jumlah bayar Rp" + String.format("%.0f", jumlahBayar) +
                         " kurang dari total tagihan Rp" + String.format("%.0f", selectedTagihan.getTotalTagihan()) + ".",
                         "Pembayaran Tidak Cukup", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 Tagihan.MetodePembayaran metode = Tagihan.MetodePembayaran.valueOf((String) inputMetodePembayaranComboBox.getSelectedItem());
                 tc.bayar(selectedTagihan, jumlahBayar, metode);
-                JOptionPane.showMessageDialog(this, "Pembayaran berhasil disimpan.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                DialogUtil.showMessageDialog(this, "Pembayaran berhasil disimpan.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 selectedTagihan.setStatus(Tagihan.Status.BELUM_BAYAR);
                 tc.update(selectedTagihan, selectedTagihan.getIdTagihan());
-                JOptionPane.showMessageDialog(this, "Status tagihan diperbarui.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                DialogUtil.showMessageDialog(this, "Status tagihan diperbarui.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
             }
             loadTagihanTable(tc.showDataWithNames());
             clearForm();
             setFormEnabled(false);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Format jumlah bayar tidak valid.", "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Format jumlah bayar tidak valid.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_simpanButtonActionPerformed
 

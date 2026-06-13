@@ -4,6 +4,8 @@
  */
 package panelView;
 
+import util.DialogUtil;
+
 import control.PasienControl;
 import control.RekamMedisControl;
 import java.text.SimpleDateFormat;
@@ -134,7 +136,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         
         List<Pasien> byNama = pc.searchByNama(keyword);
         if (byNama.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Pasien tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Pasien tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             return;
         }
         pasienTable.setModel(pc.showTable(keyword));
@@ -831,7 +833,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         if (selectedId == null) {
             return;
         }
-            int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin hapus pasien ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
+            int opsi = DialogUtil.showConfirmDialog(this, "Yakin ingin hapus pasien ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
             if (opsi != JOptionPane.YES_OPTION) {
                 return;
             }
@@ -868,18 +870,18 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         Date tglLahir = inputTanggalLahirDateChooser.getDate();
 
         if (id.isEmpty() || noRm.isEmpty() || nama.isEmpty() || tglLahir == null || telp.isEmpty() || alamat.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Semua field wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (!telp.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Nomor telepon hanya boleh angka!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Nomor telepon hanya boleh angka!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         String tgl = new SimpleDateFormat("yyyy-MM-dd").format(tglLahir);
 
-        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin " + action + " data pasien?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        int opsi = DialogUtil.showConfirmDialog(this, "Yakin ingin " + action + " data pasien?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
         if (opsi != JOptionPane.YES_OPTION) {
             return;
         }

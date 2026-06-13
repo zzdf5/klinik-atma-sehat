@@ -49,11 +49,15 @@ public class ObatControl {
         return patenDAO.generateId(); 
     }
 
-    public void delete(String id) { 
-        dao.delete(id); 
+    public void delete(String id) {
+        dao.delete(id);
     }
 
-    public Obat search(String id) { 
+    public void kurangiStok(String idObat, int jumlah) {
+        dao.kurangiStok(idObat, jumlah);
+    }
+
+    public Obat search(String id) {
         return dao.search(id); 
     }
     

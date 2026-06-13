@@ -4,6 +4,8 @@
  */
 package panelView;
 
+import util.DialogUtil;
+
 import control.ObatControl;
 
 import exception.*;
@@ -135,7 +137,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     
         Obat o = obatControl.search(pencarianObatTextField.getText());
         if(o == null ){
-            JOptionPane.showMessageDialog(rootPane, "NOT FOUND !!!");
+            DialogUtil.showMessageDialog(rootPane, "NOT FOUND !!!");
             return;
         }
 
@@ -847,10 +849,14 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             inputKosongException();
            
             if(!isDouble(inputHargaSatuanTextField.getText()) || !isInteger(inputStokObatTextField.getText())){
-                JOptionPane.showMessageDialog(this, "Harga harus berupa angka/desimal, dan Stok harus berupa angka bulat!");
+                DialogUtil.showMessageDialog(this, "Harga harus berupa angka/desimal, dan Stok harus berupa angka bulat!");
                 return;
             }
-            int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Obat ini?", 
+            if(Integer.parseInt(inputStokObatTextField.getText()) < 0 || Double.parseDouble(inputHargaSatuanTextField.getText()) < 0){
+                DialogUtil.showMessageDialog(this, "Harga dan stok tidak boleh negatif!");
+                return;
+            }
+            int confirm = DialogUtil.showConfirmDialog(this, "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Obat ini?",
                 "Konfirmasi Simpan", 
                 JOptionPane.YES_NO_CANCEL_OPTION
             );
@@ -904,9 +910,9 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
             action = null;
 
         } catch(InputKosongException e) {
-            JOptionPane.showMessageDialog(this, "Data Input Tidak Boleh Kosong!");
+            DialogUtil.showMessageDialog(this, "Data Input Tidak Boleh Kosong!");
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
+            DialogUtil.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
         }
     }//GEN-LAST:event_simpanObatButtonActionPerformed
 
@@ -1028,7 +1034,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
     private void hapusObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusObatButtonActionPerformed
         action = "hapus";
-        int confirm = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+        int confirm = DialogUtil.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
             try {
@@ -1039,7 +1045,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                 showObat();
                 tambahObatButton.setEnabled(true);
             } catch (DataMasihDigunakanException e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Tidak Dapat Menghapus", JOptionPane.WARNING_MESSAGE);
+                DialogUtil.showMessageDialog(this, e.getMessage(), "Tidak Dapat Menghapus", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_hapusObatButtonActionPerformed

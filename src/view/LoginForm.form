@@ -272,7 +272,7 @@
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Component id="inputUsernameLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="inputUsernameTextField" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputUsernameTextField" min="-2" pref="31" max="-2" attributes="0"/>
                               <EmptySpace pref="9" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -293,6 +293,9 @@
                           <Font name="sansserif" size="14" style="0"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputUsernameTextFieldActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -308,9 +311,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="inputPasswordLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="346" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
-                          <Component id="inputPasswordTextField" alignment="0" max="32767" attributes="0"/>
+                          <Component id="inputPasswordPasswordField" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -319,7 +322,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="inputPasswordLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="inputPasswordTextField" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputPasswordPasswordField" min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -333,14 +336,9 @@
                         <Property name="text" type="java.lang.String" value="Password"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="inputPasswordTextField">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="sansserif" size="14" style="0"/>
-                        </Property>
-                      </Properties>
+                    <Component class="javax.swing.JPasswordField" name="inputPasswordPasswordField">
                       <Events>
-                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="inputPasswordTextFieldKeyTyped"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputPasswordPasswordFieldActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>

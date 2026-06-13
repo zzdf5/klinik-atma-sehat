@@ -4,7 +4,10 @@
  */
 package panelView;
 
+import util.DialogUtil;
+
 import control.*;
+import exception.StokTidakCukupException;
 import model.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.awt.Component;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 public class DokterPanel extends javax.swing.JPanel {
     
@@ -22,6 +26,7 @@ public class DokterPanel extends javax.swing.JPanel {
     private ResepControl resepControl;
     private RujukanControl rujukanControl;
     private RekamMedisControl rekamMedisControl;
+    private AntrianControl antrianControl;
     
     private Kunjungan selectedKunjungan = null;
     private Pasien selectedPasien = null;
@@ -36,7 +41,7 @@ public class DokterPanel extends javax.swing.JPanel {
         initializeControllers();
         queueContainer = new JPanel();
         queueContainer.setLayout(null);
-        queueContainer.setBackground(new java.awt.Color(255, 255, 255));
+        queueContainer.setBackground(new Color(255, 255, 255));
         initComponents();
         setupQueuePanel();
         setRujukanInput(false);
@@ -73,9 +78,9 @@ public class DokterPanel extends javax.swing.JPanel {
     private void setupQueuePanel() {
         diplayQueuePasienPanel.removeAll();
         diplayQueuePasienPanel.setLayout(new BorderLayout());
-        diplayQueuePasienPanel.setBackground(java.awt.Color.WHITE);
+        diplayQueuePasienPanel.setBackground(Color.WHITE);
 
-        queueContainer.setBackground(new java.awt.Color(245, 246, 250));
+        queueContainer.setBackground(new Color(245, 246, 250));
         queueContainer.setLayout(null);
 
         JScrollPane scrollPane = new JScrollPane(queueContainer);
@@ -105,6 +110,7 @@ public class DokterPanel extends javax.swing.JPanel {
         resepControl = new ResepControl();
         rujukanControl = new RujukanControl();
         rekamMedisControl = new RekamMedisControl();
+        antrianControl = new AntrianControl();
     }
     
     private void loadQueuePasien() {
@@ -373,13 +379,13 @@ public class DokterPanel extends javax.swing.JPanel {
             } else {
                 System.out.println("DEBUG: Pasien tidak ditemukan");
 
-                JOptionPane.showMessageDialog( this, "Data pasien tidak ditemukan!");
+                DialogUtil.showMessageDialog( this, "Data pasien tidak ditemukan!");
             }
 
         } catch (Exception e) {
             System.out.println("ERROR displayPasienData: "+ e.getMessage());
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this,"Error : " + e.getMessage());
+            DialogUtil.showMessageDialog(this,"Error : " + e.getMessage());
         }
     }
     
@@ -389,7 +395,7 @@ public class DokterPanel extends javax.swing.JPanel {
             alergiTextField.setText(String.join(", ", rekam.getAlergi()));
             riwayatPenyakitTextField.setText(String.join(", ", rekam.getRiwayatPenyakit()));
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Data rekam medis tidak ditemukan");
+            DialogUtil.showMessageDialog(this, "Data rekam medis tidak ditemukan");
             System.out.println("Data rekam medis tidak ditemukan");
         }
     }
@@ -1238,21 +1244,25 @@ public class DokterPanel extends javax.swing.JPanel {
 
     private void selesaikanKonsulButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selesaikanKonsulButtonActionPerformed
         if (selectedKunjungan == null) {
-            JOptionPane.showMessageDialog(this, "Pilih pasien terlebih dahulu", "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Pilih pasien terlebih dahulu", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         if (hasilPemeriksaanTextField == null || hasilPemeriksaanTextField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Masukkan hasil pemeriksaan", "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Masukkan hasil pemeriksaan", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         if (namaPenyakitTextField == null || namaPenyakitTextField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Masukkan nama penyakit", "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Masukkan nama penyakit", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         try {
+            if (!daftarObatResep.isEmpty()) {
+                resepControl.validasiStok(daftarObatResep);
+            }
+
             // Create Diagnosa
             String idDiagnosa = diagnosaControl.generateIdDiagnosa();
             Diagnosa diagnosa = new Diagnosa(
@@ -1275,7 +1285,7 @@ public class DokterPanel extends javax.swing.JPanel {
                 for (Resep.ItemResep item : daftarObatResep) {
                     resepObj.tambahObat(item);
                 }
-                resepControl.insert(resepObj);
+                resepControl.buatResep(resepObj);
             }
 
             if (rujukanRadioButton != null && rujukanRadioButton.isSelected()) {
@@ -1294,7 +1304,7 @@ public class DokterPanel extends javax.swing.JPanel {
                     );
                     rujukanControl.insert(rujukan);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Isi tanggal rujukan terlebih dahulu", "Error", JOptionPane.ERROR_MESSAGE);
+                    DialogUtil.showMessageDialog(this, "Isi tanggal rujukan terlebih dahulu", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -1302,16 +1312,25 @@ public class DokterPanel extends javax.swing.JPanel {
             // Update Kunjungan ke SELESAI
             kunjunganControl.selesaikan(selectedKunjungan, hasilPemeriksaanTextField.getText(), idDiagnosa, idResep);
 
-            // Otomatis buat tagihan dari kunjungan yang selesai
+            if (selectedPasien != null) {
+                Antrian antrian = antrianControl.searchByPasienTanggal(
+                    selectedPasien.getId(), selectedKunjungan.getTanggal());
+                if (antrian != null && antrian.getStatus() != Antrian.Status.SELESAI) {
+                    antrianControl.ubahStatus(antrian, Antrian.Status.SELESAI);
+                }
+            }
+
             new TagihanControl().buatDariKunjungan(selectedKunjungan, resepObj);
 
-            JOptionPane.showMessageDialog(this, "Konsultasi berhasil diselesaikan", "Success", JOptionPane.INFORMATION_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Konsultasi berhasil diselesaikan", "Success", JOptionPane.INFORMATION_MESSAGE);
             
             clearForm();
             loadQueuePasien();
             
+        } catch (StokTidakCukupException ex) {
+            DialogUtil.showMessageDialog(this, ex.getMessage(), "Stok Tidak Cukup", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }//GEN-LAST:event_selesaikanKonsulButtonActionPerformed
@@ -1322,12 +1341,12 @@ public class DokterPanel extends javax.swing.JPanel {
         }
         
         if (namaObatComboBox.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(this, "Pilih obat terlebih dahulu", "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Pilih obat terlebih dahulu", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         if (jumlahObatTextField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Masukkan jumlah obat", "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Masukkan jumlah obat", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -1339,7 +1358,7 @@ public class DokterPanel extends javax.swing.JPanel {
             
             Obat obat = obatControl.search(idObat);
             if (obat == null) {
-                JOptionPane.showMessageDialog(this, "Obat tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
+                DialogUtil.showMessageDialog(this, "Obat tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
@@ -1353,7 +1372,7 @@ public class DokterPanel extends javax.swing.JPanel {
             aturanPakaiTextField.setText("");
             
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Jumlah harus berupa angka", "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Jumlah harus berupa angka", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_tambahObatButtonActionPerformed
 
@@ -1364,7 +1383,7 @@ public class DokterPanel extends javax.swing.JPanel {
         
         int selectedRow = daftarObatTabel.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Pilih obat yang akan dihapus", "Error", JOptionPane.ERROR_MESSAGE);
+            DialogUtil.showMessageDialog(this, "Pilih obat yang akan dihapus", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         

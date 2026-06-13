@@ -8,13 +8,14 @@ import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 
 /**
  *
  * @author Lenovo
  */
-public class SplashScreenForm extends javax.swing.JFrame {
+public class SplashScreenForm extends JFrame {
 
     /**
      * Creates new form LoadingForm
@@ -24,7 +25,7 @@ public class SplashScreenForm extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
-        javax.swing.Timer timer = new javax.swing.Timer(2000, e -> {
+        Timer timer = new Timer(2000, e -> {
             dispose();
             new LoginForm().setVisible(true);
         });

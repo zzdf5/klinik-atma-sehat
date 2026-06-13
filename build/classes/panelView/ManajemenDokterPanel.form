@@ -213,16 +213,11 @@
                           <Component id="inputIdDokterPanel" max="32767" attributes="0"/>
                           <Component id="inputNamaDokterPanel" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="inputTarifDokterPanel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="inputNomorSTRPanel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="inputTarifDokterPanel" max="32767" attributes="0"/>
+                                  <Component id="inputNomorSTRPanel" max="32767" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="inputStatusDokterPanel" max="32767" attributes="0"/>
                                   <Component id="inputSpesialisasiDokterPanel" max="32767" attributes="0"/>
@@ -285,10 +280,12 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="inputNomorSTRTextField" min="-2" pref="201" max="-2" attributes="0"/>
-                              <Component id="inputNomorSTRLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputNomorSTRTextField" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="inputNomorSTRLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="136" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
