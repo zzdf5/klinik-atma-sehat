@@ -57,8 +57,10 @@ public class TagihanControl {
     }
 
     public void buatDariKunjungan(Kunjungan kunjungan, Resep resep) {
-        if (dao.searchByIdKunjungan(kunjungan.getIdKunjungan()) != null) 
+        if (dao.searchByIdKunjungan(kunjungan.getIdKunjungan()) != null) {
             return;
+        }
+            
 
         String idTagihan = dao.generateId();
         Tagihan tagihan = new Tagihan(idTagihan, kunjungan.getIdKunjungan(), kunjungan.getTanggal());
@@ -72,7 +74,6 @@ public class TagihanControl {
                 tagihan.tambahItem(new ItemTagihan(item.getNamaObat(), item.getJumlah(), item.getHarga()));
             }
         }
-
         insert(tagihan);
     }
 

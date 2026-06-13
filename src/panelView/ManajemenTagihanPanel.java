@@ -55,16 +55,14 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
     private void setupListeners() {
         inputJumlahBayarTextField.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { 
-                hitungKembalian(); 
+            public void insertUpdate(DocumentEvent e) {
+                hitungKembalian();
             }
-            
             public void removeUpdate(DocumentEvent e) {
-                hitungKembalian(); 
+                hitungKembalian();
             }
-            
-            public void changedUpdate(DocumentEvent e) { 
-                hitungKembalian(); 
+            public void changedUpdate(DocumentEvent e) {
+                hitungKembalian();
             }
         });
     }
@@ -83,9 +81,8 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     private void setFormEnabled(boolean value) {
         lunasRadioButton.setEnabled(value);
         belumLunasRadioButton.setEnabled(value);
-        boolean lunas = value && lunasRadioButton.isSelected();
-        inputMetodePembayaranComboBox.setEnabled(lunas);
-        inputJumlahBayarTextField.setEnabled(lunas);
+        inputMetodePembayaranComboBox.setEnabled(value);
+        inputJumlahBayarTextField.setEnabled(value);
         kembalianTextField.setEnabled(false);
         simpanButton.setEnabled(value);
     }
@@ -112,22 +109,26 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         } catch (Exception ex) {
             inputTanggalTagihanDateChooser.setDate(null);
         }
+        
         totalHargaTagihanLabel.setText(String.format("Rp%.0f", tagihan.getTotalTagihan()));
         if (tagihan.getJumlahBayar() > 0) {
             inputJumlahBayarTextField.setText(String.format("%.0f", tagihan.getJumlahBayar()));
         } else {
             inputJumlahBayarTextField.setText("");
         }
+        
         if (tagihan.getKembalian() > 0) {
             kembalianTextField.setText(String.format("Rp%.0f", tagihan.getKembalian()));
         } else {
             kembalianTextField.setText("");
         }
+        
         if (tagihan.getMetodePembayaran() != null) {
             inputMetodePembayaranComboBox.setSelectedItem(tagihan.getMetodePembayaran().name());
         } else {
             inputMetodePembayaranComboBox.setSelectedIndex(0);
         }
+        
         if (tagihan.getStatus() == Tagihan.Status.LUNAS) {
             lunasRadioButton.setSelected(true);
         } else {
@@ -146,7 +147,10 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     private void hitungKembalian() {
         try {
             String text = inputJumlahBayarTextField.getText().trim();
-            if (text.isEmpty()) { kembalianTextField.setText(""); return; }
+            if (text.isEmpty()) { 
+                kembalianTextField.setText(""); 
+                return; 
+            }
             double jumlahBayar = Double.parseDouble(text);
             String totalText = totalHargaTagihanLabel.getText().replace("Rp", "").replace(",", "");
             double total = Double.parseDouble(totalText);
@@ -452,18 +456,8 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputStatusBayarLabel.setText("Status Bayar");
 
         lunasRadioButton.setText("LUNAS");
-        lunasRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lunasRadioButtonActionPerformed(evt);
-            }
-        });
 
         belumLunasRadioButton.setText("BELUM LUNAS");
-        belumLunasRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                belumLunasRadioButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout inputStatusBayarPanelLayout = new javax.swing.GroupLayout(inputStatusBayarPanel);
         inputStatusBayarPanel.setLayout(inputStatusBayarPanelLayout);
@@ -729,20 +723,11 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lunasRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lunasRadioButtonActionPerformed
-        inputMetodePembayaranComboBox.setEnabled(true);
-        inputJumlahBayarTextField.setEnabled(true);
-    }//GEN-LAST:event_lunasRadioButtonActionPerformed
-
-    private void belumLunasRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_belumLunasRadioButtonActionPerformed
-        inputMetodePembayaranComboBox.setEnabled(false);
-        inputJumlahBayarTextField.setEnabled(false);
-        kembalianTextField.setText("");
-    }//GEN-LAST:event_belumLunasRadioButtonActionPerformed
-
     private void TagihanTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TagihanTableMouseClicked
         int row = TagihanTable.getSelectedRow();
-        if (row < 0) return;
+        if (row < 0) {
+            return;
+        }
         String id = (String) TagihanTable.getValueAt(row, 0);
         selectedTagihan = tc.search(id);
         if (selectedTagihan != null) {
@@ -773,15 +758,12 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 }
                 double jumlahBayar = Double.parseDouble(jumlahText);
                 if (jumlahBayar < selectedTagihan.getTotalTagihan()) {
-                    JOptionPane.showMessageDialog(this,
-                        "Jumlah bayar Rp" + String.format("%.0f", jumlahBayar) +
+                    JOptionPane.showMessageDialog(this, "Jumlah bayar Rp" + String.format("%.0f", jumlahBayar) +
                         " kurang dari total tagihan Rp" + String.format("%.0f", selectedTagihan.getTotalTagihan()) + ".",
                         "Pembayaran Tidak Cukup", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                Tagihan.MetodePembayaran metode = Tagihan.MetodePembayaran.valueOf(
-                    (String) inputMetodePembayaranComboBox.getSelectedItem()
-                );
+                Tagihan.MetodePembayaran metode = Tagihan.MetodePembayaran.valueOf((String) inputMetodePembayaranComboBox.getSelectedItem());
                 tc.bayar(selectedTagihan, jumlahBayar, metode);
                 JOptionPane.showMessageDialog(this, "Pembayaran berhasil disimpan.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -798,7 +780,9 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_simpanButtonActionPerformed
 
     private void pencarianTagihanTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianTagihanTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n') doSearch();
+        if(evt.getKeyChar() == '\n') {
+            doSearch();
+        }
     }//GEN-LAST:event_pencarianTagihanTextFieldKeyPressed
 
     private void pencarianTagihanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianTagihanButtonActionPerformed

@@ -19,7 +19,7 @@ public class ResepDAO implements IDAO<Resep, String> {
         con = dbCon.makeConnection();
 
         String sqlResep = "INSERT INTO resep (id_resep, id_dokter, nomor_rekam_medis, tanggal_resep, status) VALUES (?,?,?,?,?)";
-        String sqlItem = "INSERT INTO item_resep (id_resep, id_obat, jumlah, aturan_pakai) VALUES (?,?,?,?)";
+        String sqlItem = "INSERT INTO resep_detail (id_resep, id_obat, jumlah, aturan_pakai) VALUES (?,?,?,?)";
 
         try {
             PreparedStatement ps1 = con.prepareStatement(sqlResep);

@@ -83,10 +83,8 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     }
 
     public void inputKosongException() throws InputKosongException {
-        if(inputNamaDokterTextField.getText().isEmpty() ||
-           inputNomorSTRTextField.getText().isEmpty() ||
-           inputSpesialisasiDokterTextField.getText().isEmpty() ||
-           inputTarifDokterTextField.getText().isEmpty()) {
+        if(inputNamaDokterTextField.getText().isEmpty() || inputNomorSTRTextField.getText().isEmpty() ||
+           inputSpesialisasiDokterTextField.getText().isEmpty() || inputTarifDokterTextField.getText().isEmpty()) {
             throw new InputKosongException();
         }
     }
@@ -711,7 +709,9 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
 
     private void dokterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dokterTableMouseClicked
         int clickedRow = dokterTable.getSelectedRow();
-        if(clickedRow < 0) return;
+        if(clickedRow < 0) {
+            return;
+        }
 
         TableModel tableModel = dokterTable.getModel();
 
@@ -747,7 +747,9 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_dokterTableMouseClicked
 
     private void pencarianDokterTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianDokterTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n') doSearchDokter();
+        if(evt.getKeyChar() == '\n') {
+            doSearchDokter();
+        }
     }//GEN-LAST:event_pencarianDokterTextFieldKeyPressed
 
     private void pencarianDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianDokterButtonActionPerformed

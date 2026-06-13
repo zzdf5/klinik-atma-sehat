@@ -222,7 +222,7 @@
                           <Component id="namaPemeriksaanLabel1" min="-2" max="-2" attributes="0"/>
                           <Component id="kodeAntrianPanel1" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="21" max="32767" attributes="0"/>
+                      <EmptySpace pref="13" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -414,7 +414,7 @@
                           <Component id="namaPemeriksaanLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="kodeAntrianPanel2" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="21" max="32767" attributes="0"/>
+                      <EmptySpace pref="13" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -748,7 +748,7 @@
                           <Component id="namaPemeriksaanLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="kodeAntrianPanel3" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

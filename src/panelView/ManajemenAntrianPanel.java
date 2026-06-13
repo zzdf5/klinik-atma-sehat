@@ -60,27 +60,25 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         loadPoliklinikCombo();
         refreshAll();
 
-        // Listener filter poliklinik
-        pilihPoliklinikComboBox.addActionListener(e -> loadTable2ByPoliklinik());
-
-        // jTextField1 enter → search
-        searchAntrianPasienTextField.addActionListener(e -> doSearch());
-
-        // Listener klik tabel antrian (jTable2)
         antrianPasienTable.getSelectionModel().addListSelectionListener(e -> {
-            if (e.getValueIsAdjusting()) return;
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
             int row = antrianPasienTable.getSelectedRow();
-            if (row >= 0) fillDetailCard(row);
+            if (row >= 0) {
+                fillDetailCard(row);
+            }
         });
-
-        // jButton1/2/5 dan jButton4 ditangani di GEN handler masing-masing
+        
     }
 
     private void loadPoliklinikCombo() {
         poliklinikList = pkc.showData();
         DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
         m.addElement("-- Semua Poliklinik --");
-        for (Poliklinik p : poliklinikList) m.addElement(p.getIdPoliklinik() + " - " + p.getNamaPoliklinik());
+        for (Poliklinik p : poliklinikList) {
+            m.addElement(p.getIdPoliklinik() + " - " + p.getNamaPoliklinik());
+        } 
         pilihPoliklinikComboBox.setModel(m);
     }
 
@@ -92,28 +90,17 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     }
 
     private void loadCards() {
-        // Urutkan semua antrian: tanggal terbaru dulu, lalu nomor urut terkecil
-        List<Object[]> all = new ArrayList<>(todayAntrian);
-        all.sort((a, b) -> {
-            int d = String.valueOf(b[5]).compareTo(String.valueOf(a[5]));
-            return d != 0 ? d : Integer.compare((int) a[1], (int) b[1]);
-        });
-
-        // Kiri: sedang diperiksa (DALAM_PEMERIKSAAN)
-        Object[] sedang = null;
-        for (Object[] row : all) {
-            if ("DALAM_PEMERIKSAAN".equals(String.valueOf(row[7]))) { sedang = row; break; }
-        }
-
-        // Tengah & kanan: menunggu (MENUNGGU), urut nomor terkecil
         List<Object[]> menunggu = new ArrayList<>();
-        for (Object[] row : all) {
-            if ("MENUNGGU".equals(String.valueOf(row[7]))) menunggu.add(row);
+        for (Object[] row : todayAntrian) {
+            if (TODAY.equals(String.valueOf(row[5])) && "MENUNGGU".equals(String.valueOf(row[7]))) {
+                menunggu.add(row);
+            }
         }
+        menunggu.sort((a, b) -> Integer.compare((int) a[1], (int) b[1]));
 
-        fillCardByStatus(0, sedang);
-        fillCardByStatus(1, menunggu.size() > 0 ? menunggu.get(0) : null);
-        fillCardByStatus(2, menunggu.size() > 1 ? menunggu.get(1) : null);
+        fillCardByStatus(0, menunggu.size() > 0 ? menunggu.get(0) : null);
+        fillCardByStatus(1, menunggu.size() > 1 ? menunggu.get(1) : null);
+        fillCardByStatus(2, menunggu.size() > 2 ? menunggu.get(2) : null);
     }
 
     private void centerLabelInPanel(JPanel panel, JLabel label) {
@@ -124,7 +111,9 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     }
 
     private String trunc(String text, int max) {
-        if (text == null || text.length() <= max) return text;
+        if (text == null || text.length() <= max) {
+            return text;
+        }
         return text.substring(0, max - 2) + "..";
     }
 
@@ -162,13 +151,16 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
 
     private void loadTable2ByPoliklinik() {
         String selected = (String) pilihPoliklinikComboBox.getSelectedItem();
-        String filterPoli = (selected == null || selected.startsWith("--")) ? null
-                : selected.split(" - ")[1].trim();
+        String filterPoli = (selected == null || selected.startsWith("--")) ? null : selected.split(" - ")[1].trim();
 
         List<Object[]> filtered = new ArrayList<>();
         for (Object[] row : todayAntrian) {
-            if (!TODAY.equals(String.valueOf(row[5]))) continue;
-            if (filterPoli != null && !filterPoli.equals(String.valueOf(row[4]))) continue;
+            if (!TODAY.equals(String.valueOf(row[5]))) {
+                continue;
+            }
+            if (filterPoli != null && !filterPoli.equals(String.valueOf(row[4]))) {
+                continue;
+            }
             filtered.add(row);
         }
         antrianPasienTable.setModel(new TableAntrianHarian(filtered));
@@ -191,17 +183,25 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     private void filterByCardPoliklinik(int cardIdx) {
         String[] names = {namaPoliklinik1.getText(), namaPoliklinik2.getText(), namaPoliklinik3.getText()};
         String namaPoli = names[cardIdx];
-        if ("-".equals(namaPoli)) return;
-        // Pilih di combo
+        if ("-".equals(namaPoli)) {
+            return;
+        }
+     
         for (int i = 0; i < pilihPoliklinikComboBox.getItemCount(); i++) {
             String item = (String) pilihPoliklinikComboBox.getItemAt(i);
-            if (item.contains(namaPoli)) { pilihPoliklinikComboBox.setSelectedIndex(i); return; }
+            if (item.contains(namaPoli)) { 
+                pilihPoliklinikComboBox.setSelectedIndex(i); 
+                return; 
+            }
         }
     }
 
     private void doSearch() {
         String keyword = searchAntrianPasienTextField.getText().trim();
-        if (keyword.isEmpty()) { refreshAll(); return; }
+        if (keyword.isEmpty()) { 
+            refreshAll(); 
+            return; 
+        }
         filterTableByNamaPasien(keyword);
     }
 
@@ -586,6 +586,11 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         pilihPoliklinikLabel.setText("Pilih Poliklinik");
 
         pilihPoliklinikComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        pilihPoliklinikComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pilihPoliklinikComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pilihPoliklinikPanelLayout = new javax.swing.GroupLayout(pilihPoliklinikPanel);
         pilihPoliklinikPanel.setLayout(pilihPoliklinikPanelLayout);
@@ -841,8 +846,12 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_liihatButton3ActionPerformed
 
     private void searchAntrianPasienTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAntrianPasienTextFieldActionPerformed
-        // TODO add your handling code here:
+        doSearch();
     }//GEN-LAST:event_searchAntrianPasienTextFieldActionPerformed
+
+    private void pilihPoliklinikComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihPoliklinikComboBoxActionPerformed
+        loadTable2ByPoliklinik();
+    }//GEN-LAST:event_pilihPoliklinikComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

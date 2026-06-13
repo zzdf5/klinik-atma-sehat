@@ -71,13 +71,10 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         cachedPasienList = pasienCtrl.showData();
         setupAutoComplete();
         jamJadwalComboBox = jComboBox1;
-        jamJadwalComboBox.setModel(new DefaultComboBoxModel<>(
-                new String[]{"-- Pilih Dokter Dulu --"}));
+        jamJadwalComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"-- Pilih Dokter Dulu --"}));
         jamJadwalComboBox.setEnabled(false);
 
-        inputStatusKunjunganComboBox.setModel(new DefaultComboBoxModel<>(
-            new String[]{"BELUM_DILAKUKAN", "SELESAI", "BATAL"}
-        ));
+        inputStatusKunjunganComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"BELUM_DILAKUKAN", "SELESAI", "BATAL"}));
 
         setFormEnabled(false);
         setEditDeleteEnabled(false);
@@ -101,13 +98,9 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
     private void updateMetrics() {
         List<Kunjungan> all = kc.showData();
-        long antrian = all.stream()
-            .filter(k -> k.getStatus() == Kunjungan.Status.BELUM_DILAKUKAN).count();
-        long selesai = all.stream()
-            .filter(k -> k.getStatus() == Kunjungan.Status.SELESAI).count();
-        double totalPendapatan = all.stream()
-            .filter(k -> k.getStatus() == Kunjungan.Status.SELESAI)
-            .mapToDouble(Kunjungan::getBiayaKonsultasi).sum();
+        long antrian = all.stream().filter(k -> k.getStatus() == Kunjungan.Status.BELUM_DILAKUKAN).count();
+        long selesai = all.stream().filter(k -> k.getStatus() == Kunjungan.Status.SELESAI).count();
+        double totalPendapatan = all.stream().filter(k -> k.getStatus() == Kunjungan.Status.SELESAI).mapToDouble(Kunjungan::getBiayaKonsultasi).sum();
         antrianNumber.setText(String.valueOf(antrian));
         kunjunganAntrianNumber.setText(String.valueOf(selesai));
         totalPendapatanNumber.setText("Rp" + String.format("%,.0f", totalPendapatan));
@@ -131,20 +124,26 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
     private String findIdPasien(String nomorRekamMedis) {
         for (Pasien p : cachedPasienList) {
-            if (p.getNomorRekamMedis().equals(nomorRekamMedis)) return p.getId();
+            if (p.getNomorRekamMedis().equals(nomorRekamMedis)) {
+                return p.getId();
+            }
         }
         return "";
     }
 
     private String extractNomorRekamMedis() {
         String text = inputNomorRekamMedisTextField.getText().trim();
-        if (text.contains(" - ")) return text.split(" - ")[0].trim();
+        if (text.contains(" - ")) {
+            return text.split(" - ")[0].trim();
+        }
         return text;
     }
 
     private String findNamaPasien(String nomorRekamMedis) {
         for (Pasien p : cachedPasienList) {
-            if (p.getNomorRekamMedis().equals(nomorRekamMedis)) return p.getNama();
+            if (p.getNomorRekamMedis().equals(nomorRekamMedis)) {
+                return p.getNama();
+            }
         }
         return "";
     }
@@ -176,27 +175,36 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     }
 
     private void triggerAutoComplete() {
-        if (suppressAutoComplete || !inputNomorRekamMedisTextField.isEnabled()) return;
+        if (suppressAutoComplete || !inputNomorRekamMedisTextField.isEnabled()){
+            return;
+        } 
         String keyword = inputNomorRekamMedisTextField.getText().trim();
 
         jPopupMenu.setVisible(false);
 
-        if (keyword.length() < 2) return;
+        if (keyword.length() < 2) {
+            return;
+        }
 
         // Banyaknya saran mengikuti jumlah JMenuItem yang ada di jPopupMenu (dibuat di designer)
         int maxItem = jPopupMenu.getComponentCount();
-        if (maxItem == 0) return;
+        if (maxItem == 0) {
+            return;
+        }
 
         String kw = keyword.toLowerCase();
         autoCompleteResult.clear();
         for (Pasien p : cachedPasienList) {
-            if (p.getNomorRekamMedis().toLowerCase().contains(kw)
-                    || p.getNama().toLowerCase().contains(kw)) {
+            if (p.getNomorRekamMedis().toLowerCase().contains(kw) || p.getNama().toLowerCase().contains(kw)) {
                 autoCompleteResult.add(p);
-                if (autoCompleteResult.size() >= maxItem) break;
+                if (autoCompleteResult.size() >= maxItem) {
+                    break;
+                }
             }
         }
-        if (autoCompleteResult.isEmpty()) return;
+        if (autoCompleteResult.isEmpty()) {
+            return;
+        }
 
         for (int i = 0; i < maxItem; i++) {
             JMenuItem mi = (JMenuItem) jPopupMenu.getComponent(i);
@@ -224,8 +232,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         inputTanggalKunjunganDateChooser.setDate(null);
         inputPilihDokterComboBox.setSelectedIndex(0);
         jadwalList.clear();
-        jamJadwalComboBox.setModel(new DefaultComboBoxModel<>(
-                new String[]{"-- Pilih Dokter Dulu --"}));
+        jamJadwalComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"-- Pilih Dokter Dulu --"}));
         inputStatusKunjunganComboBox.setSelectedIndex(0);
         keluhanUtamaArea.setText("");
         hasilPemeriksaanArea.setText("");
@@ -243,8 +250,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         suppressAutoComplete = false;
         if (k.getTanggal() != null && !k.getTanggal().isEmpty()) {
             try {
-                inputTanggalKunjunganDateChooser.setDate(
-                    new SimpleDateFormat("yyyy-MM-dd").parse(k.getTanggal()));
+                inputTanggalKunjunganDateChooser.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(k.getTanggal()));
             } catch (Exception ex) {
                 inputTanggalKunjunganDateChooser.setDate(null);
             }
@@ -1249,35 +1255,32 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_inputHasilPemeriksaanTextFieldActionPerformed
 
     private void simpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanButtonActionPerformed
-        if (action == null) return;
+        if (action == null) {
+            return;
+        }
 
         String id      = inputIdKunjunganTextField.getText().trim();
         String noRm    = extractNomorRekamMedis();
-        Date tgl = inputTanggalKunjunganDateChooser.getDate();
+        Date tgl       = inputTanggalKunjunganDateChooser.getDate();
         String keluhan = keluhanUtamaArea.getText().trim();
 
         int jamIdx = jamJadwalComboBox.getSelectedIndex();
-        String jam = (jamIdx > 0 && jamIdx - 1 < jadwalList.size())
-                ? (String) jadwalList.get(jamIdx - 1)[1] : "";
+        String jam = (jamIdx > 0 && jamIdx - 1 < jadwalList.size()) ? (String) jadwalList.get(jamIdx - 1)[1] : "";
 
         if (id.isEmpty() || noRm.isEmpty() || tgl == null || keluhan.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                "ID Kunjungan, No. Rekam Medis, Tanggal, dan Keluhan Utama wajib diisi!",
+            JOptionPane.showMessageDialog(this, "ID Kunjungan, No. Rekam Medis, Tanggal, dan Keluhan Utama wajib diisi!",
                 "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (jam.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                "Pilih dokter dan jadwal jam terlebih dahulu.",
+            JOptionPane.showMessageDialog(this, "Pilih dokter dan jadwal jam terlebih dahulu.",
                 "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        boolean rmValid = cachedPasienList.stream()
-                .anyMatch(p -> p.getNomorRekamMedis().equals(noRm));
+        boolean rmValid = cachedPasienList.stream().anyMatch(p -> p.getNomorRekamMedis().equals(noRm));
         if (!rmValid) {
-            JOptionPane.showMessageDialog(this,
-                "Nomor rekam medis tidak valid.\nGunakan kolom pencarian untuk memilih pasien yang terdaftar.",
+            JOptionPane.showMessageDialog(this, "Nomor rekam medis tidak valid.\nGunakan kolom pencarian untuk memilih pasien yang terdaftar.",
                 "Rekam Medis Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             inputNomorRekamMedisTextField.requestFocus();
             return;
@@ -1292,10 +1295,11 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         String tanggal   = new SimpleDateFormat("yyyy-MM-dd").format(tgl);
         String statusStr = (String) inputStatusKunjunganComboBox.getSelectedItem();
 
-        int opsi = JOptionPane.showConfirmDialog(this,
-            "Yakin ingin " + ("add".equals(action) ? "tambah" : "update") + " data kunjungan?",
+        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin " + ("add".equals(action) ? "tambah" : "update") + " data kunjungan?",
             "Konfirmasi", JOptionPane.YES_NO_OPTION);
-        if (opsi != JOptionPane.YES_OPTION) return;
+        if (opsi != JOptionPane.YES_OPTION) {
+            return;
+        }
 
         Kunjungan k = new Kunjungan(id, noRm, tanggal, jam, keluhan);
         k.setIdDokter(idDokter);
@@ -1304,8 +1308,12 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         double biaya = 0;
         try {
             String biayaStr = inputBiayaKonsultasiTextField.getText().trim();
-            if (!biayaStr.isEmpty()) biaya = Double.parseDouble(biayaStr);
-        } catch (NumberFormatException ex) { biaya = 0; }
+            if (!biayaStr.isEmpty()) {
+                biaya = Double.parseDouble(biayaStr);
+            }
+        } catch (NumberFormatException ex) { 
+            biaya = 0; 
+        }
         k.setBiayaKonsultasi(biaya);
 
         if ("add".equals(action)) {
@@ -1319,14 +1327,15 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
             if (jamIdx > 0 && jamIdx - 1 < jadwalList.size()) {
                 String idJadwal = (String) jadwalList.get(jamIdx - 1)[0];
                 JadwalDokter jadwal = jdc.search(idJadwal);
-                if (jadwal != null) idPoliklinik = jadwal.getIdPoliklinik();
+                if (jadwal != null) {
+                    idPoliklinik = jadwal.getIdPoliklinik();
+                }
             }
             int nomorUrut = ac.generateNomorUrut(tanggal);
-            Antrian antrian = new Antrian(0, nomorUrut, idPasien, idDokter != null ? idDokter : "",
-                    idPoliklinik, tanggal, Antrian.JenisKunjungan.BARU);
+            Antrian antrian = new Antrian(0, nomorUrut, idPasien, idDokter != null ? idDokter : "", idPoliklinik, tanggal, Antrian.JenisKunjungan.BARU);
             ac.insert(antrian);
 
-            JOptionPane.showMessageDialog(this, "Kunjungan berhasil ditambahkan.");
+
         } else {
             Kunjungan existing = kc.search(selectedId);
             if (existing != null) {
@@ -1335,7 +1344,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                 k.setIdResep(existing.getIdResep());
             }
             kc.update(k, selectedId);
-            JOptionPane.showMessageDialog(this, "Kunjungan berhasil diupdate.");
+
         }
 
         if (k.getStatus() == Kunjungan.Status.SELESAI) {
@@ -1369,17 +1378,22 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tanbahKunjunganButtonActionPerformed
 
     private void barukanKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanKunjunganButtonActionPerformed
-        if (selectedId == null) return;
+        if (selectedId == null) {
+            return;
+        }
         action = "update";
         setFormEnabled(true);
         inputNomorRekamMedisTextField.setEnabled(false);
     }//GEN-LAST:event_barukanKunjunganButtonActionPerformed
 
     private void hapusKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusKunjunganButtonActionPerformed
-        if (selectedId == null) return;
-        int opsi = JOptionPane.showConfirmDialog(this,
-            "Yakin ingin hapus kunjungan ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
-        if (opsi != JOptionPane.YES_OPTION) return;
+        if (selectedId == null) {
+            return;
+        }
+        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin hapus kunjungan ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
+        if (opsi != JOptionPane.YES_OPTION) {
+            return;
+        }
         kc.delete(selectedId);
         selectedId = null;
         clearForm();
@@ -1387,7 +1401,6 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         setEditDeleteEnabled(false);
         showKunjungan();
         updateMetrics();
-        JOptionPane.showMessageDialog(this, "Kunjungan berhasil dihapus.");
     }//GEN-LAST:event_hapusKunjunganButtonActionPerformed
 
     private void batalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalButtonActionPerformed
@@ -1399,7 +1412,9 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_batalButtonActionPerformed
 
     private void searchKunjunganTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKunjunganTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n') doSearch();
+        if(evt.getKeyChar() == '\n') {
+            doSearch();
+        }
     }//GEN-LAST:event_searchKunjunganTextFieldKeyPressed
 
     private void searchKunjunganButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchKunjunganButtonActionPerformed
@@ -1408,7 +1423,9 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
 
     private void kunjunganTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kunjunganTableMouseClicked
         int row = kunjunganTable.getSelectedRow();
-        if (row < 0) return;
+        if (row < 0) {
+            return;
+        }
         selectedId = (String) kunjunganTable.getValueAt(row, 0);
         Kunjungan k = kc.search(selectedId);
         if (k != null) {
@@ -1428,8 +1445,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         if (selected == null || selected.startsWith("--")) {
             inputBiayaKonsultasiTextField.setText("0");
             jadwalList.clear();
-            jamJadwalComboBox.setModel(new DefaultComboBoxModel<>(
-                    new String[]{"-- Pilih Dokter Dulu --"}));
+            jamJadwalComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"-- Pilih Dokter Dulu --"}));
             return;
         }
         String idDokter = selected.split(" - ")[0];
@@ -1445,9 +1461,14 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
     private void pilihPasienDariSaran(java.awt.event.ActionEvent evt) {
         int idx = -1;
         for (int i = 0; i < jPopupMenu.getComponentCount(); i++) {
-            if (jPopupMenu.getComponent(i) == evt.getSource()) { idx = i; break; }
+            if (jPopupMenu.getComponent(i) == evt.getSource()) { 
+                idx = i; 
+                break; 
+            }
         }
-        if (idx < 0 || idx >= autoCompleteResult.size()) return;
+        if (idx < 0 || idx >= autoCompleteResult.size()) {
+            return;
+        }
         Pasien p = autoCompleteResult.get(idx);
         suppressAutoComplete = true;
         inputNomorRekamMedisTextField.setText(p.getNomorRekamMedis() + " - " + p.getNama());

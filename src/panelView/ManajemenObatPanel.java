@@ -129,7 +129,9 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
     }
     
     public void doSearchObat(){
-        if(pencarianObatTextField.getText().isEmpty()) return;
+        if(pencarianObatTextField.getText().isEmpty()) {
+            return;
+        }
     
         Obat o = obatControl.search(pencarianObatTextField.getText());
         if(o == null ){
@@ -842,17 +844,13 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
     private void simpanObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanObatButtonActionPerformed
         try {
-            
             inputKosongException();
-
-            
+           
             if(!isDouble(inputHargaSatuanTextField.getText()) || !isInteger(inputStokObatTextField.getText())){
                 JOptionPane.showMessageDialog(this, "Harga harus berupa angka/desimal, dan Stok harus berupa angka bulat!");
                 return;
             }
-            int confirm = JOptionPane.showConfirmDialog(
-                this, 
-                "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Obat ini?", 
+            int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Obat ini?", 
                 "Konfirmasi Simpan", 
                 JOptionPane.YES_NO_CANCEL_OPTION
             );
@@ -932,7 +930,9 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
     private void obatPatenTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_obatPatenTableMouseClicked
         int clickedRow = obatPatenTable.getSelectedRow();
-        if(clickedRow < 0) return;
+        if(clickedRow < 0) {
+            return;
+        }
 
         TableModel tableModel = obatPatenTable.getModel();
         setComponentsObat(false);
@@ -948,7 +948,9 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputNamaObatTextField.setText(namaVal != null ? namaVal.toString() : "");
 
         Object bentukVal = tableModel.getValueAt(clickedRow, 2);
-        if(bentukVal != null) pilihBentukSediaanDropDown.setSelectedItem(bentukVal.toString());
+        if(bentukVal != null) {
+            pilihBentukSediaanDropDown.setSelectedItem(bentukVal.toString());
+        }
 
         Object dosisVal = tableModel.getValueAt(clickedRow, 3);
         inputDosisTextField.setText(dosisVal != null ? dosisVal.toString() : "");
@@ -968,7 +970,9 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
 
     private void obatHerbalTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_obatHerbalTableMouseClicked
         int clickedRow = obatHerbalTable.getSelectedRow();
-        if (clickedRow < 0) return;
+        if (clickedRow < 0) {
+            return;
+        }
 
         TableModel tableModel = obatHerbalTable.getModel();
         setComponentsObat(false);
@@ -984,7 +988,9 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         inputNamaObatTextField.setText(namaVal != null ? namaVal.toString() : "");
 
         Object bentukVal = tableModel.getValueAt(clickedRow, 2);
-        if (bentukVal != null) pilihBentukSediaanDropDown.setSelectedItem(bentukVal.toString());
+        if (bentukVal != null) {
+            pilihBentukSediaanDropDown.setSelectedItem(bentukVal.toString());
+        }
 
         Object dosisVal = tableModel.getValueAt(clickedRow, 3);
         inputDosisTextField.setText(dosisVal != null ? dosisVal.toString() : "");

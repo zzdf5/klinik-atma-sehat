@@ -24,16 +24,11 @@ public class TablePoliKlinik extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 0:
-                return listPoliklinik.get(rowIndex).getIdPoliklinik();
-            case 1:
-                return listPoliklinik.get(rowIndex).getNamaPoliklinik();
-            case 2:
-                return listPoliklinik.get(rowIndex).getLokasiRuangan();
-            case 3:
-                return listPoliklinik.get(rowIndex).getJamOperasional();
-            default:
-                return null;
+            case 0: return listPoliklinik.get(rowIndex).getIdPoliklinik();
+            case 1: return listPoliklinik.get(rowIndex).getNamaPoliklinik();
+            case 2: return listPoliklinik.get(rowIndex).getLokasiRuangan();
+            case 3: return listPoliklinik.get(rowIndex).getJamOperasional();
+            default: return null;
         }
     }
 

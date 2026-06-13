@@ -28,16 +28,11 @@ public class TableObat extends AbstractTableModel{
         Obat o = listObat.get(rowIndex); // Ambil objek pada baris tersebut
         
         switch(columnIndex){
-            case 0:
-                return o.getIdObat();
-            case 1:
-                return o.getNamaObat();
-            case 2:
-                return o.getBentukSediaan();
-            case 3:
-                return o.getDosis();
-            case 4:
-                return o.getKategori();
+            case 0: return o.getIdObat();
+            case 1: return o.getNamaObat();
+            case 2: return o.getBentukSediaan();
+            case 3: return o.getDosis();
+            case 4: return o.getKategori();
             case 5:
                 // Cek tipe objek secara dinamis untuk mengambil atribut khusus
                 if (o instanceof ObatHerbal) {
@@ -45,37 +40,25 @@ public class TableObat extends AbstractTableModel{
                 } else if (o instanceof ObatPaten) {
                     return ((ObatPaten) o).getMerk();
                 }
-                return "-"; // Default jika tidak ada
-            case 6:
-                return o.getHargaSatuan();
-            case 7:
-                return o.getStok();
-            default:
-                return null;
+                return "-"; 
+            case 6: return o.getHargaSatuan();
+            case 7: return o.getStok();
+            default: return null;
         }
     }
     
     @Override
     public String getColumnName(int column) {
         switch(column){
-            case 0:
-                return "ID Obat";
-            case 1:
-                return "Nama Obat";
-            case 2:
-                return "Bentuk Sediaan";
-            case 3:
-                return "Dosis";
-            case 4:
-                return "Kategori";
-            case 5:
-                return "Atribut Khusus"; // Kolom untuk Bahan Utama / Merk
-            case 6:
-                return "Harga Satuan";
-            case 7:
-                return "Stok";
-            default:
-                return null;
+            case 0: return "ID Obat";
+            case 1: return "Nama Obat";
+            case 2: return "Bentuk Sediaan";
+            case 3: return "Dosis";
+            case 4: return "Kategori";
+            case 5: return "Atribut Khusus"; 
+            case 6: return "Harga Satuan";
+            case 7: return "Stok";
+            default: return null;
         }
     }
 }

@@ -17,7 +17,6 @@ public class MainViewFormDokter extends javax.swing.JFrame {
     private ManajemenAntrianPanel manajemenAntrianPanel = new ManajemenAntrianPanel();
     private ManajemenDokterPanel manajemenDokterPanel = new ManajemenDokterPanel();
     private ManajemenJadwalDokterPanel manajemenJadwalDokterPanel = new ManajemenJadwalDokterPanel();
-    private ManajemenKunjunganPanel manajemenKunjunganPanel = new ManajemenKunjunganPanel();
     private ManajemenObatPanel manajemenObatPanel = new ManajemenObatPanel();
     private ManajemenPasienPanel manajemenPasienPanel = new ManajemenPasienPanel();
     private ManajemenPoliKlinikPanel manajemenPoliKlinikPanel = new ManajemenPoliKlinikPanel();
@@ -45,11 +44,6 @@ public class MainViewFormDokter extends javax.swing.JFrame {
                 dispose();
             }
         });
-    }
-    
-    @Deprecated
-    public MainViewFormDokter() {
-        this("DOK-001");
     }
     
     private void setForm(JComponent com) {
@@ -270,7 +264,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
 
         recolorDefaultSwitchPanel();
         kunjunganPanel.setBackground(new Color(245, 245, 245, 200));
-        setForm(new ManajemenKunjunganPanel());
+        setForm(new DokterPanel());
         selectedIndex = 1;
     }//GEN-LAST:event_kunjunganPanelMouseClicked
 
@@ -316,12 +310,7 @@ public class MainViewFormDokter extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainViewFormDokter().setVisible(true);
-            }
-        });
+        
     }
     
     

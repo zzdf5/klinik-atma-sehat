@@ -73,10 +73,8 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     }
 
     public void inputKosongException() throws InputKosongException {
-        if(inputIdPoliKlinikTextField.getText().isEmpty() ||
-           inputNamaPoliKlinikTextField.getText().isEmpty() ||
-           inputLokasiRuanganTextField.getText().isEmpty() ||
-           inputJamOperasionalTextField.getText().isEmpty()) {
+        if(inputIdPoliKlinikTextField.getText().isEmpty() || inputNamaPoliKlinikTextField.getText().isEmpty() ||
+           inputLokasiRuanganTextField.getText().isEmpty() || inputJamOperasionalTextField.getText().isEmpty()) {
             throw new InputKosongException();
         }
     }
@@ -505,12 +503,9 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
     private void simpanPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanPoliKlinikButtonActionPerformed
         try {
-            
             inputKosongException();
 
-            int confirm = JOptionPane.showConfirmDialog(
-                this, 
-                "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Poli Klinik ini?", 
+            int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Poli Klinik ini?", 
                 "Konfirmasi Simpan", 
                 JOptionPane.YES_NO_CANCEL_OPTION
             );
@@ -550,7 +545,9 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
     private void PoliKlinikTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PoliKlinikTableMouseClicked
         int clickedRow = PoliKlinikTable.getSelectedRow();
-        if(clickedRow < 0) return;
+        if(clickedRow < 0) {
+            return;
+        }
 
         TableModel tableModel = PoliKlinikTable.getModel();
 
@@ -567,7 +564,9 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_PoliKlinikTableMouseClicked
 
     private void pencarianPoliKlinikTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianPoliKlinikTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n') doSearchPoli();
+        if(evt.getKeyChar() == '\n') {
+            doSearchPoli();
+        }
     }//GEN-LAST:event_pencarianPoliKlinikTextFieldKeyPressed
 
     private void pencarianPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianPoliKlinikButtonActionPerformed

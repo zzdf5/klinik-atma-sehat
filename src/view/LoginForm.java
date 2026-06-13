@@ -9,6 +9,7 @@ import control.DokterControl;
 import exception.DataTidakDitemukanException;
 import exception.InputKosongException;
 import javax.swing.UIManager;
+import javax.swing.JOptionPane;
 import model.Admin;
 import model.Dokter;
 
@@ -31,26 +32,33 @@ public class LoginForm extends javax.swing.JFrame {
                 @Override
                 public void insertString(FilterBypass fb, int offset, String string,
                         javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
-                    if (string == null) return;
+                    if (string == null) {
+                        return;
+                    }
                     passwordBuffer.insert(offset, string);
                     super.insertString(fb, offset, mask(string.length()), attr);
                 }
                 @Override
                 public void replace(FilterBypass fb, int offset, int length, String string,
                         javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
-                    if (length > 0) passwordBuffer.delete(offset, offset + length);
-                    if (string != null) passwordBuffer.insert(offset, string);
+                    if (length > 0) {
+                        passwordBuffer.delete(offset, offset + length);
+                    }
+                    if (string != null) {
+                        passwordBuffer.insert(offset, string);
+                    }
                     super.replace(fb, offset, length, string != null ? mask(string.length()) : "", attr);
                 }
                 @Override
-                public void remove(FilterBypass fb, int offset, int length)
-                        throws javax.swing.text.BadLocationException {
+                public void remove(FilterBypass fb, int offset, int length) throws javax.swing.text.BadLocationException {
                     passwordBuffer.delete(offset, offset + length);
                     super.remove(fb, offset, length);
                 }
                 private String mask(int length) {
                     StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < length; i++) sb.append('*');
+                    for (int i = 0; i < length; i++){
+                        sb.append('*');
+                    } 
                     return sb.toString();
                 }
             });
@@ -61,8 +69,8 @@ public class LoginForm extends javax.swing.JFrame {
     private void handleLogin() {
         String username = inputUsernameTextField.getText().trim();
         String password = passwordBuffer.toString().trim();
-        username = "siti.admin";
-        password = "admin123";
+//        username = "hendra.dokter";
+//        password = "dokter123";
 
         AdminControl adminControl = new AdminControl();
         try {
@@ -71,14 +79,10 @@ public class LoginForm extends javax.swing.JFrame {
             this.dispose();
             return;
         } catch (InputKosongException e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Username dan password tidak boleh kosong!",
-                    "Peringatan",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Username dan password tidak boleh kosong!",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
-        } catch (DataTidakDitemukanException e) {
-            // bukan admin, coba sebagai dokter
-        }
+        } catch (DataTidakDitemukanException e) {}
 
         DokterControl dokterControl = new DokterControl();
         try {
@@ -86,15 +90,11 @@ public class LoginForm extends javax.swing.JFrame {
             new MainViewFormDokter(dokter.getId()).setVisible(true);
             this.dispose();
         } catch (InputKosongException e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Username dan password tidak boleh kosong!",
-                    "Peringatan",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Username dan password tidak boleh kosong!",
+                    "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
         } catch (DataTidakDitemukanException e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Username atau password salah!",
-                    "Login Gagal",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Username atau password salah!",
+                    "Login Gagal", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 

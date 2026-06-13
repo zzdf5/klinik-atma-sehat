@@ -503,7 +503,9 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void kunjunganPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kunjunganPanelMouseClicked
-        if(selectedIndex == 1) return;
+        if(selectedIndex == 1) {
+            return;
+        }
         
         recolorDefaultSwitchPanel();
         kunjunganPanel.setBackground(new Color(245, 245, 245, 200));
@@ -512,7 +514,9 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_kunjunganPanelMouseClicked
 
     private void pasienPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pasienPanelMouseClicked
-        if(selectedIndex == 2) return;
+        if(selectedIndex == 2) {
+            return;
+        }
         
         recolorDefaultSwitchPanel();
         pasienPanel.setBackground(new Color(245, 245, 245, 200));
@@ -521,7 +525,9 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_pasienPanelMouseClicked
 
     private void dokterPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dokterPanelMouseClicked
-        if(selectedIndex == 3) return;
+        if(selectedIndex == 3) {
+            return;
+        }
         
         recolorDefaultSwitchPanel();
         dokterPanel.setBackground(new Color(245, 245, 245, 200));
@@ -530,7 +536,9 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_dokterPanelMouseClicked
 
     private void antrianPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_antrianPanelMouseClicked
-        if(selectedIndex == 4) return;
+        if(selectedIndex == 4) {
+            return;
+        }
         
         recolorDefaultSwitchPanel();
         antrianPanel.setBackground(new Color(245, 245, 245, 200));
@@ -539,7 +547,9 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_antrianPanelMouseClicked
 
     private void obatPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_obatPanelMouseClicked
-        if(selectedIndex == 5) return;
+        if(selectedIndex == 5) {
+            return;
+        }
         
         recolorDefaultSwitchPanel();
         obatPanel.setBackground(new Color(245, 245, 245, 200));
@@ -548,7 +558,9 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_obatPanelMouseClicked
 
     private void tagihanPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tagihanPanelMouseClicked
-        if(selectedIndex == 6) return;
+        if(selectedIndex == 6) {
+            return;
+        }
         
         recolorDefaultSwitchPanel();
         tagihanPanel.setBackground(new Color(245, 245, 245, 200));
@@ -557,7 +569,9 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_tagihanPanelMouseClicked
 
     private void poliKlinikPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_poliKlinikPanelMouseClicked
-        if(selectedIndex == 7) return;
+        if(selectedIndex == 7) {
+            return;
+        }
         
         recolorDefaultSwitchPanel();
         poliKlinikPanel.setBackground(new Color(245, 245, 245, 200));
@@ -566,7 +580,9 @@ public class MainViewFormAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_poliKlinikPanelMouseClicked
 
     private void jadwalDokterPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jadwalDokterPanelMouseClicked
-        if(selectedIndex == 8) return;
+        if(selectedIndex == 8) {
+            return;
+        }
         
         recolorDefaultSwitchPanel();
         jadwalDokterPanel.setBackground(new Color(245, 245, 245, 200));

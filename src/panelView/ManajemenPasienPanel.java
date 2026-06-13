@@ -80,7 +80,9 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         if (p.getTanggalLahir() != null && !p.getTanggalLahir().isEmpty()) {
             try {
                 inputTanggalLahirDateChooser.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(p.getTanggalLahir()));
-            } catch (Exception ex) { inputTanggalLahirDateChooser.setDate(null); }
+            } catch (Exception ex) { 
+                inputTanggalLahirDateChooser.setDate(null); 
+            }
         }
         inputJenisKelaminDropDown.setSelectedItem(p.getJenisKelamin());
         inputNoTeleponTextField.setText(p.getNoTelepon());
@@ -96,7 +98,9 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
             if (rm.getTanggalBuat() != null && !rm.getTanggalBuat().isEmpty()) {
                 try {
                     inputTanggalPembuatanDateChooser.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(rm.getTanggalBuat()));
-                } catch (Exception ex) { inputTanggalPembuatanDateChooser.setDate(null); }
+                } catch (Exception ex) { 
+                    inputTanggalPembuatanDateChooser.setDate(null); 
+                }
             }
         }
     }
@@ -815,23 +819,29 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tambahPasienButtonActionPerformed
 
     private void barukanPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanPasienButtonActionPerformed
-        if (selectedId == null) return;
+        if (selectedId == null) {
+            return;
+        }
             action = "update";
             setFormEnabled(true);
             setRekamMedisEnabled(true);
     }//GEN-LAST:event_barukanPasienButtonActionPerformed
 
     private void hapusPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusPasienButtonActionPerformed
-        if (selectedId == null) return;
+        if (selectedId == null) {
+            return;
+        }
             int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin hapus pasien ini?", "Hapus Data", JOptionPane.YES_NO_OPTION);
-            if (opsi != JOptionPane.YES_OPTION) return;
+            if (opsi != JOptionPane.YES_OPTION) {
+                return;
+            }
             pc.delete(selectedId);
             selectedId = null;
             clearForm();
             setFormEnabled(false);
             setEditDeleteEnabled(false);
             showPasien();
-            JOptionPane.showMessageDialog(this, "Pasien berhasil dihapus.");
+
     }//GEN-LAST:event_hapusPasienButtonActionPerformed
 
     private void batalPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalPasienButtonActionPerformed
@@ -845,7 +855,9 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_batalPasienButtonActionPerformed
 
     private void simpanPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanPasienButtonActionPerformed
-        if (action == null) return;
+        if (action == null) {
+            return;
+        }
 
         String id    = inputIdPasienTextField.getText().trim();
         String noRm  = inputNomorRekamMedisTextField.getText().trim();
@@ -868,35 +880,44 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         String tgl = new SimpleDateFormat("yyyy-MM-dd").format(tglLahir);
 
         int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin " + action + " data pasien?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-        if (opsi != JOptionPane.YES_OPTION) return;
+        if (opsi != JOptionPane.YES_OPTION) {
+            return;
+        }
 
         Pasien p = new Pasien(id, noRm, nama, tgl, jk, telp, alamat);
         if ("add".equals(action)) {
             pc.insert(p);
             Date tglRm = inputTanggalPembuatanDateChooser.getDate();
-            String tglRmStr = tglRm != null
-                ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm)
-                : new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            String tglRmStr = tglRm != null ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm) : new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             RekamMedis rm = new RekamMedis(noRm, id, tglRmStr);
             String alergi  = inputAlergiTextField.getText().trim();
             String riwayat = inputRiwayatPenyakitTextField.getText().trim();
-            if (!alergi.isEmpty())  rm.tambahAlergi(alergi);
-            if (!riwayat.isEmpty()) rm.tambahRiwayatPenyakit(riwayat);
+            if (!alergi.isEmpty()) {
+                rm.tambahAlergi(alergi);
+            }
+            if (!riwayat.isEmpty()) {
+                rm.tambahRiwayatPenyakit(riwayat);
+            }
             rmc.insert(rm);
-            JOptionPane.showMessageDialog(this, "Pasien dan rekam medis berhasil ditambahkan.");
+
         } else {
             pc.update(p, selectedId);
             Date tglRm = inputTanggalPembuatanDateChooser.getDate();
-            String tglRmStr = tglRm != null
-                ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm)
-                : new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            RekamMedis rm = new RekamMedis(noRm, id, tglRmStr);
-            String alergi  = inputAlergiTextField.getText().trim();
-            String riwayat = inputRiwayatPenyakitTextField.getText().trim();
-            for (String a : alergi.split(",\\s*"))  { if (!a.isEmpty()) rm.tambahAlergi(a); }
-            for (String r : riwayat.split(",\\s*")) { if (!r.isEmpty()) rm.tambahRiwayatPenyakit(r); }
+            String tglRmStr = tglRm != null ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm) : new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            RekamMedis rm   = new RekamMedis(noRm, id, tglRmStr);
+            String alergi   = inputAlergiTextField.getText().trim();
+            String riwayat  = inputRiwayatPenyakitTextField.getText().trim();
+            for (String a : alergi.split(",\\s*")) { 
+                if (!a.isEmpty()) {
+                    rm.tambahAlergi(a); 
+                }
+            }
+            for (String r : riwayat.split(",\\s*")) { 
+                if (!r.isEmpty()) {
+                    rm.tambahRiwayatPenyakit(r); 
+                }
+            }
             rmc.update(rm, noRm);
-            JOptionPane.showMessageDialog(this, "Pasien dan rekam medis berhasil diupdate.");
         }
 
         action = null;
@@ -909,7 +930,9 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_simpanPasienButtonActionPerformed
 
     private void pencarianPasienTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianPasienTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n') doSearch();
+        if(evt.getKeyChar() == '\n') {
+            doSearch();
+        }
     }//GEN-LAST:event_pencarianPasienTextFieldKeyPressed
 
     private void pencarianPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianPasienButtonActionPerformed
@@ -918,7 +941,9 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
 
     private void pasienTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pasienTableMouseClicked
         int row = pasienTable.getSelectedRow();
-        if (row < 0) return;
+        if (row < 0) {
+            return;
+        }
         selectedId = (String) pasienTable.getValueAt(row, 0);
         Pasien p = pc.search(selectedId);
         if (p != null) {

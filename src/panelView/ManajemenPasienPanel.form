@@ -607,7 +607,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="inputRiwayatPenyakitPanel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="inputTanggalPembuatanPanel" pref="403" max="32767" attributes="0"/>
+                          <Component id="inputTanggalPembuatanPanel" pref="404" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -918,7 +918,7 @@
                           <Component id="subJudulPasienLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="judulPasienLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="389" max="32767" attributes="0"/>
+                      <EmptySpace pref="390" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="pencarianPasienTextField" min="-2" pref="287" max="-2" attributes="0"/>
