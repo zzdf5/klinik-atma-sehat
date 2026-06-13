@@ -6,7 +6,6 @@ package view;
 
 import panelView.*;
 import java.awt.Color;
-import java.util.Locale;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 

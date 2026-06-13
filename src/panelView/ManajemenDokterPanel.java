@@ -158,7 +158,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         judulDokterLabel.setText("Data Master Manajemen Dokter");
 
         subJudulDokterLabel6.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulDokterLabel6.setText("Dokter");
+        subJudulDokterLabel6.setText("Kelola data dokter yang terdaftar dalam sistem");
 
         pencarianDokterTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {

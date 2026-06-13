@@ -72,6 +72,13 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         belumLunasRadioButton.addActionListener(e -> updatePembayaranEnabled());
     }
 
+    private void lunasRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        updatePembayaranEnabled();
+    }
+
+    private void belumLunasRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        updatePembayaranEnabled();
+    }
     private void doSearch() {
         String keyword = pencarianTagihanTextField.getText().trim();
         if (keyword.isEmpty()) {
@@ -471,8 +478,18 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputStatusBayarLabel.setText("Status Bayar");
 
         lunasRadioButton.setText("LUNAS");
+        lunasRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lunasRadioButtonActionPerformed(evt);
+            }
+        });
 
         belumLunasRadioButton.setText("BELUM LUNAS");
+        belumLunasRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                belumLunasRadioButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout inputStatusBayarPanelLayout = new javax.swing.GroupLayout(inputStatusBayarPanel);
         inputStatusBayarPanel.setLayout(inputStatusBayarPanelLayout);
@@ -605,7 +622,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(inputRingkasanTagihanLabel)
                 .addGap(1, 1, 1)
-                .addComponent(formInputRingkasanTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                .addComponent(formInputRingkasanTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 165, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -635,7 +652,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         judulTagihanLabel.setText("Data Master Manajemen Tagihan");
 
         subJudulTagihanLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulTagihanLabel.setText("Tagihan");
+        subJudulTagihanLabel.setText("Menampilkan dan mengelola informasi tagihan layanan kesehatan");
 
         pencarianTagihanTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -666,7 +683,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(subJudulTagihanLabel)
                     .addComponent(judulTagihanLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 334, Short.MAX_VALUE)
                 .addGroup(pencarianTagihanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pencarianTagihanPanelLayout.createSequentialGroup()
                         .addComponent(pencarianTagihanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)

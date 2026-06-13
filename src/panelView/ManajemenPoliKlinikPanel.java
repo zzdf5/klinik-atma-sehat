@@ -387,7 +387,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         judulPoliKlinikLabel.setText("Data Master Manajemen Poliklinik");
 
         subJudulPoliKlinikLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulPoliKlinikLabel.setText("Poliklinik");
+        subJudulPoliKlinikLabel.setText("Menampilkan dan mengelola data poliklinik secara terpusat");
 
         pencarianPoliKlinikTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {

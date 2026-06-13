@@ -1132,7 +1132,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
         judulKunjunganLabel.setText("Data Master Manajemen Kunjungan");
 
         subJudulKunjunganLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulKunjunganLabel.setText("Kunjungan");
+        subJudulKunjunganLabel.setText("Kelola data kunjungan pasien untuk mendukung proses pelayanan kesehatan");
 
         searchKunjunganTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -1202,7 +1202,7 @@ public class ManajemenKunjunganPanel extends javax.swing.JPanel {
                         .addComponent(metricCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(kunjunganButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 4, Short.MAX_VALUE))
                     .addComponent(searchKunjunganPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(kunjunganScrollPane))
                 .addContainerGap())

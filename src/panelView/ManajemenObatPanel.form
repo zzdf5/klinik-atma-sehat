@@ -932,7 +932,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="sansserif" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Obat"/>
+                <Property name="text" type="java.lang.String" value="Menampilkan dan mengelola informasi obat dalam sistem"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="pencarianObatTextField">

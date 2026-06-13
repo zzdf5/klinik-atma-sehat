@@ -696,7 +696,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
         judulObatLabel.setText("Data Master Manajemen Obat");
 
         subJudulObatLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulObatLabel.setText("Obat");
+        subJudulObatLabel.setText("Menampilkan dan mengelola informasi obat dalam sistem");
 
         pencarianObatTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -776,7 +776,7 @@ public class ManajemenObatPanel extends javax.swing.JPanel {
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(obatHerbalScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                                    .addComponent(obatHerbalScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
                                     .addGroup(mainPanelLayout.createSequentialGroup()
                                         .addComponent(obatHerbalLabel)
                                         .addGap(0, 0, Short.MAX_VALUE))))))

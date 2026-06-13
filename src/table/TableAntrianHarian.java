@@ -3,10 +3,6 @@ package table;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-/**
- * Menampilkan subset kolom dari baris Antrian 8-kolom
- * (id, noUrut, namaPasien, namaDokter, poliklinik, tanggal, jenis, status).
- */
 public class TableAntrianHarian extends AbstractTableModel {
     private static final int[] SOURCE_COLUMN = {1, 2, 3, 4, 6, 7};
 

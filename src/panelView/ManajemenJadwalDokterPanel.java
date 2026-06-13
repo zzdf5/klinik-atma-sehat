@@ -265,7 +265,7 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         judulJadwalLabel.setText("Data Master Manajemen Jadwal Dokter");
 
         subJudulJadwalLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulJadwalLabel.setText("Jadwal Dokter");
+        subJudulJadwalLabel.setText("Kelola jadwal praktik dokter agar layanan berjalan teratur dan efisien");
 
         pencarianJadwalTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {

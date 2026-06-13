@@ -595,7 +595,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
                         .addComponent(inputRekamMedisLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(inputRiwayatPenyakitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inputTanggalPembuatanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))
+                    .addComponent(inputTanggalPembuatanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
                 .addContainerGap())
         );
         formInputRekamMedisPanelLayout.setVerticalGroup(
@@ -695,7 +695,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         judulPasienLabel.setText("Data Master Manajemen Pasien");
 
         subJudulPasienLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulPasienLabel.setText("Pasien");
+        subJudulPasienLabel.setText("Menampilkan dan mengelola data pasien secara terpusat");
 
         pencarianPasienTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -726,7 +726,7 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
                 .addGroup(pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(subJudulPasienLabel)
                     .addComponent(judulPasienLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 389, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 390, Short.MAX_VALUE)
                 .addGroup(pencarianPasienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pencarianPasienPanelLayout.createSequentialGroup()
                         .addComponent(pencarianPasienTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)

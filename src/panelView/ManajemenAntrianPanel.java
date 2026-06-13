@@ -438,7 +438,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(namaPoliklinik1)
                     .addComponent(namaPemeriksaanLabel1)
                     .addComponent(kodeAntrianPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         panelAntrian1Layout.setVerticalGroup(
             panelAntrian1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -555,7 +555,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(namaPoliklinik2)
                     .addComponent(namaPemeriksaanLabel2)
                     .addComponent(kodeAntrianPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         panelAntrian2Layout.setVerticalGroup(
             panelAntrian2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -586,11 +586,6 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         pilihPoliklinikLabel.setText("Pilih Poliklinik");
 
         pilihPoliklinikComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        pilihPoliklinikComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pilihPoliklinikComboBoxActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pilihPoliklinikPanelLayout = new javax.swing.GroupLayout(pilihPoliklinikPanel);
         pilihPoliklinikPanel.setLayout(pilihPoliklinikPanelLayout);
@@ -618,7 +613,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         antrianPasienHeaderLabel.setText("Antrian Pasien");
 
         subJudulAntrianLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        subJudulAntrianLabel.setText("Antrian");
+        subJudulAntrianLabel.setText("Daftar pasien yang siap untuk dilakukan pemeriksaan dan konsultasi");
 
         javax.swing.GroupLayout antrianPasienHeaderPanelLayout = new javax.swing.GroupLayout(antrianPasienHeaderPanel);
         antrianPasienHeaderPanel.setLayout(antrianPasienHeaderPanelLayout);
@@ -754,7 +749,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                     .addComponent(namaPoliklinik3)
                     .addComponent(namaPemeriksaanLabel3)
                     .addComponent(kodeAntrianPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAntrian3Layout.setVerticalGroup(
             panelAntrian3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -790,7 +785,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
                             .addGap(18, 18, 18)
                             .addComponent(panelAntrian2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(panelAntrian3, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE))
+                            .addComponent(panelAntrian3, javax.swing.GroupLayout.PREFERRED_SIZE, 363, Short.MAX_VALUE))
                         .addComponent(antrianPasienHeaderPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1141, Short.MAX_VALUE))))
         );
         mainPanelLayout.setVerticalGroup(
