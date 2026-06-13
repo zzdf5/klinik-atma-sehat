@@ -13,14 +13,20 @@ import table.TableTagihan;
 public class TagihanControl {
     private final TagihanDAO dao = new TagihanDAO();
 
-    public String generateId() { return dao.generateId(); }
-    public List<Object[]> showDataWithNames() { return dao.showDataWithNames(); }
-    public List<Object[]> searchByKeyword(String keyword) { return dao.searchByKeyword(keyword); }
+    public String generateId() { 
+        return dao.generateId(); 
+    }
+    
+    public List<Object[]> showDataWithNames() { 
+        return dao.showDataWithNames(); 
+    }
+    
+    public List<Object[]> searchByKeyword(String keyword) { 
+        return dao.searchByKeyword(keyword); 
+    }
 
     public TableTagihan showTable(String target) {
-        List<Object[]> data = (target == null || target.isBlank())
-                ? dao.showDataWithNames()
-                : dao.searchByKeyword(target);
+        List<Object[]> data = (target == null || target.isBlank()) ? dao.showDataWithNames() : dao.searchByKeyword(target);
         return new TableTagihan(data);
     }
 
@@ -34,13 +40,25 @@ public class TagihanControl {
         dao.update(data, id);
     }
 
-    public void delete(String id) { dao.delete(id); }
-    public List<Tagihan> showData() { return dao.showData(); }
-    public Tagihan search(String id) { return dao.search(id); }
-    public Tagihan searchByIdKunjungan(String idKunjungan) { return dao.searchByIdKunjungan(idKunjungan); }
+    public void delete(String id) { 
+        dao.delete(id); 
+    }
+    
+    public List<Tagihan> showData() { 
+        return dao.showData(); 
+    }
+    
+    public Tagihan search(String id) { 
+        return dao.search(id); 
+    }
+    
+    public Tagihan searchByIdKunjungan(String idKunjungan) { 
+        return dao.searchByIdKunjungan(idKunjungan); 
+    }
 
     public void buatDariKunjungan(Kunjungan kunjungan, Resep resep) {
-        if (dao.searchByIdKunjungan(kunjungan.getIdKunjungan()) != null) return;
+        if (dao.searchByIdKunjungan(kunjungan.getIdKunjungan()) != null) 
+            return;
 
         String idTagihan = dao.generateId();
         Tagihan tagihan = new Tagihan(idTagihan, kunjungan.getIdKunjungan(), kunjungan.getTanggal());

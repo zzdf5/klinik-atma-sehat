@@ -7,7 +7,9 @@ package panelView;
 import control.PasienControl;
 import control.RekamMedisControl;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Pasien;
 import model.RekamMedis;
@@ -23,56 +25,12 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
 
-        inputJenisKelaminDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"L", "P"}));
-
-        ((javax.swing.text.AbstractDocument) inputNoTeleponTextField.getDocument())
-            .setDocumentFilter(new javax.swing.text.DocumentFilter() {
-                @Override
-                public void insertString(javax.swing.text.DocumentFilter.FilterBypass fb, int off, String str,
-                        javax.swing.text.AttributeSet a) throws javax.swing.text.BadLocationException {
-                    if (str != null && str.matches("[0-9]+")) super.insertString(fb, off, str, a);
-                }
-                @Override
-                public void replace(javax.swing.text.DocumentFilter.FilterBypass fb, int off, int len, String str,
-                        javax.swing.text.AttributeSet a) throws javax.swing.text.BadLocationException {
-                    if (str == null || str.matches("[0-9]*")) super.replace(fb, off, len, str, a);
-                }
-            });
+        inputJenisKelaminDropDown.setModel(new DefaultComboBoxModel<>(new String[]{"L", "P"}));
 
         setFormEnabled(false);
         setEditDeleteEnabled(false);
         setRekamMedisEnabled(false);
         showPasien();
-
-
-        simpanPasienButton.addActionListener(e -> simpanPasien());
-
-        batalPasienButton.addActionListener(e -> {
-            action = null;
-            selectedId = null;
-            clearForm();
-            setFormEnabled(false);
-            setEditDeleteEnabled(false);
-            setRekamMedisEnabled(false);
-        });
-
-        pencarianPasienButton.addActionListener(e -> doSearch());
-        pencarianPasienTextField.addActionListener(e -> doSearch());
-
-        pasienTable.getSelectionModel().addListSelectionListener(e -> {
-            if (e.getValueIsAdjusting()) return;
-            int row = pasienTable.getSelectedRow();
-            if (row < 0) return;
-            selectedId = (String) pasienTable.getValueAt(row, 0);
-            Pasien p = pc.search(selectedId);
-            if (p != null) {
-                fillForm(p);
-                setEditDeleteEnabled(true);
-                setFormEnabled(false);
-                setRekamMedisEnabled(false);
-                action = null;
-            }
-        });
     }
 
     private void showPasien() {
@@ -161,7 +119,6 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         setFormEnabled(false);
         clearForm();
 
-        // Coba exact match by ID dulu
         Pasien byId = pc.search(keyword);
         if (byId != null) {
             pasienTable.setModel(pc.showTable(keyword));
@@ -170,79 +127,19 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
             setEditDeleteEnabled(true);
             return;
         }
-
-        // Kalau tidak ketemu by ID, cari by nama (LIKE)
+        
         List<Pasien> byNama = pc.searchByNama(keyword);
         if (byNama.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Pasien tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
             return;
         }
         pasienTable.setModel(pc.showTable(keyword));
-        // Jika hanya satu hasil, langsung isi form
+        
         if (byNama.size() == 1) {
             fillForm(byNama.get(0));
             selectedId = byNama.get(0).getId();
             setEditDeleteEnabled(true);
         }
-    }
-
-    private void simpanPasien() {
-        if (action == null) return;
-
-        String id    = inputIdPasienTextField.getText().trim();
-        String noRm  = inputNomorRekamMedisTextField.getText().trim();
-        String nama  = inputNamaLengkapTextField.getText().trim();
-        String jk    = (String) inputJenisKelaminDropDown.getSelectedItem();
-        String telp  = inputNoTeleponTextField.getText().trim();
-        String alamat = inputAlamatTextField.getText().trim();
-        java.util.Date tglLahir = inputTanggalLahirDateChooser.getDate();
-
-        if (id.isEmpty() || noRm.isEmpty() || nama.isEmpty() || tglLahir == null || telp.isEmpty() || alamat.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        String tgl = new SimpleDateFormat("yyyy-MM-dd").format(tglLahir);
-
-        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin " + action + " data pasien?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-        if (opsi != JOptionPane.YES_OPTION) return;
-
-        Pasien p = new Pasien(id, noRm, nama, tgl, jk, telp, alamat);
-        if ("add".equals(action)) {
-            pc.insert(p);
-            java.util.Date tglRm = inputTanggalPembuatanDateChooser.getDate();
-            String tglRmStr = tglRm != null
-                ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm)
-                : new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-            RekamMedis rm = new RekamMedis(noRm, id, tglRmStr);
-            String alergi  = inputAlergiTextField.getText().trim();
-            String riwayat = inputRiwayatPenyakitTextField.getText().trim();
-            if (!alergi.isEmpty())  rm.tambahAlergi(alergi);
-            if (!riwayat.isEmpty()) rm.tambahRiwayatPenyakit(riwayat);
-            rmc.insert(rm);
-            JOptionPane.showMessageDialog(this, "Pasien dan rekam medis berhasil ditambahkan.");
-        } else {
-            pc.update(p, selectedId);
-            java.util.Date tglRm = inputTanggalPembuatanDateChooser.getDate();
-            String tglRmStr = tglRm != null
-                ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm)
-                : new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-            RekamMedis rm = new RekamMedis(noRm, id, tglRmStr);
-            String alergi  = inputAlergiTextField.getText().trim();
-            String riwayat = inputRiwayatPenyakitTextField.getText().trim();
-            for (String a : alergi.split(",\\s*"))  { if (!a.isEmpty()) rm.tambahAlergi(a); }
-            for (String r : riwayat.split(",\\s*")) { if (!r.isEmpty()) rm.tambahRiwayatPenyakit(r); }
-            rmc.update(rm, noRm);
-            JOptionPane.showMessageDialog(this, "Pasien dan rekam medis berhasil diupdate.");
-        }
-
-        action = null;
-        selectedId = null;
-        clearForm();
-        setFormEnabled(false);
-        setEditDeleteEnabled(false);
-        setRekamMedisEnabled(false);
-        showPasien();
     }
 
     /**
@@ -720,6 +617,11 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        pasienTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pasienTableMouseClicked(evt);
+            }
+        });
         pasienScrollPane.setViewportView(pasienTable);
 
         pasienButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -938,11 +840,72 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
         clearForm();
         setFormEnabled(false);
         setEditDeleteEnabled(false);
+        setRekamMedisEnabled(false);
         tambahPasienButton.setEnabled(true);
     }//GEN-LAST:event_batalPasienButtonActionPerformed
 
     private void simpanPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanPasienButtonActionPerformed
-        simpanPasien();
+        if (action == null) return;
+
+        String id    = inputIdPasienTextField.getText().trim();
+        String noRm  = inputNomorRekamMedisTextField.getText().trim();
+        String nama  = inputNamaLengkapTextField.getText().trim();
+        String jk    = (String) inputJenisKelaminDropDown.getSelectedItem();
+        String telp  = inputNoTeleponTextField.getText().trim();
+        String alamat = inputAlamatTextField.getText().trim();
+        Date tglLahir = inputTanggalLahirDateChooser.getDate();
+
+        if (id.isEmpty() || noRm.isEmpty() || nama.isEmpty() || tglLahir == null || telp.isEmpty() || alamat.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!telp.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Nomor telepon hanya boleh angka!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String tgl = new SimpleDateFormat("yyyy-MM-dd").format(tglLahir);
+
+        int opsi = JOptionPane.showConfirmDialog(this, "Yakin ingin " + action + " data pasien?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (opsi != JOptionPane.YES_OPTION) return;
+
+        Pasien p = new Pasien(id, noRm, nama, tgl, jk, telp, alamat);
+        if ("add".equals(action)) {
+            pc.insert(p);
+            Date tglRm = inputTanggalPembuatanDateChooser.getDate();
+            String tglRmStr = tglRm != null
+                ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm)
+                : new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            RekamMedis rm = new RekamMedis(noRm, id, tglRmStr);
+            String alergi  = inputAlergiTextField.getText().trim();
+            String riwayat = inputRiwayatPenyakitTextField.getText().trim();
+            if (!alergi.isEmpty())  rm.tambahAlergi(alergi);
+            if (!riwayat.isEmpty()) rm.tambahRiwayatPenyakit(riwayat);
+            rmc.insert(rm);
+            JOptionPane.showMessageDialog(this, "Pasien dan rekam medis berhasil ditambahkan.");
+        } else {
+            pc.update(p, selectedId);
+            Date tglRm = inputTanggalPembuatanDateChooser.getDate();
+            String tglRmStr = tglRm != null
+                ? new SimpleDateFormat("yyyy-MM-dd").format(tglRm)
+                : new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            RekamMedis rm = new RekamMedis(noRm, id, tglRmStr);
+            String alergi  = inputAlergiTextField.getText().trim();
+            String riwayat = inputRiwayatPenyakitTextField.getText().trim();
+            for (String a : alergi.split(",\\s*"))  { if (!a.isEmpty()) rm.tambahAlergi(a); }
+            for (String r : riwayat.split(",\\s*")) { if (!r.isEmpty()) rm.tambahRiwayatPenyakit(r); }
+            rmc.update(rm, noRm);
+            JOptionPane.showMessageDialog(this, "Pasien dan rekam medis berhasil diupdate.");
+        }
+
+        action = null;
+        selectedId = null;
+        clearForm();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        setRekamMedisEnabled(false);
+        showPasien();
     }//GEN-LAST:event_simpanPasienButtonActionPerformed
 
     private void pencarianPasienTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianPasienTextFieldKeyPressed
@@ -952,6 +915,20 @@ public class ManajemenPasienPanel extends javax.swing.JPanel {
     private void pencarianPasienButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianPasienButtonActionPerformed
         doSearch();
     }//GEN-LAST:event_pencarianPasienButtonActionPerformed
+
+    private void pasienTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pasienTableMouseClicked
+        int row = pasienTable.getSelectedRow();
+        if (row < 0) return;
+        selectedId = (String) pasienTable.getValueAt(row, 0);
+        Pasien p = pc.search(selectedId);
+        if (p != null) {
+            fillForm(p);
+            setEditDeleteEnabled(true);
+            setFormEnabled(false);
+            setRekamMedisEnabled(false);
+            action = null;
+        }
+    }//GEN-LAST:event_pasienTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

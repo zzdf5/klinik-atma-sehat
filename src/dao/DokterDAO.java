@@ -85,7 +85,6 @@ public class DokterDAO implements IDAO<Dokter, String> {
     public void delete(String id) {
         con = dbCon.makeConnection();
 
-        // CASCADE di FK akan hapus baris dokter otomatis
         String sql = "DELETE FROM pengguna WHERE id=?";
 
         try {
@@ -124,7 +123,8 @@ public class DokterDAO implements IDAO<Dokter, String> {
                             rs.getString("spesialisasi"),
                             rs.getDouble("tarif_konsultasi"),
                             rs.getString("username"),
-                            rs.getString("password"));
+                            rs.getString("password")
+                    );
                     dokter.setStatusAktif(rs.getBoolean("status_aktif"));
                     list.add(dokter);
                 }
@@ -166,7 +166,8 @@ public class DokterDAO implements IDAO<Dokter, String> {
                             rs.getString("spesialisasi"),
                             rs.getDouble("tarif_konsultasi"),
                             rs.getString("username"),
-                            rs.getString("password"));
+                            rs.getString("password")
+                    );
                     dokter.setStatusAktif(rs.getBoolean("status_aktif"));
                     list.add(dokter);
                 }
@@ -227,7 +228,8 @@ public class DokterDAO implements IDAO<Dokter, String> {
                         rs.getString("spesialisasi"),
                         rs.getDouble("tarif_konsultasi"),
                         rs.getString("username"),
-                        rs.getString("password"));
+                        rs.getString("password")
+                );
                 dokter.setStatusAktif(rs.getBoolean("status_aktif"));
             }
 
@@ -264,7 +266,8 @@ public class DokterDAO implements IDAO<Dokter, String> {
                         rs.getString("spesialisasi"),
                         rs.getDouble("tarif_konsultasi"),
                         rs.getString("username"),
-                        rs.getString("password"));
+                        rs.getString("password")
+                );
                 dokter.setStatusAktif(rs.getBoolean("status_aktif"));
             }
 

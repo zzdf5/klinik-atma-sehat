@@ -93,7 +93,6 @@ public class ResepDAO implements IDAO<Resep, String> {
     @Override
     public void delete(String id) {
         con = dbCon.makeConnection();
-
         String sql = "DELETE FROM resep WHERE id_resep=?";
 
         try {
@@ -123,10 +122,11 @@ public class ResepDAO implements IDAO<Resep, String> {
             if (rs != null) {
                 while (rs.next()) {
                     Resep resep = new Resep(
-                            rs.getString("id_resep"),
-                            rs.getString("id_dokter"),
-                            rs.getString("nomor_rekam_medis"),
-                            rs.getString("tanggal_resep"));
+                        rs.getString("id_resep"),
+                        rs.getString("id_dokter"),
+                        rs.getString("nomor_rekam_medis"),
+                        rs.getString("tanggal_resep")
+                    );
                     resep.setStatus(Resep.Status.valueOf(rs.getString("status")));
                     loadItemResep(resep);
                     list.add(resep);
@@ -157,10 +157,11 @@ public class ResepDAO implements IDAO<Resep, String> {
 
             if (rs != null && rs.next()) {
                 resep = new Resep(
-                        rs.getString("id_resep"),
-                        rs.getString("id_dokter"),
-                        rs.getString("nomor_rekam_medis"),
-                        rs.getString("tanggal_resep"));
+                    rs.getString("id_resep"),
+                    rs.getString("id_dokter"),
+                    rs.getString("nomor_rekam_medis"),
+                    rs.getString("tanggal_resep")
+                );
                 resep.setStatus(Resep.Status.valueOf(rs.getString("status")));
                 loadItemResep(resep);
             }
@@ -188,13 +189,14 @@ public class ResepDAO implements IDAO<Resep, String> {
 
             while (rs.next()) {
                 Obat obat = new Obat(
-                        rs.getString("id_obat"),
-                        rs.getString("nama_obat"),
-                        rs.getString("bentuk_sediaan"),
-                        rs.getString("dosis"),
-                        rs.getString("kategori"),
-                        rs.getDouble("harga_satuan"),
-                        rs.getInt("stok"));
+                    rs.getString("id_obat"),
+                    rs.getString("nama_obat"),
+                    rs.getString("bentuk_sediaan"),
+                    rs.getString("dosis"),
+                    rs.getString("kategori"),
+                    rs.getDouble("harga_satuan"),
+                    rs.getInt("stok")
+                );
                 resep.tambahObat(new Resep.ItemResep(obat, rs.getInt("jumlah"), rs.getString("aturan_pakai")));
             }
 

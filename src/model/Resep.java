@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Resep {
-    private String idResep;
-    private String idDokter;
-    private String nomorRekamMedis;
-    private String tanggalResep;
+    private String idResep, idDokter, nomorRekamMedis, tanggalResep;
     private Status status;
     private List<ItemResep> daftarObat;
 
     public enum Status {
-        DIPROSES, SELESAI, BATAL
+        DIPROSES, 
+        SELESAI, 
+        BATAL
     }
 
     public Resep(String idResep, String idDokter, String nomorRekamMedis, String tanggalResep) {
@@ -27,15 +26,19 @@ public class Resep {
     public void setIdResep(String idResep) { 
         this.idResep = idResep; 
     }
+    
     public void setIdDokter(String idDokter) {
         this.idDokter = idDokter; 
     }
+    
     public void setNomorRekamMedis(String nomorRekamMedis) {
         this.nomorRekamMedis = nomorRekamMedis;
     }
+    
     public void setTanggalResep(String tanggalResep) {
         this.tanggalResep = tanggalResep; 
     }
+    
     public void setStatus(Status status) { 
         this.status = status; 
     }
@@ -43,18 +46,23 @@ public class Resep {
     public String getIdResep() { 
         return idResep;
     }
+    
     public String getIdDokter() { 
         return idDokter; 
     }
+    
     public String getNomorRekamMedis() { 
         return nomorRekamMedis;
     }
+    
     public String getTanggalResep() { 
         return tanggalResep;
     }
+    
     public Status getStatus() {
         return status; 
     }
+    
     public List<ItemResep> getDaftarObat() { 
         return daftarObat;
     }
@@ -81,9 +89,11 @@ public class Resep {
         public void setObat(Obat obat) {
             this.obat = obat;
         }
+        
         public void setJumlah(int jumlah) { 
             this.jumlah = jumlah;
         }
+        
         public void setAturanPakai(String aturanPakai) {
             this.aturanPakai = aturanPakai; 
         }
@@ -91,15 +101,19 @@ public class Resep {
         public Obat getObat() {
             return obat; 
         }
+        
         public int getJumlah() {
             return jumlah; 
         }
+        
         public String getAturanPakai() {
             return aturanPakai;
         }
+        
         public String getNamaObat() {
             return obat.getNamaObat(); 
         }
+        
         public double getHarga() {
             return obat.getHargaSatuan(); 
         }

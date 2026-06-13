@@ -1,11 +1,7 @@
 package model;
 
 public class Obat {
-    private String idObat;
-    private String namaObat;
-    private String bentukSediaan;
-    private String dosis;
-    private String kategori;
+    private String idObat, namaObat, bentukSediaan, dosis, kategori;
     private double hargaSatuan;
     private int stok;
 
@@ -23,9 +19,11 @@ public class Obat {
     public void setIdObat(String idObat) { 
         this.idObat = idObat; 
     }
+    
     public void setNamaObat(String namaObat) { 
         this.namaObat = namaObat; 
     }
+    
     public void setBentukSediaan(String bentukSediaan) { 
         this.bentukSediaan = bentukSediaan; 
     }
@@ -34,23 +32,46 @@ public class Obat {
         this.dosis = dosis; 
     
     }
+    
     public void setKategori(String kategori) { 
         this.kategori = kategori; 
     }
+    
     public void setHargaSatuan(double hargaSatuan) { 
         this.hargaSatuan = hargaSatuan; 
     }
+    
     public void setStok(int stok) { 
         this.stok = stok;
     }
 
-    public String getIdObat() { return idObat; }
-    public String getNamaObat() { return namaObat; }
-    public String getBentukSediaan() { return bentukSediaan; }
-    public String getDosis() { return dosis; }
-    public String getKategori() { return kategori; }
-    public double getHargaSatuan() { return hargaSatuan; }
-    public int getStok() { return stok; }
+    public String getIdObat() { 
+        return idObat; 
+    }
+    
+    public String getNamaObat() {
+        return namaObat;
+    }
+    
+    public String getBentukSediaan() { 
+        return bentukSediaan; 
+    }
+    
+    public String getDosis() { 
+        return dosis;
+    }
+    
+    public String getKategori() { 
+        return kategori; 
+    }
+    
+    public double getHargaSatuan() { 
+        return hargaSatuan; 
+    }
+    
+    public int getStok() {
+        return stok; 
+    }
 
     public String getInfo() {
         return idObat + " | " + namaObat + " " + dosis + " | Stok: " + stok

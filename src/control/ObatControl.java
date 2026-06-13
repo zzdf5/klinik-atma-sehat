@@ -17,26 +17,65 @@ public class ObatControl {
     private final ObatHerbalDAO herbalDAO = new ObatHerbalDAO();
     private final ObatPatenDAO patenDAO = new ObatPatenDAO();
    
-    public void insert(Obat data) { dao.insert(data); }
-    public void insertHerbal(ObatHerbal data) { herbalDAO.insert(data); }
-    public void insertPaten(ObatPaten data) { patenDAO.insert(data); }
+    public void insert(Obat data) { 
+        dao.insert(data); 
+    }
+    
+    public void insertHerbal(ObatHerbal data) { 
+        herbalDAO.insert(data); 
+    }
+    
+    public void insertPaten(ObatPaten data) { 
+        patenDAO.insert(data); 
+    }
 
-    public void update(Obat data, String id) { dao.update(data, id); }
-    public void updateHerbal(ObatHerbal data, String id) { herbalDAO.update(data, id); }
-    public void updatePaten(ObatPaten data, String id) { patenDAO.update(data, id); }
+    public void update(Obat data, String id) { 
+        dao.update(data, id); 
+    }
+    
+    public void updateHerbal(ObatHerbal data, String id) { 
+        herbalDAO.update(data, id); 
+    }
+    
+    public void updatePaten(ObatPaten data, String id) { 
+        patenDAO.update(data, id); 
+    }
 
-    public String generateIdHerbal() { return herbalDAO.generateId(); }
-    public String generateIdPaten() { return patenDAO.generateId(); }
+    public String generateIdHerbal() { 
+        return herbalDAO.generateId(); 
+    }
+    
+    public String generateIdPaten() { 
+        return patenDAO.generateId(); 
+    }
 
-    public void delete(String id) { dao.delete(id); }
+    public void delete(String id) { 
+        dao.delete(id); 
+    }
 
-    public Obat search(String id) { return dao.search(id); }
-    public ObatHerbal searchHerbal(String id) { return herbalDAO.search(id); }
-    public ObatPaten searchPaten(String id) { return patenDAO.search(id); }
+    public Obat search(String id) { 
+        return dao.search(id); 
+    }
+    
+    public ObatHerbal searchHerbal(String id) { 
+        return herbalDAO.search(id); 
+    }
+    
+    public ObatPaten searchPaten(String id) { 
+        return patenDAO.search(id); 
+    }
 
-    public List<Obat> showData() { return dao.showData(); }
-    public List<ObatHerbal> showDataHerbal() { return herbalDAO.showData(); }
-    public List<ObatPaten> showDataPaten() { return patenDAO.showData(); }
+    public List<Obat> showData() { 
+        return dao.showData(); 
+    }
+    
+    public List<ObatHerbal> showDataHerbal() { 
+        return herbalDAO.showData(); 
+    }
+    
+    public List<ObatPaten> showDataPaten() { 
+        return patenDAO.showData(); 
+    }
     
     public TableObat showTable(String target){
         List<Obat> dataObat = dao.showData();
@@ -53,9 +92,7 @@ public class ObatControl {
         List<ObatPaten> hasil = new ArrayList<>();
         String kw = keyword == null ? "" : keyword.toLowerCase();
         for (ObatPaten p : patenDAO.showData()) {
-            if (kw.isEmpty() || p.getIdObat().toLowerCase().contains(kw)
-                    || p.getNamaObat().toLowerCase().contains(kw)
-                    || p.getMerk().toLowerCase().contains(kw)) {
+            if (kw.isEmpty() || p.getIdObat().toLowerCase().contains(kw) || p.getNamaObat().toLowerCase().contains(kw) || p.getMerk().toLowerCase().contains(kw)) {
                 hasil.add(p);
             }
         }
@@ -66,9 +103,7 @@ public class ObatControl {
         List<ObatHerbal> hasil = new ArrayList<>();
         String kw = keyword == null ? "" : keyword.toLowerCase();
         for (ObatHerbal h : herbalDAO.showData()) {
-            if (kw.isEmpty() || h.getIdObat().toLowerCase().contains(kw)
-                    || h.getNamaObat().toLowerCase().contains(kw)
-                    || h.getBahanUtama().toLowerCase().contains(kw)) {
+            if (kw.isEmpty() || h.getIdObat().toLowerCase().contains(kw) || h.getNamaObat().toLowerCase().contains(kw) || h.getBahanUtama().toLowerCase().contains(kw)) {
                 hasil.add(h);
             }
         }

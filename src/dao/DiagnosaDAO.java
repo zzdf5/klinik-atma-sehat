@@ -99,7 +99,8 @@ public class DiagnosaDAO implements IDAO<Diagnosa, String> {
                             rs.getString("nama_penyakit"),
                             rs.getString("keterangan"),
                             rs.getString("tanggal_diagnosa"),
-                            rs.getBoolean("perlu_rujukan")));
+                            rs.getBoolean("perlu_rujukan")
+                    ));
                 }
             }
 
@@ -132,7 +133,8 @@ public class DiagnosaDAO implements IDAO<Diagnosa, String> {
                         rs.getString("nama_penyakit"),
                         rs.getString("keterangan"),
                         rs.getString("tanggal_diagnosa"),
-                        rs.getBoolean("perlu_rujukan"));
+                        rs.getBoolean("perlu_rujukan")
+                );
             }
 
             rs.close();
@@ -162,6 +164,7 @@ public class DiagnosaDAO implements IDAO<Diagnosa, String> {
         } catch (Exception e) {
             System.out.println("Error generateId Diagnosa: " + e);
         }
+        
         dbCon.closeConnection();
         return newId;
     }

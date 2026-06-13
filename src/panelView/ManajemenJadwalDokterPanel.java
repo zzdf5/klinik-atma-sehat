@@ -8,7 +8,13 @@ import control.DokterControl;
 import control.JadwalDokterControl;
 import control.PoliklinikControl;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import model.Dokter;
 import model.JadwalDokter;
 import model.Poliklinik;
@@ -38,31 +44,6 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         setFormEnabled(false);
         setEditDeleteEnabled(false);
         showJadwal();
-        
-        
-
-        pencarianJadwalButton.addActionListener(e -> doSearch());
-        pencarianJadwalTextField.addActionListener(e -> doSearch());
-
-        
-
-        
-
-        simpanJadwalButton.addActionListener(e -> simpanJadwal());
-
-        jadwalTable.getSelectionModel().addListSelectionListener(e -> {
-            if (e.getValueIsAdjusting()) return;
-            int row = jadwalTable.getSelectedRow();
-            if (row < 0) return;
-            selectedId = (String) jadwalTable.getValueAt(row, 0);
-            JadwalDokter j = jdc.search(selectedId);
-            if (j != null) {
-                fillForm(j);
-                setEditDeleteEnabled(true);
-                setFormEnabled(false);
-                action = null;
-            }
-        });
     }
     
     public void setFormEnabled(boolean value) {
@@ -74,6 +55,126 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         pilihPoliKlinikDropDown.setEnabled(value);
         simpanJadwalButton.setEnabled(value);
         batalJadwalButton.setEnabled(value);
+    }
+    
+        private void loadDokterComboBox() {
+        dokterList = dc.showData();
+        DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
+        m.addElement("-- Pilih Dokter --");
+        for (Dokter d : dokterList) m.addElement(d.getId() + " - " + d.getNama());
+        pilihDokterDropDown.setModel(m);
+    }
+
+    private void loadPoliklinikComboBox() {
+        poliklinikList = pkc.showData();
+        DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
+        m.addElement("-- Pilih Poliklinik --");
+        for (Poliklinik p : poliklinikList) m.addElement(p.getIdPoliklinik() + " - " + p.getNamaPoliklinik());
+        pilihPoliKlinikDropDown.setModel(m);
+    }
+
+    private void showJadwal() {
+        jadwalTable.setModel(jdc.showTable(""));
+    }
+
+    private void setEditDeleteEnabled(boolean value) {
+        barukanJadwalButton.setEnabled(value);
+        hapusJadwalButton.setEnabled(value);
+    }
+
+    private void clearForm() {
+        inputIdJadwalTextField.setText("");
+        pilihDokterDropDown.setSelectedIndex(0);
+        pilihPoliKlinikDropDown.setSelectedIndex(0);
+        inputJamMulaiTextField.setText("");
+        inputJamSelesaiTextField.setText("");
+        inputKuotaPasienTextField.setText("");
+    }
+
+    private void fillForm(JadwalDokter j) {
+        inputIdJadwalTextField.setText(j.getIdJadwal());
+        pilihDokterDropDown.setSelectedIndex(0);
+        for (int i = 1; i < pilihDokterDropDown.getItemCount(); i++) {
+            if (((String) pilihDokterDropDown.getItemAt(i)).startsWith(j.getIdDokter() + " - ")) {
+                pilihDokterDropDown.setSelectedIndex(i); break;
+            }
+        }
+        pilihPoliKlinikDropDown.setSelectedIndex(0);
+        for (int i = 1; i < pilihPoliKlinikDropDown.getItemCount(); i++) {
+            if (((String) pilihPoliKlinikDropDown.getItemAt(i)).startsWith(j.getIdPoliklinik() + " - ")) {
+                pilihPoliKlinikDropDown.setSelectedIndex(i); break;
+            }
+        }
+        inputJamMulaiTextField.setText(j.getJamMulai() != null ? j.getJamMulai() : "");
+        inputJamSelesaiTextField.setText(j.getJamSelesai() != null ? j.getJamSelesai() : "");
+        inputKuotaPasienTextField.setText(String.valueOf(j.getKuotaPasien()));
+    }
+
+    private void doSearch() {
+        String keyword = pencarianJadwalTextField.getText().trim();
+        if (keyword.isEmpty()) {
+            showJadwal(); clearForm(); selectedId = null; action = null;
+            setFormEnabled(false); setEditDeleteEnabled(false); return;
+        }
+        selectedId = null; setEditDeleteEnabled(false); setFormEnabled(false); clearForm();
+        List<Object[]> hasil = jdc.searchByKeyword(keyword);
+        if (hasil.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Jadwal tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        jadwalTable.setModel(new TableJadwalDokter(hasil));
+        if (hasil.size() == 1) {
+            JadwalDokter j = jdc.search((String) hasil.get(0)[0]);
+            if (j != null) { fillForm(j); selectedId = j.getIdJadwal(); setEditDeleteEnabled(true); }
+        }
+    }
+
+    private boolean isValidJam(String jam) {
+        if (!jam.matches("\\d{2}:\\d{2}")) return false;
+        int h = Integer.parseInt(jam.substring(0, 2));
+        int m = Integer.parseInt(jam.substring(3));
+        return h <= 23 && m <= 59;
+    }
+
+    private void setupJamFilter(JTextField field) {
+        ((AbstractDocument) field.getDocument())
+            .setDocumentFilter(new DocumentFilter() {
+                @Override
+                public void replace(DocumentFilter.FilterBypass fb,
+                        int off, int len, String str, AttributeSet a)
+                        throws BadLocationException {
+                    if (str == null) str = "";
+                    String digits = str.replaceAll("[^0-9]", "");
+                    String current = fb.getDocument().getText(0, fb.getDocument().getLength());
+                    String after = current.substring(0, off) + digits + current.substring(off + len);
+                    String raw = after.replace(":", "");
+                    if (raw.length() > 4) raw = raw.substring(0, 4);
+                    String formatted = raw.length() >= 3 ? raw.substring(0, 2) + ":" + raw.substring(2) : raw;
+                    fb.replace(0, fb.getDocument().getLength(), formatted, a);
+                }
+                @Override
+                public void insertString(DocumentFilter.FilterBypass fb,
+                        int off, String str, AttributeSet a)
+                        throws BadLocationException { replace(fb, off, 0, str, a); }
+            });
+    }
+
+    private void setupKuotaFilter() {
+        ((AbstractDocument) inputKuotaPasienTextField.getDocument())
+            .setDocumentFilter(new DocumentFilter() {
+                @Override
+                public void insertString(DocumentFilter.FilterBypass fb,
+                        int off, String str, AttributeSet a)
+                        throws BadLocationException {
+                    if (str != null && str.matches("[0-9]+")) super.insertString(fb, off, str, a);
+                }
+                @Override
+                public void replace(DocumentFilter.FilterBypass fb,
+                        int off, int len, String str, AttributeSet a)
+                        throws BadLocationException {
+                    if (str == null || str.matches("[0-9]*")) super.replace(fb, off, len, str, a);
+                }
+            });
     }
 
     /**
@@ -524,6 +625,11 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jadwalTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jadwalTableMouseClicked(evt);
+            }
+        });
         jadwalScrollPane.setViewportView(jadwalTable);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -575,132 +681,6 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_inputKuotaPasienTextFieldActionPerformed
 
     private void simpanJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanJadwalButtonActionPerformed
-        simpanJadwal();
-    }//GEN-LAST:event_simpanJadwalButtonActionPerformed
-
-    private void batalJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalJadwalButtonActionPerformed
-        action = null;
-        selectedId = null;
-        clearForm();
-        setFormEnabled(false);
-        setEditDeleteEnabled(false);
-        tambahJadwalButton.setEnabled(true);
-    }//GEN-LAST:event_batalJadwalButtonActionPerformed
-
-    private void pencarianJadwalTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianJadwalTextFieldKeyPressed
-        if(evt.getKeyChar() == '\n') doSearch();
-    }//GEN-LAST:event_pencarianJadwalTextFieldKeyPressed
-
-    private void pencarianJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianJadwalButtonActionPerformed
-        doSearch();
-    }//GEN-LAST:event_pencarianJadwalButtonActionPerformed
-
-    private void tambahJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahJadwalButtonActionPerformed
-        action = "tambah";
-        clearForm();
-        inputIdJadwalTextField.setText(jdc.generateId());
-        setFormEnabled(true);
-        setEditDeleteEnabled(false);
-    }//GEN-LAST:event_tambahJadwalButtonActionPerformed
-
-    private void barukanJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanJadwalButtonActionPerformed
-        action = "update";
-        setFormEnabled(true);
-        inputIdJadwalTextField.setEnabled(false);
-    }//GEN-LAST:event_barukanJadwalButtonActionPerformed
-
-    private void hapusJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusJadwalButtonActionPerformed
-        action = "hapus";
-        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
-
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            jdc.delete(selectedId);
-            clearForm();
-            setFormEnabled(false);
-            setEditDeleteEnabled(false);
-            showJadwal();
-            tambahJadwalButton.setEnabled(true);
-        }
-    }//GEN-LAST:event_hapusJadwalButtonActionPerformed
-
-    // -------------------------------------------------------------------------
-
-    
-    private void loadDokterComboBox() {
-        dokterList = dc.showData();
-        javax.swing.DefaultComboBoxModel<String> m = new javax.swing.DefaultComboBoxModel<>();
-        m.addElement("-- Pilih Dokter --");
-        for (Dokter d : dokterList) m.addElement(d.getId() + " - " + d.getNama());
-        pilihDokterDropDown.setModel(m);
-    }
-
-    private void loadPoliklinikComboBox() {
-        poliklinikList = pkc.showData();
-        javax.swing.DefaultComboBoxModel<String> m = new javax.swing.DefaultComboBoxModel<>();
-        m.addElement("-- Pilih Poliklinik --");
-        for (Poliklinik p : poliklinikList) m.addElement(p.getIdPoliklinik() + " - " + p.getNamaPoliklinik());
-        pilihPoliKlinikDropDown.setModel(m);
-    }
-
-    private void showJadwal() {
-        jadwalTable.setModel(jdc.showTable(""));
-    }
-
-    
-
-    private void setEditDeleteEnabled(boolean value) {
-        barukanJadwalButton.setEnabled(value);
-        hapusJadwalButton.setEnabled(value);
-    }
-
-    private void clearForm() {
-        inputIdJadwalTextField.setText("");
-        pilihDokterDropDown.setSelectedIndex(0);
-        pilihPoliKlinikDropDown.setSelectedIndex(0);
-        inputJamMulaiTextField.setText("");
-        inputJamSelesaiTextField.setText("");
-        inputKuotaPasienTextField.setText("");
-    }
-
-    private void fillForm(JadwalDokter j) {
-        inputIdJadwalTextField.setText(j.getIdJadwal());
-        pilihDokterDropDown.setSelectedIndex(0);
-        for (int i = 1; i < pilihDokterDropDown.getItemCount(); i++) {
-            if (((String) pilihDokterDropDown.getItemAt(i)).startsWith(j.getIdDokter() + " - ")) {
-                pilihDokterDropDown.setSelectedIndex(i); break;
-            }
-        }
-        pilihPoliKlinikDropDown.setSelectedIndex(0);
-        for (int i = 1; i < pilihPoliKlinikDropDown.getItemCount(); i++) {
-            if (((String) pilihPoliKlinikDropDown.getItemAt(i)).startsWith(j.getIdPoliklinik() + " - ")) {
-                pilihPoliKlinikDropDown.setSelectedIndex(i); break;
-            }
-        }
-        inputJamMulaiTextField.setText(j.getJamMulai() != null ? j.getJamMulai() : "");
-        inputJamSelesaiTextField.setText(j.getJamSelesai() != null ? j.getJamSelesai() : "");
-        inputKuotaPasienTextField.setText(String.valueOf(j.getKuotaPasien()));
-    }
-
-    private void doSearch() {
-        String keyword = pencarianJadwalTextField.getText().trim();
-        if (keyword.isEmpty()) {
-            showJadwal(); clearForm(); selectedId = null; action = null;
-            setFormEnabled(false); setEditDeleteEnabled(false); return;
-        }
-        selectedId = null; setEditDeleteEnabled(false); setFormEnabled(false); clearForm();
-        List<Object[]> hasil = jdc.searchByKeyword(keyword);
-        if (hasil.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Jadwal tidak ditemukan.", "Tidak Ditemukan", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        jadwalTable.setModel(new TableJadwalDokter(hasil));
-        if (hasil.size() == 1) {
-            JadwalDokter j = jdc.search((String) hasil.get(0)[0]);
-            if (j != null) { fillForm(j); selectedId = j.getIdJadwal(); setEditDeleteEnabled(true); }
-        }
-    }
-
-    private void simpanJadwal() {
         if (action == null) return;
         String id = inputIdJadwalTextField.getText().trim();
         String jamMulai = inputJamMulaiTextField.getText().trim();
@@ -747,55 +727,66 @@ public class ManajemenJadwalDokterPanel extends javax.swing.JPanel {
         action = null; selectedId = null;
         clearForm(); setFormEnabled(false); setEditDeleteEnabled(false);
         showJadwal();
-    }
+    }//GEN-LAST:event_simpanJadwalButtonActionPerformed
 
-    private boolean isValidJam(String jam) {
-        if (!jam.matches("\\d{2}:\\d{2}")) return false;
-        int h = Integer.parseInt(jam.substring(0, 2));
-        int m = Integer.parseInt(jam.substring(3));
-        return h <= 23 && m <= 59;
-    }
+    private void batalJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalJadwalButtonActionPerformed
+        action = null;
+        selectedId = null;
+        clearForm();
+        setFormEnabled(false);
+        setEditDeleteEnabled(false);
+        tambahJadwalButton.setEnabled(true);
+    }//GEN-LAST:event_batalJadwalButtonActionPerformed
 
-    private void setupJamFilter(javax.swing.JTextField field) {
-        ((javax.swing.text.AbstractDocument) field.getDocument())
-            .setDocumentFilter(new javax.swing.text.DocumentFilter() {
-                @Override
-                public void replace(javax.swing.text.DocumentFilter.FilterBypass fb,
-                        int off, int len, String str, javax.swing.text.AttributeSet a)
-                        throws javax.swing.text.BadLocationException {
-                    if (str == null) str = "";
-                    String digits = str.replaceAll("[^0-9]", "");
-                    String current = fb.getDocument().getText(0, fb.getDocument().getLength());
-                    String after = current.substring(0, off) + digits + current.substring(off + len);
-                    String raw = after.replace(":", "");
-                    if (raw.length() > 4) raw = raw.substring(0, 4);
-                    String formatted = raw.length() >= 3 ? raw.substring(0, 2) + ":" + raw.substring(2) : raw;
-                    fb.replace(0, fb.getDocument().getLength(), formatted, a);
-                }
-                @Override
-                public void insertString(javax.swing.text.DocumentFilter.FilterBypass fb,
-                        int off, String str, javax.swing.text.AttributeSet a)
-                        throws javax.swing.text.BadLocationException { replace(fb, off, 0, str, a); }
-            });
-    }
+    private void pencarianJadwalTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianJadwalTextFieldKeyPressed
+        if(evt.getKeyChar() == '\n') doSearch();
+    }//GEN-LAST:event_pencarianJadwalTextFieldKeyPressed
 
-    private void setupKuotaFilter() {
-        ((javax.swing.text.AbstractDocument) inputKuotaPasienTextField.getDocument())
-            .setDocumentFilter(new javax.swing.text.DocumentFilter() {
-                @Override
-                public void insertString(javax.swing.text.DocumentFilter.FilterBypass fb,
-                        int off, String str, javax.swing.text.AttributeSet a)
-                        throws javax.swing.text.BadLocationException {
-                    if (str != null && str.matches("[0-9]+")) super.insertString(fb, off, str, a);
-                }
-                @Override
-                public void replace(javax.swing.text.DocumentFilter.FilterBypass fb,
-                        int off, int len, String str, javax.swing.text.AttributeSet a)
-                        throws javax.swing.text.BadLocationException {
-                    if (str == null || str.matches("[0-9]*")) super.replace(fb, off, len, str, a);
-                }
-            });
-    }
+    private void pencarianJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencarianJadwalButtonActionPerformed
+        doSearch();
+    }//GEN-LAST:event_pencarianJadwalButtonActionPerformed
+
+    private void tambahJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahJadwalButtonActionPerformed
+        action = "tambah";
+        clearForm();
+        inputIdJadwalTextField.setText(jdc.generateId());
+        setFormEnabled(true);
+        setEditDeleteEnabled(false);
+    }//GEN-LAST:event_tambahJadwalButtonActionPerformed
+
+    private void barukanJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barukanJadwalButtonActionPerformed
+        action = "update";
+        setFormEnabled(true);
+        inputIdJadwalTextField.setEnabled(false);
+    }//GEN-LAST:event_barukanJadwalButtonActionPerformed
+
+    private void hapusJadwalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusJadwalButtonActionPerformed
+        action = "hapus";
+        int confirm = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            jdc.delete(selectedId);
+            clearForm();
+            setFormEnabled(false);
+            setEditDeleteEnabled(false);
+            showJadwal();
+            tambahJadwalButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_hapusJadwalButtonActionPerformed
+
+    private void jadwalTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jadwalTableMouseClicked
+        int row = jadwalTable.getSelectedRow();
+        if (row < 0) return;
+        selectedId = (String) jadwalTable.getValueAt(row, 0);
+        JadwalDokter j = jdc.search(selectedId);
+        if (j != null) {
+            fillForm(j);
+            setEditDeleteEnabled(true);
+            setFormEnabled(false);
+            action = null;
+        }
+    }//GEN-LAST:event_jadwalTableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton barukanJadwalButton;

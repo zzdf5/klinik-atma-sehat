@@ -93,7 +93,9 @@ public class PoliklinikDAO implements IDAO<Poliklinik, String> {
                             rs.getString("id_poliklinik"),
                             rs.getString("nama_poliklinik"),
                             rs.getString("lokasi_ruangan"),
-                            rs.getString("jam_operasional")));
+                            rs.getString("jam_operasional")
+                        )
+                    );
                 }
             }
 
@@ -126,7 +128,9 @@ public class PoliklinikDAO implements IDAO<Poliklinik, String> {
                             rs.getString("id_poliklinik"),
                             rs.getString("nama_poliklinik"),
                             rs.getString("lokasi_ruangan"),
-                            rs.getString("jam_operasional")));
+                            rs.getString("jam_operasional")
+                        )
+                    );
                 }
             }
 
@@ -174,10 +178,11 @@ public class PoliklinikDAO implements IDAO<Poliklinik, String> {
 
             if (rs != null && rs.next()) {
                 poliklinik = new Poliklinik(
-                        rs.getString("id_poliklinik"),
-                        rs.getString("nama_poliklinik"),
-                        rs.getString("lokasi_ruangan"),
-                        rs.getString("jam_operasional"));
+                    rs.getString("id_poliklinik"),
+                    rs.getString("nama_poliklinik"),
+                    rs.getString("lokasi_ruangan"),
+                    rs.getString("jam_operasional")
+                );
             }
 
             rs.close();

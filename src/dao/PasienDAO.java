@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Calendar;
 import model.Pasien;
 
 public class PasienDAO implements IDAO<Pasien, String> {
@@ -66,52 +67,60 @@ public class PasienDAO implements IDAO<Pasien, String> {
     @Override
     public void delete(String id) {
         con = dbCon.makeConnection();
+        String sqlGetRm = "SELECT nomor_rekam_medis FROM pasien WHERE id_pasien=?";
+        String[] sqlRmDeletes = {
+            "DELETE tg FROM tagihan tg "
+                + "JOIN kunjungan k ON tg.id_kunjungan = k.id_kunjungan "
+                + "WHERE k.nomor_rekam_medis=?",
+            "DELETE FROM rujukan WHERE nomor_rekam_medis=?",
+            "DELETE FROM kunjungan WHERE nomor_rekam_medis=?",
+            "DELETE FROM resep WHERE nomor_rekam_medis=?",
+            "DELETE FROM rekam_medis WHERE nomor_rekam_medis=?"
+        };
+
+        String sqlDeleteAntrian = "DELETE FROM antrian WHERE id_pasien=?";
+
+        String sqlDeletePasien = "DELETE FROM pasien WHERE id_pasien=?";
+
         try {
-            // 1. Ambil nomor_rekam_medis milik pasien ini
-            PreparedStatement psGetRm = con.prepareStatement(
-                "SELECT nomor_rekam_medis FROM pasien WHERE id_pasien=?");
-            psGetRm.setString(1, id);
-            ResultSet rsRm = psGetRm.executeQuery();
-            String noRm = rsRm.next() ? rsRm.getString("nomor_rekam_medis") : null;
-            rsRm.close(); psGetRm.close();
+            String noRm = null;
 
-            if (noRm != null) {
-                // 2. Hapus tagihan (lewat kunjungan)
-                exec("DELETE tg FROM tagihan tg " +
-                     "JOIN kunjungan k ON tg.id_kunjungan = k.id_kunjungan " +
-                     "WHERE k.nomor_rekam_medis=?", noRm);
-
-                // 3. Hapus rujukan (referensi kunjungan & rekam_medis)
-                exec("DELETE FROM rujukan WHERE nomor_rekam_medis=?", noRm);
-
-                // 4. Hapus kunjungan
-                exec("DELETE FROM kunjungan WHERE nomor_rekam_medis=?", noRm);
-
-                // 5. Hapus resep (resep_detail cascade otomatis)
-                exec("DELETE FROM resep WHERE nomor_rekam_medis=?", noRm);
-
-                // 6. Hapus rekam_medis (alergi & riwayat cascade otomatis)
-                exec("DELETE FROM rekam_medis WHERE nomor_rekam_medis=?", noRm);
+            PreparedStatement ps = con.prepareStatement(sqlGetRm);
+            ps.setString(1, id);
+            
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                noRm = rs.getString("nomor_rekam_medis");
             }
 
-            // 7. Hapus antrian
-            exec("DELETE FROM antrian WHERE id_pasien=?", id);
+            rs.close();
+            ps.close();
 
-            // 8. Hapus pasien
-            exec("DELETE FROM pasien WHERE id_pasien=?", id);
+            if (noRm != null) {
+                for (String sql : sqlRmDeletes) {
+                    ps = con.prepareStatement(sql);
+                    ps.setString(1, noRm);
+                    ps.executeUpdate();
+                    ps.close();
+                }
+            }
+
+            ps = con.prepareStatement(sqlDeleteAntrian);
+            ps.setString(1, id);
+            ps.executeUpdate();
+            ps.close();
+
+            ps = con.prepareStatement(sqlDeletePasien);
+            ps.setString(1, id);
+            ps.executeUpdate();
+            ps.close();
 
             System.out.println("Pasien berhasil dihapus.");
         } catch (Exception e) {
-            System.out.println("Error delete Pasien: " + e);
+            System.out.println("Error delete Pasien: " + e.getMessage());
         }
-        dbCon.closeConnection();
-    }
 
-    private void exec(String sql, String param) throws Exception {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, param);
-        ps.executeUpdate();
-        ps.close();
+        dbCon.closeConnection();
     }
 
     @Override
@@ -134,7 +143,9 @@ public class PasienDAO implements IDAO<Pasien, String> {
                             rs.getString("tanggal_lahir"),
                             rs.getString("jenis_kelamin"),
                             rs.getString("no_telepon"),
-                            rs.getString("alamat")));
+                            rs.getString("alamat")
+                        )
+                    );
                 }
             }
 
@@ -171,7 +182,7 @@ public class PasienDAO implements IDAO<Pasien, String> {
 
     public String generateNomorRekamMedis() {
         con = dbCon.makeConnection();
-        int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        int year = Calendar.getInstance().get(Calendar.YEAR);
         String newNorm = String.format("RM-%d-001", year);
         String sql = "SELECT MAX(CAST(SUBSTRING_INDEX(nomor_rekam_medis, '-', -1) AS UNSIGNED)) AS max_num FROM rekam_medis";
         try {
@@ -193,7 +204,6 @@ public class PasienDAO implements IDAO<Pasien, String> {
     @Override
     public Pasien search(String id) {
         con = dbCon.makeConnection();
-
         String sql = "SELECT * FROM pasien WHERE id_pasien=?";
         Pasien pasien = null;
 
@@ -204,13 +214,14 @@ public class PasienDAO implements IDAO<Pasien, String> {
 
             if (rs != null && rs.next()) {
                 pasien = new Pasien(
-                        rs.getString("id_pasien"),
-                        rs.getString("nomor_rekam_medis"),
-                        rs.getString("nama"),
-                        rs.getString("tanggal_lahir"),
-                        rs.getString("jenis_kelamin"),
-                        rs.getString("no_telepon"),
-                        rs.getString("alamat"));
+                    rs.getString("id_pasien"),
+                    rs.getString("nomor_rekam_medis"),
+                    rs.getString("nama"),
+                    rs.getString("tanggal_lahir"),
+                    rs.getString("jenis_kelamin"),
+                    rs.getString("no_telepon"),
+                    rs.getString("alamat")
+                );
             }
 
             rs.close();
@@ -233,13 +244,15 @@ public class PasienDAO implements IDAO<Pasien, String> {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Pasien(
-                    rs.getString("id_pasien"),
-                    rs.getString("nomor_rekam_medis"),
-                    rs.getString("nama"),
-                    rs.getString("tanggal_lahir"),
-                    rs.getString("jenis_kelamin"),
-                    rs.getString("no_telepon"),
-                    rs.getString("alamat")));
+                        rs.getString("id_pasien"),
+                        rs.getString("nomor_rekam_medis"),
+                        rs.getString("nama"),
+                        rs.getString("tanggal_lahir"),
+                        rs.getString("jenis_kelamin"),
+                        rs.getString("no_telepon"),
+                        rs.getString("alamat")
+                    )
+                );
             }
             rs.close();
             ps.close();
@@ -264,24 +277,23 @@ public class PasienDAO implements IDAO<Pasien, String> {
 
             if (rs != null && rs.next()) {
                 pasien = new Pasien(
-                        rs.getString("id_pasien"),
-                        rs.getString("nomor_rekam_medis"),
-                        rs.getString("nama"),
-                        rs.getString("tanggal_lahir"),
-                        rs.getString("jenis_kelamin"),
-                        rs.getString("no_telepon"),
-                        rs.getString("alamat"));
+                    rs.getString("id_pasien"),
+                    rs.getString("nomor_rekam_medis"),
+                    rs.getString("nama"),
+                    rs.getString("tanggal_lahir"),
+                    rs.getString("jenis_kelamin"),
+                    rs.getString("no_telepon"),
+                    rs.getString("alamat")
+                );
             }
 
             rs.close();
             ps.close();
-
         } catch (Exception e) {
             System.out.println("Error searchByNomorRM Pasien: " + e);
         }
 
         dbCon.closeConnection();
-
         return pasien;
     }
 }

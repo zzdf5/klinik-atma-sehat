@@ -10,6 +10,7 @@ import java.util.List;
 import model.Obat;
 import model.ObatHerbal;
 import model.ObatPaten;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 public class ObatDAO implements IDAO<Obat, String> {
     private DBConnection dbCon = new DBConnection();
@@ -18,8 +19,7 @@ public class ObatDAO implements IDAO<Obat, String> {
     @Override
     public void insert(Obat data) {
         con = dbCon.makeConnection();
-
-        // KOREKSI: Menghilangkan jenis_obat dan 'UMUM' agar sesuai dengan tabel XAMPP
+        
         String sql = "INSERT INTO obat (id_obat, nama_obat, bentuk_sediaan, dosis, kategori, harga_satuan, stok) VALUES (?,?,?,?,?,?,?)";
 
         try {
@@ -78,10 +78,9 @@ public class ObatDAO implements IDAO<Obat, String> {
             ps.executeUpdate();
             ps.close();
             System.out.println("Obat berhasil dihapus.");
-        } catch (java.sql.SQLIntegrityConstraintViolationException e) {
+        } catch (SQLIntegrityConstraintViolationException e) {
             dbCon.closeConnection();
-            throw new exception.DataMasihDigunakanException(
-                "Obat ini tidak dapat dihapus karena masih digunakan pada data resep.");
+            throw new exception.DataMasihDigunakanException("Obat ini tidak dapat dihapus karena masih digunakan pada data resep.");
         } catch (Exception e) {
             System.out.println("Error delete Obat: " + e);
         }
@@ -93,7 +92,6 @@ public class ObatDAO implements IDAO<Obat, String> {
     public List<Obat> showData() {
         con = dbCon.makeConnection();
 
-        // KOREKSI: Menggunakan LEFT JOIN agar bisa mengambil data Semua Kategori (Herbal & Paten) sekaligus atribut khususnya
         String sql = "SELECT o.*, h.bahan_utama, p.merk FROM obat o "
                    + "LEFT JOIN obat_herbal h ON o.id_obat = h.id_obat "
                    + "LEFT JOIN obat_paten p ON o.id_obat = p.id_obat";
@@ -108,7 +106,6 @@ public class ObatDAO implements IDAO<Obat, String> {
                 while (rs.next()) {
                     String kategori = rs.getString("kategori");
                     
-                    // Polimorfisme: Memasukkan ke list sesuai dengan instansiasi kelas anak masing-masing
                     if (kategori.equalsIgnoreCase("Obat Herbal")) {
                         list.add(new ObatHerbal(
                                 rs.getString("bahan_utama"),
@@ -118,7 +115,9 @@ public class ObatDAO implements IDAO<Obat, String> {
                                 rs.getString("dosis"),
                                 kategori,
                                 rs.getDouble("harga_satuan"),
-                                rs.getInt("stok")));
+                                rs.getInt("stok")
+                            )
+                        );
                     } else {
                         list.add(new ObatPaten(
                                 rs.getString("merk"),
@@ -128,7 +127,9 @@ public class ObatDAO implements IDAO<Obat, String> {
                                 rs.getString("dosis"),
                                 kategori,
                                 rs.getDouble("harga_satuan"),
-                                rs.getInt("stok")));
+                                rs.getInt("stok")
+                            )
+                        );
                     }
                 }
             }
@@ -147,7 +148,6 @@ public class ObatDAO implements IDAO<Obat, String> {
     public Obat search(String id) {
         con = dbCon.makeConnection();
 
-        // KOREKSI: Menggunakan LEFT JOIN agar saat data dicari, dia mengembalikan instance objek anak asli yang utuh
         String sql = "SELECT o.*, h.bahan_utama, p.merk FROM obat o "
                    + "LEFT JOIN obat_herbal h ON o.id_obat = h.id_obat "
                    + "LEFT JOIN obat_paten p ON o.id_obat = p.id_obat "
@@ -172,7 +172,8 @@ public class ObatDAO implements IDAO<Obat, String> {
                             rs.getString("dosis"),
                             kategori,
                             rs.getDouble("harga_satuan"),
-                            rs.getInt("stok"));
+                            rs.getInt("stok")
+                    );
                 } else {
                     obat = new ObatPaten(
                             rs.getString("merk"),
@@ -182,7 +183,8 @@ public class ObatDAO implements IDAO<Obat, String> {
                             rs.getString("dosis"),
                             kategori,
                             rs.getDouble("harga_satuan"),
-                            rs.getInt("stok"));
+                            rs.getInt("stok")
+                    );
                 }
             }
 

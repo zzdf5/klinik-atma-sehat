@@ -99,7 +99,8 @@ public class JadwalDokterDAO implements IDAO<JadwalDokter, String> {
                             rs.getString("id_poliklinik"),
                             rs.getString("jam_mulai"),
                             rs.getString("jam_selesai"),
-                            rs.getInt("kuota_pasien")));
+                            rs.getInt("kuota_pasien"))
+                    );
                 }
             }
 
@@ -126,7 +127,9 @@ public class JadwalDokterDAO implements IDAO<JadwalDokter, String> {
                 newId = String.format("JDW%03d", num);
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error generateId JadwalDokter: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error generateId JadwalDokter: " + e); 
+        }
         dbCon.closeConnection();
         return newId;
     }
@@ -152,7 +155,9 @@ public class JadwalDokterDAO implements IDAO<JadwalDokter, String> {
                 });
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error showDataWithNames JadwalDokter: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error showDataWithNames JadwalDokter: " + e); 
+        }
         dbCon.closeConnection();
         return list;
     }
@@ -181,12 +186,13 @@ public class JadwalDokterDAO implements IDAO<JadwalDokter, String> {
                 });
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error searchByKeyword JadwalDokter: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error searchByKeyword JadwalDokter: " + e); 
+        }
         dbCon.closeConnection();
         return list;
     }
 
-    // Dipakai di panel kunjungan untuk isi dropdown jam berdasarkan dokter yang dipilih
     public List<Object[]> searchByDokterWithNames(String idDokter) {
         con = dbCon.makeConnection();
         String sql = "SELECT j.id_jadwal, j.jam_mulai, j.jam_selesai, "
@@ -208,7 +214,9 @@ public class JadwalDokterDAO implements IDAO<JadwalDokter, String> {
                 });
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error searchByDokterWithNames: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error searchByDokterWithNames: " + e); 
+        }
         dbCon.closeConnection();
         return list;
     }
@@ -232,7 +240,8 @@ public class JadwalDokterDAO implements IDAO<JadwalDokter, String> {
                         rs.getString("id_poliklinik"),
                         rs.getString("jam_mulai"),
                         rs.getString("jam_selesai"),
-                        rs.getInt("kuota_pasien"));
+                        rs.getInt("kuota_pasien")
+                );
             }
 
             rs.close();

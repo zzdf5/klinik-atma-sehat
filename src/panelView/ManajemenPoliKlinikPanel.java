@@ -4,8 +4,10 @@
  */
 package panelView;
 import control.PoliklinikControl;
-import model.Poliklinik;
 import exception.InputKosongException;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import model.Poliklinik;
 
 
 public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
@@ -50,7 +52,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
     public void doSearchPoli() {
         String keyword = pencarianPoliKlinikTextField.getText().trim();
-        javax.swing.table.TableModel model = poliControl.showTable(keyword);
+        TableModel model = poliControl.showTable(keyword);
         PoliKlinikTable.setModel(model);
         setComponentsPoli(false);
         setEditDeleteButtonPoli(false);
@@ -70,12 +72,12 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         }
     }
 
-    public void inputKosongException() throws Exception {
+    public void inputKosongException() throws InputKosongException {
         if(inputIdPoliKlinikTextField.getText().isEmpty() ||
            inputNamaPoliKlinikTextField.getText().isEmpty() ||
            inputLokasiRuanganTextField.getText().isEmpty() ||
            inputJamOperasionalTextField.getText().isEmpty()) {
-            throw new Exception("Seluruh Data Input Tidak Boleh Kosong!");
+            throw new InputKosongException();
         }
     }
 
@@ -503,23 +505,22 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
     private void simpanPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanPoliKlinikButtonActionPerformed
         try {
-            // Pengecekan input kosong
+            
             inputKosongException();
 
-            // Memunculkan Dialog Konfirmasi (Yes/No/Cancel)
-            int confirm = javax.swing.JOptionPane.showConfirmDialog(
+            int confirm = JOptionPane.showConfirmDialog(
                 this, 
                 "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Poli Klinik ini?", 
                 "Konfirmasi Simpan", 
-                javax.swing.JOptionPane.YES_NO_CANCEL_OPTION
+                JOptionPane.YES_NO_CANCEL_OPTION
             );
             
-            if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+            if (confirm != JOptionPane.YES_OPTION) {
                 return; 
             }
 
             
-            model.Poliklinik poli = new model.Poliklinik(
+            Poliklinik poli = new Poliklinik(
                 inputIdPoliKlinikTextField.getText(),
                 inputNamaPoliKlinikTextField.getText(),
                 inputLokasiRuanganTextField.getText(),
@@ -540,8 +541,10 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
             selectedId = null;
             action = null;
 
+        } catch(InputKosongException e) {
+            JOptionPane.showMessageDialog(this, "Seluruh Data Input Tidak Boleh Kosong!");
         } catch(Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_simpanPoliKlinikButtonActionPerformed
 
@@ -549,7 +552,7 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
         int clickedRow = PoliKlinikTable.getSelectedRow();
         if(clickedRow < 0) return;
 
-        javax.swing.table.TableModel tableModel = PoliKlinikTable.getModel();
+        TableModel tableModel = PoliKlinikTable.getModel();
 
         setComponentsPoli(false); 
         setEditDeleteButtonPoli(true);
@@ -587,9 +590,9 @@ public class ManajemenPoliKlinikPanel extends javax.swing.JPanel {
 
     private void hapusPoliKlinikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusPoliKlinikButtonActionPerformed
         action = "hapus";
-        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
 
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+        if (confirm == JOptionPane.YES_OPTION) {
             poliControl.delete(selectedId);
             clearTextPoli();
             setComponentsPoli(false);

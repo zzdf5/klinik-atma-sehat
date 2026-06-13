@@ -17,7 +17,6 @@ public class ObatHerbalDAO implements IDAO<ObatHerbal, String> {
     public void insert(ObatHerbal data) {
         con = dbCon.makeConnection();
 
-        // KOREKSI: Menghapus jenis_obat dan 'HERBAL' agar sesuai dengan tabel mysql
         String sqlObat = "INSERT INTO obat (id_obat, nama_obat, bentuk_sediaan, dosis, kategori, harga_satuan, stok) VALUES (?,?,?,?,?,?,?)";
         String sqlHerbal = "INSERT INTO obat_herbal (id_obat, bahan_utama) VALUES (?,?)";
 
@@ -84,8 +83,6 @@ public class ObatHerbalDAO implements IDAO<ObatHerbal, String> {
     public void delete(String id) {
         con = dbCon.makeConnection();
 
-        // Cukup delete dari tabel induk 'obat', karena foreign key di mysql 
-        // sudah kita pasang ON DELETE CASCADE, tabel obat_herbal otomatis ikut terhapus
         String sql = "DELETE FROM obat WHERE id_obat=?";
 
         try {
@@ -122,7 +119,9 @@ public class ObatHerbalDAO implements IDAO<ObatHerbal, String> {
                             rs.getString("dosis"),
                             rs.getString("kategori"),
                             rs.getDouble("harga_satuan"),
-                            rs.getInt("stok")));
+                            rs.getInt("stok")
+                        )
+                    );
                 }
             }
 
@@ -170,14 +169,15 @@ public class ObatHerbalDAO implements IDAO<ObatHerbal, String> {
 
             if (rs != null && rs.next()) {
                 obat = new ObatHerbal(
-                            rs.getString("bahan_utama"),
-                            rs.getString("id_obat"),
-                            rs.getString("nama_obat"),
-                            rs.getString("bentuk_sediaan"),
-                            rs.getString("dosis"),
-                            rs.getString("kategori"),
-                            rs.getDouble("harga_satuan"),
-                            rs.getInt("stok"));
+                    rs.getString("bahan_utama"),
+                    rs.getString("id_obat"),
+                    rs.getString("nama_obat"),
+                    rs.getString("bentuk_sediaan"),
+                    rs.getString("dosis"),
+                    rs.getString("kategori"),
+                    rs.getDouble("harga_satuan"),
+                    rs.getInt("stok")
+                );
             }
 
             rs.close();

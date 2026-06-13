@@ -1,13 +1,9 @@
 package model;
 
 public class Poliklinik {
-    private String idPoliklinik;
-    private String namaPoliklinik;
-    private String lokasiRuangan;
-    private String jamOperasional;
+    private String idPoliklinik, namaPoliklinik, lokasiRuangan, jamOperasional;
 
-    public Poliklinik(String idPoliklinik, String namaPoliklinik,
-                      String lokasiRuangan, String jamOperasional) {
+    public Poliklinik(String idPoliklinik, String namaPoliklinik, String lokasiRuangan, String jamOperasional) {
         this.idPoliklinik = idPoliklinik;
         this.namaPoliklinik = namaPoliklinik;
         this.lokasiRuangan = lokasiRuangan;
@@ -37,9 +33,11 @@ public class Poliklinik {
     public String getNamaPoliklinik() { 
         return namaPoliklinik; 
     }
+    
     public String getLokasiRuangan() { 
         return lokasiRuangan; 
     }
+    
     public String getJamOperasional() { 
         return jamOperasional; 
     }

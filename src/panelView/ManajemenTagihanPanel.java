@@ -5,10 +5,13 @@
 package panelView;
 
 import control.TagihanControl;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import model.Tagihan;
@@ -29,7 +32,6 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         loadTagihanTable(tc.showDataWithNames());
         setFormEnabled(false);
 
-        // Field ini selalu read-only — diisi otomatis dari data tagihan
         inputIdTagihanTextField.setEnabled(false);
         inputIdKunjunganTextField.setEnabled(false);
         inputTanggalTagihanDateChooser.setEnabled(false);
@@ -37,12 +39,12 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
 
 
     private void setupTables() {
-        TagihanTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        TagihanTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         itemTagihanTable.setModel(new TableItemTagihan(new ArrayList<>()));
     }
 
     private void setupComboBox() {
-        inputMetodePembayaranComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
+        inputMetodePembayaranComboBox.setModel(new DefaultComboBoxModel<>(
             new String[]{"TUNAI", "BPJS", "TRANSFER", "DEBIT"}
         ));
         ButtonGroup statusGroup = new ButtonGroup();
@@ -52,45 +54,18 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     }
 
     private void setupListeners() {
-        pencarianTagihanButton.addActionListener(e -> doSearch());
-        pencarianTagihanTextField.addActionListener(e -> doSearch());
-
-        TagihanTable.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int row = TagihanTable.getSelectedRow();
-                if (row >= 0) {
-                    String id = (String) TagihanTable.getValueAt(row, 0);
-                    selectedTagihan = tc.search(id);
-                    if (selectedTagihan != null) {
-                        fillForm(selectedTagihan);
-                        loadItemTable(selectedTagihan);
-                        setFormEnabled(true);
-                        if (selectedTagihan.getStatus() == Tagihan.Status.LUNAS) {
-                            lunasRadioButton.setEnabled(false);
-                            belumLunasRadioButton.setEnabled(false);
-                            inputMetodePembayaranComboBox.setEnabled(false);
-                            inputJumlahBayarTextField.setEnabled(false);
-                            simpanButton.setEnabled(false);
-                        }
-                    }
-                }
-            }
-        });
-
         inputJumlahBayarTextField.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { hitungKembalian(); }
-            public void removeUpdate(DocumentEvent e) { hitungKembalian(); }
-            public void changedUpdate(DocumentEvent e) { hitungKembalian(); }
-        });
-
-        lunasRadioButton.addActionListener(e -> {
-            inputMetodePembayaranComboBox.setEnabled(true);
-            inputJumlahBayarTextField.setEnabled(true);
-        });
-        belumLunasRadioButton.addActionListener(e -> {
-            inputMetodePembayaranComboBox.setEnabled(false);
-            inputJumlahBayarTextField.setEnabled(false);
-            kembalianTextField.setText("");
+            public void insertUpdate(DocumentEvent e) { 
+                hitungKembalian(); 
+            }
+            
+            public void removeUpdate(DocumentEvent e) {
+                hitungKembalian(); 
+            }
+            
+            public void changedUpdate(DocumentEvent e) { 
+                hitungKembalian(); 
+            }
         });
     }
 
@@ -132,7 +107,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         inputIdTagihanTextField.setText(tagihan.getIdTagihan());
         inputIdKunjunganTextField.setText(tagihan.getIdKunjungan());
         try {
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             inputTanggalTagihanDateChooser.setDate(sdf.parse(tagihan.getTanggalTagihan()));
         } catch (Exception ex) {
             inputTanggalTagihanDateChooser.setDate(null);
@@ -484,6 +459,11 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
         });
 
         belumLunasRadioButton.setText("BELUM LUNAS");
+        belumLunasRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                belumLunasRadioButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout inputStatusBayarPanelLayout = new javax.swing.GroupLayout(inputStatusBayarPanel);
         inputStatusBayarPanel.setLayout(inputStatusBayarPanelLayout);
@@ -616,7 +596,7 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(inputRingkasanTagihanLabel)
                 .addGap(1, 1, 1)
-                .addComponent(formInputRingkasanTagihanPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 165, Short.MAX_VALUE)
+                .addComponent(formInputRingkasanTagihanPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -631,6 +611,11 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        TagihanTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TagihanTableMouseClicked(evt);
+            }
+        });
         TagihanScrollPane.setViewportView(TagihanTable);
 
         pencarianTagihanPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -745,7 +730,34 @@ public class ManajemenTagihanPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lunasRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lunasRadioButtonActionPerformed
+        inputMetodePembayaranComboBox.setEnabled(true);
+        inputJumlahBayarTextField.setEnabled(true);
     }//GEN-LAST:event_lunasRadioButtonActionPerformed
+
+    private void belumLunasRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_belumLunasRadioButtonActionPerformed
+        inputMetodePembayaranComboBox.setEnabled(false);
+        inputJumlahBayarTextField.setEnabled(false);
+        kembalianTextField.setText("");
+    }//GEN-LAST:event_belumLunasRadioButtonActionPerformed
+
+    private void TagihanTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TagihanTableMouseClicked
+        int row = TagihanTable.getSelectedRow();
+        if (row < 0) return;
+        String id = (String) TagihanTable.getValueAt(row, 0);
+        selectedTagihan = tc.search(id);
+        if (selectedTagihan != null) {
+            fillForm(selectedTagihan);
+            loadItemTable(selectedTagihan);
+            setFormEnabled(true);
+            if (selectedTagihan.getStatus() == Tagihan.Status.LUNAS) {
+                lunasRadioButton.setEnabled(false);
+                belumLunasRadioButton.setEnabled(false);
+                inputMetodePembayaranComboBox.setEnabled(false);
+                inputJumlahBayarTextField.setEnabled(false);
+                simpanButton.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_TagihanTableMouseClicked
 
     private void simpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanButtonActionPerformed
         if (selectedTagihan == null) {

@@ -6,9 +6,15 @@ package panelView;
 
 import control.AntrianControl;
 import control.PoliklinikControl;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.table.TableModel;
 import model.Poliklinik;
 import table.TableAntrian;
@@ -20,30 +26,27 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
     private final PoliklinikControl pkc = new PoliklinikControl();
     private List<Poliklinik> poliklinikList;
     private List<Object[]> todayAntrian;
-    private final String TODAY = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+    private final String TODAY = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
     public ManajemenAntrianPanel() {
         initComponents();
         setOpaque(false);
 
-        // Ukuran kartu dan kotak biru konstan, tidak ikut teks
-        java.awt.Dimension cardSize = new java.awt.Dimension(371, 354);
-        java.awt.Dimension blueSize = new java.awt.Dimension(344, 93);
-        for (javax.swing.JPanel p : new javax.swing.JPanel[]{panelAntrian1, panelAntrian2, panelAntrian3}) {
+        Dimension cardSize = new Dimension(371, 354);
+        Dimension blueSize = new Dimension(344, 93);
+        for (JPanel p : new JPanel[]{panelAntrian1, panelAntrian2, panelAntrian3}) {
             p.setPreferredSize(cardSize); p.setMinimumSize(cardSize); p.setMaximumSize(cardSize);
         }
-        for (javax.swing.JPanel p : new javax.swing.JPanel[]{kodeAntrianPanel1, kodeAntrianPanel2, kodeAntrianPanel3}) {
+        for (JPanel p : new JPanel[]{kodeAntrianPanel1, kodeAntrianPanel2, kodeAntrianPanel3}) {
             p.setPreferredSize(blueSize); p.setMinimumSize(blueSize); p.setMaximumSize(blueSize);
         }
 
-        // Kotak kecil kiri & kanan tiap kartu
-        java.awt.Dimension smallSize = new java.awt.Dimension(167, 71);
-        for (javax.swing.JPanel p : new javax.swing.JPanel[]{
+        Dimension smallSize = new Dimension(167, 71);
+        for (JPanel p : new JPanel[]{
                 namaDokterPanel1, statusAntrianPanel1, namaDokterPanel2, statusAntrianPanel2, namaDokterPanel3, statusAntrianPanel3}) {
             p.setPreferredSize(smallSize); p.setMinimumSize(smallSize); p.setMaximumSize(smallSize);
         }
 
-        // Ganti layout kotak biru & kotak kecil ke BorderLayout agar label tepat di tengah
         centerLabelInPanel(kodeAntrianPanel1,  kodeAntrianLabel1);
         centerLabelInPanel(kodeAntrianPanel2,  kodeAntrianLabel2);
         centerLabelInPanel(kodeAntrianPanel3, kodeAntrianLabel3);
@@ -75,7 +78,7 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
 
     private void loadPoliklinikCombo() {
         poliklinikList = pkc.showData();
-        javax.swing.DefaultComboBoxModel<String> m = new javax.swing.DefaultComboBoxModel<>();
+        DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
         m.addElement("-- Semua Poliklinik --");
         for (Poliklinik p : poliklinikList) m.addElement(p.getIdPoliklinik() + " - " + p.getNamaPoliklinik());
         pilihPoliklinikComboBox.setModel(m);
@@ -113,10 +116,10 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         fillCardByStatus(2, menunggu.size() > 1 ? menunggu.get(1) : null);
     }
 
-    private void centerLabelInPanel(javax.swing.JPanel panel, javax.swing.JLabel label) {
+    private void centerLabelInPanel(JPanel panel, JLabel label) {
         panel.removeAll();
-        panel.setLayout(new java.awt.GridBagLayout());
-        label.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        panel.setLayout(new GridBagLayout());
+        label.setHorizontalAlignment(JLabel.CENTER);
         panel.add(label);
     }
 
@@ -125,7 +128,6 @@ public class ManajemenAntrianPanel extends javax.swing.JPanel {
         return text.substring(0, max - 2) + "..";
     }
 
-    // row: [id_antrian, nomor_urut, nama_pasien, nama_dokter, nama_poliklinik, tanggal, jenis, status]
     private void fillCardByStatus(int idx, Object[] row) {
         String namaPasien = trunc(row != null ? String.valueOf(row[2]) : "-", 20);
         String namaPoli   = trunc(row != null ? String.valueOf(row[4]) : "-", 22);

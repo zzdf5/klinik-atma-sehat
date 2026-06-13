@@ -17,7 +17,6 @@ public class ObatPatenDAO implements IDAO<ObatPaten, String> {
     public void insert(ObatPaten data) {
         con = dbCon.makeConnection();
 
-        // KOREKSI: Menghapus jenis_obat dan 'PATEN' agar sesuai dengan tabel mysql
         String sqlObat = "INSERT INTO obat (id_obat, nama_obat, bentuk_sediaan, dosis, kategori, harga_satuan, stok) VALUES (?,?,?,?,?,?,?)";
         String sqlPaten = "INSERT INTO obat_paten (id_obat, merk) VALUES (?,?)";
 
@@ -84,7 +83,6 @@ public class ObatPatenDAO implements IDAO<ObatPaten, String> {
     public void delete(String id) {
         con = dbCon.makeConnection();
 
-        // Cukup delete dari tabel induk 'obat', tabel obat_paten otomatis ikut terhapus karena CASCADE
         String sql = "DELETE FROM obat WHERE id_obat=?";
 
         try {
@@ -121,7 +119,9 @@ public class ObatPatenDAO implements IDAO<ObatPaten, String> {
                             rs.getString("dosis"),
                             rs.getString("kategori"),
                             rs.getDouble("harga_satuan"),
-                            rs.getInt("stok")));
+                            rs.getInt("stok")
+                        )
+                    );
                 }
             }
 
@@ -169,14 +169,15 @@ public class ObatPatenDAO implements IDAO<ObatPaten, String> {
 
             if (rs != null && rs.next()) {
                 obat = new ObatPaten(
-                            rs.getString("merk"),
-                            rs.getString("id_obat"),
-                            rs.getString("nama_obat"),
-                            rs.getString("bentuk_sediaan"),
-                            rs.getString("dosis"),
-                            rs.getString("kategori"),
-                            rs.getDouble("harga_satuan"),
-                            rs.getInt("stok"));
+                    rs.getString("merk"),
+                    rs.getString("id_obat"),
+                    rs.getString("nama_obat"),
+                    rs.getString("bentuk_sediaan"),
+                    rs.getString("dosis"),
+                    rs.getString("kategori"),
+                    rs.getDouble("harga_satuan"),
+                    rs.getInt("stok")
+                );
             }
 
             rs.close();

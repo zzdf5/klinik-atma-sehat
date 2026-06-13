@@ -108,12 +108,13 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                 newId = String.format("TAG%03d", num);
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error generateId Tagihan: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error generateId Tagihan: " + e); 
+        }
         dbCon.closeConnection();
         return newId;
     }
 
-    // [id_tagihan, nama_pasien, id_kunjungan, tanggal_tagihan, total_tagihan, metode_pembayaran, status]
     public List<Object[]> showDataWithNames() {
         con = dbCon.makeConnection();
         String sql = "SELECT t.id_tagihan, COALESCE(p.nama, k.nomor_rekam_medis) AS nama_pasien, "
@@ -136,7 +137,9 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                 });
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error showDataWithNames Tagihan: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error showDataWithNames Tagihan: " + e); 
+        }
         dbCon.closeConnection();
         return list;
     }
@@ -166,7 +169,9 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                 });
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error searchByKeyword Tagihan: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error searchByKeyword Tagihan: " + e); 
+        }
         dbCon.closeConnection();
         return list;
     }
@@ -185,12 +190,16 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                 tagihan.setJumlahBayar(rs.getDouble("jumlah_bayar"));
                 tagihan.setKembalian(rs.getDouble("kembalian"));
                 String metode = rs.getString("metode_pembayaran");
-                if (metode != null) tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
+                if (metode != null) {
+                    tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
+                }
                 tagihan.setStatus(Tagihan.Status.valueOf(rs.getString("status")));
                 loadItemTagihan(tagihan);
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error searchByIdKunjungan: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error searchByIdKunjungan: " + e); 
+        }
         dbCon.closeConnection();
         return tagihan;
     }
@@ -220,14 +229,17 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
             if (rs != null) {
                 while (rs.next()) {
                     Tagihan tagihan = new Tagihan(
-                            rs.getString("id_tagihan"),
-                            rs.getString("id_kunjungan"),
-                            rs.getString("tanggal_tagihan"));
+                        rs.getString("id_tagihan"),
+                        rs.getString("id_kunjungan"),
+                        rs.getString("tanggal_tagihan")
+                    );
                     tagihan.setTotalTagihan(rs.getDouble("total_tagihan"));
                     tagihan.setJumlahBayar(rs.getDouble("jumlah_bayar"));
                     tagihan.setKembalian(rs.getDouble("kembalian"));
                     String metode = rs.getString("metode_pembayaran");
-                    if (metode != null) tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
+                    if (metode != null) {
+                        tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
+                    }
                     tagihan.setStatus(Tagihan.Status.valueOf(rs.getString("status")));
                     loadItemTagihan(tagihan);
                     list.add(tagihan);
@@ -252,14 +264,17 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
             ResultSet rs = ps.executeQuery();
             if (rs != null && rs.next()) {
                 tagihan = new Tagihan(
-                        rs.getString("id_tagihan"),
-                        rs.getString("id_kunjungan"),
-                        rs.getString("tanggal_tagihan"));
+                    rs.getString("id_tagihan"),
+                    rs.getString("id_kunjungan"),
+                    rs.getString("tanggal_tagihan")
+                );
                 tagihan.setTotalTagihan(rs.getDouble("total_tagihan"));
                 tagihan.setJumlahBayar(rs.getDouble("jumlah_bayar"));
                 tagihan.setKembalian(rs.getDouble("kembalian"));
                 String metode = rs.getString("metode_pembayaran");
-                if (metode != null) tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
+                if (metode != null) {
+                    tagihan.setMetodePembayaran(Tagihan.MetodePembayaran.valueOf(metode));
+                }
                 tagihan.setStatus(Tagihan.Status.valueOf(rs.getString("status")));
                 loadItemTagihan(tagihan);
             }
@@ -274,9 +289,7 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
 
     private void loadItemTagihan(Tagihan tagihan) {
         try {
-            // Baca dari tagihan_detail
-            PreparedStatement ps = con.prepareStatement(
-                "SELECT nama_item, jumlah, harga_satuan FROM tagihan_detail WHERE id_tagihan=?");
+            PreparedStatement ps = con.prepareStatement("SELECT nama_item, jumlah, harga_satuan FROM tagihan_detail WHERE id_tagihan=?");
             ps.setString(1, tagihan.getIdTagihan());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -285,9 +298,9 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                         rs.getInt("jumlah"),
                         rs.getDouble("harga_satuan")));
             }
-            rs.close(); ps.close();
+            rs.close(); 
+            ps.close();
 
-            // Fallback: jika tagihan_detail kosong, ambil dari kunjungan + resep
             if (tagihan.getDaftarItem().isEmpty()) {
                 String sqlFallback =
                     "SELECT 'Biaya Konsultasi' AS nama_item, 1 AS jumlah, k.biaya_konsultasi AS harga_satuan " +
@@ -308,7 +321,9 @@ public class TagihanDAO implements IDAO<Tagihan, String> {
                     tagihan.tambahItem(new Tagihan.ItemTagihan(
                             rs2.getString("nama_item"),
                             rs2.getInt("jumlah"),
-                            rs2.getDouble("harga_satuan")));
+                            rs2.getDouble("harga_satuan")
+                        )
+                    );
                 }
                 rs2.close(); ps2.close();
             }

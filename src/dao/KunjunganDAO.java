@@ -241,7 +241,8 @@ public class KunjunganDAO implements IDAO<Kunjungan, String> {
                         rs.getString("nomor_rekam_medis"),
                         rs.getString("tanggal"),
                         rs.getString("jam"),
-                        rs.getString("keluhan_utama"));
+                        rs.getString("keluhan_utama")
+                );
                 kunjungan.setIdDokter(rs.getString("id_dokter"));
                 kunjungan.setHasilPemeriksaan(rs.getString("hasil_pemeriksaan"));
                 kunjungan.setIdDiagnosa(rs.getString("id_diagnosa"));

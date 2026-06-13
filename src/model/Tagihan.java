@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tagihan {
-    private String idTagihan;
-    private String idKunjungan;
-    private String tanggalTagihan;
-    private double totalTagihan;
-    private double jumlahBayar;
-    private double kembalian;
+    private String idTagihan, idKunjungan, tanggalTagihan;
+    private double totalTagihan, jumlahBayar, kembalian;
     private MetodePembayaran metodePembayaran;
     private Status status;
     private List<ItemTagihan> daftarItem;
 
     public enum MetodePembayaran {
-        TUNAI, BPJS, TRANSFER, DEBIT
+        TUNAI, 
+        BPJS, 
+        TRANSFER,
+        DEBIT
     }
 
     public enum Status {
-        BELUM_BAYAR, LUNAS
+        BELUM_BAYAR, 
+        LUNAS
     }
 
     public Tagihan(String idTagihan, String idKunjungan, String tanggalTagihan) {
@@ -33,24 +33,31 @@ public class Tagihan {
     public void setIdTagihan(String idTagihan) { 
         this.idTagihan = idTagihan;
     }
+    
     public void setIdKunjungan(String idKunjungan) {
         this.idKunjungan = idKunjungan; 
     }
+    
     public void setTanggalTagihan(String tanggalTagihan) { 
         this.tanggalTagihan = tanggalTagihan; 
     }
+    
     public void setMetodePembayaran(MetodePembayaran metodePembayaran) {
         this.metodePembayaran = metodePembayaran; 
     }
+    
     public void setStatus(Status status) { 
         this.status = status;
     }
+    
     public void setJumlahBayar(double jumlahBayar) { 
         this.jumlahBayar = jumlahBayar; 
     }
+    
     public void setKembalian(double kembalian) { 
         this.kembalian = kembalian;
     }
+    
     public void setTotalTagihan(double totalTagihan) {
         this.totalTagihan = totalTagihan;
     }
@@ -58,27 +65,35 @@ public class Tagihan {
     public String getIdTagihan() {
         return idTagihan;
     }
+    
     public String getIdKunjungan() { 
         return idKunjungan; 
     }
+    
     public String getTanggalTagihan() { 
         return tanggalTagihan; 
     }
+    
     public double getTotalTagihan() { 
         return totalTagihan;
     }
+    
     public double getJumlahBayar() {
         return jumlahBayar; 
     }
+    
     public double getKembalian() {
         return kembalian; 
     }
+    
     public MetodePembayaran getMetodePembayaran() {
         return metodePembayaran; 
     }
+    
     public Status getStatus() {
         return status;
     }
+    
     public List<ItemTagihan> getDaftarItem() {
         return daftarItem; 
     }
@@ -105,9 +120,11 @@ public class Tagihan {
         public void setNamaItem(String namaItem) { 
             this.namaItem = namaItem; 
         }
+        
         public void setJumlah(int jumlah) { 
             this.jumlah = jumlah; 
         }
+        
         public void setHargaSatuan(double hargaSatuan) {
             this.hargaSatuan = hargaSatuan; 
         }
@@ -115,9 +132,11 @@ public class Tagihan {
         public String getNamaItem() {
             return namaItem; 
         }
+        
         public int getJumlah() { 
             return jumlah; 
         }
+        
         public double getHargaSatuan() {
             return hargaSatuan;
         }

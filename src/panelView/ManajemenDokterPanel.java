@@ -4,6 +4,9 @@
  */
 package panelView;
 import control.DokterControl;
+import exception.InputKosongException;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
 import model.Dokter;
 
 public class ManajemenDokterPanel extends javax.swing.JPanel {
@@ -55,7 +58,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
 
     public void doSearchDokter() {
         String keyword = pencarianDokterTextField.getText().trim();
-        javax.swing.table.TableModel model = dokterControl.showTable(keyword);
+        TableModel model = dokterControl.showTable(keyword);
         dokterTable.setModel(model);
         setComponentsDokter(false);
         setEditDeleteButtonDokter(false);
@@ -79,18 +82,23 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         }
     }
 
-    public void inputKosongException() throws Exception {
+    public void inputKosongException() throws InputKosongException {
         if(inputNamaDokterTextField.getText().isEmpty() ||
            inputNomorSTRTextField.getText().isEmpty() ||
            inputSpesialisasiDokterTextField.getText().isEmpty() ||
            inputTarifDokterTextField.getText().isEmpty()) {
-            throw new Exception("Seluruh Data Input Tidak Boleh Kosong!");
+            throw new InputKosongException();
         }
     }
     
     public boolean isDouble(String str) {
-        try { Double.parseDouble(str); return true; } 
-        catch (NumberFormatException e) { return false; }
+        try { 
+            Double.parseDouble(str); 
+            return true; 
+        } 
+        catch (NumberFormatException e) { 
+            return false; 
+        }
     }
 
     /**
@@ -630,9 +638,9 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
 
     private void hapusDokterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusDokterButtonActionPerformed
         action = "hapus";
-        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus data Dokter ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
         
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+        if (confirm == JOptionPane.YES_OPTION) {
             dokterControl.delete(selectedId); 
             clearTextDokter();
             setComponentsDokter(false);
@@ -647,19 +655,18 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             inputKosongException();
             
             if(!isDouble(inputTarifDokterTextField.getText())){
-                javax.swing.JOptionPane.showMessageDialog(this, "Tarif Konsultasi harus berupa angka!");
+                JOptionPane.showMessageDialog(this, "Tarif Konsultasi harus berupa angka!");
                 return;
             }
 
-            // Dialog Konfirmasi dengan YES_NO_CANCEL_OPTION
-            int confirm = javax.swing.JOptionPane.showConfirmDialog(
+            int confirm = JOptionPane.showConfirmDialog(
                 this, 
                 "Apakah Anda yakin ingin melakukan aksi " + action + " pada data Dokter ini?", 
                 "Konfirmasi Simpan", 
-                javax.swing.JOptionPane.YES_NO_CANCEL_OPTION
+                JOptionPane.YES_NO_CANCEL_OPTION
             );
 
-            if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+            if (confirm != JOptionPane.YES_OPTION) {
                 return; 
             }
 
@@ -669,11 +676,11 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             double tarif = Double.parseDouble(inputTarifDokterTextField.getText());
             
             String idDokter = action.equals("tambah") ? dokterControl.generateId() : selectedId;
-            String noTelepon = "-"; // Dummy
-            String username = nama.replaceAll("\\s+", "").toLowerCase(); // Dummy dari nama
-            String password = "123"; // Dummy
+            String noTelepon = "-"; 
+            String username = nama.replaceAll("\\s+", "").toLowerCase(); 
+            String password = "123"; 
 
-            model.Dokter d = new model.Dokter(idDokter, noSTR, nama, noTelepon, spesialis, tarif, username, password);
+            Dokter d = new Dokter(idDokter, noSTR, nama, noTelepon, spesialis, tarif, username, password);
             d.setStatusAktif(statusAktif);
 
             if(action.equals("tambah")) {
@@ -691,8 +698,10 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
             selectedId = null;
             action = null;
 
+        } catch(InputKosongException e) {
+            JOptionPane.showMessageDialog(this, "Seluruh Data Input Tidak Boleh Kosong!");
         } catch(Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_simpanDokterButtonActionPerformed
 
@@ -704,7 +713,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         int clickedRow = dokterTable.getSelectedRow();
         if(clickedRow < 0) return;
 
-        javax.swing.table.TableModel tableModel = dokterTable.getModel();
+        TableModel tableModel = dokterTable.getModel();
 
         setComponentsDokter(false); 
         setEditDeleteButtonDokter(true);

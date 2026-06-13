@@ -140,7 +140,8 @@ public class RekamMedisDAO implements IDAO<RekamMedis, String> {
                     RekamMedis rm = new RekamMedis(
                             rs.getString("nomor_rekam_medis"),
                             rs.getString("id_pasien"),
-                            rs.getString("tanggal_buat"));
+                            rs.getString("tanggal_buat")
+                    );
                     loadAlergiDanRiwayat(rm);
                     list.add(rm);
                 }
@@ -170,9 +171,10 @@ public class RekamMedisDAO implements IDAO<RekamMedis, String> {
 
             if (rs != null && rs.next()) {
                 rm = new RekamMedis(
-                        rs.getString("nomor_rekam_medis"),
-                        rs.getString("id_pasien"),
-                        rs.getString("tanggal_buat"));
+                    rs.getString("nomor_rekam_medis"),
+                    rs.getString("id_pasien"),
+                    rs.getString("tanggal_buat")
+                );
                 loadAlergiDanRiwayat(rm);
             }
 

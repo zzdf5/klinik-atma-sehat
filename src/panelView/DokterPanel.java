@@ -7,10 +7,20 @@ package panelView;
 import control.*;
 import model.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.awt.Component;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import table.TableItemResep;
 
 public class DokterPanel extends javax.swing.JPanel {
@@ -36,7 +46,7 @@ public class DokterPanel extends javax.swing.JPanel {
         initializeControllers();
         queueContainer = new JPanel();
         queueContainer.setLayout(null);
-        queueContainer.setBackground(new java.awt.Color(255, 255, 255));
+        queueContainer.setBackground(new Color(255, 255, 255));
         initComponents();
         setupQueuePanel();
         loadQueuePasien();
@@ -48,22 +58,22 @@ public class DokterPanel extends javax.swing.JPanel {
     private void setupQueuePanel() {
         diplayQueuePasienPanel.removeAll();
         diplayQueuePasienPanel.setLayout(new BorderLayout());
-        diplayQueuePasienPanel.setBackground(java.awt.Color.WHITE);
+        diplayQueuePasienPanel.setBackground(Color.WHITE);
 
-        queueContainer.setBackground(new java.awt.Color(245, 246, 250));
+        queueContainer.setBackground(new Color(245, 246, 250));
         queueContainer.setLayout(null);
 
         JScrollPane scrollPane = new JScrollPane(queueContainer);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(null);
-        scrollPane.getViewport().setBackground(new java.awt.Color(245, 246, 250));
+        scrollPane.getViewport().setBackground(new Color(245, 246, 250));
 
         diplayQueuePasienPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Tampilkan tepat 3 card; card lebih banyak bisa discroll
         int visibleHeight = CARD_GAP + 4 * (CARD_HEIGHT + CARD_GAP);
-        diplayQueuePasienPanel.setPreferredSize(new java.awt.Dimension(205, visibleHeight));
+        diplayQueuePasienPanel.setPreferredSize(new Dimension(205, visibleHeight));
 
         diplayQueuePasienPanel.revalidate();
         diplayQueuePasienPanel.repaint();
@@ -118,7 +128,7 @@ public class DokterPanel extends javax.swing.JPanel {
 
         // Container setinggi konten asli — scroll aktif otomatis jika melebihi 3 card
         int totalHeight = yPos + CARD_GAP;
-        queueContainer.setPreferredSize(new java.awt.Dimension(
+        queueContainer.setPreferredSize(new Dimension(
             diplayQueuePasienPanel.getWidth() > 0 ? diplayQueuePasienPanel.getWidth() : 205,
             totalHeight
         ));
@@ -128,81 +138,81 @@ public class DokterPanel extends javax.swing.JPanel {
     
     private JPanel createPatientCard(Pasien pasien, Kunjungan kunjungan, int yPos) {
         JPanel card = new JPanel();
-        card.setBackground(java.awt.Color.WHITE);
+        card.setBackground(Color.WHITE);
         card.setBounds(10, yPos, 185, CARD_HEIGHT);
-        card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        card.setLayout(new java.awt.GridBagLayout());
+        card.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        card.setLayout(new GridBagLayout());
 
         // Border definitions — compound supaya total space selalu 2px
-        javax.swing.border.Border defaultBorder = javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(210, 218, 240), 1),
-            javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1)
+        Border defaultBorder = BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(210, 218, 240), 1),
+            BorderFactory.createEmptyBorder(1, 1, 1, 1)
         );
-        javax.swing.border.Border selectedBorder = javax.swing.BorderFactory.createLineBorder(
-            new java.awt.Color(90, 120, 210), 2
+        Border selectedBorder = BorderFactory.createLineBorder(
+            new Color(90, 120, 210), 2
         );
-        javax.swing.border.Border hoverBorder = javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 180, 240), 1),
-            javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1)
+        Border hoverBorder = BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(150, 180, 240), 1),
+            BorderFactory.createEmptyBorder(1, 1, 1, 1)
         );
 
         card.setBorder(defaultBorder);
 
-        java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();
+        GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
 
         // Nama
         JLabel namLabel = new JLabel(pasien.getNama());
-        namLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-        namLabel.setForeground(new java.awt.Color(25, 25, 25));
+        namLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        namLabel.setForeground(new Color(25, 25, 25));
 
         // Divider
         JSeparator sep = new JSeparator();
-        sep.setForeground(new java.awt.Color(225, 230, 245));
-        sep.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 1));
+        sep.setForeground(new Color(225, 230, 245));
+        sep.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
 
         // RM
         JLabel rmLabel = new JLabel("RM: " + pasien.getNomorRekamMedis());
-        rmLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
-        rmLabel.setForeground(new java.awt.Color(90, 90, 90));
+        rmLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        rmLabel.setForeground(new Color(90, 90, 90));
 
         // Jam
         JLabel jamLabel = new JLabel("Jam: " + kunjungan.getJam());
-        jamLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
-        jamLabel.setForeground(new java.awt.Color(90, 90, 90));
+        jamLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        jamLabel.setForeground(new Color(90, 90, 90));
 
         // Info usia & jenis kelamin
         JLabel infoLabel = new JLabel(
             calculateAge(pasien.getTanggalLahir()) + " th  •  " + pasien.getJenisKelamin()
         );
-        infoLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 11));
-        infoLabel.setForeground(new java.awt.Color(130, 130, 130));
+        infoLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        infoLabel.setForeground(new Color(130, 130, 130));
 
-        gbc.gridy = 0; gbc.insets = new java.awt.Insets(10, 10, 4, 10);
+        gbc.gridy = 0; gbc.insets = new Insets(10, 10, 4, 10);
         card.add(namLabel, gbc);
 
-        gbc.gridy = 1; gbc.insets = new java.awt.Insets(0, 10, 6, 10);
+        gbc.gridy = 1; gbc.insets = new Insets(0, 10, 6, 10);
         card.add(sep, gbc);
 
-        gbc.gridy = 2; gbc.insets = new java.awt.Insets(2, 10, 2, 10);
+        gbc.gridy = 2; gbc.insets = new Insets(2, 10, 2, 10);
         card.add(rmLabel, gbc);
 
         gbc.gridy = 3;
         card.add(jamLabel, gbc);
 
-        gbc.gridy = 4; gbc.insets = new java.awt.Insets(2, 10, 10, 10);
+        gbc.gridy = 4; gbc.insets = new Insets(2, 10, 10, 10);
         card.add(infoLabel, gbc);
 
-        java.awt.Color colorDefault  = java.awt.Color.WHITE;
-        java.awt.Color colorSelected = new java.awt.Color(232, 238, 255);
-        java.awt.Color colorHover    = new java.awt.Color(248, 250, 255);
+        Color colorDefault  = Color.WHITE;
+        Color colorSelected = new Color(232, 238, 255);
+        Color colorHover    = new Color(248, 250, 255);
 
-        java.awt.event.MouseAdapter cardClickListener = new java.awt.event.MouseAdapter() {
+        MouseAdapter cardClickListener = new MouseAdapter() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            public void mouseClicked(MouseEvent evt) {
                 displayPasienData(kunjungan);
                 // Reset semua card ke default
                 for (JPanel c : patientCards) {
@@ -215,7 +225,7 @@ public class DokterPanel extends javax.swing.JPanel {
             }
 
             @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            public void mouseEntered(MouseEvent evt) {
                 if (!card.getBackground().equals(colorSelected)) {
                     card.setBackground(colorHover);
                     card.setBorder(hoverBorder);
@@ -223,7 +233,7 @@ public class DokterPanel extends javax.swing.JPanel {
             }
 
             @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            public void mouseExited(MouseEvent evt) {
                 if (!card.getBackground().equals(colorSelected)) {
                     card.setBackground(colorDefault);
                     card.setBorder(defaultBorder);
@@ -232,7 +242,7 @@ public class DokterPanel extends javax.swing.JPanel {
         };
 
         card.addMouseListener(cardClickListener);
-        for (java.awt.Component comp : card.getComponents()) {
+        for (Component comp : card.getComponents()) {
             comp.addMouseListener(cardClickListener);
         }
 
@@ -334,7 +344,7 @@ public class DokterPanel extends javax.swing.JPanel {
                 kodePenyakitTextField != null && !kodePenyakitTextField.getText().isEmpty() ? kodePenyakitTextField.getText() : "DIS-001",
                 namaPenyakitTextField.getText(),
                 keteranganDiagnosisTextField != null ? keteranganDiagnosisTextField.getText() : "",
-                new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()),
+                new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
                 rujukanRadioButton != null && rujukanRadioButton.isSelected()
             );
             diagnosaControl.insert(diagnosa);
@@ -345,7 +355,7 @@ public class DokterPanel extends javax.swing.JPanel {
             if (!daftarObatResep.isEmpty()) {
                 idResep = resepControl.generateIdResep();
                 resepObj = new Resep(idResep, idDokterLogin, selectedPasien.getNomorRekamMedis(),
-                    new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()));
+                    new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                 for (Resep.ItemResep item : daftarObatResep) {
                     resepObj.tambahObat(item);
                 }
@@ -364,8 +374,8 @@ public class DokterPanel extends javax.swing.JPanel {
                         idDokterLogin,
                         tujuanRujukanTextField != null ? tujuanRujukanTextField.getText() : "",
                         alasanRujukanTextField != null ? alasanRujukanTextField.getText() : "",
-                        new java.text.SimpleDateFormat("yyyy-MM-dd").format(tanggalRujukanDateChooser.getDate()),
-                        new java.text.SimpleDateFormat("yyyy-MM-dd").format(tanggalBerlakuDateChooser.getDate())
+                        new SimpleDateFormat("yyyy-MM-dd").format(tanggalRujukanDateChooser.getDate()),
+                        new SimpleDateFormat("yyyy-MM-dd").format(tanggalBerlakuDateChooser.getDate())
                     );
                     rujukanControl.insert(rujukan);
                 } else {
@@ -500,7 +510,7 @@ public class DokterPanel extends javax.swing.JPanel {
 
             riwayatPenyakitTextField.setText(String.join(", ", rekam.getRiwayatPenyakit()));
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Data rekam medis tidak ditemukan");
+            JOptionPane.showMessageDialog(this, "Data rekam medis tidak ditemukan");
             System.out.println("Data rekam medis tidak ditemukan");
 
         }
@@ -1313,7 +1323,7 @@ public class DokterPanel extends javax.swing.JPanel {
                     .addComponent(dataPasienDisplayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(rujukanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 336, Short.MAX_VALUE)
+                    .addComponent(rujukanPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                     .addComponent(rekamMedisPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(selesaikanKonsulButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(109, 109, 109))

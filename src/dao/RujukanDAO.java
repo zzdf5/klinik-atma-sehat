@@ -100,14 +100,15 @@ public class RujukanDAO implements IDAO<Rujukan, String> {
             if (rs != null) {
                 while (rs.next()) {
                     Rujukan rujukan = new Rujukan(
-                            rs.getString("id_rujukan"),
-                            rs.getString("id_kunjungan"),
-                            rs.getString("nomor_rekam_medis"),
-                            rs.getString("id_dokter_pengirim"),
-                            rs.getString("tujuan_rujukan"),
-                            rs.getString("alasan_rujukan"),
-                            rs.getString("tanggal_rujukan"),
-                            rs.getString("tanggal_berlaku"));
+                        rs.getString("id_rujukan"),
+                        rs.getString("id_kunjungan"),
+                        rs.getString("nomor_rekam_medis"),
+                        rs.getString("id_dokter_pengirim"),
+                        rs.getString("tujuan_rujukan"),
+                        rs.getString("alasan_rujukan"),
+                        rs.getString("tanggal_rujukan"),
+                        rs.getString("tanggal_berlaku")
+                    );
                     rujukan.setStatus(Rujukan.Status.valueOf(rs.getString("status")));
                     list.add(rujukan);
                 }
@@ -137,14 +138,15 @@ public class RujukanDAO implements IDAO<Rujukan, String> {
 
             if (rs != null && rs.next()) {
                 rujukan = new Rujukan(
-                        rs.getString("id_rujukan"),
-                        rs.getString("id_kunjungan"),
-                        rs.getString("nomor_rekam_medis"),
-                        rs.getString("id_dokter_pengirim"),
-                        rs.getString("tujuan_rujukan"),
-                        rs.getString("alasan_rujukan"),
-                        rs.getString("tanggal_rujukan"),
-                        rs.getString("tanggal_berlaku"));
+                    rs.getString("id_rujukan"),
+                    rs.getString("id_kunjungan"),
+                    rs.getString("nomor_rekam_medis"),
+                    rs.getString("id_dokter_pengirim"),
+                    rs.getString("tujuan_rujukan"),
+                    rs.getString("alasan_rujukan"),
+                    rs.getString("tanggal_rujukan"),
+                    rs.getString("tanggal_berlaku")
+                );
                 rujukan.setStatus(Rujukan.Status.valueOf(rs.getString("status")));
             }
 

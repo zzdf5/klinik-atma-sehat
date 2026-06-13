@@ -81,7 +81,6 @@ public class AdminDAO implements IDAO<Admin, String> {
     public void delete(String id) {
         con = dbCon.makeConnection();
 
-        // CASCADE di FK akan hapus baris admin otomatis
         String sql = "DELETE FROM pengguna WHERE id=?";
 
         try {
@@ -117,7 +116,8 @@ public class AdminDAO implements IDAO<Admin, String> {
                             rs.getString("no_telepon"),
                             rs.getString("username"),
                             rs.getString("password"),
-                            Admin.Jabatan.valueOf(rs.getString("jabatan")));
+                            Admin.Jabatan.valueOf(rs.getString("jabatan"))
+                    );
                     admin.setStatusAktif(rs.getBoolean("status_aktif"));
                     list.add(admin);
                 }
@@ -154,7 +154,8 @@ public class AdminDAO implements IDAO<Admin, String> {
                         rs.getString("no_telepon"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        Admin.Jabatan.valueOf(rs.getString("jabatan")));
+                        Admin.Jabatan.valueOf(rs.getString("jabatan"))
+                );
                 admin.setStatusAktif(rs.getBoolean("status_aktif"));
             }
 
@@ -188,7 +189,8 @@ public class AdminDAO implements IDAO<Admin, String> {
                         rs.getString("no_telepon"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        Admin.Jabatan.valueOf(rs.getString("jabatan")));
+                        Admin.Jabatan.valueOf(rs.getString("jabatan"))
+                );
                 admin.setStatusAktif(rs.getBoolean("status_aktif"));
             }
 

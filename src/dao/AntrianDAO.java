@@ -17,7 +17,6 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
     public void insert(Antrian data) {
         con = dbCon.makeConnection();
 
-        // id_antrian tidak disertakan karena AUTO_INCREMENT
         String sql = "INSERT INTO antrian (nomor_urut, id_pasien, id_dokter, id_poliklinik, tanggal, status, jenis_kunjungan) VALUES (?,?,?,?,?,?,?)";
 
         try {
@@ -104,7 +103,8 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
                             rs.getString("id_dokter"),
                             rs.getString("id_poliklinik"),
                             rs.getString("tanggal"),
-                            Antrian.JenisKunjungan.valueOf(rs.getString("jenis_kunjungan")));
+                            Antrian.JenisKunjungan.valueOf(rs.getString("jenis_kunjungan"))
+                    );
                     antrian.setStatus(Antrian.Status.valueOf(rs.getString("status")));
                     list.add(antrian);
                 }
@@ -130,15 +130,19 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
             ResultSet rs = ps.executeQuery();
             if (rs != null && rs.next()) {
                 int max = rs.getInt(1);
-                if (max > 0) next = max + 1;
+                if (max > 0) {
+                    next = max + 1;
+                }
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error generateNomorUrut: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error generateNomorUrut: " + e); 
+        }
+        
         dbCon.closeConnection();
         return next;
     }
 
-    // [id_antrian, nomor_urut, nama_pasien, nama_dokter, nama_poliklinik, tanggal, jenis_kunjungan, status]
     public List<Object[]> showDataWithNames() {
         con = dbCon.makeConnection();
         String sql = "SELECT a.id_antrian, a.nomor_urut, "
@@ -164,7 +168,10 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
                 });
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error showDataWithNames Antrian: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error showDataWithNames Antrian: " + e); 
+        }
+        
         dbCon.closeConnection();
         return list;
     }
@@ -186,7 +193,9 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
         String param = "%" + keyword + "%";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, param); ps.setString(2, param); ps.setString(3, param);
+            ps.setString(1, param); 
+            ps.setString(2, param); 
+            ps.setString(3, param);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Object[]{
@@ -197,7 +206,10 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
                 });
             }
             rs.close(); ps.close();
-        } catch (Exception e) { System.out.println("Error searchByKeyword Antrian: " + e); }
+        } catch (Exception e) { 
+            System.out.println("Error searchByKeyword Antrian: " + e); 
+        }
+        
         dbCon.closeConnection();
         return list;
     }
@@ -222,7 +234,8 @@ public class AntrianDAO implements IDAO<Antrian, Integer> {
                         rs.getString("id_dokter"),
                         rs.getString("id_poliklinik"),
                         rs.getString("tanggal"),
-                        Antrian.JenisKunjungan.valueOf(rs.getString("jenis_kunjungan")));
+                        Antrian.JenisKunjungan.valueOf(rs.getString("jenis_kunjungan"))
+                );
                 antrian.setStatus(Antrian.Status.valueOf(rs.getString("status")));
             }
 

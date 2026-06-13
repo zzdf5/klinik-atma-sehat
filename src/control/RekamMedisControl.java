@@ -14,12 +14,15 @@ public class RekamMedisControl {
     public void update(RekamMedis data, String nomorRekamMedis) {
         dao.update(data, nomorRekamMedis); 
     }
+    
     public void delete(String nomorRekamMedis) {
         dao.delete(nomorRekamMedis); 
     }
+    
     public List<RekamMedis> showData() {
         return dao.showData(); 
     }
+    
     public RekamMedis search(String nomorRekamMedis) {
         return dao.search(nomorRekamMedis); 
     }

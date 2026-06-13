@@ -8,7 +8,9 @@ import table.TablePoliKlinik;
 public class PoliklinikControl {
     private final PoliklinikDAO dao = new PoliklinikDAO();
 
-    public String generateId() { return dao.generateId(); }
+    public String generateId() { 
+        return dao.generateId(); 
+    }
 
     public void insert(Poliklinik data) {
         dao.insert(data);
@@ -31,9 +33,7 @@ public class PoliklinikControl {
     }
     
     public TablePoliKlinik showTable(String target) {
-        List<Poliklinik> dataPoliKlinik = (target == null || target.isBlank())
-                ? dao.showData()
-                : dao.searchByKeyword(target);
+        List<Poliklinik> dataPoliKlinik = (target == null || target.isBlank()) ? dao.showData() : dao.searchByKeyword(target);
         return new TablePoliKlinik(dataPoliKlinik);
     }
 }
