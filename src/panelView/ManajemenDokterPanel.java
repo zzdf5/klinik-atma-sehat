@@ -33,6 +33,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputNomorSTRTextField.setEnabled(value);
         inputSpesialisasiDokterTextField.setEnabled(value);
         inputTarifDokterTextField.setEnabled(value);
+        inputNoTelpDokterTextField.setEnabled(value);
         inputStatusDokterButton.setEnabled(value);
         simpanDokterButton.setEnabled(value);
         batalDokterButton.setEnabled(value);
@@ -47,6 +48,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputIdDokterTextField.setText("");
         inputNamaDokterTextField.setText("");
         inputNomorSTRTextField.setText("");
+        inputNoTelpDokterTextField.setText("");
         inputSpesialisasiDokterTextField.setText("");
         inputTarifDokterTextField.setText("");
         pencarianDokterTextField.setText("");
@@ -139,6 +141,9 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         inputNamaDokterLabel = new javax.swing.JLabel();
         inputNamaDokterTextField = new javax.swing.JTextField();
         formInputDataKunjunganLabel = new javax.swing.JLabel();
+        inputNoTelpDokterPanel = new javax.swing.JPanel();
+        inputNoTelpDokterLabel = new javax.swing.JLabel();
+        inputNoTelpDokterTextField = new javax.swing.JTextField();
         dokterScrollPane = new javax.swing.JScrollPane();
         dokterTable = new javax.swing.JTable();
         dokterButtonPanel = new javax.swing.JPanel();
@@ -421,6 +426,35 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
         formInputDataKunjunganLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         formInputDataKunjunganLabel.setText("Data Dokter");
 
+        inputNoTelpDokterPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        inputNoTelpDokterLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        inputNoTelpDokterLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/namaDoctor.png"))); // NOI18N
+        inputNoTelpDokterLabel.setText("No Telepon");
+
+        javax.swing.GroupLayout inputNoTelpDokterPanelLayout = new javax.swing.GroupLayout(inputNoTelpDokterPanel);
+        inputNoTelpDokterPanel.setLayout(inputNoTelpDokterPanelLayout);
+        inputNoTelpDokterPanelLayout.setHorizontalGroup(
+            inputNoTelpDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputNoTelpDokterPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(inputNoTelpDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputNoTelpDokterPanelLayout.createSequentialGroup()
+                        .addComponent(inputNoTelpDokterLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(inputNoTelpDokterTextField, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        inputNoTelpDokterPanelLayout.setVerticalGroup(
+            inputNoTelpDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputNoTelpDokterPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(inputNoTelpDokterLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(inputNoTelpDokterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout formInputDokterPanelLayout = new javax.swing.GroupLayout(formInputDokterPanel);
         formInputDokterPanel.setLayout(formInputDokterPanelLayout);
         formInputDokterPanelLayout.setHorizontalGroup(
@@ -444,7 +478,8 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                     .addGroup(formInputDokterPanelLayout.createSequentialGroup()
                         .addComponent(simpanDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(batalDokterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(batalDokterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inputNoTelpDokterPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         formInputDokterPanelLayout.setVerticalGroup(
@@ -456,7 +491,9 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addComponent(inputIdDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputNamaDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(inputNoTelpDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputNomorSTRPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inputSpesialisasiDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -468,7 +505,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addGroup(formInputDokterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(simpanDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(batalDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         dokterScrollPane.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -539,7 +576,7 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                 .addComponent(barukanDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hapusDokterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         dokterButtonPanelLayout.setVerticalGroup(
             dokterButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -563,8 +600,8 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
                     .addComponent(pencarianDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(formInputDokterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dokterButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(formInputDokterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dokterButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dokterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -772,6 +809,9 @@ public class ManajemenDokterPanel extends javax.swing.JPanel {
     private javax.swing.JLabel inputNamaDokterLabel;
     private javax.swing.JPanel inputNamaDokterPanel;
     private javax.swing.JTextField inputNamaDokterTextField;
+    private javax.swing.JLabel inputNoTelpDokterLabel;
+    private javax.swing.JPanel inputNoTelpDokterPanel;
+    private javax.swing.JTextField inputNoTelpDokterTextField;
     private javax.swing.JLabel inputNomorSTRLabel;
     private javax.swing.JPanel inputNomorSTRPanel;
     private javax.swing.JTextField inputNomorSTRTextField;
